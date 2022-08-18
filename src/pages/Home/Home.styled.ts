@@ -6,6 +6,7 @@ import Grid from "components/BaseElement/Grid";
 import { Typography } from '../../components/BaseElement/index';
 
 export const Image = styled.img`
+  display: block;
   object-fit: cover;
   width: auto;  
   height: auto;  
@@ -72,7 +73,7 @@ export const Display = styled(Row)`
   gap: 51px;
 `
 export const DisplayVision = styled.div`
-  margin-top: 127px;
+  padding-top: 127px;
 `
 export const Vision = styled.div`
   margin-bottom: 60px;
@@ -80,6 +81,36 @@ export const Vision = styled.div`
   font-weight: bold;
   color: #F5F5F5;
 `
+export const ImageHover = styled(Box)<{
+  bgColor: string,
+  textColor: string,
+  text: string
+}>`
+  position: relative;
+  
+  &::after {
+    content: '${({text}) => text}';
+    position: absolute;
+    color: ${({textColor}) => textColor};
+    background: ${({bgColor}) => bgColor};
+    font-size: 40px;
+    font-weight: bold;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 35px 72px;
+    visibility: hidden;
+  }
+  &:hover {
+    &::after {
+      visibility: visible;
+    }
+  }
+`
+
 export const PartThree = styled.div`
   position: relative;
   padding: 332px 195px 0;
@@ -156,6 +187,30 @@ export const EmailIpt = styled.input`
     box-sizing: border-box;
     color: #fff;
     outline: unset;
+    &::after {
+      content: 'SUBMIT'
+    }
+    &:hover {
+      border: 2px solid #00E88A;
+      color: #00E88A;
+      ::placeholder {
+        color: #00E88A;
+      }
+    }
+    &:active {
+      border: 2px solid #00E88A;
+      color: #00E88A;
+      ::placeholder {
+        color: #00E88A;
+      }
+    }
+    &:focus {
+      border: 2px solid #00E88A;
+      color: #00E88A;
+      ::placeholder {
+        color: #00E88A;
+      }
+    }
 `
 
 export const RoadMapCard = styled.div<{type: 'left' | 'right', text: string}>`

@@ -1,5 +1,5 @@
 // const baseSize = 50
-
+import AOS from "aos";
 function setRem() {
   let clientWidth = window.innerWidth <= 1280 ? 1280 : window.innerWidth
   let scale = clientWidth / 19.2
@@ -11,4 +11,5 @@ setRem()
 
 window.onresize = function () {
   setRem()
+  // AOS.refresh();
 }
