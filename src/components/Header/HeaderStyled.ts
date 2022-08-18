@@ -4,7 +4,8 @@ import { Z_INDEX } from "utils/global";
 
 export const HeaderOccupy = styled.div`
   position: relative;
-  height: 118px;
+  /* height: 118px; */
+  height: 1.18rem;
   width: 100%;
 `
 
@@ -15,23 +16,28 @@ export const HeaderFrame = styled.div`
   top: 0%;
   bottom: 0%;
   background: #000000;
-  height: 118px;
+  /* height: 118px; */
+  height: 1.18rem;
   width: 100%;
   display: flex;
   align-items: center;
   z-index: ${Z_INDEX.header_nav};
 `
 export const Logo = styled.img`
-  /* width: auto;  
+  width: auto;  
   height: auto;  
   max-width: 100%;  
-  max-height: 100%;  */
+  max-height: 100%;
+  width: 2.62rem;
+  height: .72rem;
 `
 
 export const HeaderLinks = styled(RowBetween)`
-  gap: 48px;
+  /* gap: 48px; */
+  gap: .48rem;
   .nav-item {
-    font-size: 20px;
+    font-size: .2rem;
+    /* font-size: 20px; */
     font-weight: 400;
     color: #ffffff;
     text-decoration: none;
@@ -43,7 +49,8 @@ export const HeaderLinks = styled(RowBetween)`
 `
 
 export const HeaderContent = styled.div`
-  padding: 0 71px 0 32px;
+  /* padding: 0 71px 0 32px; */
+  padding: 0 .71rem 0 .32rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -52,9 +59,12 @@ export const HeaderContent = styled.div`
 
 export const ConnectWallet = styled(Row)`
   background: ${({theme}) => theme.colors.normal};;
-  height: 118px;
-  padding: 0 40px 0 50px;
-  font-size: 20px;
+  /* height: 118px; */
+  height: 1.18rem;
+  /* padding: 0 40px 0 50px; */
+  padding: 0 .4rem 0 .5rem;
+  /* font-size: 20px; */
+  font-size: .2rem;
   font-weight: 700;
   white-space: nowrap;  
   cursor: pointer;

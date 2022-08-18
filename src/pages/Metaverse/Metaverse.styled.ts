@@ -1,4 +1,5 @@
 import Box from "components/BaseElement";
+import Input from "components/form/Input";
 import styled from "styled-components";
 
 export const PartTwo = styled(Box)`
@@ -103,4 +104,81 @@ export const CollaborationCard = styled(Box)`
     box-shadow: 0px 4px 20px #F6B91B;
     transform: scale(1.02);
   }
+`
+
+export const EmailInput = styled(Input)`
+  background: transparent;
+  border: 2px solid #6B6B6B;
+  border-radius: 60px;
+  width: 100%;
+  max-width: 773px;
+  padding: 0 0 0 12px;
+  box-sizing: border-box;
+  height: 48px;
+  &:hover {
+    border: 2px solid #00E88A;
+    color: #00E88A;
+    .email-input {
+
+      ::placeholder {
+        color: #00E88A;
+      }
+    }
+    .submit {
+      background: #00E88A;
+    }
+  }
+  &:active {
+    border: 2px solid #00E88A;
+    color: #00E88A;
+    ::placeholder {
+      color: #00E88A;
+    }
+  }
+  &:focus {
+    border: 2px solid #00E88A;
+    color: #00E88A;
+    ::placeholder {
+      color: #00E88A;
+    }
+  }
+
+  .email-input {
+    color: #6B6B6B;
+    border: none;
+    outline: unset;
+    ::placeholder {
+      color: #6B6B6B;
+    }
+    &:hover {
+      color: #00E88A;
+      ::placeholder {
+        color: #00E88A;
+      }
+    }
+    &:active {
+      color: #00E88A;
+      ::placeholder {
+        color: #00E88A;
+      }
+    }
+    &:focus {
+      color: #00E88A;
+      ::placeholder {
+        color: #00E88A;
+      }
+    }
+  }
+`
+
+export const Submit = styled(Box)`
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  background: #F6B91B;
+  color: #000;
+  height: 48px;
+  border-radius: 48px;
+  cursor: pointer;
+
 `

@@ -9,7 +9,8 @@ export default function Footer() {
   return (
     <Wrapper>
       <ColumnStart
-        gap="75px"
+        // gap="75px"
+        gap=".75rem"
       >
         <Logo src={require('assets/svg/logo.svg').default} alt="" />
         <Icons>
@@ -21,7 +22,8 @@ export default function Footer() {
         <Connect>info@getaverses.com</Connect>
       </ColumnStart>
       <RowStart
-        gap='157px'
+        // gap='157px'
+        gap='1.57rem'
       >
         <About>
           <span>{t(`About`)}</span>

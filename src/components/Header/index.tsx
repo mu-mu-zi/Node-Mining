@@ -4,6 +4,7 @@ import { HeaderFrame, HeaderContent, ConnectWallet, HeaderLinks, Logo, HeaderOcc
 import RouterLink from './RouterLink';
 import { useTranslation } from 'react-i18next';
 import Box, { Typography } from 'components/BaseElement';
+import { Row } from 'components/BaseElement/Row';
 
 export default function Header() {
   const { t } = useTranslation()
@@ -13,24 +14,25 @@ export default function Header() {
     <HeaderOccupy>
       <HeaderFrame>
         <HeaderContent>
-          <Box>
+          <Row>
             <Logo src={require('assets/svg/logo.svg').default} alt="" />
-          </Box>
+          </Row>
 
           <HeaderLinks>
               <RouterLink to={"/"} className={({isActive}) => `nav-item ${isActive ? "active" : ""}`} >{t(`HOME`)}</RouterLink>
               <RouterLink to={"/digital"} className={({isActive}) => `nav-item ${isActive ? "active" : ""}`} >{t(`DID DIGITAL ID`)}</RouterLink>
               <RouterLink to={"/metaverse"} className={({isActive}) => `nav-item ${isActive ? "active" : ""}`} >{t(`METAVERSE`)}</RouterLink>
-              <RouterLink to={"/nodes"} className={({isActive}) => `nav-item ${isActive ? "active" : ""}`} >{t(`NODES`)}</RouterLink>
-              <RouterLink to={"/mynodes"} className={({isActive}) => `nav-item ${isActive ? "active" : ""}`} >{t(`MY NODES`)}</RouterLink>
-              <RouterLink to={"/aboutus"} className={({isActive}) => `nav-item ${isActive ? "active" : ""}`} >{t(`ABOUT US`)}</RouterLink>
-              <Typography
-                fontSize={'20px'}
+              <RouterLink style={{pointerEvents:'none'}} to={"/nodes"} className={({isActive}) => `nav-item ${isActive ? "active" : ""}`} >{t(`NODES`)}</RouterLink>
+              <RouterLink style={{pointerEvents:'none'}} to={"/mynodes"} className={({isActive}) => `nav-item ${isActive ? "active" : ""}`} >{t(`MY NODES`)}</RouterLink>
+              <RouterLink style={{pointerEvents:'none'}} to={"/aboutus"} className={({isActive}) => `nav-item ${isActive ? "active" : ""}`} >{t(`ABOUT US`)}</RouterLink>
+              {/* <Typography
+                // fontSize={'20px'}
+                fontSize={'.2rem'}
                 fontWeight={'400'}
                 color={'#ffffff'}
                 cursor={'pointer'}
                 
-              >EN/CN</Typography>
+              >EN/CN</Typography> */}
               {/* <RouterLink to={"/aboutus"} className={({isActive}) => `nav-item ${isActive ? "active" : ""}`} >{t(`ABOUT US`)}</RouterLink> */}
           </HeaderLinks>
         </HeaderContent>

@@ -2,9 +2,12 @@ import Box, { Typography } from 'components/BaseElement'
 import Flex from 'components/BaseElement/Flex'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { Banner, EmailIpt, PartTwo, Title, IdentityCard, PartThree } from './Digital.styled'
+import { Banner, EmailIpt, PartTwo, Title, IdentityCard, PartThree
+  , EmailInput, Submit
+} from './Digital.styled'
 import {Image} from '../Home/Home.styled'
 import { RowCenter } from 'components/BaseElement/Row'
+import Input from 'components/form/Input'
 
 export default function Digital() {
   const { t } = useTranslation()
@@ -12,7 +15,7 @@ export default function Digital() {
     <>
       <Banner>
         <Typography
-          fontSize={"120px"}
+          fontSize={"100px"}
           fontFamily={"CRT-64"}
           fontWeight={"400"}
           color={"#F6B91B"}
@@ -21,7 +24,7 @@ export default function Digital() {
           {t(`DECENTRALI`)}
         </Typography>
         <Typography
-          fontSize={"120px"}
+          fontSize={"100px"}
           fontFamily={"CRT-64"}
           fontWeight={"400"}
           color={"#F6B91B"}
@@ -31,18 +34,26 @@ export default function Digital() {
         </Typography>
 
         <Typography
-          fontSize={"30px"}
+          fontSize={"20px"}
           fontWeight={"400"}
           color={"#ffffff"}
           textAlign={"center"}
           maxWidth={"984px"}
           marginBottom={"32px"}
+          marginTop={"32px"}
         >
           {t(`Getaverse works by providing a window into the WEB3 world on a decentralized identity system, with additional support and rewards for all participants who maintain this window. Any trusted party (verifier) that needs to verify a user will receive the verifiable statement and verify its authenticity.`)}
         </Typography>
 
-        <EmailIpt 
+        {/* <EmailIpt
           placeholder="Enter your email address"
+        /> */}
+
+        <EmailInput 
+          placeholder='Enter your email address'
+          right={<Submit className='submit' onClick={() => console.log('aabb')}>SUBMIT</Submit>}
+          inputClassName="email-input"
+          // onChange={() => console.log('aabb')}
         />
 
       </Banner>

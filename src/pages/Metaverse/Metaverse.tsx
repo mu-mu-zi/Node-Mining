@@ -5,7 +5,9 @@ import Swiper from './Swiper'
 import { useTranslation } from 'react-i18next';
 import { Title } from 'pages/Digital/Digital.styled';
 import { PartTwo, Cooperation, CooperationSvg, Activating,ActivatingSvg, PartThree, PartFive, EmailIpt
-  ,CollaborationCard
+  ,CollaborationCard,
+  EmailInput,
+  Submit
 } from './Metaverse.styled';
 import { AnimateContent, CooperationProjects } from './types';
 import Grid from 'components/BaseElement/Grid';
@@ -221,7 +223,7 @@ export default function Metaverse() {
           style={{pointerEvents: 'none'}}
         >
           <Typography
-            fontSize={"120px"}
+            fontSize={"100px"}
             fontFamily={"CRT-64"}
             fontWeight={"400"}
             color={"#F6B91B"}
@@ -231,7 +233,7 @@ export default function Metaverse() {
           </Typography>
 
           <Typography
-            fontSize={"28px"}
+            fontSize={"20px"}
             fontWeight={"400"}
             color={"#ffffff"}
             textAlign={"center"}
@@ -394,9 +396,15 @@ export default function Metaverse() {
               {t(`We will contact you as soon as you submit your email!`)}
             </Typography>
 
-            <EmailIpt
+            {/* <EmailIpt
               placeholder="Enter your email address"
+            /> */}
+            <EmailInput
+              placeholder='Enter your email address'
+              right={<Submit className='submit' onClick={() => console.log('aabb')}>SUBMIT</Submit>}
+              inputClassName="email-input"
             />
+
 
           </ColumnStart>
         </Flex>

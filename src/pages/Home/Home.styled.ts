@@ -23,9 +23,9 @@ export const Banner = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: start;
-  height: 1082px;
-  padding-top: 385px;
+  justify-content: center;
+  height: 860px;
+  /* padding-top: 385px; */
   box-sizing: border-box;
 `
 export const Describe = styled.div`

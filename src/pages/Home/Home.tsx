@@ -43,9 +43,8 @@ export default function Home() {
   return (
     <>
       <Banner>
-
         <Typography
-          fontSize={"120px"}
+          fontSize={"100px"}
           fontFamily={"CRT-64"}
           fontWeight={"400"}
           color={"#F6B91B"}
@@ -149,7 +148,7 @@ export default function Home() {
             fontSize={'60px'}
             fontWeight={'500'}
             color={'#fff'}
-            // WhiteSpace={'nowrap'}
+            WhiteSpace={'nowrap'}
           >{t(`Getaverse advantages`)}</Box>
           <Box
             fontSize={'28px'}
@@ -322,19 +321,19 @@ export default function Home() {
           position={'relative'}
         >
           <Box>
-            <Image src={require('assets/svg/index_part_seven_2.svg').default} alt="" />
+            <Image src={require('assets/images/Home/index_part_seven_1.png')} alt="" />
 
           </Box>
           <Box>
-            <Image src={require('assets/svg/index_part_seven_2.svg').default} alt="" />
+            <Image src={require('assets/images/Home/index_part_seven_2.png')} alt="" />
 
           </Box>
           <Box>
-            <Image src={require('assets/svg/index_part_seven_3.svg').default} alt="" />
+            <Image src={require('assets/images/Home/index_part_seven_3.png')} alt="" />
 
           </Box>
           <Box>
-            <Image src={require('assets/svg/index_part_seven_4.svg').default} alt="" />
+            <Image src={require('assets/images/Home/index_part_seven_4.png')} alt="" />
 
           </Box>
           {/* <Box>
