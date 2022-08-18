@@ -6,7 +6,6 @@ import {Autoplay} from "swiper";
 import 'swiper/css'
 import banner1 from 'assets/images/index_banner.png'
 import banner3 from './img_bg.png'
-import banner4 from './AAAAA.png'
 import { Image } from 'pages/Home/Home.styled';
 
 export default function BannerSwiper() {
@@ -18,9 +17,6 @@ export default function BannerSwiper() {
       },
       {
         image: banner3
-      },
-      {
-        image: banner4
       }
     ]
     setList(aa)

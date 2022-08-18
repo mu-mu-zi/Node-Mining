@@ -337,10 +337,10 @@ export default function Home() {
             <Image src={require('assets/svg/index_part_seven_4.svg').default} alt="" />
 
           </Box>
-          <Box>
+          {/* <Box>
             <Image src={require('assets/svg/index_part_seven_4.svg').default} alt="" />
 
-          </Box>
+          </Box> */}
         </Flex>
 
         <RowCenter
