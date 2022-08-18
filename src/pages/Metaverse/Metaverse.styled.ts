@@ -1,0 +1,106 @@
+import Box from "components/BaseElement";
+import styled from "styled-components";
+
+export const PartTwo = styled(Box)`
+  padding: 168px 310px 134px;
+  background-color: #111111;
+`
+
+export const Cooperation = styled(Box)`
+  position: relative;
+  padding: 87px 24px 40px;
+  background: #1A1919;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 17px;
+  max-width: 308px;
+  box-sizing: border-box;
+  cursor: pointer;
+  &:hover {
+    transition: all 0.3s;
+    box-shadow: 0px 4px 20px #F6B91B;
+    transform: scale(1.05);
+  }
+`
+
+export const CooperationSvg = styled.img`
+  position: absolute;
+  top: -18px;
+  left: 24px;
+`
+
+export const Activating = styled(Box)`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  padding: 59px 16px 20px;
+
+`
+
+export const ActivatingSvg = styled.img`
+  width: 88px;
+  height: 88px;
+`
+
+export const PartThree = styled(Box)`
+  background: radial-gradient(transparent, #111 1px);
+  background-size: 14px 10px;
+  padding: 125px 251px 160px;
+`
+export const PartFive = styled(Box)`
+  background: #111111;
+  padding: 122px 20px 163px;
+`
+export const EmailIpt = styled.input`
+    background: transparent;
+    border: 2px solid #6B6B6B;
+    border-radius: 60px;
+    padding: 6px 133px 7px 16px;
+    font-size: 20px;
+    font-weight: 400;
+    width: 100%;
+    max-width: 773px;
+    box-sizing: border-box;
+    color: #6B6B6B;
+    outline: unset;
+    &::after {
+      content: 'SUBMIT'
+    }
+    &:hover {
+      border: 2px solid #00E88A;
+      color: #00E88A;
+      ::placeholder {
+        color: #00E88A;
+      }
+    }
+    &:active {
+      border: 2px solid #00E88A;
+      color: #00E88A;
+      ::placeholder {
+        color: #00E88A;
+      }
+    }
+    &:focus {
+      border: 2px solid #00E88A;
+      color: #00E88A;
+      ::placeholder {
+        color: #00E88A;
+      }
+    }
+`
+
+export const CollaborationCard = styled(Box)`
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  padding: 33.5px 14.5px;
+  background: #1A1919;
+  border-radius: 8px;
+  &:hover {
+    transition: all 0.3s;
+    box-shadow: 0px 4px 20px #F6B91B;
+    transform: scale(1.02);
+  }
+`
