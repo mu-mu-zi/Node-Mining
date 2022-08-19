@@ -14,7 +14,7 @@ export default function Digital() {
   return (
     <>
       <Banner>
-        <Typography
+        {/* <Typography
           fontSize={"100px"}
           fontFamily={"CRT-64"}
           fontWeight={"400"}
@@ -31,7 +31,7 @@ export default function Digital() {
           textAlign={"center"}
         >
           {t(`ZED IDENTITY`)}
-        </Typography>
+        </Typography> */}
 
         <Typography
           fontSize={"20px"}
@@ -89,7 +89,7 @@ export default function Digital() {
               textAlign={'center'}
               margin={'32px 0 '}
             >
-              {t(`SECURE AND PRIVACY CENTRIC`)}
+              {t(`SECURITY AND PRIVACY`)}
             </Typography>
             <Typography
               fontWeight='350'

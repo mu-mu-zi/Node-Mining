@@ -222,7 +222,7 @@ export default function Metaverse() {
           height={'100%'}
           style={{pointerEvents: 'none'}}
         >
-          <Typography
+          {/* <Typography
             fontSize={"100px"}
             fontFamily={"CRT-64"}
             fontWeight={"400"}
@@ -230,7 +230,7 @@ export default function Metaverse() {
             style={{textShadow: "0px 0px 10px rgba(0,0,0,0.1600)"}}
           >
             {t(`GETAVERSE`)}
-          </Typography>
+          </Typography> */}
 
           <Typography
             fontSize={"20px"}

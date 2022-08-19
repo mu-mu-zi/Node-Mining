@@ -56,7 +56,7 @@ export const EmailIpt = styled.input`
 
 export const EmailInput = styled(Input)`
   background: transparent;
-  border: 2px solid #6B6B6B;
+  /* border: 2px solid #6B6B6B; */
   border-radius: 60px;
   width: 100%;
   max-width: 773px;
@@ -64,7 +64,7 @@ export const EmailInput = styled(Input)`
   box-sizing: border-box;
   height: 48px;
   &:hover {
-    border: 2px solid #00E88A;
+    /* border: 2px solid #00E88A; */
     color: #00E88A;
     .email-input {
 
@@ -72,19 +72,19 @@ export const EmailInput = styled(Input)`
         color: #00E88A;
       }
     }
-    .submit {
+    /* .submit {
       background: #00E88A;
-    }
+    } */
   }
   &:active {
-    border: 2px solid #00E88A;
+    /* border: 2px solid #00E88A; */
     color: #00E88A;
     ::placeholder {
       color: #00E88A;
     }
   }
   &:focus {
-    border: 2px solid #00E88A;
+    /* border: 2px solid #00E88A; */
     color: #00E88A;
     ::placeholder {
       color: #00E88A;
@@ -128,11 +128,14 @@ export const Submit = styled(Box)`
   height: 48px;
   border-radius: 48px;
   cursor: pointer;
+  &:hover {
+    background: #00E88A;
+  }
 
 `
 
 export const PartTwo = styled.div`
-  background: radial-gradient(transparent, #111 1px);
+  background: radial-gradient(transparent, #000 1px);
   background-size: 14px 10px;
   padding: 168px 20px 72px;
 `
@@ -167,6 +170,6 @@ export const IdentityCard = styled(Flex)`
 `
 
 export const PartThree = styled.div`
-  background: #111111;
+  background: #000;
   padding: 111px 20px 157px;
 `

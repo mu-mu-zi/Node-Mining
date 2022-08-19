@@ -9,9 +9,10 @@ import { useTranslation } from 'react-i18next'
 import {
   Banner, Describe, FlyNode, IconLinks, PartTwo, Display, DisplayVision, Vision,
   PartThree, CardWrapper, Card, CardBg, PartFour, NodeBtn, PartFive, PartnersBg,
-  PartSix, EmailIpt, Image, RoadMapCard, RoadMapLi, ImageHover
+  PartSix, EmailIpt, Image, RoadMapCard, RoadMapLi, ImageHover, LineCut
 } from './Home.styled'
 import { Z_INDEX } from 'utils/global'
+import { Title } from 'pages/Digital/Digital.styled'
 
 
 export default function Home() {
@@ -44,7 +45,7 @@ export default function Home() {
   return (
     <>
       <Banner>
-        <Typography
+        {/* <Typography
           fontSize={"100px"}
           fontFamily={"CRT-64"}
           fontWeight={"400"}
@@ -52,7 +53,7 @@ export default function Home() {
           marginBottom={"62px"}
           style={{textShadow: "0px 0px 10px rgba(0,0,0,0.1600)"}}
           // data-aos="fade-up"
-        >{t(`GETAVERSE`)}</Typography>
+        >{t(`GETAVERSE`)}</Typography> */}
 
         <Describe 
           // data-aos="fade-up"
@@ -77,6 +78,7 @@ export default function Home() {
         <Display 
           // data-aos-anchor-placement="bottom-top" 
           // data-aos="fade-up"
+          // data-aos="zoom-in"
         >
           <Box>
 
@@ -84,7 +86,7 @@ export default function Home() {
           </Box>
           <Box>
       
-            <Image src={require('assets/svg/index_part_two_2.svg').default} alt="" />
+            <Image src={require('assets/svg/index_part_two_2.png')} alt="" />
           </Box>
           <Box>
 
@@ -93,10 +95,16 @@ export default function Home() {
         </Display>
 
         <DisplayVision>
-          <Vision 
+          <Title 
+            marginBottom={'60px'}
+            display={'inline-block'}
+            style={{textAlign: 'left'}}
+            // textAlign={'left'}
             // data-aos-anchor-placement="bottom-top"
             // data-aos="fade-right" 
-          >{t(`Vision`)}</Vision>
+          >
+            {t(`Vision`)}
+          </Title>
 
           <Grid
             gridTemplateColumns={"1fr 1fr"}
@@ -180,15 +188,15 @@ export default function Home() {
           position={'relative'}
         // marginBottom={'104px'}
         >
-          <Box
-            fontSize={'60px'}
-            fontWeight={'500'}
-            color={'#fff'}
+          <Title
+            // fontSize={'60px'}
+            // fontWeight={'500'}
+            // color={'#fff'}
             WhiteSpace={'nowrap'}
             // data-aos="fade-right"
             // data-aos-anchor-placement="bottom-top"
             // data-aos-offset="700"
-          >{t(`Getaverse advantages`)}</Box>
+          >{t(`Getaverse advantages`)}</Title>
           <Box
             fontSize={'28px'}
             fontWeight={'400'}
@@ -253,20 +261,20 @@ export default function Home() {
             src={require('assets/svg/index_part_five_9.svg').default} alt="" />
         </Row>
 
-        <Box
+        <LineCut
           marginTop={'163px'}
           paddingBottom={'96px'}
           textAlign={'center'}
         >
-          <Typography
-            fontSize={'60px'}
-            fontWeight={500}
-            color={'#ffffff'}
+          <Title
+            // fontSize={'60px'}
+            // fontWeight={500}
+            // color={'#ffffff'}
             // data-aos="fade-up"
             // data-aos-anchor-placement="bottom-top"
           >
             {t(`Getaverse Operational Mechanism`)}
-          </Typography>
+          </Title>
           <RowCenter>
             <Typography
               marginTop={'59px'}
@@ -285,7 +293,7 @@ export default function Home() {
               data sources such as Snapshot.org, Twitter, and Github.`)}
             </Typography>
           </RowCenter>
-        </Box>
+        </LineCut>
 
       </PartThree>
 
@@ -321,19 +329,18 @@ export default function Home() {
           </Box>
         </Row>
         <RowCenter>
-          <Typography
-            fontSize={'60px'}
-            fontWeight={500}
+          <Title
+            // fontSize={'60px'}
+            // fontWeight={500}
+            // color={"#ffffff"}
             textAlign={'center'}
-            maxWidth={'1134px'}
-            color={"#ffffff"}
+            // maxWidth={'1134px'}
             margin={'54px 0 78px'}
             // data-aos="fade-up"
             // data-aos-anchor-placement="bottom-top"
           >
-            {t(`GETA is the governance token of Getaverse. 
-            The total supply is 5 billion.`)}
-          </Typography>
+            {t(`GETA is the governance token of the Getaverse, with a total supply of 5 billion.`)}
+          </Title>
         </RowCenter>
 
         <Row
@@ -393,11 +400,11 @@ export default function Home() {
       </PartFour>
 
       <PartFive>
-        {/* <PartnersBg /> */}
-        <Typography
-          fontSize={'60px'}
-          fontWeight={500}
-          color={'#ffffff'}
+        <PartnersBg />
+        <Title
+          // fontSize={'60px'}
+          // fontWeight={500}
+          // color={'#ffffff'}
           textAlign={'center'}
           position={'relative'}
           // data-aos="fade-up"
@@ -405,17 +412,20 @@ export default function Home() {
           // data-aos-offset="500"
         >
           {t(`Strategic Partners`)}
-        </Typography>
+        </Title>
 
         <Flex
           marginTop={'120px'}
-          gap={'78px 65px'}
+          gap={'78px 20px'}
           flexWrap={'wrap'}
           justifyContent={'center'}
           position={'relative'}
           
         >
-          <Box >
+          <Box 
+          width={'4rem'}
+          height={'1.15rem'}
+          >
             <Image 
             // data-aos="fade-up"  
             // data-aos-anchor-placement="bottom-top"
@@ -423,7 +433,10 @@ export default function Home() {
             src={require('assets/images/Home/index_part_seven_1.png')} alt="" />
 
           </Box>
-          <Box >
+          <Box 
+            width={'4rem'}
+            height={'1.15rem'}
+          >
             <Image 
             // data-aos="fade-up" 
             // data-aos-anchor-placement="bottom-top"
@@ -431,7 +444,10 @@ export default function Home() {
             src={require('assets/images/Home/index_part_seven_2.png')} alt="" />
 
           </Box>
-          <Box >
+          <Box
+             width={'4rem'}
+             height={'1.15rem'}
+          >
             <Image 
             // data-aos="fade-up" 
             // data-aos-anchor-placement="bottom-top"
@@ -439,7 +455,10 @@ export default function Home() {
             src={require('assets/images/Home/index_part_seven_3.png')} alt="" />
 
           </Box>
-          <Box >
+          <Box 
+            width={'4rem'}
+            height={'1.15rem'}
+          >
             <Image 
             // data-aos="fade-up" 
             // data-aos-anchor-placement="bottom-top"
@@ -464,10 +483,10 @@ export default function Home() {
           src={require('assets/svg/index_part_seven_6.svg').default} alt="" />
         </RowCenter>
 
-        <Typography
-          fontSize={'60px'}
-          fontWeight={500}
-          color={'#ffffff'}
+        <Title
+          // fontSize={'60px'}
+          // fontWeight={500}
+          // color={'#ffffff'}
           textAlign={'center'}
           marginTop={'212px'}
           // data-aos="fade-up"
@@ -475,7 +494,7 @@ export default function Home() {
           // data-aos-offset="1000"
         >
           {t(`Roadmap`)}
-        </Typography>
+        </Title>
         <Column
           marginTop={'191px'}
           justifyContent={'center'}
@@ -619,17 +638,17 @@ export default function Home() {
       </PartFive>
 
       <PartSix>
-        <Typography
-          fontSize={'60px'}
-          fontWeight={500}
-          color={'#ffffff'}
+        <Title
+          // fontSize={'60px'}
+          // fontWeight={500}
+          // color={'#ffffff'}
           textAlign={'center'}
           // data-aos="fade-up"
           // data-aos-anchor-placement="bottom-top"
           // data-aos-offset="1000"
         >
           {t(`Subscribe`)}
-        </Typography>
+        </Title>
         <Typography
           fontSize={'28px'}
           fontWeight={300}
@@ -653,7 +672,7 @@ export default function Home() {
             placeholder='Email'
           />
           <FlyNode>
-            {t(`SEND`)}
+            {t(`SUBMIT`)}
           </FlyNode>
 
         </RowCenter>

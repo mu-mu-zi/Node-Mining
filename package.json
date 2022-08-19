@@ -11,6 +11,12 @@
     "@types/node": "^16.11.49",
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",
+    "@reduxjs/toolkit": "^1.8.2",
+    "@web3-react/metamask": "^8.0.26-beta.0",
+    "@web3-react/network": "^8.0.26-beta.0",
+    "@web3-react/types": "^8.0.19-beta.0",
+    "@web3-react/walletconnect": "^8.0.34-beta.0",
+    "@web3-react/core": "^8.0.33-beta.0",
     "aos": "^2.3.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -21,7 +27,10 @@
     "styled-system": "^5.1.5",
     "swiper": "^8.1.5",
     "typescript": "^4.7.4",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "react-transition-group": "^4.4.2",
+    "react-redux": "^8.0.2",
+    "react-use": "^17.4.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -51,6 +60,7 @@
     "@types/aos": "^3.0.4",
     "@types/react-router-dom": "5.3.3",
     "@types/styled-components": "^5.1.24",
-    "@types/styled-system": "^5.1.15"
+    "@types/styled-system": "^5.1.15",
+    "@types/react-transition-group": "^4.4.4"
   }
 }

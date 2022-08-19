@@ -4,6 +4,7 @@ import { Row } from "components/BaseElement/Row";
 import Box from "components/BaseElement";
 import Grid from "components/BaseElement/Grid";
 import { Typography } from '../../components/BaseElement/index';
+import { Z_INDEX } from "utils/global";
 
 export const Image = styled.img`
   display: block;
@@ -20,7 +21,7 @@ export const Banner = styled.div`
   /* background-image: url('${require('assets/svg/banner.svg').default}'); */
   background-repeat: no-repeat;
   background-size: cover;
-  background-color: #111111;
+  background-color: #000;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -52,20 +53,20 @@ export const FlyNode = styled.div`
 `
 
 export const IconLinks = styled(Column)`
-  position: absolute;
+  position: fixed;
   bottom: 195px;
   right: 115px;
   gap: 30px;
-  
+  z-index: ${Z_INDEX.fixed_links};
 `
 
 export const PartTwo = styled.div`
   padding-top: 155px;
-  background: radial-gradient(transparent, #111 1px);
+  background: radial-gradient(transparent, #000 1px);
   background-size: 14px 10px;
   background-color: #fff;
-  padding-left: 195px;
-  padding-right: 195px;
+  padding-left: 320px;
+  padding-right: 320px;
 `
 
 export const Display = styled(Row)`
@@ -81,13 +82,8 @@ export const Vision = styled.div`
   font-weight: bold;
   color: #F5F5F5;
 `
-export const ImageHover = styled(Box)<{
-  bgColor: string,
-  textColor: string,
-  text: string
-}>`
+export const ImageHover = styled(Box)<{  bgColor: string,textColor: string,text: string}>`
   position: relative;
-  
   &::after {
     content: '${({text}) => text}';
     position: absolute;
@@ -107,14 +103,14 @@ export const ImageHover = styled(Box)<{
   &:hover {
     &::after {
       visibility: visible;
-    }
-  }
+    };
+  };
 `
 
 export const PartThree = styled.div`
   position: relative;
-  padding: 332px 195px 0;
-  background: #111;
+  padding: 332px 320px 0;
+  background: #000;
 `
 
 export const CardWrapper = styled(Grid)`
@@ -132,6 +128,34 @@ export const CardBg = styled.div`
   background-repeat: no-repeat;
 `
 
+export const LineCut = styled(Box)`
+  position: relative;
+  &::before{
+    content: '';
+    position: absolute;
+    background-image: url('${require('assets/images/Home/line_cat.png')}');
+    background-repeat: no-repeat;
+    width: 354px;
+    height: 54px;
+    display: inline-block;
+    left: -320px;
+    top: 200px;
+    /* transform: translate(-50%, -50%); */
+  }
+  &::after{
+    content: '';
+    position: absolute;
+    background-image: url('${require('assets/images/Home/line_cat.png')}');
+    background-repeat: no-repeat;
+    width: 354px;
+    height: 54px;
+    display: inline-block;
+    right: -320px;
+    top: 200px;
+    transform: rotate(180deg);
+  }
+`
+
 
 export const Card = styled(Box)`
   max-width: 624px;
@@ -139,8 +163,8 @@ export const Card = styled(Box)`
 `
 
 export const PartFour = styled.div`
-    padding: 104px 195px 138px;
-    background: radial-gradient(transparent, #111 1px);
+    padding: 104px 320px 138px;
+    background: radial-gradient(transparent, #000 1px);
     background-size: 14px 10px;
 `
 
@@ -155,24 +179,27 @@ export const NodeBtn = styled.div`
 `
 
 export const PartFive= styled.div`
-    padding: 141px 195px 207px;
-    background: #111;
+    padding: 141px 320px 207px;
+    background: #000;
     position: relative;
 `
 
 export const PartnersBg = styled.div`
   position: absolute;
   top: 185px;
-  width: 1465px;
-  height: 695px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 14.65rem;
+  height: 6.95rem;
   background-image: url('${require('assets/svg/index_part_seven_5.svg').default}');
   background-repeat: no-repeat;
+  background-size: contain;
 `
 
 export const PartSix = styled.div`
-  background: radial-gradient(transparent, #111 1px);
+  background: radial-gradient(transparent, #000 1px);
   background-size: 14px 10px;
-  padding: 250px 195px 423px;
+  padding: 250px 320px 423px;
 
 `
 

@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 export const PartTwo = styled(Box)`
   padding: 168px 310px 134px;
-  background-color: #111111;
+  background-color: #000;
 `
 
 export const Cooperation = styled(Box)`
@@ -46,12 +46,12 @@ export const ActivatingSvg = styled.img`
 `
 
 export const PartThree = styled(Box)`
-  background: radial-gradient(transparent, #111 1px);
+  background: radial-gradient(transparent, #000 1px);
   background-size: 14px 10px;
   padding: 125px 251px 160px;
 `
 export const PartFive = styled(Box)`
-  background: #111111;
+  background: #000;
   padding: 122px 20px 163px;
 `
 export const EmailIpt = styled.input`
