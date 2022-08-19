@@ -329,10 +329,10 @@ export default function Home() {
           </Box>
         </Row>
         <RowCenter>
-          <Title
-            // fontSize={'60px'}
-            // fontWeight={500}
-            // color={"#ffffff"}
+          <Typography
+            fontSize={'60px'}
+            fontWeight={500}
+            color={"#ffffff"}
             textAlign={'center'}
             // maxWidth={'1134px'}
             margin={'54px 0 78px'}
@@ -340,7 +340,7 @@ export default function Home() {
             // data-aos-anchor-placement="bottom-top"
           >
             {t(`GETA is the governance token of the Getaverse, with a total supply of 5 billion.`)}
-          </Title>
+          </Typography>
         </RowCenter>
 
         <Row

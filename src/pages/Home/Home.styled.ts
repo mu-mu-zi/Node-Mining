@@ -279,6 +279,7 @@ export const RoadMapCard = styled.div<{type: 'left' | 'right', text: string}>`
 `
 export const RoadMapLi = styled(Typography)`
   position: relative;
+  padding-left: 26px;
   &::before {
     content: '';
     display: inline-block;
@@ -287,5 +288,8 @@ export const RoadMapLi = styled(Typography)`
     border-radius: 50%;
     background: #00E88A;
     margin-right: 11px;
+    position: absolute;
+    left: 0;
+    top: 14px;
   }
 `

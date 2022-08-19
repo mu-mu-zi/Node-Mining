@@ -34,7 +34,7 @@ export default function Digital() {
         </Typography> */}
 
         <Typography
-          fontSize={"20px"}
+          fontSize={"30px"}
           fontWeight={"400"}
           color={"#ffffff"}
           textAlign={"center"}
@@ -49,12 +49,11 @@ export default function Digital() {
           placeholder="Enter your email address"
         /> */}
 
-        <EmailInput 
+        {/* <EmailInput 
           placeholder='Enter your email address'
           right={<Submit className='submit' onClick={() => console.log('aabb')}>SUBMIT</Submit>}
           inputClassName="email-input"
-          // onChange={() => console.log('aabb')}
-        />
+        /> */}
 
       </Banner>
 
@@ -81,7 +80,7 @@ export default function Digital() {
           gap={'16px'}
         >
           <IdentityCard>
-            <Image src={require('assets/svg/Digital/digital_two_1.svg').default} alt='' />
+            <Image src={require('assets/svg/Digital/digital_two_1.png')} alt='' />
             <Typography
               fontWeight='400'
               fontSize='28px'
