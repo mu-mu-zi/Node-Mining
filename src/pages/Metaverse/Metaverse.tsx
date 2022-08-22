@@ -233,7 +233,7 @@ export default function Metaverse() {
           </Typography> */}
 
           <Typography
-            fontSize={"20px"}
+            fontSize={"30px"}
             fontWeight={"400"}
             color={"#ffffff"}
             textAlign={"center"}
@@ -336,7 +336,7 @@ export default function Metaverse() {
 
       <PartThree>
         <Title>
-          {t(`Collaboration IP`)}
+          {t(`IP Collaboration`)}
         </Title>
         
         <RowCenter

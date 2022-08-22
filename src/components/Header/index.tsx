@@ -42,7 +42,7 @@ export default function Header() {
                 cursor={'pointer'}
                 
               >EN/CN</Typography>
-              <RouterLink to={"/aboutus"} className={({isActive}) => `nav-item ${isActive ? "active" : ""}`} >{t(`ABOUT US`)}</RouterLink>
+
           </HeaderLinks>
         </HeaderContent>
         <ConnectWallet

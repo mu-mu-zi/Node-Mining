@@ -58,7 +58,7 @@ export default function Home() {
         <Describe 
           // data-aos="fade-up"
         >
-          {t(`Getaverse is a metaverse ecological service platform based on the Web3 digital authentication engine protocol`)}
+          {t(`Getaverse is a metaverse ecological service platform based on the Web3 digital authentication engine protocol.`)}
         </Describe>
 
         <FlyNode 
@@ -550,14 +550,14 @@ export default function Home() {
               color={'#ffffff'}
             >
               <RoadMapLi className="ty-li">
-                {t(`Start the systematic token production`)}
+                {t(`Launch the Trusted Verifier Node`)}
               </RoadMapLi>
 
               <RoadMapLi className="ty-li">
                 {t(`Launch the SBT-based credit system `)}
               </RoadMapLi>
               <RoadMapLi className="ty-li">
-                {t(`DAO governance goes live`)}
+                {t(`Launch the DAO Governance`)}
               </RoadMapLi>
 
             </Grid>

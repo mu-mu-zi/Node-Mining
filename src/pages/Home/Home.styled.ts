@@ -31,7 +31,7 @@ export const Banner = styled.div`
   box-sizing: border-box;
 `
 export const Describe = styled.div`
-  font-size: 28px;
+  font-size: 30px;
   font-weight: 400;
   color: #ffffff;
   max-width: 650px;
