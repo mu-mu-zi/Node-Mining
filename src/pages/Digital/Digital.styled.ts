@@ -137,14 +137,14 @@ export const Submit = styled(Box)`
 export const PartTwo = styled.div`
   background: radial-gradient(transparent, #000 1px);
   background-size: 14px 10px;
-  padding: 168px 20px 72px;
+  padding: 168px 360px 72px;
 `
 
 export const Title = styled(Box)`
   position: relative;
   text-align: center;
   font-weight: 700;
-  font-size: 60px;
+  font-size: .6rem;
   color: #ffffff;
   &::before {
     content: '';
@@ -160,8 +160,8 @@ export const Title = styled(Box)`
 `
 
 export const IdentityCard = styled(Flex)`
-  max-width: 398px;
-  min-height: 446px;
+  max-width: 389px;
+  /* min-height: 446px; */
   border: 2px solid #00DC83;
   padding: 40px 16px 46.5px;
   flex-direction: column;

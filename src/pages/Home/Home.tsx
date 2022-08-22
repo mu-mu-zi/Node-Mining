@@ -127,7 +127,7 @@ export default function Home() {
 
               <Box
                 color='#ffffff'
-                fontSize='28px'
+                fontSize='.28rem'
                 fontWeight='400'
                 textAlign={'center'}
                 // data-aos-anchor-placement="bottom-top"
@@ -153,7 +153,7 @@ export default function Home() {
               </ImageHover>
               <Box
                 color='#ffffff'
-                fontSize='28px'
+                fontSize='.28rem'
                 fontWeight='400'
                 textAlign={'center'}
                 // data-aos="fade-up-left"
@@ -168,6 +168,7 @@ export default function Home() {
             position={'absolute'}
             left={'0'}
             width={'100%'}
+            minWidth={'1300px'}
             zIndex={Z_INDEX.index_vision}
           
           >
@@ -198,7 +199,7 @@ export default function Home() {
             // data-aos-offset="700"
           >{t(`Getaverse advantages`)}</Title>
           <Box
-            fontSize={'28px'}
+            fontSize={'.28rem'}
             fontWeight={'400'}
             color={'#fff'}
             // data-aos="fade-left"
@@ -225,8 +226,8 @@ export default function Home() {
                   //  data-aos-offset="700"
                 >
                   <Image src={item.icon} alt="" />
-                  <Typography fontSize={"28px"} fontWeight={"bold"} margin={"24px 0 16px"} color="#F6B91B">{item.title}</Typography>
-                  <Typography fontSize={"22px"} color="#F5F5F5">{item.text}</Typography>
+                  <Typography fontSize={".28rem"} fontWeight={"bold"} margin={"24px 0 16px"} color="#F6B91B">{item.title}</Typography>
+                  <Typography fontSize={".22rem"} color="#F5F5F5">{item.text}</Typography>
                 </Card>
               )
             })
@@ -278,7 +279,7 @@ export default function Home() {
           <RowCenter>
             <Typography
               marginTop={'59px'}
-              fontSize={'28px'}
+              fontSize={'.28rem'}
               fontWeight={400}
               color={'#ffffff'}
               maxWidth={'902px'}
@@ -330,7 +331,7 @@ export default function Home() {
         </Row>
         <RowCenter>
           <Typography
-            fontSize={'60px'}
+            fontSize={'.6rem'}
             fontWeight={500}
             color={"#ffffff"}
             textAlign={'center'}
@@ -362,7 +363,7 @@ export default function Home() {
         </Row>
         <RowCenter>
           <Typography
-            fontSize={'28px'}
+            fontSize={'.28rem'}
             fontWeight={400}
             color={'#ffffff'}
             textAlign={'center'}
@@ -376,7 +377,7 @@ export default function Home() {
         </RowCenter>
         <RowCenter>
           <Typography
-            fontSize={'28px'}
+            fontSize={'.28rem'}
             fontWeight={400}
             color={'#ffffff'}
             textAlign={'center'}
@@ -423,8 +424,8 @@ export default function Home() {
           
         >
           <Box 
-          width={'4rem'}
-          height={'1.15rem'}
+            width={'4rem'}
+            height={'1.15rem'}
           >
             <Image 
             // data-aos="fade-up"  
@@ -512,7 +513,7 @@ export default function Home() {
             <Grid
               gridTemplateColumns={'1fr 1fr'}
               gap={'16px 10px'}
-              fontSize={'30px'}
+              fontSize={'.3rem'}
               fontWeight={'500'}
               color={'#ffffff'}
             >
@@ -545,7 +546,7 @@ export default function Home() {
             <Grid
               gridTemplateColumns={'1fr 1fr'}
               gap={'16px 10px'}
-              fontSize={'30px'}
+              fontSize={'.3rem'}
               fontWeight={'500'}
               color={'#ffffff'}
             >
@@ -575,7 +576,7 @@ export default function Home() {
               <Grid
               gridTemplateColumns={'1fr 1fr'}
               gap={'16px 10px'}
-              fontSize={'30px'}
+              fontSize={'.3rem'}
               fontWeight={'500'}
               color={'#ffffff'}
             >
@@ -612,7 +613,7 @@ export default function Home() {
             <Grid
               gridTemplateColumns={'1fr 1fr'}
               gap={'16px 10px'}
-              fontSize={'30px'}
+              fontSize={'.3rem'}
               fontWeight={'500'}
               color={'#ffffff'}
             >
@@ -650,7 +651,7 @@ export default function Home() {
           {t(`Subscribe`)}
         </Title>
         <Typography
-          fontSize={'28px'}
+          fontSize={'.28rem'}
           fontWeight={300}
           color={'#ffffff'}
           textAlign={'center'}

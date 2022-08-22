@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import GlobalStyle from 'style/Global';
-import {Provider} from 'react-redux';
-import {store} from './store';
+import { Provider } from 'react-redux';
+import { store } from './store';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import ThemeProvider from 'theme';
@@ -12,7 +12,7 @@ import "utils/rem"
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
-root.render(  
+root.render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>

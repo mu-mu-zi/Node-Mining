@@ -31,7 +31,7 @@ export const Banner = styled.div`
   box-sizing: border-box;
 `
 export const Describe = styled.div`
-  font-size: 30px;
+  font-size: .3rem;
   font-weight: 400;
   color: #ffffff;
   max-width: 650px;
@@ -42,7 +42,7 @@ export const Describe = styled.div`
 export const FlyNode = styled.div`
   background: ${({theme}) => theme.colors.normal};
   padding: 20px 50px;
-  font-size: 30px;
+  font-size: .3rem;
   font-weight: 900;
   color: #000000;
   cursor: pointer;
@@ -78,7 +78,7 @@ export const DisplayVision = styled.div`
 `
 export const Vision = styled.div`
   margin-bottom: 60px;
-  font-size: 60px;
+  font-size: .6rem;
   font-weight: bold;
   color: #F5F5F5;
 `
@@ -89,7 +89,7 @@ export const ImageHover = styled(Box)<{  bgColor: string,textColor: string,text:
     position: absolute;
     color: ${({textColor}) => textColor};
     background: ${({bgColor}) => bgColor};
-    font-size: 40px;
+    font-size: .4rem;
     font-weight: bold;
     left: 0;
     bottom: 0;
@@ -97,7 +97,7 @@ export const ImageHover = styled(Box)<{  bgColor: string,textColor: string,text:
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 35px 72px;
+    padding: .35rem .72rem;
     visibility: hidden;
   }
   &:hover {
@@ -173,7 +173,7 @@ export const NodeBtn = styled.div`
   color: #00E88A;
   border: 2px solid #00E88A; 
   border-radius: 42px;
-  font-size: 28px;
+  font-size: .28rem;
   font-weight: bold;
   color: #00E88A;
 `
@@ -208,7 +208,7 @@ export const EmailIpt = styled.input`
     border: 2px solid #666666;
     border-radius: 40px;
     padding: 21px 48px;
-    font-size: 28px;
+    font-size: .28rem;
     width: 100%;
     max-width: 773px;
     box-sizing: border-box;
@@ -257,7 +257,7 @@ export const RoadMapCard = styled.div<{type: 'left' | 'right', text: string}>`
     right: ${(props) =>props.type === 'right' ? '76px' : ''};
     background: #F6B91B;
     border-radius: 14px;
-    font-size: 40px;
+    font-size: .4rem;
     font-weight: bold;
     /* transform: rotate(-2deg); */
     transform: translateY(-60%) ${(props) =>props.type === 'right' ? 'rotate(2deg)' : 'rotate(-2deg)'} ;

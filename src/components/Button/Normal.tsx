@@ -3,19 +3,23 @@ import React from 'react'
 import styled from 'styled-components'
 
 const Node = styled(Box)`
+  /* border: 1px solid ${({theme}) => theme.colors.normal}; */
   background: ${({theme}) => theme.colors.normal};
-  padding: .2rem .5rem;
-  font-size: .3rem;
-  font-weight: 900;
-  color: #000000;
+  padding: .16rem .52rem;
+  font-size: .2rem;
+  font-weight: 700;
+  color: #000;
   cursor: pointer;
-  border-radius: 42px;
+  border-radius: 48px;
   &:hover {
+    /* border: 1px solid ${({theme}) => theme.colors.hover}; */
+    color: #fff;
     background: ${({theme}) => theme.colors.hover};;
+
   }
 `
 
-export function EaseBtn(props: any) {
+export default function Normal(props: any) {
   
   return <Node onClick={props.onClick}>
     {props.children}

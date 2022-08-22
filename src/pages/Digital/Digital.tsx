@@ -8,6 +8,7 @@ import { Banner, EmailIpt, PartTwo, Title, IdentityCard, PartThree
 import {Image} from '../Home/Home.styled'
 import { RowCenter } from 'components/BaseElement/Row'
 import Input from 'components/form/Input'
+import Grid from 'components/BaseElement/Grid'
 
 export default function Digital() {
   const { t } = useTranslation()
@@ -76,7 +77,8 @@ export default function Digital() {
           </Typography>
         </RowCenter>
 
-        <RowCenter
+        <Grid
+          gridTemplateColumns={'repeat(3,1fr)'}
           gap={'16px'}
         >
           <IdentityCard>
@@ -139,7 +141,7 @@ export default function Digital() {
               {t(`The data related to the identity is anchored on the blockchain, and the authentication process does not depend on the user who provided the identity.`)}
             </Typography>
           </IdentityCard>
-        </RowCenter>
+        </Grid>
 
         <Title
           marginTop={'147px'}

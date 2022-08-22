@@ -7,6 +7,7 @@ import styled from 'styled-components'
 import AOS from "aos";
 import "aos/dist/aos.css";
 import ModalProvider from 'components/provider/ModalProvider';
+
 const Medium = styled.div`
   flex: 1;
   width: 100%;
@@ -24,9 +25,9 @@ function App() {
         minHeight={'100vh'}
       >
         <Header />
-        <Medium>
-          <Routers />
-        </Medium>
+          <Medium>
+            <Routers />
+          </Medium>
         <Footer />
       </Column>
     </ModalProvider>
