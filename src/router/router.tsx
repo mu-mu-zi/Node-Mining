@@ -12,6 +12,7 @@ import NodeRevenue from 'pages/MyNodes/NodeRevenue'
 import FundRecords from 'pages/MyNodes/FundRecords'
 import Withdraw from 'pages/MyNodes/Withdraw';
 import NodeRecord from 'pages/MyNodes/NodeRecord';
+import Invite from 'pages/MyNodes/Invite';
 export default function Routers() {
 
   const history = useLocation()
@@ -47,6 +48,10 @@ export default function Routers() {
     {
       element: <MyNodes />,
       path: "/mynodes",
+    },
+    {
+      element: <Invite />,
+      path: "/mynodes/invitefriends",
     },
     {
       element: <Withdraw />,

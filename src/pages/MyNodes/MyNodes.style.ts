@@ -2,6 +2,7 @@ import Box from 'components/BaseElement';
 import { Column } from 'components/BaseElement/Column';
 import Flex from 'components/BaseElement/Flex';
 import { Row, RowStart } from 'components/BaseElement/Row';
+import Input from 'components/form/Input';
 import styled from 'styled-components';
 
 export const Warpper = styled.div`
@@ -112,6 +113,13 @@ export const Active = styled(Box)`
   }
 `
 
+export const WithdrawWrap = styled(Box)`
+  background: radial-gradient(transparent, #000 1px);
+  background-size: 14px 10px;
+  padding: .64rem 4.18rem 2.5rem;
+  min-height: 4rem;
+`
+
 export const FundRecordsWrap = styled(Box)`
   background: radial-gradient(transparent, #000 1px);
   background-size: 14px 10px;
@@ -142,5 +150,99 @@ export const MyNode = styled(Row)`
   &>img {
     width: .8841rem;
     height: .7665rem;
+  }
+`
+
+export const InviteWrap = styled(Box)`
+  background: radial-gradient(transparent, #000 1px);
+  background-size: 14px 10px;
+  padding: .62rem 3.6rem 2.5rem;
+  min-height: 4rem;
+`
+
+export const ProgressImg = styled.img`
+  width: 12rem;
+  height: 1.44rem;
+`
+
+export const InviteInput = styled(Input)`
+  background: transparent;
+  border: 2px solid #6B6B6B;
+  border-radius: 60px;
+  width: 100%;
+  /* max-width: 773px; */
+  padding: 0 0 0 12px;
+  box-sizing: border-box;
+  height: 48px;
+  &:hover {
+    border: 2px solid #00E88A;
+    color: #00E88A;
+    .email-input {
+      ::placeholder {
+        color: #00E88A;
+      }
+    }
+    .submit {
+      color: #ffffff;
+      background: ${({theme}) => theme.colors.hover};;
+    }
+  }
+  &:active {
+    border: 2px solid #00E88A;
+    color: #00E88A;
+    ::placeholder {
+      color: #00E88A;
+    }
+  }
+  &:focus {
+    border: 2px solid #00E88A;
+    color: #00E88A;
+    ::placeholder {
+      color: #00E88A;
+    }
+  }
+
+.input {
+    color: #6B6B6B;
+    border: none;
+    outline: unset;
+    ::placeholder {
+      color: #6B6B6B;
+    }
+    &:hover {
+      color: #00E88A;
+      ::placeholder {
+        color: #00E88A;
+      }
+    }
+    &:active {
+      color: #00E88A;
+      ::placeholder {
+        color: #00E88A;
+      }
+    }
+    &:focus {
+      color: #00E88A;
+      ::placeholder {
+        color: #00E88A;
+      }
+    }
+  }
+`
+
+export const Invitation = styled(Box)`
+  box-sizing: border-box;
+  background: ${({theme}) => theme.colors.normal};
+  height: .46rem;
+  padding: .085rem .12rem;
+  font-size: .2rem;
+  font-weight: 700;
+  color: #000;
+  cursor: pointer;
+  border-radius: 60px;
+  transform: translateX(1px);
+  &:hover {
+    color: #fff;
+    background: ${({theme}) => theme.colors.hover};;
   }
 `

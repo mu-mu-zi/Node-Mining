@@ -199,7 +199,9 @@ export default function MyNodes() {
             </Typography>
           </Flex>
 
-          <Normal>
+          <Normal
+            onClick={() => navigate('/mynodes/invitefriends')}
+          >
             {t(`INVITE NOW`)}
           </Normal>
         </InviteWarpper>
