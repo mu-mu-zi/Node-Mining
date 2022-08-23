@@ -9,19 +9,23 @@ export const PartTwo = styled(Box)`
 
 export const Cooperation = styled(Box)`
   position: relative;
-  padding: 87px 24px 40px;
+  padding: .87rem .24rem .4rem;
   background: #1A1919;
   border-radius: 16px;
   display: flex;
   flex-direction: column;
-  gap: 17px;
-  max-width: 308px;
+  gap: .17rem;
+  /* max-width: 3.08rem; */
   box-sizing: border-box;
   cursor: pointer;
   &:hover {
     transition: all 0.3s;
     box-shadow: 0px 4px 20px #F6B91B;
     transform: scale(1.05);
+  }
+  img {
+    width: .88rem;
+    height: .88rem;
   }
 `
 
@@ -41,8 +45,8 @@ export const Activating = styled(Box)`
 `
 
 export const ActivatingSvg = styled.img`
-  width: 88px;
-  height: 88px;
+  width: .88rem;
+  height: .88rem;
 `
 
 export const PartThree = styled(Box)`
@@ -95,14 +99,18 @@ export const EmailIpt = styled.input`
 export const CollaborationCard = styled(Box)`
   display: flex;
   flex-direction: column;
-  gap: 22px;
-  padding: 33.5px 14.5px;
+  gap: .22rem;
+  padding: .335rem .145rem;
   background: #1A1919;
   border-radius: 8px;
   &:hover {
     transition: all 0.3s;
     box-shadow: 0px 4px 20px #F6B91B;
     transform: scale(1.02);
+  }
+  img {
+    width: 1.14rem;
+    height: 1.15rem;
   }
 `
 
@@ -111,10 +119,10 @@ export const EmailInput = styled(Input)`
   border: 2px solid #6B6B6B;
   border-radius: 60px;
   width: 100%;
-  max-width: 773px;
-  padding: 0 0 0 12px;
+  max-width: 7.73rem;
+  padding: 0 0 0 .12rem;
   box-sizing: border-box;
-  height: 48px;
+  height: .48rem;
   &:hover {
     border: 2px solid #00E88A;
     color: #00E88A;

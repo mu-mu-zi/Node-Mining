@@ -11,9 +11,10 @@ import {
   PartFive, LineCut, PartTwoBg
 } from './MyNodes.style'
 import { getaverseNodes } from './config'
+import { useNavigate } from 'react-router-dom';
 export default function MyNodes() {
   const { t } = useTranslation()
-
+  const navigate = useNavigate()
 
 
 
@@ -26,7 +27,9 @@ export default function MyNodes() {
           <Title>
             {t(`My Nodes`)}
           </Title>
-          <Normal>
+          <Normal
+            onClick={() => navigate('/mynodes/withdrawingcoins')}
+          >
             {t(`WITHDRAW COINS`)}
           </Normal>
         </Row>
@@ -36,6 +39,8 @@ export default function MyNodes() {
           gridTemplateColumns={'1fr 1fr'}
           background={'#1A1919'}
           borderRadius={'8px'}
+          cursor={'pointer'}
+          onClick={() => navigate('/mynodes/fundrecords')}
         >
           <Column color={'#fff'}>
             <Typography
@@ -142,7 +147,9 @@ export default function MyNodes() {
               328.428
             </Typography>
 
-            <Normal>
+            <Normal
+              onClick={() => navigate('/mynodes/noderevenue')}
+            >
               CHECK
             </Normal>
 
@@ -165,7 +172,9 @@ export default function MyNodes() {
               2
             </Typography>
 
-            <Normal>
+            <Normal
+              onClick={() => navigate('/mynodes/noderecord')}
+            >
               CHECK
             </Normal>
 

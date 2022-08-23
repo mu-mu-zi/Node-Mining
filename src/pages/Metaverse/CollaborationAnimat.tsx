@@ -42,15 +42,15 @@ export default function CollaborationAnimate(props: Animation) {
           return (
             <SwiperSlide key={index}>
               <Grid
-                gap="16px 0px"
-                padding="10px"
+                gap=".16rem 0px"
+                padding=".1rem"
               >
                 <CollaborationCard>
                   <img src={item.pngUp} alt="" />
                   {/* <img src={require('./collaboration_1.png')} alt="" /> */}
                   <Typography
-                    maxWidth='159px'
-                    fontSize='20px'
+                    maxWidth='1.59rem'
+                    fontSize='.2rem'
                     fontWeight='400'
                     color='#ffffff'
                     textAlign={'center'}
@@ -61,8 +61,8 @@ export default function CollaborationAnimate(props: Animation) {
                 <CollaborationCard>
                   <img src={item.pngDown} alt="" />
                   <Typography
-                    maxWidth='159px'
-                    fontSize='20px'
+                    maxWidth='1.59rem'
+                    fontSize='.2rem'
                     fontWeight='400'
                     color='#ffffff'
                     textAlign={'center'}

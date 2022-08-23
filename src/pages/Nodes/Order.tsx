@@ -11,37 +11,33 @@ interface Iprops {
 }
 
 export default function Order(props: Iprops) {
-  const {t} = useTranslation()
+  const { t } = useTranslation()
   return (
     <>
       <Column
         gap=".4rem"
       >
-        <Box
-          position={'relative'}
+        <Row
+          width={"100%"}
+          justifyContent={'space-between'}
         >
           <Box
-            position={'absolute'}
-            top={'50%'}
-            left={'-2.42rem'}
-            style={{
-              transform: 'translate(-50%, -50%)'
-            }}
           >
-          <JumpBtn
-            text="Back"
-            onClick={() => props.setStep(1)}
+            <JumpBtn
+              text="Back"
+              onClick={() => props.setStep(1)}
             // path={-1}
-          />
+            />
           </Box>
           <Typography
             fontSize={'.6rem'}
             fontWeight={'700'}
             color={'#fff'}
-            >
+          >
             {t(`Order Information`)}
           </Typography>
-        </Box>
+          <Box />
+        </Row>
 
         <ColumnStart
           gap={'.32rem'}
@@ -159,7 +155,7 @@ export default function Order(props: Iprops) {
         <PurchaseNode
           onClick={() => props.setStep(3)}
         >
-              {t(`Purchase Node`)}
+          {t(`Purchase Node`)}
         </PurchaseNode>
       </Column>
     </>

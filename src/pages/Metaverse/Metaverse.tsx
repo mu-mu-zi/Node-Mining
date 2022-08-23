@@ -5,9 +5,7 @@ import Swiper from './Swiper'
 import { useTranslation } from 'react-i18next';
 import { Title } from 'pages/Digital/Digital.styled';
 import { PartTwo, Cooperation, CooperationSvg, Activating,ActivatingSvg, PartThree, PartFive, EmailIpt
-  ,CollaborationCard,
-  EmailInput,
-  Submit
+  , EmailInput, Submit
 } from './Metaverse.styled';
 import { AnimateContent, CooperationProjects } from './types';
 import Grid from 'components/BaseElement/Grid';

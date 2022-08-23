@@ -14,6 +14,7 @@ import {HTMLAttributes} from "react";
 interface Space {
   WhiteSpace?: string
   cursor?: string
+  boxSizing?: string
 }
 
 export interface BoxProps extends BackgroundProps,
@@ -42,6 +43,7 @@ const Box = styled.div<BoxProps>`
   ${color}
   white-space: ${(props) => props.WhiteSpace};
   cursor: ${(props) => props.cursor};
+  box-sizing: ${(props) => props.boxSizing};
 `
 export const Typography = styled.div<BoxProps>`
   ${background}

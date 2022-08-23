@@ -17,7 +17,6 @@ import { Title } from 'pages/Digital/Digital.styled'
 
 export default function Home() {
   const { t } = useTranslation()
-
   const Advantages = [
     {
       icon: require('assets/svg/index_part_five_1.svg').default,
@@ -68,10 +67,30 @@ export default function Home() {
         </FlyNode>
 
         <IconLinks>
-          <Image src={require('assets/svg/banne_icon_m.svg').default} alt="" />
-          <Image src={require('assets/svg/banne_icon_dc.svg').default} alt="" />
-          <Image src={require('assets/svg/banne_icon_tw.svg').default} alt="" />
-          <Image src={require('assets/svg/banne_icon_tg.svg').default} alt="" />
+          <a
+            href="https://medium.com/@GetaverseGlobal"
+            target="_blank"
+          >
+            <Image src={require('assets/svg/banne_icon_m.svg').default} alt="" />
+          </a>
+          <a
+            href="https://discord.com/invite/vGXwF3TdEw"
+            target="_blank"
+          >
+            <Image src={require('assets/svg/banne_icon_dc.svg').default} alt="" />
+          </a>
+          <a
+            href="https://twitter.com/GetaverseGlobal"
+            target="_blank"
+          >
+            <Image src={require('assets/svg/banne_icon_tw.svg').default} alt="" />
+          </a>
+          <a
+            href="https://t.me/Getaverse_Official"
+            target="_blank"
+          >
+            <Image src={require('assets/svg/banne_icon_tg.svg').default} alt="" />
+          </a>
         </IconLinks>
       </Banner>
       <PartTwo>

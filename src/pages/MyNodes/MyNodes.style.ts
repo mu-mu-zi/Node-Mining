@@ -1,6 +1,7 @@
 import Box from 'components/BaseElement';
+import { Column } from 'components/BaseElement/Column';
 import Flex from 'components/BaseElement/Flex';
-import { RowStart } from 'components/BaseElement/Row';
+import { Row, RowStart } from 'components/BaseElement/Row';
 import styled from 'styled-components';
 
 export const Warpper = styled.div`
@@ -85,4 +86,61 @@ export const PartFive = styled(Box)`
   background: radial-gradient(transparent, #000 1px);
   background-size: 14px 10px;
   padding: .6rem 3.6rem .63rem;
+`
+
+export const RevenueWrap = styled(Box)`
+  background: radial-gradient(transparent, #000 1px);
+  background-size: 14px 10px;
+  padding: .64rem 4.18rem 2.5rem;
+  min-height: 4rem;
+`
+
+export const Active = styled(Box)`
+  cursor: pointer;
+  position: relative;
+  &.active {
+    color: #F6B91B;
+    &::before{
+      content: '';
+      height: .02rem;
+      width: 100%;
+      background: #F6B91B;
+      position: absolute;
+      bottom: -0.12rem;
+      left: 0;
+    }
+  }
+`
+
+export const FundRecordsWrap = styled(Box)`
+  background: radial-gradient(transparent, #000 1px);
+  background-size: 14px 10px;
+  padding: .64rem 4.18rem 2.5rem;
+  min-height: 4rem;
+`
+export const NodeRecordWrap = styled(Box)`
+  background: radial-gradient(transparent, #000 1px);
+  background-size: 14px 10px;
+  padding: .81rem 4.18rem 2.5rem;
+  min-height: 4rem;
+`
+
+export const ActiveNode = styled(Column)`
+  gap: .15rem;
+  cursor: pointer;
+  .node-png-active {
+    border: 1px solid #F6B91B;
+  }
+`
+
+export const MyNode = styled(Row)`
+  justify-content: center;
+  background: #1A1919;
+  border-radius: 8px;
+  padding: .1767rem .1179rem;
+  border: 1px solid transparent;
+  &>img {
+    width: .8841rem;
+    height: .7665rem;
+  }
 `
