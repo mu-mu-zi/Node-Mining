@@ -29,6 +29,10 @@ export const Banner = styled.div`
   height: 860px;
   /* padding-top: 385px; */
   box-sizing: border-box;
+  background-position: center;
+  ${({theme}) => theme.mediaWidth.sm`
+    height: 926px;
+  `}
 `
 export const Describe = styled.div`
   font-size: .3rem;
@@ -37,9 +41,14 @@ export const Describe = styled.div`
   max-width: 650px;
   text-align: center;
   margin: 62px 0 67px;
+  ${({theme}) => theme.mediaWidth.sm`
+    font-size: 20px;
+    font-weight: 600;
+    margin: 35px 50px;
+  `}
 `
 
-export const FlyNode = styled.div`
+export const FlyNode = styled(Box)`
   background: ${({theme}) => theme.colors.normal};
   padding: 20px 50px;
   font-size: .3rem;
@@ -47,9 +56,16 @@ export const FlyNode = styled.div`
   color: #000000;
   cursor: pointer;
   border-radius: 42px;
+  box-sizing: border-box;
+  text-align: center;
   &:hover {
     background: ${({theme}) => theme.colors.hover};;
   }
+  ${({theme}) => theme.mediaWidth.sm`
+    font-size: 18px;
+    font-weight: bold;
+    padding: 9px 25px;
+  `}
 `
 
 export const IconLinks = styled(Column)`
@@ -58,15 +74,21 @@ export const IconLinks = styled(Column)`
   right: 115px;
   gap: 30px;
   z-index: ${Z_INDEX.fixed_links};
+  ${({theme}) => theme.mediaWidth.sm`
+    display: none;
+  `}
 `
 
 export const PartTwo = styled.div`
   padding-top: 155px;
   background: radial-gradient(transparent, #000 1px);
-  background-size: 14px 10px;
+  background-size: 20px 18px;
   background-color: #fff;
   padding-left: 320px;
   padding-right: 320px;
+  ${({theme}) => theme.mediaWidth.sm`
+    padding: 25px 20px 0;
+  `}
 `
 
 export const Display = styled(Row)`
@@ -74,7 +96,10 @@ export const Display = styled(Row)`
   gap: 51px;
 `
 export const DisplayVision = styled.div`
-  padding-top: 127px;
+  padding-top: 1.27rem;
+  ${({theme}) => theme.mediaWidth.sm`
+    padding-top: 35px;
+  `}
 `
 export const Vision = styled.div`
   margin-bottom: 60px;
@@ -99,6 +124,11 @@ export const ImageHover = styled(Box)<{  bgColor: string,textColor: string,text:
     align-items: center;
     padding: .35rem .72rem;
     visibility: hidden;
+    ${({theme}) => theme.mediaWidth.sm`
+      visibility: visible;
+      padding: 32px 17px;
+      font-size: 20px;
+    `}
   }
   &:hover {
     &::after {
@@ -111,6 +141,9 @@ export const PartThree = styled.div`
   position: relative;
   padding: 332px 320px 0;
   background: #000;
+  ${({theme}) => theme.mediaWidth.sm`
+    padding: 131px 20px 0;
+  `}
 `
 
 export const CardWrapper = styled(Grid)`
@@ -141,6 +174,9 @@ export const LineCut = styled(Box)`
     left: -320px;
     top: 200px;
     /* transform: translate(-50%, -50%); */
+    ${({theme}) => theme.mediaWidth.sm`
+      display: none;
+    `}
   }
   &::after{
     content: '';
@@ -153,12 +189,21 @@ export const LineCut = styled(Box)`
     right: -320px;
     top: 200px;
     transform: rotate(180deg);
+    ${({theme}) => theme.mediaWidth.sm`
+      display: none;
+    `}
   }
 `
 
 
 export const Card = styled(Box)`
   max-width: 624px;
+  padding: 42px 32px 26px;
+  border: 4px solid #00E88A;
+  ${({theme}) => theme.mediaWidth.sm`
+    border: 2px solid #00E88A;
+    padding: 21px 9px 12px 16px;
+  `}
   /* min-height: 386px; */
 `
 
@@ -166,6 +211,9 @@ export const PartFour = styled.div`
     padding: 104px 320px 138px;
     background: radial-gradient(transparent, #000 1px);
     background-size: 14px 10px;
+  ${({theme}) => theme.mediaWidth.sm`
+    padding: 39px 20px 68px;
+  `}
 `
 
 export const NodeBtn = styled.div`
@@ -176,12 +224,20 @@ export const NodeBtn = styled.div`
   font-size: .28rem;
   font-weight: bold;
   color: #00E88A;
+  text-align: center;
+  ${({theme}) => theme.mediaWidth.sm`
+    padding: 7px 14px;
+    font-size: 12px;
+  `}
 `
 
 export const PartFive= styled.div`
     padding: 141px 320px 207px;
     background: #000;
     position: relative;
+  ${({theme}) => theme.mediaWidth.sm`
+    padding: 30px 20px 25px;
+  `}
 `
 
 export const PartnersBg = styled.div`
@@ -194,12 +250,18 @@ export const PartnersBg = styled.div`
   background-image: url('${require('assets/svg/index_part_seven_5.svg').default}');
   background-repeat: no-repeat;
   background-size: contain;
+  ${({theme}) => theme.mediaWidth.sm`
+    display: none;
+  `}
 `
 
 export const PartSix = styled.div`
   background: radial-gradient(transparent, #000 1px);
   background-size: 14px 10px;
   padding: 250px 320px 423px;
+  ${({theme}) => theme.mediaWidth.sm`
+      padding: 70px 20px 173px;
+  `}
 
 `
 
@@ -238,6 +300,16 @@ export const EmailIpt = styled.input`
         color: #00E88A;
       }
     }
+    ${({theme}) => theme.mediaWidth.sm`
+      max-width: 200px;
+      border: 2px solid #00E88A;
+      font-size: 18px;
+      color: #00E88A;
+      padding: 9px 26px;
+      ::placeholder {
+        color: #00E88A;
+      }
+    `}
 `
 
 export const RoadMapCard = styled.div<{type: 'left' | 'right', text: string}>`
@@ -276,6 +348,9 @@ export const RoadMapCard = styled.div<{type: 'left' | 'right', text: string}>`
       }
     }
   }
+  ${({theme}) => theme.mediaWidth.sm`
+    padding: 31px 13px 32px 54px
+  `}
 `
 export const RoadMapLi = styled(Typography)`
   position: relative;
@@ -290,6 +365,14 @@ export const RoadMapLi = styled(Typography)`
     margin-right: 11px;
     position: absolute;
     left: 0;
-    top: 14px;
+    top: .5em;
+  ${({theme}) => theme.mediaWidth.sm`
+    width: 6px;
+    height: 6px;
+    margin-right: 4px;
+  `}
   }
+  ${({theme}) => theme.mediaWidth.sm`
+    padding-left: 10px;
+  `}
 `

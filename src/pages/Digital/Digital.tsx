@@ -9,8 +9,10 @@ import {Image} from '../Home/Home.styled'
 import { RowCenter } from 'components/BaseElement/Row'
 import Input from 'components/form/Input'
 import Grid from 'components/BaseElement/Grid'
+import useTheme from 'hooks/useTheme'
 
 export default function Digital() {
+  const { theme } = useTheme()
   const { t } = useTranslation()
   return (
     <>
@@ -35,11 +37,11 @@ export default function Digital() {
         </Typography> */}
 
         <Typography
-          fontSize={"30px"}
+          fontSize={theme.isH5 ? "16px" : "30px"}
           fontWeight={"400"}
           color={"#ffffff"}
           textAlign={"center"}
-          maxWidth={"984px"}
+          maxWidth={theme.isH5 ? "252px" : "984px"}
           marginBottom={"32px"}
           marginTop={"32px"}
         >
@@ -66,10 +68,10 @@ export default function Digital() {
         >
           <Typography
             fontWeight='400'
-            fontSize='20px'
+            fontSize={theme.isH5 ? "10px" : '20px'}
             color='#ffffff'
-            marginTop={'58px'}
-            marginBottom={'62px'}
+            marginTop={theme.isH5 ? "21px" : '58px'}
+            marginBottom={theme.isH5 ? "32px" : '62px'}
             maxWidth={'984px'}
             textAlign={'center'}
           >
@@ -78,23 +80,28 @@ export default function Digital() {
         </RowCenter>
 
         <Grid
-          gridTemplateColumns={'repeat(3,1fr)'}
-          gap={'16px'}
+          gridTemplateColumns={theme.isH5 ? "1fr" : 'repeat(3,1fr)'}
+          gap={theme.isH5 ? "8px" : '16px'}
         >
           <IdentityCard>
-            <Image src={require('assets/svg/Digital/digital_two_1.png')} alt='' />
+            <Image 
+              style={{
+                width: theme.isH5 ? '44px' : 'auto',
+                maxHeight: theme.isH5 ? '44px' : 'auto',
+              }}
+              src={require('assets/svg/Digital/digital_two_1.png')} alt='' />
             <Typography
               fontWeight='400'
-              fontSize='28px'
+              fontSize={theme.isH5 ? "14px" : '28px'}
               color='#F6B91B'
               textAlign={'center'}
-              margin={'32px 0 '}
+              margin={theme.isH5 ? "8px 0" : '32px 0 '}
             >
               {t(`SECURITY AND PRIVACY`)}
             </Typography>
             <Typography
               fontWeight='350'
-              fontSize='22px'
+              fontSize={theme.isH5 ? "11px" : '22px'}
               color='#ffffff'
               textAlign={'center'}
             >
@@ -102,19 +109,24 @@ export default function Digital() {
             </Typography>
           </IdentityCard>
           <IdentityCard>
-            <Image src={require('assets/svg/Digital/digital_two_2.svg').default} alt='' />
+            <Image 
+              style={{
+                width: theme.isH5 ? '44px' : 'auto',
+                maxHeight: theme.isH5 ? '44px' : 'auto',
+              }}
+            src={require('assets/svg/Digital/digital_two_2.svg').default} alt='' />
             <Typography
               fontWeight='400'
-              fontSize='28px'
+              fontSize={theme.isH5 ? "11px" : '22px'}
               color='#F6B91B'
               textAlign={'center'}
-              margin={'32px 0 '}
+              margin={theme.isH5 ? "8px 0" : '32px 0 '}
             >
               {t(`DECENTRALIZATION`)}
             </Typography>
             <Typography
               fontWeight='350'
-              fontSize='22px'
+              fontSize={theme.isH5 ? "11px" : '22px'}
               color='#ffffff'
               textAlign={'center'}
             >
@@ -122,19 +134,24 @@ export default function Digital() {
             </Typography>
           </IdentityCard>
           <IdentityCard>
-            <Image src={require('assets/svg/Digital/digital_two_3.svg').default} alt='' />
+            <Image 
+              style={{
+                width: theme.isH5 ? '44px' : 'auto',
+                maxHeight: theme.isH5 ? '44px' : 'auto',
+              }}
+            src={require('assets/svg/Digital/digital_two_3.svg').default} alt='' />
             <Typography
               fontWeight='400'
-              fontSize='28px'
+              fontSize={theme.isH5 ? "11px" : '22px'}
               color='#F6B91B'
               textAlign={'center'}
-              margin={'32px 0 '}
+              margin={theme.isH5 ? "8px 0" : '32px 0 '}
             >
               {t(`TRUSTED DATA EXCHANGE`)}
             </Typography>
             <Typography
               fontWeight='350'
-              fontSize='22px'
+              fontSize={theme.isH5 ? "11px" : '22px'}
               color='#ffffff'
               textAlign={'center'}
             >
@@ -144,16 +161,16 @@ export default function Digital() {
         </Grid>
 
         <Title
-          marginTop={'147px'}
+          marginTop={theme.isH5 ? "46px" : '147px'}
         >
           {t(`DID Solution Architecture`)}
         </Title>
 
         <RowCenter
-          marginTop={'58px'}
+          marginTop={theme.isH5 ? "21px" : '58px'}
         >
           <Typography
-            fontSize={"20px"}
+            fontSize={theme.isH5 ? "10px" : "20px"}
             fontWeight={"400"}
             color={"#ffffff"}
             maxWidth={'984px'}
@@ -163,7 +180,7 @@ export default function Digital() {
           </Typography>
         </RowCenter>
         <RowCenter
-          marginTop={'88px'}
+          marginTop={theme.isH5 ? "32px" : '88px'}
         >
           <Image src={require('assets/svg/Digital/digital_three.svg').default} />
         </RowCenter>
@@ -175,10 +192,10 @@ export default function Digital() {
           {t(`Self-governance`)}
         </Title>
         <RowCenter
-          marginTop={'58px'}
+          marginTop={theme.isH5 ? "21px" : '58px'}
         >
           <Typography
-            fontSize={"20px"}
+            fontSize={theme.isH5 ? "10px" : "20px"}
             fontWeight={"400"}
             color={"#ffffff"}
             maxWidth={'984px'}
@@ -189,7 +206,7 @@ export default function Digital() {
         </RowCenter>
 
         <RowCenter
-          marginTop={'72px'}
+          marginTop={theme.isH5 ? "32px" : '72px'}
         >
           <Image src={require('assets/svg/Digital/digital_four.svg').default} />
         </RowCenter>

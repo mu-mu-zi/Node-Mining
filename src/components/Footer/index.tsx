@@ -3,14 +3,16 @@ import { useTranslation } from 'react-i18next';
 import { RowStart } from 'components/BaseElement/Row'
 import React from 'react'
 import { Wrapper, About, Community, Logo, Connect, Icons } from './FooterStyled'
+import useTheme from 'hooks/useTheme';
 
 export default function Footer() {
   const { t } = useTranslation()
+  const { theme } = useTheme()
   return (
     <Wrapper>
       <ColumnStart
         // gap="75px"
-        gap=".75rem"
+        gap={theme.isH5 ? "16px" : ".75rem"}
       >
         <Logo src={require('assets/svg/logo.svg').default} alt="" />
         <Icons>
@@ -23,7 +25,7 @@ export default function Footer() {
       </ColumnStart>
       <RowStart
         // gap='157px'
-        gap='1.57rem'
+        gap={theme.isH5 ? '64px' : '1.57rem'}
       >
         <About>
           <span>{t(`About`)}</span>

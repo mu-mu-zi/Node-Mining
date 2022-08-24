@@ -9,9 +9,10 @@ import { CollaborationCard } from './Metaverse.styled';
 import { useTranslation } from 'react-i18next';
 import { AnimateContent } from './types';
 import Grid from 'components/BaseElement/Grid';
+import useTheme from 'hooks/useTheme';
 
 export interface Animation {
-  list: AnimateContent[],
+  list: AnimateContent[][],
   startTime?: number,
   margintop?: string, 
   speed?: number
@@ -19,6 +20,7 @@ export interface Animation {
 
 export default function CollaborationAnimate(props: Animation) {
   const {t} = useTranslation()
+  const {theme} = useTheme()
   const { list, margintop, speed } = props
   return (
     <Swiper 
@@ -29,48 +31,38 @@ export default function CollaborationAnimate(props: Animation) {
       loop={true}
       speed= {speed}
       autoplay={{
-        delay: 2000,
+        delay: 1000 * 2,
         disableOnInteraction: false,
         pauseOnMouseEnter: false
       }}
       transition-timing-function={'ease-out'}
       modules={[Autoplay]}
-      style = {{height: '600px', marginTop: margintop}}
+      style = {{width: '100%', height: theme.isH5 ? '400px' : '600px', marginTop: margintop}}
     >
       {
         list && list.map((item,index) => {
           return (
             <SwiperSlide key={index}>
               <Grid
-                gap=".16rem 0px"
-                padding=".1rem"
+                gap={theme.isH5 ? '8px 0' : ".16rem 0px"}
+                padding={theme.isH5 ? '0' : ".1rem"}
               >
-                <CollaborationCard>
-                  <img src={item.pngUp} alt="" />
-                  {/* <img src={require('./collaboration_1.png')} alt="" /> */}
-                  <Typography
-                    maxWidth='1.59rem'
-                    fontSize='.2rem'
-                    fontWeight='400'
-                    color='#ffffff'
-                    textAlign={'center'}
-                  >
-                    {t(`${item.nameUp}`)}
-                  </Typography>
-                </CollaborationCard>
-                <CollaborationCard>
-                  <img src={item.pngDown} alt="" />
-                  <Typography
-                    maxWidth='1.59rem'
-                    fontSize='.2rem'
-                    fontWeight='400'
-                    color='#ffffff'
-                    textAlign={'center'}
-
-                  >
-                    {t(`${item.nameDown}`)}
-                  </Typography>
-                </CollaborationCard>
+                {
+                  item.map((val,idx) => {
+                    return   <CollaborationCard key={val.name}>
+                    <img src={val.png} alt="" />
+                    <Typography
+                      maxWidth={theme.isH5 ? '68px' : '1.59rem'}
+                      fontSize={theme.isH5 ? '11px' : '.2rem'}
+                      fontWeight='400'
+                      color='#ffffff'
+                      textAlign={'center'}
+                    >
+                      {t(`${val.name}`)}
+                    </Typography>
+                  </CollaborationCard>
+                  })
+                }
               </Grid>
             </SwiperSlide>
           )

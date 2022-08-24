@@ -7,9 +7,11 @@ import 'swiper/css'
 import banner1 from 'assets/images/index_banner.png'
 import banner3 from 'assets/images/about_banner.png'
 import { Image } from 'pages/Home/Home.styled';
+import useTheme from 'hooks/useTheme';
 
 export default function BannerSwiper() {
   const [list, setList] = useState<any>()
+  const {theme} = useTheme()
   useEffect(() => {
     const aa = [
       {
@@ -39,8 +41,8 @@ export default function BannerSwiper() {
     >
       {
         list && list.map((item:any,index:any) => {
-        return <SwiperSlide  key={index} style={{minWidth: '1280px', height: '600px'}}>
-            <Image style={{display: 'block', width: '100%', height: '100%'}} src={item.image} alt="" />
+        return <SwiperSlide  key={index} style={{ height: theme.isH5 ? '327px' : '600px'}}>
+            <Image style={{ width: '100%', height: '100%'}} src={item.image} alt="" />
           </SwiperSlide>
         })
       }

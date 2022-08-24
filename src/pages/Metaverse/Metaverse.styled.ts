@@ -5,6 +5,9 @@ import styled from "styled-components";
 export const PartTwo = styled(Box)`
   padding: 168px 310px 134px;
   background-color: #000;
+  ${({theme}) => theme.mediaWidth.sm`
+    padding: 59px 16px 0;
+  `}
 `
 
 export const Cooperation = styled(Box)`
@@ -27,12 +30,23 @@ export const Cooperation = styled(Box)`
     width: .88rem;
     height: .88rem;
   }
+  ${({theme}) => theme.mediaWidth.sm`
+      padding: 34px 16px 16px;
+      gap: 8px;
+      img {
+        width: 44px;
+        height: 44px;
+      }
+  `}
 `
 
 export const CooperationSvg = styled.img`
   position: absolute;
   top: -18px;
   left: 24px;
+  ${({theme}) => theme.mediaWidth.sm`
+      left: 16px;
+  `}
 `
 
 export const Activating = styled(Box)`
@@ -41,22 +55,34 @@ export const Activating = styled(Box)`
   align-items: center;
   gap: 32px;
   padding: 59px 16px 20px;
-
+  ${({theme}) => theme.mediaWidth.sm`
+    padding: 16px 0;
+  `}
 `
 
 export const ActivatingSvg = styled.img`
   width: .88rem;
   height: .88rem;
+  ${({theme}) => theme.mediaWidth.sm`
+    width: 44px;
+    height: 44px;
+  `}
 `
 
 export const PartThree = styled(Box)`
   background: radial-gradient(transparent, #000 1px);
   background-size: 14px 10px;
   padding: 125px 251px 160px;
+  ${({theme}) => theme.mediaWidth.sm`
+    padding: 40px 16px 0;
+  `}
 `
 export const PartFive = styled(Box)`
   background: #000;
   padding: 122px 20px 163px;
+  ${({theme}) => theme.mediaWidth.sm`
+    padding: 32px 16px 85px;
+  `}
 `
 export const EmailIpt = styled.input`
     background: transparent;
@@ -97,21 +123,48 @@ export const EmailIpt = styled.input`
 `
 
 export const CollaborationCard = styled(Box)`
+  position: relative;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: .22rem;
   padding: .335rem .145rem;
   background: #1A1919;
   border-radius: 8px;
+  box-sizing: border-box;
+  align-items: center;
+  &::after {
+    position: absolute;
+    content: '';
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    width: 100%;
+    height: 100%
+  }
   &:hover {
-    transition: all 0.3s;
-    box-shadow: 0px 4px 20px #F6B91B;
-    transform: scale(1.02);
+    &::after {
+      transition: all 0.3s;
+      box-shadow: 0px 4px 20px #F6B91B;
+      transform: scale(1.02);
+    }
   }
   img {
     width: 1.14rem;
     height: 1.15rem;
   }
+
+  ${({theme}) => theme.mediaWidth.sm`
+    width: 100%;
+    gap: 8px;
+    padding: 16px;
+    img {
+        width: 48px;
+        height: 48px;
+      }
+    `}
 `
 
 export const EmailInput = styled(Input)`
@@ -123,6 +176,10 @@ export const EmailInput = styled(Input)`
   padding: 0 0 0 .12rem;
   box-sizing: border-box;
   height: .48rem;
+  ${({theme}) => theme.mediaWidth.sm`
+    height: 36px;
+    max-width: initial;
+  `}
   &:hover {
     border: 2px solid #00E88A;
     color: #00E88A;
@@ -155,6 +212,10 @@ export const EmailInput = styled(Input)`
     color: #6B6B6B;
     border: none;
     outline: unset;
+    padding-left: 16px;
+    ${({theme}) => theme.mediaWidth.sm`
+      font-size: 11px;
+    `}
     ::placeholder {
       color: #6B6B6B;
     }
@@ -188,5 +249,9 @@ export const Submit = styled(Box)`
   height: 48px;
   border-radius: 48px;
   cursor: pointer;
-
+  transform: translateX(2px);
+  ${({theme}) => theme.mediaWidth.sm`
+    height: 36px;
+    font-size: 12px;
+  `}
 `

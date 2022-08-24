@@ -4,7 +4,8 @@ import { Z_INDEX } from 'utils/global'
 import Swiper from './Swiper'
 import { useTranslation } from 'react-i18next';
 import { Title } from 'pages/Digital/Digital.styled';
-import { PartTwo, Cooperation, CooperationSvg, Activating,ActivatingSvg, PartThree, PartFive, EmailIpt
+import {
+  PartTwo, Cooperation, CooperationSvg, Activating, ActivatingSvg, PartThree, PartFive, EmailIpt
   , EmailInput, Submit
 } from './Metaverse.styled';
 import { AnimateContent, CooperationProjects } from './types';
@@ -13,11 +14,12 @@ import { RowCenter } from 'components/BaseElement/Row';
 import Flex from 'components/BaseElement/Flex';
 import { ColumnStart } from 'components/BaseElement/Column';
 import CollaborationAnimate from './CollaborationAnimat';
+import useTheme from 'hooks/useTheme';
 
 export default function Metaverse() {
-  const {t} = useTranslation()
-
-  const cooperationProjects:CooperationProjects[] = [
+  const { t } = useTranslation()
+  const { theme } = useTheme()
+  const cooperationProjects: CooperationProjects[] = [
     {
       png: require('assets/svg/Metaverse/projects_1.svg').default,
       name: t(`Port3`),
@@ -80,7 +82,7 @@ export default function Metaverse() {
     },
   ]
 
-  const activating:CooperationProjects[] = [
+  const activating: CooperationProjects[] = [
     {
       png: require('assets/svg/Metaverse/activating_1.svg').default,
       name: t(`GETA Token`),
@@ -98,109 +100,311 @@ export default function Metaverse() {
     },
   ]
 
-  const CollaborationList: AnimateContent[][] = [
+  const CollaborationList: AnimateContent[][][] = [
     [
-      {
-        pngUp: require('assets/images/Metaverse/collaboration_1.png'),
-        nameUp: t(`Ramin Nazer`),
-        pngDown: require('assets/images/Metaverse/collaboration_2.png'),
-        nameDown: t(`Magnus Voll Mathiasse`),
-      },
-      {
-        pngUp: require('assets/images/Metaverse/collaboration_3.png'),
-        nameUp: t(`Car Pintos`),
-        pngDown: require('assets/images/Metaverse/collaboration_4.png'),
-        nameDown: t(`SQUID LICKER`),
-      },
+      [
+        {
+          png: require('assets/images/Metaverse/collaboration_1.png'),
+          name: t(`Ramin Nazer`),
+
+        },
+        {
+          png: require('assets/images/Metaverse/collaboration_2.png'),
+          name: t(`Magnus Voll Mathiasse`),
+        },
+      ],
+      [
+        {
+          png: require('assets/images/Metaverse/collaboration_3.png'),
+          name: t(`Car Pintos`),
+        },
+        {
+          png: require('assets/images/Metaverse/collaboration_4.png'),
+          name: t(`SQUID LICKER`),
+        },
+      ],
     ],
     [
-      {
-        pngUp: require('assets/images/Metaverse/collaboration_5.png'),
-        nameUp: t(`Christian Vieri`),
-        pngDown: require('assets/images/Metaverse/collaboration_6.png'),
-        nameDown: t(`Antoine Corbineau`),
-      },
-      {
-        pngUp: require('assets/images/Metaverse/collaboration_7.png'),
-        nameUp: t(`Betsy Cameron`),
-        pngDown: require('assets/images/Metaverse/collaboration_8.png'),
-        nameDown: t(`Cat Coquilette`),
-      },
+      [
+        {
+          png: require('assets/images/Metaverse/collaboration_5.png'),
+          name: t(`Christian Vieri`),
+
+        },
+        {
+          png: require('assets/images/Metaverse/collaboration_6.png'),
+          name: t(`Antoine Corbineau`),
+        },
+      ],
+      [
+        {
+          png: require('assets/images/Metaverse/collaboration_7.png'),
+          name: t(`Betsy Cameron`),
+        },
+        {
+          png: require('assets/images/Metaverse/collaboration_8.png'),
+          name: t(`Cat Coquilette`),
+        },
+      ],
     ],
     [
-      {
-        pngUp: require('assets/images/Metaverse/collaboration_9.png'),
-        nameUp: t(`Fafi`),
-        pngDown: require('assets/images/Metaverse/collaboration_10.png'),
-        nameDown: t(`Rongrong`),
-      },
-      {
-        pngUp: require('assets/images/Metaverse/collaboration_11.png'),
-        nameUp: t(`Bee Sturgis`),
-        pngDown: require('assets/images/Metaverse/collaboration_12.png'),
-        nameDown: t(`Mia Charro`),
-      },
+      [
+        {
+          png: require('assets/images/Metaverse/collaboration_9.png'),
+          name: t(`Fafi`),
+
+        },
+        {
+          png: require('assets/images/Metaverse/collaboration_10.png'),
+          name: t(`Rongrong`),
+        },
+      ],
+      [
+        {
+          png: require('assets/images/Metaverse/collaboration_11.png'),
+          name: t(`Bee Sturgis`),
+        },
+        {
+          png: require('assets/images/Metaverse/collaboration_12.png'),
+          name: t(`Mia Charro`),
+        },
+      ],
     ],
     [
-      {
-        pngUp: require('assets/images/Metaverse/collaboration_13.png'),
-        nameUp: t(`Wesley Sneijder`),
-        pngDown: require('assets/images/Metaverse/collaboration_14.png'),
-        nameDown: t(`Aunty Acid`),
-      },
-      {
-        pngUp: require('assets/images/Metaverse/collaboration_15.png'),
-        nameUp: t(`Karan Singh`),
-        pngDown: require('assets/images/Metaverse/collaboration_16.png'),
-        nameDown: t(`Heather Dutton`),
-      },
+      [
+        {
+          png: require('assets/images/Metaverse/collaboration_13.png'),
+          name: t(`Wesley Sneijder`),
+
+        },
+        {
+          png: require('assets/images/Metaverse/collaboration_14.png'),
+          name: t(`Aunty Acid`),
+        },
+      ],
+      [
+        {
+          png: require('assets/images/Metaverse/collaboration_15.png'),
+          name: t(`Karan Singh`),
+        },
+        {
+          png: require('assets/images/Metaverse/collaboration_16.png'),
+          name: t(`Heather Dutton`),
+        },
+      ],
     ],
     [
-      {
-        pngUp: require('assets/images/Metaverse/collaboration_17.png'),
-        nameUp: t(`Kendra Dandy`),
-        pngDown: require('assets/images/Metaverse/collaboration_18.png'),
-        nameDown: t(`Mister Phil`),
-      },
-      {
-        pngUp: require('assets/images/Metaverse/collaboration_19.png'),
-        nameUp: t(`Sarah Maxwell`),
-        pngDown: require('assets/images/Metaverse/collaboration_20.png'),
-        nameDown: t(`Malika Favre`),
-      },
+      [
+        {
+          png: require('assets/images/Metaverse/collaboration_17.png'),
+          name: t(`Kendra Dandy`),
+
+        },
+        {
+          png: require('assets/images/Metaverse/collaboration_18.png'),
+          name: t(`Mister Phil`),
+        },
+      ],
+      [
+        {
+          png: require('assets/images/Metaverse/collaboration_19.png'),
+          name: t(`Sarah Maxwell`),
+        },
+        {
+          png: require('assets/images/Metaverse/collaboration_20.png'),
+          name: t(`Malika Favre`),
+        },
+      ],
     ],
     [
-      {
-        pngUp: require('assets/images/Metaverse/collaboration_21.png'),
-        nameUp: t(`James Goldcrown`),
-        pngDown: require('assets/images/Metaverse/collaboration_22.png'),
-        nameDown: t(`John Devolle`),
-      },
-      {
-        pngUp: require('assets/images/Metaverse/collaboration_23.png'),
-        nameUp: t(`Venie Tee`),
-        pngDown: require('assets/images/Metaverse/collaboration_24.png'),
-        nameDown: t(`Dimitran Milan`),
-      },
+      [
+        {
+          png: require('assets/images/Metaverse/collaboration_21.png'),
+          name: t(`James Goldcrown`),
+
+        },
+        {
+          png: require('assets/images/Metaverse/collaboration_22.png'),
+          name: t(`John Devolle`),
+        },
+      ],
+      [
+        {
+          png: require('assets/images/Metaverse/collaboration_23.png'),
+          name: t(`Venie Tee`),
+        },
+        {
+          png: require('assets/images/Metaverse/collaboration_24.png'),
+          name: t(`Dimitran Milan`),
+        },
+      ],
     ],
     [
-      {
-        pngUp: require('assets/images/Metaverse/collaboration_25.png'),
-        nameUp: t(`ADOONGA`),
-        pngDown: require('assets/images/Metaverse/collaboration_26.png'),
-        nameDown: t(`Owen Davey`),
-      },
-      {
-        pngUp: require('assets/images/Metaverse/collaboration_27.png'),
-        nameUp: t(`Alja Horvat`),
-        pngDown: require('assets/images/Metaverse/collaboration_25.png'),
-        nameDown: t(`Ramin Nazer`),
-      },
+      [
+        {
+          png: require('assets/images/Metaverse/collaboration_25.png'),
+          name: t(`ADOONGA`),
+
+        },
+        {
+          png: require('assets/images/Metaverse/collaboration_26.png'),
+          name: t(`Owen Davey`),
+        },
+      ],
+      [
+        {
+          png: require('assets/images/Metaverse/collaboration_27.png'),
+          name: t(`Alja Horvat`),
+        },
+        {
+          png: require('assets/images/Metaverse/collaboration_25.png'),
+          name: t(`ADOONGA`),
+        },
+      ],
     ],
   ]
+  const CollaborationListH5: AnimateContent[][][] = [
+    [
+      [
+        {
+          png: require('assets/images/Metaverse/collaboration_1.png'),
+          name: t(`Ramin Nazer`),
 
-  const margintop = ['0px', '40px', '80px', '120px', '80px', '40px', '0px']
-  const speed = [1800, 1400, 800, 600, 800, 1400, 1800]
+        },
+        {
+          png: require('assets/images/Metaverse/collaboration_2.png'),
+          name: t(`Magnus Voll Mathiasse`),
+        },
+        {
+          png: require('assets/images/Metaverse/collaboration_3.png'),
+          name: t(`Car Pintos`),
+        },
+      ],
+      [
+        {
+          png: require('assets/images/Metaverse/collaboration_4.png'),
+          name: t(`SQUID LICKER`),
+        },
+        {
+          png: require('assets/images/Metaverse/collaboration_5.png'),
+          name: t(`Christian Vieri`),
+        },
+        {
+          png: require('assets/images/Metaverse/collaboration_6.png'),
+          name: t(`Antoine Corbineau`),
+        },
+      ],
+      [
+        {
+          png: require('assets/images/Metaverse/collaboration_7.png'),
+          name: t(`Betsy Cameron`),
+        },
+        {
+          png: require('assets/images/Metaverse/collaboration_8.png'),
+          name: t(`Cat Coquilette`),
+        },
+        {
+          png: require('assets/images/Metaverse/collaboration_9.png'),
+          name: t(`Fafi`),
+        },
+      ],
+    ],
+    [
+      [
+        {
+          png: require('assets/images/Metaverse/collaboration_10.png'),
+          name: t(`Rongrong`),
+
+        },
+        {
+          png: require('assets/images/Metaverse/collaboration_11.png'),
+          name: t(`Bee Sturgis`),
+        },
+        {
+          png: require('assets/images/Metaverse/collaboration_12.png'),
+          name: t(`Mia Charro`),
+        },
+      ],
+      [
+        {
+          png: require('assets/images/Metaverse/collaboration_13.png'),
+          name: t(`Wesley Sneijder`),
+        },
+        {
+          png: require('assets/images/Metaverse/collaboration_14.png'),
+          name: t(`Aunty Acid`),
+        },
+        {
+          png: require('assets/images/Metaverse/collaboration_15.png'),
+          name: t(`Karan Singh`),
+        },
+      ],
+      [
+        {
+          png: require('assets/images/Metaverse/collaboration_16.png'),
+          name: t(`Heather Dutton`),
+        },
+        {
+          png: require('assets/images/Metaverse/collaboration_17.png'),
+          name: t(`Kendra Dandy`),
+        },
+        {
+          png: require('assets/images/Metaverse/collaboration_18.png'),
+          name: t(`Mister Phil`),
+        },
+      ],
+    ],
+    [
+      [
+        {
+          png: require('assets/images/Metaverse/collaboration_19.png'),
+          name: t(`Sarah Maxwell`),
+
+        },
+        {
+          png: require('assets/images/Metaverse/collaboration_20.png'),
+          name: t(`Malika Favre`),
+        },
+        {
+          png: require('assets/images/Metaverse/collaboration_21.png'),
+          name: t(`James Goldcrown`),
+        },
+      ],
+      [
+        {
+          png: require('assets/images/Metaverse/collaboration_22.png'),
+          name: t(`John Devolle`),
+        },
+        {
+          png: require('assets/images/Metaverse/collaboration_23.png'),
+          name: t(`Venie Tee`),
+        },
+        {
+          png: require('assets/images/Metaverse/collaboration_24.png'),
+          name: t(`Dimitran Milan`),
+        },
+      ],
+      [
+        {
+          png: require('assets/images/Metaverse/collaboration_25.png'),
+          name: t(`ADOONGA`),
+        },
+        {
+          png: require('assets/images/Metaverse/collaboration_26.png'),
+          name: t(`Owen Davey`),
+        },
+        {
+          png: require('assets/images/Metaverse/collaboration_27.png'),
+          name: t(`Alja Horvat`),
+        },
+      ],
+    ],
+  ]
+  
+  const collaboraList = theme.isH5 ? CollaborationListH5 : CollaborationList 
+
+  const margintop = theme.isH5 ? ['59px', '0px', '59px'] : ['0px', '40px', '80px', '120px', '80px', '40px', '0px']
+  const speed = theme.isH5 ? [800, 600, 800] : [1800, 1400, 800, 600, 800, 1400, 1800]
 
   return (
     <>
@@ -218,7 +422,7 @@ export default function Metaverse() {
           justifyContent={"center"}
           width={'100%'}
           height={'100%'}
-          style={{pointerEvents: 'none'}}
+          style={{ pointerEvents: 'none' }}
         >
           {/* <Typography
             fontSize={"100px"}
@@ -231,7 +435,7 @@ export default function Metaverse() {
           </Typography> */}
 
           <Typography
-            fontSize={"30px"}
+            fontSize={theme.isH5 ? "16px" : ".3rem"}
             fontWeight={"400"}
             color={"#ffffff"}
             textAlign={"center"}
@@ -244,91 +448,91 @@ export default function Metaverse() {
         </Box>
         <Swiper />
       </Box>
-      
+
       <PartTwo>
         <Title>
           {t(`Cooperation Projects`)}
         </Title>
-      <Grid
-        gridTemplateColumns={'repeat(auto-fit, minmax(308px, 1fr))'}
-        gap={'62px 16px'}
-        marginTop={'111px'}
-      >
-        {
-          cooperationProjects.map((item) => {
-            return <Cooperation key={item.name}>
-              <CooperationSvg src={item.png} />
-              <Typography
-                fontSize="28px"
-                fontWeight="400"
-                color="#F6B91B"
-              >
-                {item.name}
-              </Typography>
-              <Typography
-                fontSize="18px"
-                fontWeight="350"
-                color="#ffffff"
-              >
-                {item.text}
-              </Typography>
-            </Cooperation>
-          })
-          
-        }
-      </Grid>
-
-      <Title
-        marginTop={'139px'}
-      >
-        {t(`Activating the metaverse`)}
-      </Title>
-
-      <RowCenter
-        marginTop={'58px'}
-      >
-        <Typography
-          fontSize="20px"
-          fontWeight="400"
-          color="#ffffff" 
+        <Grid
+          gridTemplateColumns={theme.isH5 ? "1fr" : 'repeat(auto-fit, minmax(308px, 1fr))'}
+          gap={theme.isH5 ? "26px" : '.62rem .16rem'}
+          marginTop={theme.isH5 ? "50px" : '111px'}
         >
-          {t(`Through GETA tokens, digital identities, tokens`)}
-        </Typography>
-      </RowCenter>
-
-      <Grid
-        marginTop={'101px'}
-        gap={'16px'}
-        gridTemplateColumns={'repeat(3,1fr)'}
-      >
-        {
-          activating.map((item) => {
-            return (
-              <Activating key={item.name}>
-                <ActivatingSvg src={item.png} alt="" />
+          {
+            cooperationProjects.map((item) => {
+              return <Cooperation key={item.name}>
+                <CooperationSvg src={item.png} />
                 <Typography
-                  fontSize="28px"
+                  fontSize={theme.isH5 ? "14px" : "28px"}
                   fontWeight="400"
                   color="#F6B91B"
-                  textAlign={'center'}
                 >
                   {item.name}
                 </Typography>
-
                 <Typography
-                  fontSize="18px"
+                  fontSize={theme.isH5 ? "11px" : "18px"}
                   fontWeight="350"
                   color="#ffffff"
-                  textAlign={'center'}
                 >
                   {item.text}
                 </Typography>
-              </Activating>
-            )
-          })
-        }
-        
-      </Grid>
+              </Cooperation>
+            })
+
+          }
+        </Grid>
+
+        <Title
+          marginTop={theme.isH5 ? "48px" : '139px'}
+        >
+          {t(`Activating the metaverse`)}
+        </Title>
+
+        <RowCenter
+          marginTop={theme.isH5 ? "21px" : '58px'}
+        >
+          <Typography
+            fontSize={theme.isH5 ? "10px" : "20px"}
+            fontWeight="400"
+            color="#ffffff"
+          >
+            {t(`Through GETA tokens, digital identities, tokens`)}
+          </Typography>
+        </RowCenter>
+
+        <Grid
+          marginTop={theme.isH5 ? "24px" : '101px'}
+          gap={theme.isH5 ? "8px" : '16px'}
+          gridTemplateColumns={theme.isH5 ? "1fr" : 'repeat(3,1fr)'}
+        >
+          {
+            activating.map((item) => {
+              return (
+                <Activating key={item.name}>
+                  <ActivatingSvg src={item.png} alt="" />
+                  <Typography
+                    fontSize={theme.isH5 ? "14px" : "28px"}
+                    fontWeight="400"
+                    color="#F6B91B"
+                    textAlign={'center'}
+                  >
+                    {item.name}
+                  </Typography>
+
+                  <Typography
+                    fontSize={theme.isH5 ? "11px" : "18px"}
+                    fontWeight="350"
+                    color="#ffffff"
+                    textAlign={'center'}
+                  >
+                    {item.text}
+                  </Typography>
+                </Activating>
+              )
+            })
+          }
+
+        </Grid>
 
       </PartTwo>
 
@@ -336,12 +540,12 @@ export default function Metaverse() {
         <Title>
           {t(`IP Collaboration`)}
         </Title>
-        
+
         <RowCenter
-          marginTop={"58px"}
+          marginTop={theme.isH5 ? "21px" : "58px"}
         >
           <Typography
-            fontSize="20px"
+            fontSize={theme.isH5 ? "10px" : "20px"}
             fontWeight="400"
             color="#ffffff"
           >
@@ -350,46 +554,54 @@ export default function Metaverse() {
         </RowCenter>
 
         <Grid
-          marginTop="108px"
-          gap="0 16px"
-          gridTemplateColumns={'repeat(7,1fr)'}
+          marginTop={theme.isH5 ? '16px' : "108px"}
+          gap={theme.isH5 ? "0 8px" : "0"}
+          gridTemplateColumns={theme.isH5 ? "repeat(3,1fr)" : 'repeat(7,1fr)'}
         >
           {
-            CollaborationList && 
-            CollaborationList.map((item,index) => {
-              return <CollaborationAnimate 
-              key={index} 
-              list={item}
-              margintop={margintop[index]}
-              speed={speed[index]}
-            />
-            } )
+            collaboraList &&
+            collaboraList.map((item, index) => {
+              return <CollaborationAnimate
+                key={index}
+                list={item}
+                margintop={margintop[index]}
+                speed={speed[index]}
+              />
+            })
           }
-          
+
         </Grid>
-        
+
 
       </PartThree>
 
       <PartFive>
         <Flex
-          gap={'43px'}
+          flexDirection={theme.isH5 ? "column" : 'row'}
+          gap={theme.isH5 ? "8px" : '43px'}
           justifyContent={'center'}
+          alignItems={'center'}
         >
-          <img src={require('assets/svg/Metaverse/meta_five_1.svg').default} alt="" />
+          <img
+            style={{
+              width: theme.isH5 ? '44px' : 'auto',
+              maxHeight: theme.isH5 ? '44px' : 'auto',
+            }}
+            src={require('assets/svg/Metaverse/meta_five_1.svg').default} alt="" />
           <ColumnStart>
             <Typography
-              fontSize="36px"
+              fontSize={theme.isH5 ? "18px" : "36px"}
               fontWeight="700"
               color="#ffffff"
+              textAlign={'center'}
             >
               {t(`Become a partner to accelerate project growth`)}
             </Typography>
-            <Typography 
-              fontSize="20px"
+            <Typography
+              fontSize={theme.isH5 ? "11px" : "20px"}
               fontWeight="400"
               color="#ffffff"
-              margin={'14px 0 42px'} 
+              margin={theme.isH5 ? "8px auto 24px" : '14px 0 42px'}
             >
               {t(`We will contact you as soon as you submit your email!`)}
             </Typography>

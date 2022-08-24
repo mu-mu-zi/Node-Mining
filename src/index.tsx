@@ -16,10 +16,10 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
-        <ThemeProvider>
-          <GlobalStyle />
+        {/* <ThemeProvider> */}
+          {/* <GlobalStyle /> */}
           <App />
-        </ThemeProvider>
+        {/* </ThemeProvider> */}
       </BrowserRouter>
     </Provider>
   </React.StrictMode>

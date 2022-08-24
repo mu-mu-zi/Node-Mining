@@ -4,8 +4,6 @@ export interface CooperationProjects {
   text: string,
 }
 export type AnimateContent = {
-  pngUp: string,
-  nameUp: string,
-  pngDown: string,
-  nameDown: string,
+  png: string,
+  name: string,
 }

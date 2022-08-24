@@ -16,6 +16,7 @@ export default function Header() {
   return (
     <HeaderOccupy>
       <HeaderFrame>
+        
         <HeaderContent>
           <Row>
             <Logo src={require('assets/svg/logo.svg').default} alt="" />

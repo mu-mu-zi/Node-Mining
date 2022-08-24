@@ -15,6 +15,10 @@ justify-content: center;
 height: 860px;
 /* padding-top: 108px; */
 box-sizing: border-box;
+background-position: center;
+${({theme}) => theme.mediaWidth.sm`
+    height: 327px;
+`}
 `
 
 export const EmailIpt = styled.input`
@@ -138,6 +142,9 @@ export const PartTwo = styled.div`
   background: radial-gradient(transparent, #000 1px);
   background-size: 14px 10px;
   padding: 168px 360px 72px;
+  ${({theme}) => theme.mediaWidth.sm`
+    padding: 59px 16px 0;
+  `}
 `
 
 export const Title = styled(Box)`
@@ -150,13 +157,23 @@ export const Title = styled(Box)`
     content: '';
     position: absolute;
     background-image: url('${require('assets/svg/Digital/title_bg.svg').default}');
-    width: 240px;
-    height: 174px;
+    width: 2.4rem;
+    height: 1.74rem;
     display: inline-block;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+    ${({theme}) => theme.mediaWidth.sm`
+      width: 83px;
+      height: 52px;
+      background-size: 83px 52px;
+      background-repeat: no-repeat;
+    `}
   }
+  ${({theme}) => theme.mediaWidth.sm`
+    font-size: 20px;
+    font-weight: 700;
+  `}
 `
 
 export const IdentityCard = styled(Flex)`
@@ -172,4 +189,7 @@ export const IdentityCard = styled(Flex)`
 export const PartThree = styled.div`
   background: #000;
   padding: 111px 20px 157px;
+  ${({theme}) => theme.mediaWidth.sm`
+    padding: 48px 16px 36px;
+  `}
 `

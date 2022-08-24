@@ -6,7 +6,7 @@ import Footer from 'components/Footer';
 import styled from 'styled-components'
 import AOS from "aos";
 import "aos/dist/aos.css";
-import ModalProvider from 'components/provider/ModalProvider';
+import AppProvider from 'AppProvider';
 
 const Medium = styled.div`
   flex: 1;
@@ -20,17 +20,17 @@ function App() {
   }, []);
 
   return (
-    <ModalProvider>
+    <AppProvider>
       <Column
         minHeight={'100vh'}
-      >
+        >
         <Header />
           <Medium>
             <Routers />
           </Medium>
         <Footer />
       </Column>
-    </ModalProvider>
+    </AppProvider>
   );
 }
 

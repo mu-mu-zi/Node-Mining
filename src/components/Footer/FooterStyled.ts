@@ -11,14 +11,33 @@ export const Wrapper = styled(RowStart)`
   background: #000000;
   width: 100%;
   box-sizing: border-box;
+  ${({theme}) => theme.mediaWidth.sm`
+    flex-direction: column;
+    gap: 32px;
+    padding: 16px;
+  `}
 `
 export const Logo = styled.img`
-
+  ${({theme}) => theme.mediaWidth.sm`
+    width: 131px;
+    height: 38px;
+  `}
 `
 
 export const Icons = styled(Row)`
   /* gap: 50px; */
   gap: .5rem;
+  img {
+    width: .48rem;
+    height: .48rem;
+    ${({theme}) => theme.mediaWidth.sm`
+      width: 32px;
+      height: 32px;
+    `}
+  }
+  ${({theme}) => theme.mediaWidth.sm`
+    gap: 16px;
+  `}
 `
 
 export const Connect = styled.div`
@@ -26,6 +45,9 @@ export const Connect = styled.div`
   /* font-size: 28px; */
   font-size: .28rem;
   color: #ffffff;
+  ${({theme}) => theme.mediaWidth.sm`
+    font-size: 14px;
+  `}
 `
 
 export const About = styled(Column)`
@@ -41,7 +63,14 @@ export const About = styled(Column)`
     font-weight: 700;
     /* font-size: 32px; */
     font-size: .32rem;
+    ${({theme}) => theme.mediaWidth.sm`
+      font-size: 16px;
+    `}
   }
+  ${({theme}) => theme.mediaWidth.sm`
+    font-size: 10px;
+    gap: 8px;
+  `}
 `
 
 export const Community = styled(Column)`
@@ -57,6 +86,13 @@ export const Community = styled(Column)`
     font-weight: 700;
     /* font-size: 32px; */
     font-size: .32rem;
+    ${({theme}) => theme.mediaWidth.sm`
+      font-size: 16px;
+    `}
   }
+  ${({theme}) => theme.mediaWidth.sm`
+    font-size: 10px;
+    gap: 8px;
+  `}
 `
 
