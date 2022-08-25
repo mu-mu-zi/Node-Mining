@@ -3,17 +3,33 @@ import { ColumnStart } from "components/BaseElement/Column";
 import Modal from "components/Modal/Modal";
 import { IOpenModal } from "components/provider/ModalProvider";
 import { useTranslation } from 'react-i18next';
-import { WALLETS } from "connectwallet/config";
+import { IWallet, WALLETS } from "connectwallet/config";
 import { ConnectWalletModalStyle, Option } from './ConnectWalletModal.style'
 import useTheme from "hooks/useTheme";
+import { CHAIN_ID } from "connectwallet/hooks";
+import {useEffect} from 'react';
+import {useWeb3React} from '@web3-react/core';
 
 interface AA {
   
 }
 
 export default function ConnectModal(props: IOpenModal & AA) {
+  const {account} = useWeb3React()
   const {t} = useTranslation()
   const {theme} = useTheme()
+
+  useEffect(() => {
+    console.log(account)
+  },[account])
+
+  const connect = async (item:IWallet) => {
+    await item.connector.activate(CHAIN_ID)
+
+    // props.destoryComponent()
+  }
+
+
   return (
     <Modal
       onClose={() => props.destoryComponent()}
@@ -35,7 +51,10 @@ export default function ConnectModal(props: IOpenModal & AA) {
           {
             Object.values(WALLETS).map((item) => {
               return (
-                <Option key={item.name}>
+                <Option key={item.name}
+                  onClick={ () => connect(item)}
+                
+                >
                   <img src={item.icon} alt="" />
                   <Typography
                     fontSize={theme.isH5 ? '16px' : "20px"}

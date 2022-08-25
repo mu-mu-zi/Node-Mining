@@ -352,10 +352,11 @@ export default function Home() {
         </Row>
         <RowCenter>
           <Typography
-            fontSize={theme.isH5 ? '30px' : '.6rem'}
+            fontSize={theme.isH5 ? '20px' : '.6rem'}
             fontWeight={500}
             color={"#ffffff"}
             textAlign={'center'}
+            fontFamily={'RomicStd'}
             // maxWidth={'1134px'}
             margin={theme.isH5 ? '33px 0 22px' : '54px 0 78px'}
             // data-aos="fade-up"

@@ -41,9 +41,10 @@ export default function Digital() {
           fontWeight={"400"}
           color={"#ffffff"}
           textAlign={"center"}
-          maxWidth={theme.isH5 ? "252px" : "984px"}
-          marginBottom={"32px"}
-          marginTop={"32px"}
+          maxWidth={theme.isH5 ? "100%" : "984px"}
+          // marginBottom={"32px"}
+          // marginTop={"32px"}
+          margin={theme.isH5 ? "0 61.5px" : '0'}
         >
           {t(`Getaverse works by providing a window into the WEB3 world on a decentralized identity system, with additional support and rewards for all participants who maintain this window. Any trusted party (verifier) that needs to verify a user will receive the verifiable statement and verify its authenticity.`)}
         </Typography>

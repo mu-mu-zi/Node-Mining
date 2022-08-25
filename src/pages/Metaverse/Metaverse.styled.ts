@@ -57,6 +57,7 @@ export const Activating = styled(Box)`
   padding: 59px 16px 20px;
   ${({theme}) => theme.mediaWidth.sm`
     padding: 16px 0;
+    gap: 8px;
   `}
 `
 
@@ -72,9 +73,11 @@ export const ActivatingSvg = styled.img`
 export const PartThree = styled(Box)`
   background: radial-gradient(transparent, #000 1px);
   background-size: 14px 10px;
+  background: #000000;
   padding: 125px 251px 160px;
   ${({theme}) => theme.mediaWidth.sm`
     padding: 40px 16px 0;
+    background: #000000;
   `}
 `
 export const PartFive = styled(Box)`
@@ -179,10 +182,14 @@ export const EmailInput = styled(Input)`
   ${({theme}) => theme.mediaWidth.sm`
     height: 36px;
     max-width: initial;
+    border: 1px solid #6B6B6B;
   `}
   &:hover {
     border: 2px solid #00E88A;
     color: #00E88A;
+    ${({theme}) => theme.mediaWidth.sm`
+      border: 1px solid #00E88A;
+    `}
     .email-input {
 
       ::placeholder {
@@ -196,6 +203,9 @@ export const EmailInput = styled(Input)`
   &:active {
     border: 2px solid #00E88A;
     color: #00E88A;
+    ${({theme}) => theme.mediaWidth.sm`
+      border: 1px solid #00E88A;
+    `}
     ::placeholder {
       color: #00E88A;
     }
@@ -203,6 +213,9 @@ export const EmailInput = styled(Input)`
   &:focus {
     border: 2px solid #00E88A;
     color: #00E88A;
+    ${({theme}) => theme.mediaWidth.sm`
+      border: 1px solid #00E88A;
+    `}
     ::placeholder {
       color: #00E88A;
     }
@@ -253,5 +266,6 @@ export const Submit = styled(Box)`
   ${({theme}) => theme.mediaWidth.sm`
     height: 36px;
     font-size: 12px;
+    font-weight: 700;
   `}
 `

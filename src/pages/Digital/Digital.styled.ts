@@ -144,10 +144,12 @@ export const PartTwo = styled.div`
   padding: 168px 360px 72px;
   ${({theme}) => theme.mediaWidth.sm`
     padding: 59px 16px 0;
+    background: #000000;
   `}
 `
 
 export const Title = styled(Box)`
+  font-family: 'RomicStd';
   position: relative;
   text-align: center;
   font-weight: 700;
@@ -184,6 +186,10 @@ export const IdentityCard = styled(Flex)`
   flex-direction: column;
   justify-content: start;
   align-items: center;
+  ${({theme}) => theme.mediaWidth.sm`
+    padding: 16px 29.5px;
+    max-width: 100%;
+  `}
 `
 
 export const PartThree = styled.div`

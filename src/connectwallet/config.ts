@@ -1,5 +1,6 @@
 
 import {CSSProperties} from "react";
+import { injected } from "./hooks";
 
 export type IWallet = {
     name: string
@@ -8,7 +9,7 @@ export type IWallet = {
     download: string
     keyword: string
     // hooks: any
-    // connector: any
+    connector?: any
 }
 export const WALLETS: {[propsName: string]: IWallet} = {
     MetaMask: {
@@ -18,7 +19,7 @@ export const WALLETS: {[propsName: string]: IWallet} = {
       download: "https://metamask.io/download/",
       keyword: "isMetaMask",
       // hooks: metaMaskHooks,
-      // connector: metaMask
+      connector: injected,
     },
     TokenPocket: {
       name: 'TokenPocket',
@@ -28,6 +29,7 @@ export const WALLETS: {[propsName: string]: IWallet} = {
       keyword: "isTokenPocket",
       // hooks: metaMaskHooks,
       // connector: metaMask
+      connector: injected,
     },
     ImToken: {
       name: 'ImToken',
@@ -37,6 +39,7 @@ export const WALLETS: {[propsName: string]: IWallet} = {
       keyword: "isImToken",
       // hooks: metaMaskHooks,
       // connector: metaMask
+      connector: injected,
     },
     MathWalletask: {
       name: 'MathWallet',
@@ -46,6 +49,7 @@ export const WALLETS: {[propsName: string]: IWallet} = {
       keyword: "isMathWallet",
       // hooks: metaMaskHooks,
       // connector: metaMask
+      connector: injected,
     },
     BitKeepWallet: {
       name: 'BitKeepWallet',
@@ -55,5 +59,6 @@ export const WALLETS: {[propsName: string]: IWallet} = {
       keyword: "isBitKeepWallet",
       // hooks: null,
       // connector: bscConnector
+      connector: injected,
     }
 };

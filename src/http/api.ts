@@ -1,0 +1,1 @@
+import { fetchPost, fetchGet } from "./index";

@@ -10,3 +10,5 @@ export const Z_INDEX = {
 export const nodeUrl = () => {
   return `https://mainnet.infura.io/v3/7d0afe54dc294b0685539de9451894a2`
 }
+
+export const service_api = process.env.NODE_ENV === "production" ? "http://13.215.206.153:8100/" : "";

@@ -439,8 +439,9 @@ export default function Metaverse() {
             fontWeight={"400"}
             color={"#ffffff"}
             textAlign={"center"}
-            maxWidth={"650px"}
-            marginTop={"60px"}
+            maxWidth={theme.isH5 ? "100%" : "650px"}
+            // marginTop={"60px"}
+            margin={theme.isH5 ? "0 61px" : '0'}
           >
             {t(`The Getaverse metaverse is an open source decentralized, interoperable platform for programmable digital assets and digital identities built on Getaverse.`)}
           </Typography>
