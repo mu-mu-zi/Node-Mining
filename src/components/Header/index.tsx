@@ -1,12 +1,13 @@
 import React, {useContext} from 'react'
 import useScrollPosition from '@react-hook/window-scroll'
-import { HeaderFrame, HeaderContent, ConnectWallet, HeaderLinks, Logo, HeaderOccupy } from './HeaderStyled'
+import { HeaderFrame, HeaderContent, ConnectWallet, HeaderLinks, Logo, HeaderOccupy, Menu, Occupy } from './HeaderStyled'
 import RouterLink from './RouterLink';
 import { useTranslation } from 'react-i18next';
 import Box, { Typography } from 'components/BaseElement';
 import { Row } from 'components/BaseElement/Row';
 import { ModalContext } from 'components/provider/ModalProvider';
 import ConnectModal from 'components/ConnectModal/ConnectModal';
+import NavModal from 'components/NavModal/NavModal';
 
 export default function Header() {
   const { t } = useTranslation()
@@ -18,10 +19,19 @@ export default function Header() {
       <HeaderFrame>
         
         <HeaderContent>
+          <Occupy />
           <Row>
             <Logo src={require('assets/svg/logo.svg').default} alt="" />
           </Row>
-          
+          <Menu
+            onClick={() => {
+              openModal(NavModal,{
+                
+              })
+            }}
+          >
+            <img src={require('assets/svg/icon_menu.svg').default} alt="" />
+          </Menu>
           <HeaderLinks>
               <RouterLink to={"/"} className={({isActive}) => `nav-item ${isActive ? "active" : ""}`} >{t(`HOME`)}</RouterLink>
               <RouterLink to={"/digital"} className={({isActive}) => `nav-item ${isActive ? "active" : ""}`} >{t(`DID DIGITAL ID`)}</RouterLink>

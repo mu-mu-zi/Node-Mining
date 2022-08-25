@@ -9,6 +9,7 @@ export const HeaderOccupy = styled.div`
   width: 100%;
   ${({theme}) => theme.mediaWidth.sm`
     height: 36px;
+
   `}
 `
 
@@ -43,6 +44,16 @@ export const Logo = styled.img`
   `}
 `
 
+export const Menu = styled(Row)`
+  display: none;
+  width: 18px;
+  height: 18px;
+  ${({theme}) => theme.mediaWidth.sm`
+    display: flex;
+    margin-right: 16px;
+  `}
+`
+
 export const HeaderLinks = styled(RowBetween)`
   /* gap: 48px; */
   gap: .48rem;
@@ -70,7 +81,6 @@ export const HeaderContent = styled.div`
   align-items: center;
   width: 100%;
   ${({theme}) => theme.mediaWidth.sm`
-    justify-content: center;
     padding: 0;
   `}
 `
@@ -91,5 +101,16 @@ export const ConnectWallet = styled(Row)`
   }
   ${({theme}) => theme.mediaWidth.sm`
     display: none;
+  `}
+`
+
+export const Occupy = styled.div`
+  display: none;
+  width: 18px;
+  height: 18px;
+  margin-left: 16px;
+  ${({theme}) => theme.mediaWidth.sm`
+  display: block;
+  
   `}
 `

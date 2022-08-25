@@ -2,6 +2,7 @@ import React, { CSSProperties, MouseEventHandler, useEffect, useMemo, useRef, us
 import { useTranslation } from 'react-i18next';
 import * as style from './modal.style';
 import * as styleDrawer from './drawer.style';
+import * as styleH5 from './h5.style';
 import { useEffectState } from "hooks/useEffectState";
 import { CSSTransition } from "react-transition-group";
 import Toggle from '../toggle/Toggle';
@@ -24,16 +25,26 @@ type IProps = {
     isH5?: boolean
     active?: boolean
     enableBodyScroll?: boolean
-    type: 'modal' | 'drawer'
+    type: 'modal' | 'drawer' | 'h5'
 }
 export default function Modal(props: IProps) {
     const { t } = useTranslation();
-    const { ModalBox } = props.type === 'modal' ? style : styleDrawer;
+    const { ModalBox } = props.type === 'modal' ? style : props.type === 'drawer' ? styleDrawer : styleH5;
 
     const state = useEffectState({
         active: false,
         touchStart: 0
     });
+
+    function getEventParentElement(element: HTMLElement, targetId: string): HTMLElement | null {
+        if (!element || element.tagName === "BODY") {
+            return null;
+        } else if(element.id === targetId) {
+            return element
+        } else {
+            return getEventParentElement(element.parentElement!, targetId);
+        }
+    }
 
     useEffect(() => {
         let cssText = '';
@@ -70,19 +81,7 @@ export default function Modal(props: IProps) {
         if (!props.disabledModalClick) {
             // @ts-ignore
             let targetId = event.target.id;
-            let target:any = event.target
-            // if (!props.isH5 && targetId === "modal" && typeof props.onClose === "function") {
-            //     props.onClose();
-            // }
-            let cDom = document.getElementById("modal") || document.body;
-            if(cDom.contains(target)) {
-                console.log(1)
-            } else {
-                console.log(2)
-
-            }
-            
-            if (!props.isH5 && targetId === "modal" && typeof props.onClose === "function") {
+            if (!props.isH5 && targetId === "modal" && typeof  props.onClose === "function") {
                 props.onClose();
             }
             // @ts-ignore

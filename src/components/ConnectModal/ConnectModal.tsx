@@ -5,19 +5,25 @@ import { IOpenModal } from "components/provider/ModalProvider";
 import { useTranslation } from 'react-i18next';
 import { WALLETS } from "connectwallet/config";
 import { ConnectWalletModalStyle, Option } from './ConnectWalletModal.style'
+import useTheme from "hooks/useTheme";
 
-export default function ConnectModal(props: IOpenModal) {
+interface AA {
+  
+}
+
+export default function ConnectModal(props: IOpenModal & AA) {
   const {t} = useTranslation()
-
+  const {theme} = useTheme()
   return (
     <Modal
       onClose={() => props.destoryComponent()}
-      type='drawer'
-      style={{ color: '#fff', height: '100%', width: '100%' }}
+      type={theme.isH5 ? 'h5' : 'drawer'}
+      isH5={theme.isH5}
+      // style={{ color: '#fff', height: '100%', width: '100%' }}
     >
-      <ConnectWalletModalStyle  data-aos="fade-left">
+      <ConnectWalletModalStyle  data-aos={theme.isH5 ? "fade-up" : "fade-left"}>
         <Typography
-          fontSize="30px"
+          fontSize={theme.isH5 ? '24px' : "30px"}
           fontWeight={700}
           color={'#ffffff'}
         >
@@ -32,7 +38,7 @@ export default function ConnectModal(props: IOpenModal) {
                 <Option key={item.name}>
                   <img src={item.icon} alt="" />
                   <Typography
-                    fontSize="20px"
+                    fontSize={theme.isH5 ? '16px' : "20px"}
                     fontWeight={400}
                     color={'#ffffff'}  
                   >

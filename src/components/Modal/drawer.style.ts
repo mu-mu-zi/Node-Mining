@@ -12,7 +12,11 @@ export const ModalBox = styled.div`
     width: 376px;
     background: #191919;
     box-sizing: border-box;
-
+    ${({theme}) => theme.mediaWidth.sm`
+        top: 36px;
+        height: calc( 100vh - 36px );
+        width: 100%;
+    `}
     
 
     .modal_content_box{
