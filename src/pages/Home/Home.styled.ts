@@ -82,12 +82,14 @@ export const IconLinks = styled(Column)`
 export const PartTwo = styled.div`
   padding-top: 155px;
   background: radial-gradient(transparent, #000 1px);
-  background-size: 20px 18px;
+  background-size: 14px 10px;
   background-color: #fff;
   padding-left: 320px;
   padding-right: 320px;
   ${({theme}) => theme.mediaWidth.sm`
     padding: 25px 20px 0;
+    background: radial-gradient(transparent, #000 .6px);
+    background-size: 16px 10px;
   `}
 `
 
@@ -213,6 +215,8 @@ export const PartFour = styled.div`
     background-size: 14px 10px;
   ${({theme}) => theme.mediaWidth.sm`
     padding: 39px 20px 68px;
+    background: radial-gradient(transparent, #000 .6px);
+    background-size: 16px 10px;
   `}
 `
 
@@ -261,6 +265,8 @@ export const PartSix = styled.div`
   padding: 250px 320px 423px;
   ${({theme}) => theme.mediaWidth.sm`
       padding: 70px 20px 173px;
+      background: radial-gradient(transparent, #000 .6px);
+      background-size: 16px 10px;
   `}
 
 `
@@ -333,6 +339,12 @@ export const RoadMapCard = styled.div<{type: 'left' | 'right', text: string}>`
     font-weight: bold;
     /* transform: rotate(-2deg); */
     transform: translateY(-60%) ${(props) =>props.type === 'right' ? 'rotate(2deg)' : 'rotate(-2deg)'} ;
+    ${({theme,type}) => theme.mediaWidth.sm`
+      font-size: 16px;
+      padding: 8px 28px;
+      left: ${type === 'left' ? '26px' : ''};
+      right: ${type === 'right' ? '24px' : ''};
+    `}
   }
   &:hover {
     transform: scale(1.05);
@@ -349,7 +361,8 @@ export const RoadMapCard = styled.div<{type: 'left' | 'right', text: string}>`
     }
   }
   ${({theme}) => theme.mediaWidth.sm`
-    padding: 31px 13px 32px 54px
+    padding: 31px 13px 32px 54px;
+    font-size: 16px;
   `}
 `
 export const RoadMapLi = styled(Typography)`
