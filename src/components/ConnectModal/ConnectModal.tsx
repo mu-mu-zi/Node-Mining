@@ -15,6 +15,7 @@ import useWalletTools from "hooks/useWalletTools";
 import { awaitWrap } from "utils/tools";
 import { generateNonce } from "http/api";
 import { useGenerateNonce } from "hooks/useGenerateNonce";
+import { loginApi } from '../../http/api';
 
 export default function ConnectModal(props: IOpenModal) {
   const {account,chainId,provider} = useWeb3React()
@@ -31,36 +32,55 @@ export default function ConnectModal(props: IOpenModal) {
   },[store])
 
   useEffect(() => {
-    if(chainId && account) {
-      
-      if(chainId !== CHAINS.BSC.chainId) {
-        alert('You are connected to an unsupported network, please switch to the main BSC network.')
-        deactivate()
-        userDispatch.setWalletInfo(null)
+    if (chainId && account) {
+      if (store.token) {
+        // props.onConnect?.(walletAddress);
+        // userDispatch.setAddress(account)
+        // props.destoryComponent();
       } else {
-        sign(account)
+        if (chainId !== CHAINS.BSC.chainId) {
+          alert('You are connected to an unsupported network, please switch to the main BSC network.')
+          deactivate()
+          userDispatch.setWalletInfo(null)
+        } else {
+          sign(account)
+        }
       }
-      
     }
-  },[account,chainId])
+  },[account, chainId])
 
   const connect = async (item:IWallet) => {
-    
     userDispatch.setWalletInfo(item)
-
     // await item.connector.activate(CHAIN_ID)
-
-    props.destoryComponent()
+    // props.destoryComponent()
   }
 
   const sign = async (address:string) => {
     let [signData, error] = await awaitWrap(getGenerateNonce(address, provider));
+    if(signData) {
+      login(address, signData.signatrue)
+    } else {
+      resetWalletAddress()
+    }
 
   }
 
-  async function login() {
+  async function login(address: string, signature: string) {
+    loginApi({address,signature}).then((res) => {
+      userDispatch.setToken(res.data.token)
+      userDispatch.setAddress(res.data.address)
+      props.destoryComponent()
+    }).catch(() => {
+      resetWalletAddress()
+    })
 
   }
+
+  function resetWalletAddress() {
+    deactivate();
+    userDispatch.setAddress(null);
+    userDispatch.setWalletInfo(null);
+}
 
 
   return (

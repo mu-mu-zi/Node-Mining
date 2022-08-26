@@ -12,9 +12,32 @@ import {
 } from './MyNodes.style'
 import { getaverseNodes } from './config'
 import { useNavigate } from 'react-router-dom';
+import { useAsync } from 'react-use';
+import { earnings, Earnings, myNode, MyNode } from 'http/api';
+import { useEffectState } from 'hooks/useEffectState';
+import useRedux from 'hooks/useRedux';
+import { EmptyStr } from 'utils/global';
 export default function MyNodes() {
   const { t } = useTranslation()
   const navigate = useNavigate()
+  const {store} = useRedux()
+  const state = useEffectState({
+    earning: {} as Earnings,
+    nodes: {} as MyNode,
+  });
+
+
+  useAsync(async() => {
+    if(store.token) {
+      const result1 = await earnings()
+      const result2 = await myNode()
+
+      state.earning = result1.data
+      state.nodes = result2.data
+    } else {
+      alert('Please login first')
+    }
+  },[])
 
 
 
@@ -55,7 +78,7 @@ export default function MyNodes() {
               fontWeight={'700'}
               marginBottom={'.32rem'}
             >
-              645.23
+              {state.earning.getaTotalFunds ?? EmptyStr}
             </Typography>
 
             <Flex gap=".6rem">
@@ -67,7 +90,7 @@ export default function MyNodes() {
                 <Typography
                   fontSize={".2rem"}
                   fontWeight={'700'}
-                >600</Typography>
+                >{state.earning.getaAvailableAmount ?? EmptyStr}</Typography>
               </Column>
               <Column gap=".16rem">
                 <Typography
@@ -77,7 +100,7 @@ export default function MyNodes() {
                 <Typography
                   fontSize={".2rem"}
                   fontWeight={'700'}
-                >45.23</Typography>
+                >{state.earning.getafreezeAmount ?? EmptyStr}</Typography>
               </Column>
             </Flex>
 
@@ -96,7 +119,7 @@ export default function MyNodes() {
               fontWeight={'700'}
               marginBottom={'.32rem'}
             >
-              645.23
+              {state.earning.ustdTotalFunds ?? EmptyStr}
             </Typography>
 
             <Flex gap=".6rem">
@@ -108,7 +131,7 @@ export default function MyNodes() {
                 <Typography
                   fontSize={".2rem"}
                   fontWeight={'700'}
-                >600</Typography>
+                >{state.earning.ustdAvailableAmount ?? EmptyStr}</Typography>
               </Column>
               <Column gap=".16rem">
                 <Typography
@@ -118,7 +141,7 @@ export default function MyNodes() {
                 <Typography
                   fontSize={".2rem"}
                   fontWeight={'700'}
-                >45.23</Typography>
+                >{state.earning.ustdfreezeAmount ?? EmptyStr}</Typography>
               </Column>
             </Flex>
           </Column>
@@ -144,7 +167,7 @@ export default function MyNodes() {
               fontWeight={'700'}
               marginBottom={'.32rem'}
             >
-              328.428
+              {state.nodes.income}
             </Typography>
 
             <Normal
@@ -169,7 +192,7 @@ export default function MyNodes() {
               fontWeight={'700'}
               marginBottom={'.32rem'}
             >
-              2
+              {state.nodes.myNode}
             </Typography>
 
             <Normal

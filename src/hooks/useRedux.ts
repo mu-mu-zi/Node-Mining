@@ -1,4 +1,4 @@
-import {useDispatch, useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "store";
 import { useMemo } from 'react'
 import { appStoreSlice } from "store/appStoreSlice";
@@ -6,15 +6,13 @@ import { IWallet } from "connectwallet/config";
 
 
 export default function useRedux() {
-  const dispatch = useDispatch()
   const store = useSelector((state:RootState) => state.appStore)
-
-
+  const dispatch = useDispatch()
 
   const userDispatch = useMemo(() => {
     return {
-      setAddress (address:string) {
-        sessionStorage.setItem("wallet_address", address)
+      setAddress (address:string | null) {
+        sessionStorage.setItem("wallet_address", address || "")
         dispatch(appStoreSlice.actions.setAddress(address))
       },
       setToken(token:string) {

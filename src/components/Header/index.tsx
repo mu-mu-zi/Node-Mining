@@ -1,4 +1,4 @@
-import React, {useContext} from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import useScrollPosition from '@react-hook/window-scroll'
 import { HeaderFrame, HeaderContent, ConnectWallet, HeaderLinks, Logo, HeaderOccupy, Menu, Occupy } from './HeaderStyled'
 import RouterLink from './RouterLink';
@@ -8,11 +8,24 @@ import { Row } from 'components/BaseElement/Row';
 import { ModalContext } from 'components/provider/ModalProvider';
 import ConnectModal from 'components/ConnectModal/ConnectModal';
 import NavModal from 'components/NavModal/NavModal';
+import useRedux from 'hooks/useRedux';
+import { formatAddress } from 'utils/tools';
+
 
 export default function Header() {
   const { t } = useTranslation()
-  const {openModal, destoryModal} = useContext(ModalContext);
+  const { openModal } = useContext(ModalContext);
+  const {store} = useRedux()
+  const [displayBtnStr, setDisplayBtnStr] = useState<string>()
   const scrollY = useScrollPosition()
+
+  useEffect(() => {
+    if(store.address) {
+      setDisplayBtnStr(formatAddress(store.address))
+    } else {
+      setDisplayBtnStr("CONNECT WALLET")
+    }
+  },[store.address])
 
   return (
     <HeaderOccupy>
@@ -58,11 +71,12 @@ export default function Header() {
         </HeaderContent>
         <ConnectWallet
           // style={{pointerEvents:'none'}}
+          draggable={true}
           onClick={() => {
             openModal(ConnectModal)
           }}
         >
-            {t(`CONNECT WALLET`)}
+            {t(`${displayBtnStr}`)}
         </ConnectWallet>
       </HeaderFrame>
     </HeaderOccupy>

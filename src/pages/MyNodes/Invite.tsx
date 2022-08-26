@@ -75,7 +75,7 @@ export default function Invite() {
                   fontSize={".2rem"}
                   fontWeight={'350'}
                   color={'#fff'}
-                  WhiteSpace={'nowrap'}
+                  whiteSpace={'nowrap'}
                 >
                   {t(`Cumulative number of invitations`)}
                 </Typography>
@@ -94,7 +94,7 @@ export default function Invite() {
                   fontSize={".2rem"}
                   fontWeight={'350'}
                   color={'#fff'}
-                  WhiteSpace={'nowrap'}
+                  whiteSpace={'nowrap'}
                 >
                   {t(`Cumulative Direct Push Bonus`)}
                 </Typography>
@@ -113,7 +113,7 @@ export default function Invite() {
                   fontSize={".2rem"}
                   fontWeight={'350'}
                   color={'#fff'}
-                  WhiteSpace={'nowrap'}
+                  whiteSpace={'nowrap'}
                 >
                   {t(`Today's direct push bonus`)}
                 </Typography>

@@ -13,7 +13,7 @@ export default function useWalletTools() {
     useIsActive,
     useProvider,
     useENSNames
-  } = store.walletInfo?.hooks || WALLETS.metamask.hooks
+  } = store.walletInfo?.hooks || WALLETS.MetaMask.hooks
 
   const chainId = useChainId()
   const accounts = useAccounts()
@@ -25,7 +25,7 @@ export default function useWalletTools() {
 
   // 获取当前连接组
   const connector = useMemo(() => {
-    return store.walletInfo?.connector || WALLETS.metamask.connector
+    return store.walletInfo?.connector || WALLETS.MetaMask.connector
   },[store.walletInfo])
 
   const activate = useCallback(async () => {

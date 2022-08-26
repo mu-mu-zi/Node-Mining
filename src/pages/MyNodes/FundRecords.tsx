@@ -10,6 +10,9 @@ import Grid from 'components/BaseElement/Grid';
 import { Table, Tr } from 'components/BaseElement/Table';
 import { Th, Td } from '../../components/BaseElement/Table';
 import styled from 'styled-components';
+import { useAsync } from 'react-use';
+import { withdrawList, WithdrawList, WithdrawRecords } from 'http/api';
+import { useEffectState } from 'hooks/useEffectState';
 
 interface FundRecord {
   type: string
@@ -27,7 +30,20 @@ const _Td = styled(Td)`
 export default function FundRecords() {
   const { t } = useTranslation()
   const [record, setRecord] = useState<FundRecord[]>([])
-  useEffect(() => {
+  const state = useEffectState({
+    withdraw: {} as WithdrawList,
+    pageIndex: 10,
+    pageSize: 1,
+    withdrawRecords: [] as WithdrawRecords[]
+  })
+
+  useAsync(async () => {
+    let result = await withdrawList({
+      pageIndex: state.pageIndex,
+      pageSize: state.pageSize
+    })
+    state.withdraw = result.data
+    state.withdrawRecords = result.data.records
     const test = [
       {
         type: 'withdrawing coins',
@@ -103,7 +119,7 @@ export default function FundRecords() {
             </thead>
             <tbody>
               {
-                record.map((item,idx) => {
+                state.withdrawRecords.map((item,idx) => {
                   return <Tr  
                     fontSize={'.2rem'}
                     fontWeight={'350'}
@@ -111,13 +127,13 @@ export default function FundRecords() {
                     key={idx}
                   >
                     <_Td  textAlign={'left'} width={'2.6rem'}>
-                      {t(`${item.type}`)}
+                      {t(`withdrawing coins`)}
                     </_Td>
                     <_Td  textAlign={'center'} width={'2.6rem'}>
                       {t(`${item.amount}`)}
                     </_Td>
                     <_Td  textAlign={'center'} width={'2.04rem'}>
-                      {t(`${item.time}`)}
+                      {t(`${item.updateTime}`)}
                     </_Td>
                   </Tr>
                 })

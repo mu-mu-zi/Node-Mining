@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { background, layout, border, position, space, flexbox, grid, typography, color } from "styled-system";
+import { background, layout, system, border, position, space, flexbox, grid, typography, color } from "styled-system";
 import { BoxProps } from ".";
 
 
@@ -14,9 +14,11 @@ export const Table = styled.table<BoxProps>`
   ${grid}
   ${typography}
   ${color}
-  white-space: ${(props) => props.WhiteSpace};
-  cursor:  ${(props) => props.cursor};
-  font-size: .16rem;
+  ${system({
+    cursor: true,
+    boxSizing: true,
+    whiteSpace: true
+  })};
 `
 
 export const Td = styled.td<BoxProps>`
@@ -29,9 +31,11 @@ export const Td = styled.td<BoxProps>`
   ${grid}
   ${typography}
   ${color}
-  white-space: ${(props) => props.WhiteSpace};
-  cursor:  ${(props) => props.cursor};
-  box-sizing: border-box;
+  ${system({
+    cursor: true,
+    boxSizing: true,
+    whiteSpace: true
+  })};
 `;
 
 export const Th = styled.th<BoxProps>`
@@ -44,9 +48,11 @@ export const Th = styled.th<BoxProps>`
   ${grid}
   ${typography}
   ${color}
-  white-space: ${(props) => props.WhiteSpace};
-  cursor:  ${(props) => props.cursor};
-  box-sizing: border-box;
+  ${system({
+    cursor: true,
+    boxSizing: true,
+    whiteSpace: true
+  })};
 `;
 
 export const Tr = styled.tr<BoxProps>`
@@ -59,8 +65,10 @@ export const Tr = styled.tr<BoxProps>`
   ${grid}
   ${typography}
   ${color}
-  white-space: ${(props) => props.WhiteSpace};
-  cursor:  ${(props) => props.cursor};
-  box-sizing: border-box;
+  ${system({
+    cursor: true,
+    boxSizing: true,
+    whiteSpace: true
+  })};
 `
 

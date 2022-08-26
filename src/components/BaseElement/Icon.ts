@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { background, layout, border, position, space, flexbox, grid, typography, color } from "styled-system";
+import { background, layout, border, system, position, space, flexbox, grid, typography, color } from "styled-system";
 import { BoxProps } from ".";
 
 
@@ -14,8 +14,11 @@ export const Icon = styled.img<BoxProps>`
   ${grid}
   ${typography}
   ${color}
-  white-space: ${(props) => props.WhiteSpace};
-  cursor:  ${(props) => props.cursor};
+  ${system({
+    cursor: true,
+    boxSizing: true,
+    whiteSpace: true
+  })};
   font-size: .16rem;
   user-select: none;
 `

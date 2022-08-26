@@ -9,12 +9,10 @@ import Flex from 'components/BaseElement/Flex';
 import Grid from 'components/BaseElement/Grid';
 import { Table, Td, Th, Tr } from 'components/BaseElement/Table';
 import styled from 'styled-components';
-
-interface NodeRevenue {
-  type: string
-  amount: string
-  time: string
-}
+import { useEffectState } from '../../hooks/useEffectState';
+import { nodeRevenue, Revenue } from 'http/api';
+import { useAsync } from 'react-use';
+import { EmptyStr } from 'utils/global';
 
 const _Th = styled(Th)`
   padding: .08rem 0;
@@ -25,9 +23,17 @@ const _Td = styled(Td)`
 
 export default function NodeRevenue() {
   const {t} = useTranslation()
-  const [record, setRecord] = useState<NodeRevenue[]>([])
+  const state = useEffectState({
+    revenue: {} as Revenue
+  })
+  const [record, setRecord] = useState<any>([])
   const [type, setType] = useState<Number>(1)
-  useEffect(() => {
+  useAsync(async() => {
+
+    let result = await nodeRevenue()
+  
+    state.revenue = result.data
+
     const test = [
       {
         type: 'withdrawing coins',
@@ -86,7 +92,7 @@ export default function NodeRevenue() {
             fontSize={'.2rem'}
             fontWeight={'350'}
             color={'#fff'}
-            WhiteSpace={'nowrap'}
+            whiteSpace={'nowrap'}
           >
             {t(`Accumulated penny earnings (GW)`)}
           </Typography>
@@ -95,7 +101,7 @@ export default function NodeRevenue() {
             fontWeight={'700'}
             color={'#fff'}
           >
-            328.428
+            {state.revenue.countIncome ?? EmptyStr}
           </Typography>
         </Column>
         <Column
@@ -113,7 +119,7 @@ export default function NodeRevenue() {
             fontWeight={'700'}
             color={'#fff'}
           >
-            15.33
+            {state.revenue.todayCentsIncome ?? EmptyStr}
           </Typography>
         </Column>
         <Column
@@ -131,7 +137,7 @@ export default function NodeRevenue() {
             fontWeight={'700'}
             color={'#fff'}
           >
-            1
+            {state.revenue.nodeNumber ?? 0}
           </Typography>
         </Column>
       </Grid>
@@ -195,7 +201,7 @@ export default function NodeRevenue() {
               </thead>
               <tbody>
                 {
-                  record.map((item,idx) => {
+                  record.map((item: { amount: any; time: any; },idx: React.Key | null | undefined) => {
                     return <Tr  
                       fontSize={'.2rem'}
                       fontWeight={'350'}
@@ -235,7 +241,7 @@ export default function NodeRevenue() {
               </thead>
               <tbody>
                 {
-                  record.map((item,idx) => {
+                  record.map((item: { type: any; amount: any; time: any; },idx: React.Key | null | undefined) => {
                     return <Tr  
                       fontSize={'.2rem'}
                       fontWeight={'350'}

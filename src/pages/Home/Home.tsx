@@ -226,7 +226,7 @@ export default function Home() {
             // fontSize={'60px'}
             // fontWeight={'500'}
             // color={'#fff'}
-            WhiteSpace={'nowrap'}
+            whiteSpace={'nowrap'}
             // data-aos="fade-right"
             // data-aos-anchor-placement="bottom-top"
             // data-aos-offset="700"

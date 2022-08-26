@@ -17,7 +17,8 @@ axios.interceptors.request.use((config:myConfig) => {
         if (config.headers) {
             let token = sessionStorage.getItem('token') || "";
             if (token) {
-                config.headers['Authorization'] = token;
+                // config.headers['Authorization'] = token;
+                config.headers['token'] = token;
             }
         }
 
