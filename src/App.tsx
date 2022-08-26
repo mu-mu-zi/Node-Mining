@@ -7,6 +7,8 @@ import styled from 'styled-components'
 import AOS from "aos";
 import "aos/dist/aos.css";
 import AppProvider from 'AppProvider';
+import useRedux from 'hooks/useRedux';
+import { useAsync } from 'react-use';
 
 const Medium = styled.div`
   flex: 1;
@@ -14,9 +16,15 @@ const Medium = styled.div`
 `
 
 function App() {
-
+  const { store } = useRedux()
   useEffect(() => {
     AOS.init();
+  }, []);
+
+  useAsync(async() => {
+    if (store.walletInfo) {
+      await store.walletInfo.connector.activate()
+    }
   }, []);
 
   return (

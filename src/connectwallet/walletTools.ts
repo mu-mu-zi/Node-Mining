@@ -21,8 +21,8 @@ export async function signString(str: string, address: string, Provider: any) : 
               resolve({origin: str, signatrue: res});
           } else {
               if(err.code === -32602){
-                  // logoout
                   // PubSub.publish(wallet_logout);
+                  console.log(err)
               }
               reject(err);
           }

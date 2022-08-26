@@ -1,6 +1,6 @@
 
 import {CSSProperties} from "react";
-import { injected } from "./hooks";
+import { injected ,injectedHooks } from "./hooks";
 
 export type IWallet = {
     name: string
@@ -8,9 +8,30 @@ export type IWallet = {
     style: CSSProperties
     download: string
     keyword: string
-    // hooks: any
+    hooks: any
     connector?: any
 }
+
+export const getWalletInfoByName = function(name: string | null):IWallet | null {
+  let walletInfo: IWallet | null = null 
+  Object.values(WALLETS).forEach((item) => {
+    if(item.name === name) {
+      walletInfo = item 
+    }
+  })
+  return walletInfo
+}
+
+export const CHAINS = {
+  BSC: {
+      name: "BSC-Test",
+      fullName: "Binance Smart Chain",
+      // icon: require("src/assets/images/BNB 1.png"),
+      chainId: 97,
+      node: "https://apis-sj.ankr.com/4819f8b2e4a2491da76b28b9d3aaf96b/c3b85bea4a6b3c020eec29cacb6e5f21/binance/full/test"
+  }
+};
+
 export const WALLETS: {[propsName: string]: IWallet} = {
     MetaMask: {
       name: 'MetaMask',
@@ -18,7 +39,7 @@ export const WALLETS: {[propsName: string]: IWallet} = {
       style: {width: "inherit"},
       download: "https://metamask.io/download/",
       keyword: "isMetaMask",
-      // hooks: metaMaskHooks,
+      hooks: injectedHooks,
       connector: injected,
     },
     TokenPocket: {
@@ -27,7 +48,7 @@ export const WALLETS: {[propsName: string]: IWallet} = {
       style: {width: "inherit"},
       download: "https://www.tokenpocket.pro/",
       keyword: "isTokenPocket",
-      // hooks: metaMaskHooks,
+      hooks: injectedHooks,
       // connector: metaMask
       connector: injected,
     },
@@ -37,17 +58,17 @@ export const WALLETS: {[propsName: string]: IWallet} = {
       style: {width: "inherit"},
       download: "https://token.im/",
       keyword: "isImToken",
-      // hooks: metaMaskHooks,
+      hooks: injectedHooks,
       // connector: metaMask
       connector: injected,
     },
-    MathWalletask: {
+    MathWallet: {
       name: 'MathWallet',
       icon: require("assets/images/icon_mathwallet.png"),
       style: {width: "inherit"},
       download: "https://mathwallet.org/",
       keyword: "isMathWallet",
-      // hooks: metaMaskHooks,
+      hooks: injectedHooks,
       // connector: metaMask
       connector: injected,
     },
@@ -57,8 +78,10 @@ export const WALLETS: {[propsName: string]: IWallet} = {
       style: {width: "inherit"},
       download: "https://www.bnbchain.org/en/binance-wallet",
       keyword: "isBitKeepWallet",
-      // hooks: null,
+      hooks: injectedHooks,
       // connector: bscConnector
       connector: injected,
     }
 };
+
+

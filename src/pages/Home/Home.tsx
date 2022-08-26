@@ -72,24 +72,28 @@ export default function Home() {
           <a
             href="https://medium.com/@GetaverseGlobal"
             target="_blank"
+            rel="noreferrer"
           >
             <Image src={require('assets/svg/banne_icon_m.svg').default} alt="" />
           </a>
           <a
             href="https://discord.com/invite/vGXwF3TdEw"
             target="_blank"
+            rel="noreferrer"
           >
             <Image src={require('assets/svg/banne_icon_dc.svg').default} alt="" />
           </a>
           <a
             href="https://twitter.com/GetaverseGlobal"
             target="_blank"
+            rel="noreferrer"
           >
             <Image src={require('assets/svg/banne_icon_tw.svg').default} alt="" />
           </a>
           <a
             href="https://t.me/Getaverse_Official"
             target="_blank"
+            rel="noreferrer"
           >
             <Image src={require('assets/svg/banne_icon_tg.svg').default} alt="" />
           </a>
@@ -228,7 +232,7 @@ export default function Home() {
             // data-aos-offset="700"
           >{t(`Getaverse advantages`)}</Title>
           <Box
-            fontSize={'.28rem'}
+            fontSize={theme.isH5 ? '18px' : '.28rem'}
             fontWeight={'400'}
             color={'#fff'}
             textAlign={'center'}
@@ -240,7 +244,7 @@ export default function Home() {
 
         <CardWrapper
           gridTemplateColumns={theme.isH5 ? '1fr' : '1fr 1fr'}
-          gap={'.51rem .7rem'}
+          gap={theme.isH5 ? '37px' : '.51rem .7rem'}
           marginTop={theme.isH5 ? '26px' : '1.04rem'}
         >
 

@@ -9,7 +9,6 @@ import {ReactNode, useMemo} from "react";
 import {Network} from "@web3-react/network";
 import {Connector} from "@web3-react/types";
 import { nodeUrl } from "utils/global";
-
 function onError(error: Error) {
   console.log('asdasdasdsad')
   console.debug(`web-react error => ${error}`)

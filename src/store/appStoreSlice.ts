@@ -1,12 +1,21 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { getWalletInfoByName, IWallet } from 'connectwallet/config';
 import { Wallet } from 'connectwallet/hooks';
 
+
+
 export type IState = {
-    selectedWallet?: Wallet
+    selectedWallet?: Wallet,
+    address: string | null,
+    token: string | null,
+    walletInfo: IWallet | null
 }
 
 const initState: IState = {
-    selectedWallet: undefined
+    selectedWallet: undefined,
+    address: sessionStorage.getItem("wallet_address"),
+    token: sessionStorage.getItem("token"),
+    walletInfo: getWalletInfoByName(sessionStorage.getItem("wallet_name"))
 };
 export const appStoreSlice = createSlice({
     name: "appStore",
@@ -15,9 +24,18 @@ export const appStoreSlice = createSlice({
         // setAddress(state, action: PayloadAction<string>){
         //     state.address = action.payload;
         // },
+        setAddress(state,action) {
+            state.address = action.payload
+        },
+        setToken(state,action) {
+            state.token = action.payload
+        },
+        setWalletInfo(state,action) {
+            state.walletInfo = action.payload
+        }
     },
 });
 
-// export const { setAddress,setToken,setUserInfo } = appStoreSlice.actions;
+// export const { setAddress,setToken,setWalletInfo } = appStoreSlice.actions;
 
 export default appStoreSlice.reducer;
