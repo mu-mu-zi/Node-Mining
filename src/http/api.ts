@@ -1,9 +1,10 @@
 import { fetchPost, fetchGet } from "./index";
+import { AppDispatch } from '../store/index';
 
 
 interface PageType {
-	pageIndex: number,
-	pageSize: number
+  pageIndex: number,
+  pageSize: number
 }
 
 interface Nonce {
@@ -12,7 +13,7 @@ interface Nonce {
 }
 
 export function generateNonce(address: string) {
-  return fetchPost<Nonce>('/api/v1/user/generateNonce',{address})
+  return fetchPost<Nonce>('/api/v1/user/generateNonce', { address })
 }
 
 interface LoginApi {
@@ -24,7 +25,7 @@ interface LoginApi {
 export function loginApi(data: { address: string; signature: string; }) {
   return fetchPost<LoginApi>('/api/v1/user/token', {
     address: data.address,
-	  signature: data.signature
+    signature: data.signature
   })
 }
 export interface Earnings {
@@ -37,17 +38,25 @@ export interface Earnings {
 }
 
 export function earnings() {
-  return fetchGet<Earnings>('/api/v1/asset/myEarnings') 
+  return fetchGet<Earnings>('/api/v1/asset/myEarnings')
 }
 
 export interface MyNode {
   myNode: number,
   income: number,
-
 }
 
 export function myNode() {
-  return fetchGet<MyNode>('/api/v1/asset/myNode') 
+  return fetchGet<MyNode>('/api/v1/asset/myNode')
+}
+
+export interface MyAsset {
+  totalAsset: number,
+  available: number,
+}
+
+export function myAsset() {
+  return fetchGet<MyAsset>('/api/v1/asset/myAsset')
 }
 
 export interface Revenue {
@@ -63,12 +72,19 @@ export function nodeRevenue() {
 }
 
 export interface IncomeRecords {
-  countIncome: number,
-  todayCentsIncome: number,
-  nodeNumber: number,
+  pageIndex: number
+  pageSize: number
+  records: Records[]
+  total: number
 }
 
-export function incomeRecords(data:PageType) {
+export type Records = {
+  amount: number,
+  symbol: string,
+  createTime: number,
+}
+
+export function incomeRecords(data: PageType) {
   return fetchPost<IncomeRecords>('/api/v1/record/incomeRecords', {
     pageIndex: data.pageIndex,
     pageSize: data.pageSize
@@ -77,20 +93,20 @@ export function incomeRecords(data:PageType) {
 
 export interface Award {
   total: number
-  records: [
-    {
-      userId: number
-      inviteesAddr: string
-      award: number
-      symbol: string
-      createTime: number
-    }
-  ],
+  records: AwardRecords[],
   pageIndex: number
   pageSize: number
 }
 
-export function award(data:PageType) {
+export type AwardRecords = {
+  userId: number
+  inviteesAddr: string
+  award: number
+  symbol: string
+  createTime: number
+}
+
+export function award(data: PageType) {
   return fetchPost<Award>('/api/v1/record/award', {
     pageIndex: data.pageIndex,
     pageSize: data.pageSize
@@ -98,14 +114,14 @@ export function award(data:PageType) {
 }
 
 
-export function apply(data:{coinId:number,amount:number}) {
+export function apply(data: { coinId: number, amount: number }) {
   return fetchPost<boolean>('/api/v1/withdraw/apply', {
     coinId: data.coinId,
     amount: data.amount
   })
 }
 
-interface CoinList 	{
+export interface CoinList {
   id: number
   symbol: string
   name: string
@@ -115,7 +131,7 @@ interface CoinList 	{
 }
 
 export function coinList() {
-  return fetchPost<CoinList>('/api/v1/withdraw/coinList', {})
+  return fetchPost<CoinList[]>('/api/v1/withdraw/coinList', {})
 }
 
 export type WithdrawRecords = {
@@ -133,17 +149,78 @@ export type WithdrawRecords = {
   updateTime: string,
 }
 
-export interface WithdrawList 	{
+export interface WithdrawList {
   total: number
   records: WithdrawRecords[]
   pageIndex: number
   pageSize: 0
 }
 
-export function withdrawList(data:PageType) {
+export function withdrawList(data: PageType) {
   return fetchPost<WithdrawList>('/api/v1/withdraw/list', {
     pageIndex: data.pageIndex,
     pageSize: data.pageSize
   })
 }
 
+export type NodeListRecords = {
+  "id": number
+  "tokenId": number
+  "apiKey": string
+  "price": number
+  "coinId": number
+  "createTime": string
+  "coinName": string
+}
+
+export interface NodeList {
+  "total": number
+  "records": NodeListRecords[]
+  "pageIndex": number
+  "pageSize": number
+}
+
+export function nodeList(data: PageType) {
+  return fetchPost<NodeList>('/api/v1/node/list', {
+    pageIndex: data.pageIndex,
+    pageSize: data.pageSize
+  })
+}
+
+export interface GetNodeKey {
+  apiKey: string,
+  apiSecret: string
+}
+
+export function getNodeKey(nodeId: number) {
+  return fetchPost<GetNodeKey>('/api/v1/node/getApiInfo', { nodeId }
+  )
+}
+export interface GenerateNodeKey {
+  apiKey: string,
+  apiSecret: string
+}
+
+export function generateNodeKey(data: {
+  originalData: string,
+  signature: string
+}) {
+  return fetchPost<GenerateNodeKey>('/api/v1/node/generateNodeApiKey', {
+    "originalData": data.originalData,
+    "signature": data.signature
+  }
+  )
+}
+
+export interface PushRewardInfo {
+  totalIncome:number
+  usdtTotalIncome:number
+  todayIncome:number
+  usdtTodayIncome: number
+}
+
+export function pushRewardInfo() {
+  return fetchPost<PushRewardInfo>('/api/v1/record/pushRewardInfo', {
+
+  })
+}

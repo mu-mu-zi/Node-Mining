@@ -184,12 +184,21 @@ export default function Index() {
             </Collapse>
 
             <Collapse title={'How many Getaverse nodes are there in total?'}>
+              <Typography>{t(`There are a total of 50,000 Getaverse nodes.`)}</Typography>
             </Collapse>
             <Collapse title={'What rewards will Getaverse node operators receive?'}>
+              <Typography>{t(`Getaverse node operators will be rewarded with tokens for daily Getaverse node work. Node owners will also receive NFT drops and token rewards based on their reputation score as a node operator and general community member.`)}</Typography>
             </Collapse>
             <Collapse title={'What are the software and hardware requirements to run the node?'}>
+              <Typography>{t(`Getaverse nodes will be available for download on Windows, Mac and Linux. Our node operations are not as resource intensive as traditional cryptocurrency mining. You will be able to run our node software from your home computer, meeting the following minimum requirements. `)}</Typography>
+              <Typography>{t(`4 GB RAM`)}</Typography>
+              <Typography>{t(`2 CPU cores`)}</Typography>
+              <Typography>{t(`60 GB of disk space`)}</Typography>
+              <Typography>{t(`x86/x64 processor`)}</Typography>
+              <Typography>{t(`Stable Internet connection`)}</Typography>
             </Collapse>
             <Collapse title={'Can multiple nodes run on a single computer?'}>
+              <Typography>{t(`No. When a person purchases multiple licenses and operates Getaverse software, they need to have the same number of available computers as they have licenses. There is a one computer per node type requirement to help run the network and receive rewards.`)}</Typography>
             </Collapse>
           </Column>
         </Box>

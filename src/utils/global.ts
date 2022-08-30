@@ -1,4 +1,5 @@
 export const Z_INDEX = {
+  toast: 10001,
   modal: 10000,
   fixed_links: 9000,
   header_nav: 8000,
@@ -14,3 +15,20 @@ export const nodeUrl = () => {
 export const service_api = process.env.NODE_ENV === "production" ? "http://13.215.206.153:8100/" : "http://13.215.206.153:8100/";
 
 export const EmptyStr = "--" 
+
+export const _group = "getaverse"
+
+export const Decimals = 18
+
+export const zeroAddress = "0x0000000000000000000000000000000000000000";
+
+/*Verify if digital*/
+export const NUMBER_REG = "^[\\+-]?\\d+(\\.{1}\\d+)?$";
+/*Verify integer*/
+export const INT_REG = "^\\d+$";
+
+export const INPUT_NUMBER_REG = "^\\d*(\\.{1}\\d*)?$";
+
+export const DECIMAL_NUMBER = "^[\\+-]?\\d+(\\.{1}\\d*)?$";
+
+export const FLOAT_NUMBER = "^[1-9]\\d*\\.?\\d*)|(0\\.\\d*[1-9]?$";

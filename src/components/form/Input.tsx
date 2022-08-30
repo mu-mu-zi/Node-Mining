@@ -18,7 +18,7 @@ export interface IdefalutProps extends Pick<InputHTMLAttributes<HTMLInputElement
     right?: JSX.Element,
     left?: JSX.Element,
     simpleBorder?:boolean,
-    value?:string,
+    value?:string | number,
     min?:number,
     minText?: string,
     max?:number,
@@ -31,7 +31,7 @@ export interface inputProps extends IdefalutProps, WithTranslation{
 
 }
 interface inputState {
-    value: string | undefined,
+    value: string | undefined | number,
     offsetLeft:number,
     validErr:boolean,
     errText: string,
@@ -177,7 +177,8 @@ class Input extends React.Component<inputProps, inputState>{
         this.handle();
     }
 
-    validMaxDecimal(val: string) {
+    validMaxDecimal(val: string | number) {
+        if(typeof val === 'number') return
         let arr = val.split(".");
         if (this.props.maxDecimal && (arr[1] && arr[1].length > this.props.maxDecimal) ) {
             return false;

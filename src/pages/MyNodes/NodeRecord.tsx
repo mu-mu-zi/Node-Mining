@@ -7,16 +7,42 @@ import { RowCenter, RowStart } from 'components/BaseElement/Row';
 import { NodeRecordWrap, MyNode, ActiveNode } from './MyNodes.style';
 import Grid from 'components/BaseElement/Grid';
 import Normal from 'components/Button/Normal';
+import { GetNodeKey, getNodeKey, nodeList, NodeListRecords } from 'http/api';
+import { useAsync } from 'react-use';
+import { useUpdateEffect } from 'ahooks';
+import { EmptyStr } from '../../utils/global';
 
 
 export default function NodeRecord() {
   const { t } = useTranslation()
-  const [active, setActive] = useState<number>()
-  const [data, setData] = useState<number[]>([])
 
-  useEffect(() => {
-    setData([1, 2, 3, 4])
-  }, [])
+  const [activeNode, setActiveNode] = useState<NodeListRecords>()
+  const [activeIndex, setActiveIndex] = useState<number>(0)
+  const [data, setData] = useState<NodeListRecords[]>([])
+  const [nodeInfo, setNodeInfo] = useState<GetNodeKey>()
+
+  useAsync(async () => {
+    let result = await nodeList({
+      pageSize: 100,
+      pageIndex: 1
+    })
+    setData(result.data.records)
+    setActiveNode(result.data.records[0])
+    console.log(result)
+  },[])
+
+  const getNodeInfo = async() => {
+    if(!activeNode) return
+    let result = await getNodeKey(activeNode.id)
+    setNodeInfo(result.data)
+    console.log(result)
+  }
+
+  useUpdateEffect( () => {
+    // activeNode
+    getNodeInfo()
+    console.log(activeNode)
+  },[activeNode])
 
   return (
     <NodeRecordWrap>
@@ -39,10 +65,13 @@ export default function NodeRecord() {
           {
             data.map((item,index) => {
               return (
-                <ActiveNode key={item} 
-                  onClick={() => {setActive(index)}}
+                <ActiveNode key={index} 
+                  onClick={() => {
+                    setActiveNode(item);
+                    setActiveIndex(index)
+                  }}
                 >
-                  <MyNode className={`${active === index ? 'node-png-active' : ''} `}>
+                  <MyNode className={`${activeIndex === index ? 'node-png-active' : ''} `}>
                     <img src={require('assets/images/Nodes/logo_n.png')} alt="" />
                   </MyNode>
                   <Typography
@@ -64,8 +93,10 @@ export default function NodeRecord() {
           borderRadius={'4px'}
           padding={'.75rem 1.17rem .39rem .24rem'}
           gap={'.59rem'}
+          width={'100%'}
+          boxSizing={'border-box'}
         >
-          <Column
+          <ColumnStart
             gap=".16rem"
           >
             <RowStart 
@@ -75,7 +106,7 @@ export default function NodeRecord() {
               fontWeight="350"
             >
               <Typography minWidth="1.56rem">{t(`Apikey`)}</Typography>
-              <Typography>09ef018bb785ejr83kd2jdleweab4e7ef7f00481e1ffab3defd3b1a943cc04c4</Typography>
+              <Typography>{nodeInfo?.apiKey ?? EmptyStr}</Typography>
             </RowStart>
             <RowStart 
               gap=".48rem" 
@@ -84,9 +115,9 @@ export default function NodeRecord() {
               fontWeight="350"
             >
               <Typography minWidth="1.56rem">{t(`Cents earnings`)}</Typography>
-              <Typography>09ef018bb785ejr83kd2jdleweab4e7ef7f00481e1ffab3defd3b1a943cc04c4</Typography>
+              <Typography>{nodeInfo?.apiSecret ?? EmptyStr}</Typography>
             </RowStart>
-          </Column>
+          </ColumnStart>
           <RowCenter width="100%">
             <Normal>
               {t(`Settings`)}

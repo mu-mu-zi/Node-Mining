@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Routers from 'router/router';
 import Header from 'components/Header';
 import { Column } from 'components/BaseElement/Column';
@@ -9,6 +9,7 @@ import "aos/dist/aos.css";
 import AppProvider from 'AppProvider';
 import useRedux from 'hooks/useRedux';
 import { useAsync } from 'react-use';
+import { coinList, CoinList } from 'http/api';
 
 const Medium = styled.div`
   flex: 1;
@@ -16,16 +17,35 @@ const Medium = styled.div`
 `
 
 function App() {
-  const { store } = useRedux()
+  const { store, userDispatch } = useRedux()
+  const [coins, setCoins] = useState<CoinList[]>()
   useEffect(() => {
     AOS.init();
+    getCoinList()
   }, []);
 
   useAsync(async() => {
+    console.log(store.walletInfo)
     if (store.walletInfo) {
-      await store.walletInfo.connector.activate()
+      try {
+        await store.walletInfo.connector.activate()
+      }catch(e) {
+        // userDispatch.logout()
+      }
     }
   }, []);
+  async function getCoinList() {
+    let result = await coinList()
+    
+    setCoins(result.data)
+  }
+
+
+  useEffect(() => {
+    userDispatch.setCoins(coins)
+  },[coins])
+
+
 
   return (
     <AppProvider>

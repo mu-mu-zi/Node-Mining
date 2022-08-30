@@ -59,6 +59,7 @@ export default function Header() {
               // style={{pointerEvents:'none'}}
                to={"/aboutus"} className={({isActive}) => `nav-item ${isActive ? "active" : ""}`} >{t(`ABOUT US`)}</RouterLink>
               <Typography
+                display={'none'}
                 // fontSize={'20px'}
                 fontSize={'.2rem'}
                 fontWeight={'400'}

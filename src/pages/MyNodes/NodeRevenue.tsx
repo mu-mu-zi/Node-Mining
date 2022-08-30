@@ -10,7 +10,7 @@ import Grid from 'components/BaseElement/Grid';
 import { Table, Td, Th, Tr } from 'components/BaseElement/Table';
 import styled from 'styled-components';
 import { useEffectState } from '../../hooks/useEffectState';
-import { nodeRevenue, Revenue } from 'http/api';
+import { IncomeRecords, incomeRecords, nodeList, NodeList, nodeRevenue, Records, Revenue } from 'http/api';
 import { useAsync } from 'react-use';
 import { EmptyStr } from 'utils/global';
 
@@ -24,30 +24,36 @@ const _Td = styled(Td)`
 export default function NodeRevenue() {
   const {t} = useTranslation()
   const state = useEffectState({
-    revenue: {} as Revenue
+    revenue: {} as Revenue,
+    purchase: {} as NodeList,
+    incomeRecords: [] as Records[]
   })
-  const [record, setRecord] = useState<any>([])
   const [type, setType] = useState<Number>(1)
+
   useAsync(async() => {
 
     let result = await nodeRevenue()
   
     state.revenue = result.data
-
-    const test = [
-      {
-        type: 'withdrawing coins',
-        amount: '-0.27 GW',
-        time: '2022-08-02 12:27:26',
-      },
-      {
-        type: 'withdrawing coins',
-        amount: '-0.27 GW',
-        time: '2022-08-02 12:27:26',
-      }
-    ]
-    setRecord(test)
   }, [])
+  useAsync(async() => {
+
+    let result = await incomeRecords({
+      pageIndex: 1,
+      pageSize: 10
+    })
+    console.log(result)
+    state.incomeRecords = result.data.records
+  }, [])
+
+  useAsync(async() => {
+    let result = await nodeList({
+      pageIndex: 1,
+      pageSize: 100
+    })
+    state.purchase = result.data
+    
+  },[])
 
   return ( 
   <RevenueWrap>
@@ -201,7 +207,7 @@ export default function NodeRevenue() {
               </thead>
               <tbody>
                 {
-                  record.map((item: { amount: any; time: any; },idx: React.Key | null | undefined) => {
+                  state.incomeRecords && state.incomeRecords.map((item,idx) => {
                     return <Tr  
                       fontSize={'.2rem'}
                       fontWeight={'350'}
@@ -212,10 +218,10 @@ export default function NodeRevenue() {
                         {t(`${item.type}`)}
                       </_Td> */}
                       <_Td  textAlign={'center'} width={'2.6rem'}>
-                        {t(`${item.amount}`)}
+                        {t(`${item.amount} ${item.symbol}`)}
                       </_Td>
                       <_Td  textAlign={'center'} width={'2.04rem'}>
-                        {t(`${item.time}`)}
+                        {t(`${item.createTime}`)}
                       </_Td>
                     </Tr>
                   })
@@ -234,14 +240,14 @@ export default function NodeRevenue() {
                   fontWeight={'400'}
                   color={'#6B6B6B'}
                 >
-                  <_Th textAlign={'left'}>{t(`Type`)}</_Th>
+                  <_Th textAlign={'left'}>{t(`Name`)}</_Th>
                   <_Th>{t(`Amount`)}</_Th>
                   <_Th>{t(`Time`)}</_Th>
                 </Tr>
               </thead>
               <tbody>
                 {
-                  record.map((item: { type: any; amount: any; time: any; },idx: React.Key | null | undefined) => {
+                  state.purchase.records.map((item, idx) => {
                     return <Tr  
                       fontSize={'.2rem'}
                       fontWeight={'350'}
@@ -249,13 +255,13 @@ export default function NodeRevenue() {
                       key={idx}
                     >
                       <_Td  textAlign={'left'} width={'2.6rem'}>
-                        {t(`${item.type}`)}
+                        {t(`${item.tokenId}`)}
                       </_Td>
                       <_Td  textAlign={'center'} width={'2.6rem'}>
-                        {t(`${item.amount}`)}
+                        {t(`${item.price} ${item.coinName}`)}
                       </_Td>
                       <_Td  textAlign={'center'} width={'2.04rem'}>
-                        {t(`${item.time}`)}
+                        {t(`${item.createTime}`)}
                       </_Td>
                     </Tr>
                   })

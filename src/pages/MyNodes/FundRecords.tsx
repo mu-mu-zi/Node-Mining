@@ -127,7 +127,7 @@ export default function FundRecords() {
                     key={idx}
                   >
                     <_Td  textAlign={'left'} width={'2.6rem'}>
-                      {t(`withdrawing coins`)}
+                      {t(`${item.coinName}`)}
                     </_Td>
                     <_Td  textAlign={'center'} width={'2.6rem'}>
                       {t(`${item.amount}`)}

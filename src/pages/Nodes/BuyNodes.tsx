@@ -7,10 +7,55 @@ import { Wrapper, OrderInput, IconPrice, PngNode, PurchaseNode } from './BuyNode
 import { useTranslation } from 'react-i18next';
 import Order from './Order'
 import PurchaseSuccess from './PurchaseSuccess'
+import { useTgeMarket } from 'hooks/useContract'
+import { useAsync } from 'react-use'
+import { useWeb3React } from '@web3-react/core'
+import { useEffectState } from 'hooks/useEffectState'
+import { Decimals, EmptyStr, zeroAddress } from 'utils/global'
+import {useEffect} from 'react';
+import BigNumber from "bignumber.js";
+import { MsgStatus } from 'components/messageBox/MessageBox'
+import { Notice } from 'utils/tools'
 
 export default function BuyNodes() {
   const { t } = useTranslation()
   const [step, setStep] = useState<number>(1)
+  const TgeMarket = useTgeMarket()
+  const { account } = useWeb3React()
+  const state = useEffectState({
+    count: 1 as number,
+    Invite: EmptyStr as string,
+    price: new BigNumber(0)
+  })
+  useAsync(async() => {
+
+    if (!TgeMarket || !account) return
+    let result = await TgeMarket.getTotalCost(state.count)
+    state.price = new BigNumber(result.toString())
+
+
+  },[state.count, account])
+  // useEffect(() => {
+  //   if (!TgeMarket || !account) return
+
+  // },[account])
+  
+  useAsync(async() => {
+    if (!TgeMarket || !account) return
+
+    state.Invite = await TgeMarket.getInviter(account)
+
+
+  },[account])
+
+  const StepNext = () => {
+    if(state.Invite === zeroAddress) {
+      Notice('Sorry, you are not eligible to purchase.' , MsgStatus.fail)
+      // setStep(2)
+    } else {
+      setStep(2)
+    }
+  }
 
   return (
     <Wrapper>
@@ -67,7 +112,7 @@ export default function BuyNodes() {
                       fontSize={'.2rem'}
                       fontWeight={'700'}
                       color={'#fff'}
-                    >124.432</Typography>
+                    >{state.price.div(10 ** Decimals).toFixed()}</Typography>
                   </Row>
                 </Row>
                 <Row
@@ -84,13 +129,25 @@ export default function BuyNodes() {
                   </Typography>
                   <Row gap=".08rem">
 
-                    <img src={require('assets/svg/Ellipse_sub.svg').default} />
-
-                    <OrderInput
-                      defaultValue={1}
+                    <img src={require('assets/svg/Ellipse_sub.svg').default} 
+                      onClick={() => {
+                        if(state.count <= 1) {
+                          alert('cant')
+                          return
+                        }
+                        state.count = state.count - 1
+                      }}
                     />
 
-                    <img src={require('assets/svg/Ellipse_add.svg').default} />
+                    <OrderInput
+                      value={state.count}
+                    />
+
+                    <img src={require('assets/svg/Ellipse_add.svg').default} 
+                      onClick={() => {
+                        state.count = state.count + 1
+                      }}
+                    />
                   </Row>
                 </Row>
                 <Row
@@ -110,12 +167,12 @@ export default function BuyNodes() {
                       fontSize={'.16rem'}
                       fontWeight={'400'}
                       color={'#fff'}
-                    >0x7Cbb269D95f85Cd069fEF7D6c625f4C22fAeCA99</Typography>
+                    >{state.Invite}</Typography>
                   </Row>
                 </Row>
 
                 <PurchaseNode 
-                  onClick={() => setStep(2)}
+                  onClick={StepNext}
                 >
                   {t(`Purchase Node`)}
                 </PurchaseNode>
@@ -124,7 +181,7 @@ export default function BuyNodes() {
           </Row>
         </> : 
         step === 2 ?
-        <Order setStep={setStep} /> :
+        <Order setStep={setStep} state={state} /> :
         step === 3 ?
         <PurchaseSuccess setStep={setStep} /> : null
       }

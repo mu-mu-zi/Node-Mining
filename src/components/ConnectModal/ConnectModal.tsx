@@ -12,10 +12,11 @@ import {useWeb3React} from '@web3-react/core';
 import useRedux from "hooks/useRedux";
 import { useAsync } from 'react-use';
 import useWalletTools from "hooks/useWalletTools";
-import { awaitWrap } from "utils/tools";
+import { awaitWrap, Notice } from "utils/tools";
 import { generateNonce } from "http/api";
 import { useGenerateNonce } from "hooks/useGenerateNonce";
 import { loginApi } from '../../http/api';
+import { MsgStatus } from "components/messageBox/MessageBox";
 
 export default function ConnectModal(props: IOpenModal) {
   const {account,chainId,provider} = useWeb3React()
@@ -39,7 +40,7 @@ export default function ConnectModal(props: IOpenModal) {
         // props.destoryComponent();
       } else {
         if (chainId !== CHAINS.BSC.chainId) {
-          alert('You are connected to an unsupported network, please switch to the main BSC network.')
+          Notice('You are connected to an unsupported network, please switch to the main BSC network.',MsgStatus.fail)
           deactivate()
           userDispatch.setWalletInfo(null)
         } else {
@@ -90,7 +91,7 @@ export default function ConnectModal(props: IOpenModal) {
       isH5={theme.isH5}
       // style={{ color: '#fff', height: '100%', width: '100%' }}
     >
-      <ConnectWalletModalStyle  data-aos={theme.isH5 ? "fade-up" : "fade-left"}>
+      <ConnectWalletModalStyle >
         <Typography
           fontSize={theme.isH5 ? '24px' : "30px"}
           fontWeight={700}

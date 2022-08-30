@@ -173,7 +173,7 @@ export const InviteInput = styled(Input)`
   /* max-width: 773px; */
   padding: 0 0 0 12px;
   box-sizing: border-box;
-  height: 48px;
+  height: .48rem;
   &:hover {
     border: 2px solid #00E88A;
     color: #00E88A;
@@ -234,6 +234,90 @@ export const Invitation = styled(Box)`
   box-sizing: border-box;
   background: ${({theme}) => theme.colors.normal};
   height: .46rem;
+  padding: .085rem .12rem;
+  font-size: .2rem;
+  font-weight: 700;
+  color: #000;
+  cursor: pointer;
+  border-radius: 60px;
+  transform: translateX(1px);
+  &:hover {
+    color: #fff;
+    background: ${({theme}) => theme.colors.hover};;
+  }
+`
+
+
+export const WithdrawInp = styled(Input)`
+  background: transparent;
+  border: 2px solid #6B6B6B;
+  border-radius: 60px;
+  width: 100%;
+  max-width: 3.68rem;
+  padding: 0 0 0 12px;
+  box-sizing: border-box;
+  height: .4rem;
+  &:hover {
+    border: 2px solid #00E88A;
+    color: #00E88A;
+    .email-input {
+      ::placeholder {
+        color: #00E88A;
+      }
+    }
+    .submit {
+      color: #ffffff;
+      background: ${({theme}) => theme.colors.hover};;
+    }
+  }
+  &:active {
+    border: 2px solid #00E88A;
+    color: #00E88A;
+    ::placeholder {
+      color: #00E88A;
+    }
+  }
+  &:focus {
+    border: 2px solid #00E88A;
+    color: #00E88A;
+    ::placeholder {
+      color: #00E88A;
+    }
+  }
+
+.input {
+    color: #6B6B6B;
+    border: none;
+    outline: unset;
+    ::placeholder {
+      color: #6B6B6B;
+    }
+    &:hover {
+      color: #00E88A;
+      ::placeholder {
+        color: #00E88A;
+      }
+    }
+    &:active {
+      color: #00E88A;
+      ::placeholder {
+        color: #00E88A;
+      }
+    }
+    &:focus {
+      color: #00E88A;
+      ::placeholder {
+        color: #00E88A;
+      }
+    }
+  }
+`
+
+export const WithdrawMax = styled(Box)`
+  line-height: 1;
+  box-sizing: border-box;
+  background: ${({theme}) => theme.colors.normal};
+  height: .38rem;
   padding: .085rem .12rem;
   font-size: .2rem;
   font-weight: 700;

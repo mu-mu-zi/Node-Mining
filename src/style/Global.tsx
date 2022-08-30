@@ -27,6 +27,11 @@ const GlobalStyle = createGlobalStyle `
       min-width: initial;
     `}
   }
+  .flex-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
 `
 export default GlobalStyle

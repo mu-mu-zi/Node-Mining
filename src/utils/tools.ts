@@ -1,3 +1,5 @@
+import OpenMessageBox, { MsgStatus } from "components/messageBox/MessageBox";
+import { NUMBER_REG, INT_REG, INPUT_NUMBER_REG, FLOAT_NUMBER } from "./global";
 
 
 export function getEventParentElement(element: HTMLElement, targetId: string): HTMLElement | null {
@@ -8,6 +10,16 @@ export function getEventParentElement(element: HTMLElement, targetId: string): H
     } else {
         return getEventParentElement(element.parentElement!, targetId);
     }
+}
+
+export function Notice(msg: string, type?: MsgStatus, params: any = {}) {
+    //alert(msg);
+    //Toast(msg);
+    OpenMessageBox({
+        title: msg,
+        subtitle: params.subtitle || "",
+        type: type ?? MsgStatus.warn
+    })
 }
 
 //async await Error Handling
@@ -40,4 +52,20 @@ export function formatAddress(address: string, start = 6, end = 4) {
     }
     let reg = new RegExp(`(.{${start}}).+(.{${end}}$)`, "g");
     return address.replace(reg, "$1...$2")
+}
+
+export function isNumber(str: string) {
+    return new RegExp(NUMBER_REG, "gi").test(str);
+}
+export function isIntNumber(str: string) {
+    return new RegExp(INT_REG, "gi").test(str);
+}
+export function isInputNumber(str: string) {
+    return new RegExp(INPUT_NUMBER_REG, "gi").test(str);
+}
+export function isFloatNumber(str: string) {
+    return new RegExp(FLOAT_NUMBER, "gi").test(str);
+}
+export function isEmptyObject(data: Object) {
+    return !data || Object.keys(data).length === 0;
 }

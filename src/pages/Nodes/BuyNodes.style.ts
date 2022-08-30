@@ -29,6 +29,7 @@ export const OrderInput = styled(Input)`
   height: .36rem;
   width: .9rem;
   .input {
+    display: block;
     background: transparent;
     border: none;
     color: #6B6B6B;
