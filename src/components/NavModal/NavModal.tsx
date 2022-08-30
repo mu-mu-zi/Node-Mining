@@ -84,6 +84,7 @@ export default function NavModal(props: IOpenModal & AA) {
           onClick={() => props.destoryComponent()}
           to={"/aboutus"} className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`} >{t(`ABOUT US`)}</RouterLink>
         <Typography
+          display={'none'}
           fontSize={'20px'}
           fontWeight={'400'}
           color={'#ffffff'}

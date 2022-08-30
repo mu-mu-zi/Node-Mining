@@ -237,7 +237,7 @@ export const NodeBtn = styled.div`
 `
 
 export const PartFive= styled.div`
-    padding: 141px 320px 207px;
+    padding: 141px 200px 207px;
     background: #000;
     position: relative;
   ${({theme}) => theme.mediaWidth.sm`
@@ -340,6 +340,9 @@ export const Roadmap = styled(Box)`
   /* color: #F6B91B; */
   background: #F6B91B;
   border-radius: 3px;
+  ${({theme}) => theme.mediaWidth.sm`
+    left: 26px;
+  `}
 `
 
 export const RoadmapImg = styled.img`
@@ -350,6 +353,11 @@ export const RoadmapImg = styled.img`
   transform: translateX(-50%);
   width: .58rem;
   height: .61rem;
+  ${({theme}) => theme.mediaWidth.sm`
+    left: 26px;
+    width: 24.8px;
+    height: 26.08px;
+  `}
 `
 
 export const RoadmapHover = styled(Flex)`

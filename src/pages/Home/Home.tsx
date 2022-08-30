@@ -308,7 +308,7 @@ export default function Home() {
               fontSize={theme.isH5 ? '16px' : '.28rem'}
               fontWeight={400}
               color={'#ffffff'}
-              maxWidth={theme.isH5 ? '100%' : '9.02rem'}
+              maxWidth={theme.isH5 ? '100%' : '10.02rem'}
 
               paddingBottom={theme.isH5 ? '50px' : '0'}
               borderBottom={theme.isH5 ? '5px dashed #00E88A' : 'none'}
@@ -451,95 +451,219 @@ export default function Home() {
         >
           {t(`Core team`)}
         </Title>
-
-        <Flex
-          marginTop={theme.isH5 ? '50px' : '120px'}
-          gap={'10px'}
-          flexWrap={'wrap'}
-          justifyContent={'center'}
-          position={'relative'}
-        >
-          <Grid
-            gridTemplateColumns={'repeat(3,1fr)'}
-            gap={'1rem'}
-          >
-            <ColumnStart
-              gap={'.3rem'}
+        {
+          theme.isH5 ?
+            <Flex
+              gap={'25px'}
+              flexDirection={'column'}
+              marginTop={'50px'}
             >
-              <CoreTeamImg>
-                <Image src={require('assets/images/Home/Ryan.png')} alt="" />
-                <CoreTeamId>
+              <Flex
+                gap={'14px'}
+              >
+                <Image
+                  style={{ width: '170px', height: '260px', borderRadius: '10px' }}
+                  src={require('assets/images/Home/Ryan.png')} alt="" />
+                  
+                <Flex
+                  flexDirection={'column'}
+                  alignItems={'start'}
+                  justifyContent={'flex-end'}
+                >
                   <Typography
-                    fontSize={'.28rem'}
-                    fontWeight={'bold'}
+                    color="#F6B91B"
+                    fontSize="16px"
+                    fontWeight="bold"
+                    marginBottom="10px"
                   >Ryan Chris</Typography>
                   <Typography
-                    fontSize={'.22rem'}
-                    fontWeight={'normal'}
+                    color="#F6B91B"
+                    fontSize="14px"
+                    fontWeight="normal"
+                    marginBottom="25px"
                   >CEO</Typography>
-                </CoreTeamId>
-              </CoreTeamImg>
-              <Box
-                fontSize={'.22rem'}
-                color={'#ffffff'}
-              >
-                <Typography>{t(`More than 5 years of crypto investment experience;`)}</Typography>
-                <Typography>{t(`Marketing & financial consulting services for more than 5 blockchain projects;`)}</Typography>
-
-              </Box>
-            </ColumnStart>
-            <ColumnStart
-              gap={'.3rem'}
-            >
-              <CoreTeamImg>
-                <Image src={require('assets/images/Home/Yuby.png')} alt="" />
-                <CoreTeamId>
                   <Typography
-                    fontSize={'.28rem'}
-                    fontWeight={'bold'}
+                    fontSize={'14px'}
+                    fontWeight={'normal'}
+                    color={'#ffffff'}
+                  >{t(`More than 5 years of crypto investment experience;`)}</Typography>
+                  <Typography
+                    fontSize={'14px'}
+                    fontWeight={'normal'}
+                    color={'#ffffff'}
+                  >{t(`Marketing & financial consulting services for more than 5 blockchain projects;`)}</Typography>
+                </Flex>
+              </Flex>
+              <Flex
+                gap={'14px'}
+                flexDirection={'row-reverse'}
+              >
+                <Image
+                  style={{ width: '170px', height: '260px', borderRadius: '10px'  }}
+                  src={require('assets/images/Home/Yuby.png')} alt="" />
+                <Flex
+                  flexDirection={'column'}
+                  alignItems={'flex-end'}
+                  textAlign={'right'}
+                  justifyContent={'flex-end'}
+                >
+                  <Typography
+                    color="#F6B91B"
+                    fontSize="16px"
+                    fontWeight="bold"
+                    marginBottom="10px"
+                    textAlign={'right'}
                   >Yuby Brown</Typography>
                   <Typography
-                    fontSize={'.22rem'}
-                    fontWeight={'normal'}
+                    color="#F6B91B"
+                    fontSize="14px"
+                    fontWeight="normal"
+                    marginBottom="25px"
+                    textAlign={'left'}
                   >Co-Founder</Typography>
-                </CoreTeamId>
-              </CoreTeamImg>
-              <Box
-                fontSize={'.22rem'}
-                color={'#ffffff'}
-              >
-
-                <Typography>{t(`More than 5 years of project management experience;`)}</Typography>
-                <Typography>{t(`Worked for blue chip companies and startups;`)}</Typography>
-
-              </Box>
-            </ColumnStart>
-            <ColumnStart
-              gap={'.3rem'}
-            >
-              <CoreTeamImg>
-                <Image src={require('assets/images/Home/Eden.png')} alt="" />
-                <CoreTeamId>
                   <Typography
-                    fontSize={'.28rem'}
-                    fontWeight={'bold'}
+                    fontSize={'14px'}
+                    fontWeight={'normal'}
+                    color={'#ffffff'}
+                  >{t(`More than 5 years of project management experience;`)}</Typography>
+                  <Typography
+                    fontSize={'14px'}
+                    fontWeight={'normal'}
+                    color={'#ffffff'}
+                  >{t(`Worked for blue chip companies and startups;`)}</Typography>
+                </Flex>
+              </Flex>
+              <Flex
+                gap={'14px'}
+              >
+                <Image
+                  style={{ width: '170px', height: '260px', borderRadius: '10px'  }}
+                  src={require('assets/images/Home/Eden.png')} alt="" />
+                <Flex
+                  flexDirection={'column'}
+                  alignItems={'start'}
+                  justifyContent={'flex-end'}
+                >
+                  <Typography
+                    color="#F6B91B"
+                    fontSize="16px"
+                    fontWeight="bold"
+                    marginBottom="10px"
                   >Eden</Typography>
                   <Typography
-                    fontSize={'.22rem'}
-                    fontWeight={'normal'}
+                    color="#F6B91B"
+                    fontSize="14px"
+                    fontWeight="normal"
+                    marginBottom="25px"
                   >Co-Founder</Typography>
-                </CoreTeamId>
-              </CoreTeamImg>
-              <Box
-                fontSize={'.22rem'}
-                color={'#ffffff'}
+                  <Typography
+                    fontSize={'14px'}
+                    fontWeight={'normal'}
+                    color={'#ffffff'}
+                  >{t(`More than 7 years of executive experience in IT strategy and cybersecurity;`)}</Typography>
+                  <Typography
+                    fontSize={'14px'}
+                    fontWeight={'normal'}
+                    color={'#ffffff'}
+                  >{t(`Previously CTO of a multinational enterprise software company.`)}</Typography>
+                </Flex>
+              </Flex>
+
+            </Flex>
+            :
+            <Flex
+              marginTop={theme.isH5 ? '50px' : '120px'}
+              gap={'10px'}
+              flexWrap={'wrap'}
+              justifyContent={'center'}
+              position={'relative'}
+            >
+              <Grid
+                gridTemplateColumns={'repeat(3,1fr)'}
+                gap={'1rem'}
               >
-                <Typography>{t(`More than 7 years of executive experience in IT strategy and cybersecurity;`)}</Typography>
-                <Typography>{t(`Previously CTO of a multinational enterprise software company.`)}</Typography>
-              </Box>
-            </ColumnStart>
-          </Grid>
-        </Flex>
+
+                <Flex
+                  flexDirection={'column'}
+                  gap={'.3rem'}
+                >
+                  <CoreTeamImg>
+                    <Image src={require('assets/images/Home/Ryan.png')} alt="" />
+                    <CoreTeamId>
+                      <Typography
+                        fontSize={'.28rem'}
+                        fontWeight={'bold'}
+                      >Ryan Chris</Typography>
+                      <Typography
+                        fontSize={'.22rem'}
+                        fontWeight={'normal'}
+                      >CEO</Typography>
+                    </CoreTeamId>
+                  </CoreTeamImg>
+                  <Box
+                    fontSize={'.22rem'}
+                    color={'#ffffff'}
+                  >
+                    <Typography>{t(`More than 5 years of crypto investment experience;`)}</Typography>
+                    <Typography>{t(`Marketing & financial consulting services for more than 5 blockchain projects;`)}</Typography>
+
+                  </Box>
+                </Flex>
+                <Flex
+                  flexDirection={'column'}
+                  gap={'.3rem'}
+                >
+                  <CoreTeamImg>
+                    <Image src={require('assets/images/Home/Yuby.png')} alt="" />
+                    <CoreTeamId>
+                      <Typography
+                        fontSize={'.28rem'}
+                        fontWeight={'bold'}
+                      >Yuby Brown</Typography>
+                      <Typography
+                        fontSize={'.22rem'}
+                        fontWeight={'normal'}
+                      >Co-Founder</Typography>
+                    </CoreTeamId>
+                  </CoreTeamImg>
+                  <Box
+                    fontSize={'.22rem'}
+                    color={'#ffffff'}
+                  >
+
+                    <Typography>{t(`More than 5 years of project management experience;`)}</Typography>
+                    <Typography>{t(`Worked for blue chip companies and startups;`)}</Typography>
+
+                  </Box>
+                </Flex>
+                <Flex
+                  flexDirection={'column'}
+                  gap={'.3rem'}
+                >
+                  <CoreTeamImg>
+                    <Image src={require('assets/images/Home/Eden.png')} alt="" />
+                    <CoreTeamId>
+                      <Typography
+                        fontSize={'.28rem'}
+                        fontWeight={'bold'}
+                      >Eden</Typography>
+                      <Typography
+                        fontSize={'.22rem'}
+                        fontWeight={'normal'}
+                      >Co-Founder</Typography>
+                    </CoreTeamId>
+                  </CoreTeamImg>
+                  <Box
+                    fontSize={'.22rem'}
+                    color={'#ffffff'}
+                  >
+                    <Typography>{t(`More than 7 years of executive experience in IT strategy and cybersecurity;`)}</Typography>
+                    <Typography>{t(`Previously CTO of a multinational enterprise software company.`)}</Typography>
+                  </Box>
+                </Flex>
+              </Grid>
+            </Flex>
+        }
 
         <RowCenter
           marginTop={theme.isH5 ? '65px' : '3.22rem'}
@@ -570,24 +694,24 @@ export default function Home() {
         >
 
           <Grid
-            gap={'.6rem 1.96rem'}
-            gridTemplateColumns={'repeat(2,1fr)'}
+            gap={theme.isH5 ? '44px' : '.6rem 1.96rem'}
+            gridTemplateColumns={theme.isH5 ? '1fr' : 'repeat(2,1fr)'}
             position={'relative'}
           >
-            <Roadmap>
-            </Roadmap>
+            <Roadmap />
             <RoadmapImg src={require('assets/svg/roadmap_icon.svg').default} />
             <Flex
               gap={'.24rem'}
               color={'#00E88A'}
-              fontSize={'.3rem'}
+              fontSize={theme.isH5 ? '14px' : '.3rem'}
               fontWeight={'500'}
               flexDirection={'column'}
-              alignItems={'end'}
-              textAlign={'right'}
+              alignItems={theme.isH5 ? 'start' : 'end'}
+              textAlign={theme.isH5 ? 'left' : 'right'}
+              paddingLeft={theme.isH5 ? '64px' : '0'}
             >
               <Typography
-                fontSize={'.43rem'}
+                fontSize={theme.isH5 ? '16px' : '.43rem'}
                 fontWeight={'bold'}
               >Q3 2022</Typography>
               <Typography>{t(`Launch Getaverse platform`)}</Typography>
@@ -596,21 +720,22 @@ export default function Home() {
               <Typography>{t(`Deploy the Trusted Verifier Node`)}</Typography>
             </Flex>
 
-            <Box />
+            <Box display={theme.isH5 ? 'none' : ''} />
 
-            <Box />
+            <Box display={theme.isH5 ? 'none' : ''} />
 
             <RoadmapHover
-              gap={'.24rem'}
+              gap={theme.isH5 ? '10px' : '.24rem'}
               color={'#ffffff'}
-              fontSize={'.3rem'}
+              fontSize={theme.isH5 ? '16px' : '.3rem'}
               fontWeight={'500'}
               flexDirection={'column'}
               textAlign={'left'}
               alignItems={'start'}
+              paddingLeft={theme.isH5 ? '64px' : '0'}
             >
               <Typography
-                fontSize={'.43rem'}
+                fontSize={theme.isH5 ? '14px' : '.43rem'}
                 fontWeight={'bold'}
                 color={'#F6B91B'}
               >Q4 2022</Typography>
@@ -620,16 +745,17 @@ export default function Home() {
             </RoadmapHover>
 
             <RoadmapHover
-              gap={'.24rem'}
+              gap={theme.isH5 ? '10px' : '.24rem'}
               color={'#ffffff'}
-              fontSize={'.3rem'}
+              fontSize={theme.isH5 ? '14px' : '.3rem'}
               fontWeight={'500'}
               flexDirection={'column'}
-              alignItems={'end'}
-              textAlign={'right'}
+              alignItems={theme.isH5 ? 'start' : 'end'}
+              textAlign={theme.isH5 ? 'left' : 'right'}
+              paddingLeft={theme.isH5 ? '64px' : '0'}
             >
               <Typography
-                fontSize={'.43rem'}
+                fontSize={theme.isH5 ? '14px' : '.43rem'}
                 fontWeight={'bold'}
                 color={'#F6B91B'}
               >Q1 2023</Typography>
@@ -641,21 +767,22 @@ export default function Home() {
               <Typography>{t(`Provide strategic incubation services`)}</Typography>
             </RoadmapHover>
 
-            <Box />
+            <Box display={theme.isH5 ? 'none' : ''} />
 
-            <Box />
+            <Box display={theme.isH5 ? 'none' : ''} />
 
-            <RoadmapHover 
-              gap={'.24rem'}
+            <RoadmapHover
+              gap={theme.isH5 ? '10px' : '.24rem'}
               color={'#ffffff'}
-              fontSize={'.3rem'}
+              fontSize={theme.isH5 ? '14px' : '.3rem'}
               fontWeight={'500'}
               flexDirection={'column'}
               textAlign={'left'}
               alignItems={'start'}
+              paddingLeft={theme.isH5 ? '64px' : '0'}
             >
               <Typography
-                fontSize={'.43rem'}
+                fontSize={theme.isH5 ? '16px' : '.43rem'}
                 fontWeight={'bold'}
                 color={'#F6B91B'}
               >Q2 2023</Typography>
