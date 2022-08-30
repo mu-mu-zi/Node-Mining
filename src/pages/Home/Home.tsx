@@ -1,6 +1,6 @@
 import React from 'react'
 import Box, { Typography } from 'components/BaseElement'
-import { Column } from 'components/BaseElement/Column'
+import { Column, ColumnStart } from 'components/BaseElement/Column'
 import Flex from 'components/BaseElement/Flex'
 import Grid from 'components/BaseElement/Grid'
 import { Row, RowCenter } from 'components/BaseElement/Row'
@@ -9,7 +9,8 @@ import { useTranslation } from 'react-i18next'
 import {
   Banner, Describe, FlyNode, IconLinks, PartTwo, Display, DisplayVision, Vision,
   PartThree, CardWrapper, Card, CardBg, PartFour, NodeBtn, PartFive, PartnersBg,
-  PartSix, EmailIpt, Image, RoadMapCard, RoadMapLi, ImageHover, LineCut
+  PartSix, EmailIpt, Image, ImageHover, LineCut, CoreTeamImg, Roadmap,
+  CoreTeamId, RoadmapHover, RoadmapImg
 } from './Home.styled'
 import { Z_INDEX } from 'utils/global'
 import { Title } from 'pages/Digital/Digital.styled'
@@ -18,7 +19,7 @@ import useTheme from 'hooks/useTheme'
 
 export default function Home() {
   const { t } = useTranslation()
-  const {theme} = useTheme()
+  const { theme } = useTheme()
   const Advantages = [
     {
       icon: theme.isH5 ? require('assets/svg/index_part_five_1_h5.svg').default : require('assets/svg/index_part_five_1.svg').default,
@@ -42,7 +43,7 @@ export default function Home() {
     },
   ]
 
-  
+
   return (
     <>
       <Banner>
@@ -56,14 +57,14 @@ export default function Home() {
           // data-aos="fade-up"
         >{t(`GETAVERSE`)}</Typography> */}
 
-        <Describe 
-          // data-aos="fade-up"
+        <Describe
+        // data-aos="fade-up"
         >
           {t(`Getaverse is a metaverse ecological service platform based on the Web3 digital authentication engine protocol.`)}
         </Describe>
 
-        <FlyNode 
-          // data-aos="fade-up"
+        <FlyNode
+        // data-aos="fade-up"
         >
           {t(`APPLY FOR NODE`)}
         </FlyNode>
@@ -100,10 +101,10 @@ export default function Home() {
         </IconLinks>
       </Banner>
       <PartTwo>
-        <Display 
-          // data-aos-anchor-placement="bottom-top" 
-          // data-aos="fade-up"
-          // data-aos="zoom-in"
+        <Display
+        // data-aos-anchor-placement="bottom-top" 
+        // data-aos="fade-up"
+        // data-aos="zoom-in"
         >
 
           <Box
@@ -119,19 +120,19 @@ export default function Home() {
           <Box
             display={theme.isH5 ? 'none' : ''}
           >
-            <Image src={require('assets/svg/index_part_two_3.svg').default} alt="" />
+            <Image src={require('assets/images/Home/index_part_two_3.png')} alt="" />
           </Box>
 
         </Display>
 
         <DisplayVision>
-          <Title 
+          <Title
             marginBottom={theme.isH5 ? "21px" : '60px'}
             display={'inline-block'}
-            style={{textAlign: 'left'}}
-            // textAlign={'left'}
-            // data-aos-anchor-placement="bottom-top"
-            // data-aos="fade-right" 
+            style={{ textAlign: 'left' }}
+          // textAlign={'left'}
+          // data-aos-anchor-placement="bottom-top"
+          // data-aos="fade-right" 
           >
             {t(`Vision`)}
           </Title>
@@ -143,7 +144,7 @@ export default function Home() {
             <Column
               gap='30px'
             >
-              <ImageHover 
+              <ImageHover
                 // data-aos-anchor-placement="bottom-top" 
                 // data-aos="fade-up-right"
                 bgColor="rgba(246, 185, 27, .5)"
@@ -159,8 +160,8 @@ export default function Home() {
                 fontSize={theme.isH5 ? '16px' : '.28rem'}
                 fontWeight='400'
                 textAlign={'center'}
-                // data-aos-anchor-placement="bottom-top"
-                // data-aos="fade-up-right"
+              // data-aos-anchor-placement="bottom-top"
+              // data-aos="fade-up-right"
               >
                 {t(`Getaverse is not just a metaverse reputation system. We will be the top private domain traffic portal in the future metaverse world and will provide a bridge to link Web3 to the huge numbers of digital users in Web2.`)}
               </Box>
@@ -170,14 +171,14 @@ export default function Home() {
             <Column
               gap='30px'
             >
-              <ImageHover 
+              <ImageHover
                 // data-aos="fade-up-left"
                 // data-aos-anchor-placement="bottom-top"
                 bgColor="rgba(0, 232, 138, .5)"
                 textColor="#F6B91B"
                 text="Exclusive Metaverse Digital Identity System"
               >
-                <Image                  
+                <Image
                   src={require('assets/images/index_part_three_2.png')} alt="" />
               </ImageHover>
               <Box
@@ -185,8 +186,8 @@ export default function Home() {
                 fontSize={theme.isH5 ? '16px' : '.28rem'}
                 fontWeight='400'
                 textAlign={'center'}
-                // data-aos="fade-up-left"
-                // data-aos-anchor-placement="bottom-top"
+              // data-aos="fade-up-left"
+              // data-aos-anchor-placement="bottom-top"
               >
                 {t(`Users will get an exclusive metaverse decentralized identity (DID) system in Getaverse. They can generate their own SBT tokens and provide different advantageous platform services based on the user's reputation level in the platform.`)}
               </Box>
@@ -199,14 +200,14 @@ export default function Home() {
             width={'100%'}
             minWidth={theme.isH5 ? 'initial' : '1280px'}
             zIndex={Z_INDEX.index_vision}
-          
+
           >
-            <Image 
+            <Image
               // data-aos="fade-up"
               // data-aos-anchor-placement="bottom-top"
               // data-aos-offset="600"
-              style={{ width: '100%' }} 
-              src={ theme.isH5 ? require('assets/images/Home/index_part_four_1_h5.png') : require('assets/svg/index_part_four_1.svg').default} alt="" 
+              style={{ width: '100%' }}
+              src={theme.isH5 ? require('assets/images/Home/index_part_four_1_h5.png') : require('assets/svg/index_part_four_1.svg').default} alt=""
             />
           </Box>
 
@@ -227,18 +228,18 @@ export default function Home() {
             // fontWeight={'500'}
             // color={'#fff'}
             whiteSpace={'nowrap'}
-            // data-aos="fade-right"
-            // data-aos-anchor-placement="bottom-top"
-            // data-aos-offset="700"
+          // data-aos="fade-right"
+          // data-aos-anchor-placement="bottom-top"
+          // data-aos-offset="700"
           >{t(`Getaverse advantages`)}</Title>
           <Box
             fontSize={theme.isH5 ? '18px' : '.28rem'}
             fontWeight={'400'}
             color={'#fff'}
             textAlign={'center'}
-            // data-aos="fade-left"
-            // data-aos-anchor-placement="bottom-top"
-            // data-aos-offset="700"
+          // data-aos="fade-left"
+          // data-aos-anchor-placement="bottom-top"
+          // data-aos-offset="700"
           >{t(`Getaverse will provide a way to monetize, contractualize personal data, information and value.`)}</Box>
         </Flex>
 
@@ -253,15 +254,15 @@ export default function Home() {
               return (
                 <Card
                   key={index}
-                  // data-aos="zoom-in-up"
-                  // data-aos-anchor-placement="bottom-top"
-                  //  data-aos-offset="700"
+                // data-aos="zoom-in-up"
+                // data-aos-anchor-placement="bottom-top"
+                //  data-aos-offset="700"
                 >
-                  <Image  
-                    src={item.icon} alt="" 
+                  <Image
+                    src={item.icon} alt=""
                   />
-                  <Typography fontSize={ theme.isH5 ? '18px' :".28rem"} fontWeight={"bold"} margin={"24px 0 16px"} color="#F6B91B">{item.title}</Typography>
-                  <Typography fontSize={ theme.isH5 ? '16px' : ".22rem"} color="#F5F5F5">{item.text}</Typography>
+                  <Typography fontSize={theme.isH5 ? '18px' : ".28rem"} fontWeight={"bold"} margin={"24px 0 16px"} color="#F6B91B">{item.title}</Typography>
+                  <Typography fontSize={theme.isH5 ? '16px' : ".22rem"} color="#F5F5F5">{item.text}</Typography>
                 </Card>
               )
             })
@@ -311,8 +312,8 @@ export default function Home() {
 
               paddingBottom={theme.isH5 ? '50px' : '0'}
               borderBottom={theme.isH5 ? '5px dashed #00E88A' : 'none'}
-              // data-aos="fade-up"
-              // data-aos-anchor-placement="bottom-top"
+            // data-aos="fade-up"
+            // data-aos-anchor-placement="bottom-top"
             >
               {t(`Getaverse provides the infrastructure for community members to`)}<br />
               {t(`manage and contribute digital credentials to our data network. Our`)}<br />
@@ -333,22 +334,22 @@ export default function Home() {
           gap={'115px'}
         >
 
-          <Box 
+          <Box
             display={theme.isH5 ? 'none' : ''}
           >
             <Image src={require('assets/svg/index_part_six_1.svg').default} alt="" />
           </Box>
 
-          <Box 
+          <Box
             display={theme.isH5 ? 'none' : ''}
           >
             <Image src={require('assets/svg/index_part_six_2.svg').default} alt="" />
           </Box>
 
-          <Box 
-            // data-aos="fade-up" 
-            // data-aos-anchor-placement="bottom-top" 
-            // data-aos-delay="500"
+          <Box
+          // data-aos="fade-up" 
+          // data-aos-anchor-placement="bottom-top" 
+          // data-aos-delay="500"
           >
             <Image src={require('assets/svg/index_part_six_3.svg').default} alt="" />
           </Box>
@@ -363,8 +364,8 @@ export default function Home() {
             fontFamily={'RomicStd'}
             // maxWidth={'1134px'}
             margin={theme.isH5 ? '33px 0 22px' : '54px 0 78px'}
-            // data-aos="fade-up"
-            // data-aos-anchor-placement="bottom-top"
+          // data-aos="fade-up"
+          // data-aos-anchor-placement="bottom-top"
           >
             {t(`GETA is the governance token of the Getaverse, with a total supply of 5 billion.`)}
           </Typography>
@@ -376,18 +377,18 @@ export default function Home() {
           marginBottom={theme.isH5 ? '20px' : '43px'}
         >
           <NodeBtn>{t(`Purchase node`)}</NodeBtn>
-          <Image 
-          // data-aos-anchor-placement="bottom-top" 
-          // data-aos="fade-up" 
+          <Image
+            // data-aos-anchor-placement="bottom-top" 
+            // data-aos="fade-up" 
             style={{
               width: theme.isH5 ? '21px' : 'auto',
               maxHeight: theme.isH5 ? '15px' : 'auto',
             }}
             src={require('assets/svg/index_part_six_4.svg').default} alt="" />
           <NodeBtn>{t(`Registration node`)}</NodeBtn>
-          <Image 
-          // data-aos-anchor-placement="bottom-top" 
-          // data-aos="fade-up" 
+          <Image
+            // data-aos-anchor-placement="bottom-top" 
+            // data-aos="fade-up" 
             style={{
               width: theme.isH5 ? '21px' : 'auto',
               maxHeight: theme.isH5 ? '15px' : 'auto',
@@ -404,8 +405,8 @@ export default function Home() {
             textAlign={'center'}
             maxWidth={'1266px'}
             marginBottom={'.2rem'}
-            // data-aos="fade-up"
-            // data-aos-anchor-placement="bottom-top"
+          // data-aos="fade-up"
+          // data-aos-anchor-placement="bottom-top"
           >
             {t(`Geta tokenomics is the core rule to ensure the long-term development of the project.`)}
           </Typography>
@@ -417,8 +418,8 @@ export default function Home() {
             color={'#ffffff'}
             textAlign={'center'}
             maxWidth={'1266px'}
-            // data-aos="fade-up"
-            // data-aos-anchor-placement="bottom-top"
+          // data-aos="fade-up"
+          // data-aos-anchor-placement="bottom-top"
           >
             {t(`Incentives based on the degree of value creation to Getaverse will always be the highest principle of Geta tokenomics.`)}
           </Typography>
@@ -426,8 +427,8 @@ export default function Home() {
         <Flex
           justifyContent={'center'}
           marginTop={theme.isH5 ? '20px' : '.4rem'}
-          // data-aos="fade-up"
-          // data-aos-anchor-placement="bottom-top"
+        // data-aos="fade-up"
+        // data-aos-anchor-placement="bottom-top"
         >
           <FlyNode>
             {t(`APPLY FOR NODE`)}
@@ -444,11 +445,11 @@ export default function Home() {
           // color={'#ffffff'}
           textAlign={'center'}
           position={'relative'}
-          // data-aos="fade-up"
-          // data-aos-anchor-placement="bottom-top"
-          // data-aos-offset="500"
+        // data-aos="fade-up"
+        // data-aos-anchor-placement="bottom-top"
+        // data-aos-offset="500"
         >
-          {t(`Strategic Partners`)}
+          {t(`Core team`)}
         </Title>
 
         <Flex
@@ -457,66 +458,97 @@ export default function Home() {
           flexWrap={'wrap'}
           justifyContent={'center'}
           position={'relative'}
-          
         >
-          <Box 
-            width={theme.isH5 ? '173px' : '4rem'}
-            height={theme.isH5 ? '50px' : '1.15rem'}
+          <Grid
+            gridTemplateColumns={'repeat(3,1fr)'}
+            gap={'1rem'}
           >
-            <Image 
-            // data-aos="fade-up"  
-            // data-aos-anchor-placement="bottom-top"
-            // data-aos-offset="600" 
-            src={require('assets/images/Home/index_part_seven_1.png')} alt="" />
+            <ColumnStart
+              gap={'.3rem'}
+            >
+              <CoreTeamImg>
+                <Image src={require('assets/images/Home/Ryan.png')} alt="" />
+                <CoreTeamId>
+                  <Typography
+                    fontSize={'.28rem'}
+                    fontWeight={'bold'}
+                  >Ryan Chris</Typography>
+                  <Typography
+                    fontSize={'.22rem'}
+                    fontWeight={'normal'}
+                  >CEO</Typography>
+                </CoreTeamId>
+              </CoreTeamImg>
+              <Box
+                fontSize={'.22rem'}
+                color={'#ffffff'}
+              >
+                <Typography>{t(`More than 5 years of crypto investment experience;`)}</Typography>
+                <Typography>{t(`Marketing & financial consulting services for more than 5 blockchain projects;`)}</Typography>
 
-          </Box>
-          <Box 
-            width={theme.isH5 ? '173px' : '4rem'}
-            height={theme.isH5 ? '50px' : '1.15rem'}
-          >
-            <Image 
-            // data-aos="fade-up" 
-            // data-aos-anchor-placement="bottom-top"
-            // data-aos-offset="600" 
-            src={require('assets/images/Home/index_part_seven_2.png')} alt="" />
+              </Box>
+            </ColumnStart>
+            <ColumnStart
+              gap={'.3rem'}
+            >
+              <CoreTeamImg>
+                <Image src={require('assets/images/Home/Yuby.png')} alt="" />
+                <CoreTeamId>
+                  <Typography
+                    fontSize={'.28rem'}
+                    fontWeight={'bold'}
+                  >Yuby Brown</Typography>
+                  <Typography
+                    fontSize={'.22rem'}
+                    fontWeight={'normal'}
+                  >Co-Founder</Typography>
+                </CoreTeamId>
+              </CoreTeamImg>
+              <Box
+                fontSize={'.22rem'}
+                color={'#ffffff'}
+              >
 
-          </Box>
-          <Box
-             width={theme.isH5 ? '173px' : '4rem'}
-             height={theme.isH5 ? '50px' : '1.15rem'}
-          >
-            <Image 
-            // data-aos="fade-up" 
-            // data-aos-anchor-placement="bottom-top"
-            // data-aos-offset="600" 
-            src={require('assets/images/Home/index_part_seven_3.png')} alt="" />
+                <Typography>{t(`More than 5 years of project management experience;`)}</Typography>
+                <Typography>{t(`Worked for blue chip companies and startups;`)}</Typography>
 
-          </Box>
-          <Box 
-            width={theme.isH5 ? '173px' : '4rem'}
-            height={theme.isH5 ? '50px' : '1.15rem'}
-          >
-            <Image 
-            // data-aos="fade-up" 
-            // data-aos-anchor-placement="bottom-top"
-            // data-aos-offset="600" 
-            src={require('assets/images/Home/index_part_seven_4.png')} alt="" />
-
-          </Box>
-          {/* <Box>
-            <Image src={require('assets/svg/index_part_seven_4.svg').default} alt="" />
-
-          </Box> */}
+              </Box>
+            </ColumnStart>
+            <ColumnStart
+              gap={'.3rem'}
+            >
+              <CoreTeamImg>
+                <Image src={require('assets/images/Home/Eden.png')} alt="" />
+                <CoreTeamId>
+                  <Typography
+                    fontSize={'.28rem'}
+                    fontWeight={'bold'}
+                  >Eden</Typography>
+                  <Typography
+                    fontSize={'.22rem'}
+                    fontWeight={'normal'}
+                  >Co-Founder</Typography>
+                </CoreTeamId>
+              </CoreTeamImg>
+              <Box
+                fontSize={'.22rem'}
+                color={'#ffffff'}
+              >
+                <Typography>{t(`More than 7 years of executive experience in IT strategy and cybersecurity;`)}</Typography>
+                <Typography>{t(`Previously CTO of a multinational enterprise software company.`)}</Typography>
+              </Box>
+            </ColumnStart>
+          </Grid>
         </Flex>
 
         <RowCenter
           marginTop={theme.isH5 ? '65px' : '3.22rem'}
         >
-          <Image  
-          // data-aos="fade-up" 
-          // data-aos-anchor-placement="bottom-top"
-          // data-aos-offset="900"  
-          src={theme.isH5 ? require('assets/images/Home/index_part_seven_6_h5.png') : require('assets/svg/index_part_seven_6.svg').default} alt="" />
+          <Image
+            // data-aos="fade-up" 
+            // data-aos-anchor-placement="bottom-top"
+            // data-aos-offset="900"  
+            src={theme.isH5 ? require('assets/images/Home/index_part_seven_6_h5.png') : require('assets/svg/index_part_seven_6.svg').default} alt="" />
         </RowCenter>
 
         <Title
@@ -525,9 +557,9 @@ export default function Home() {
           // color={'#ffffff'}
           textAlign={'center'}
           marginTop={theme.isH5 ? '49px' : '2.12rem'}
-          // data-aos="fade-up"
-          // data-aos-anchor-placement="bottom-top"
-          // data-aos-offset="1000"
+        // data-aos="fade-up"
+        // data-aos-anchor-placement="bottom-top"
+        // data-aos-offset="1000"
         >
           {t(`Roadmap`)}
         </Title>
@@ -537,138 +569,102 @@ export default function Home() {
           gap={theme.isH5 ? '61px' : '1rem'}
         >
 
-       
-          <RoadMapCard
-            type='left'
-            text='Q3 2022'
-            // data-aos="fade-right"
-            // data-aos-anchor-placement="bottom-top"
-            // data-aos-offset="1000"
+          <Grid
+            gap={'.6rem 1.96rem'}
+            gridTemplateColumns={'repeat(2,1fr)'}
+            position={'relative'}
           >
-            <Grid
-              gridTemplateColumns={theme.isH5 ? '1fr' : '1fr 1fr'}
-              gap={theme.isH5 ? '19px' : '16px 10px'}
-              fontSize={theme.isH5 ? '12px' : '.3rem'}
+            <Roadmap>
+            </Roadmap>
+            <RoadmapImg src={require('assets/svg/roadmap_icon.svg').default} />
+            <Flex
+              gap={'.24rem'}
+              color={'#00E88A'}
+              fontSize={'.3rem'}
               fontWeight={'500'}
-              color={'#ffffff'}
+              flexDirection={'column'}
+              alignItems={'end'}
+              textAlign={'right'}
             >
-              <RoadMapLi className="ty-li">
+              <Typography
+                fontSize={'.43rem'}
+                fontWeight={'bold'}
+              >Q3 2022</Typography>
+              <Typography>{t(`Launch Getaverse platform`)}</Typography>
+              <Typography>{t(`Open the wallet port`)}</Typography>
+              <Typography>{t(`Launch the Decentralized Identity system`)}</Typography>
+              <Typography>{t(`Deploy the Trusted Verifier Node`)}</Typography>
+            </Flex>
 
-                {t(`Launch Getaverse platform`)}
-              </RoadMapLi>
+            <Box />
 
-              <RoadMapLi className="ty-li">
-                {t(`Launch the Decentralized Identity system`)}
-              </RoadMapLi>
-              <RoadMapLi className="ty-li">
-                {t(`Open the wallet port`)}
-              </RoadMapLi>
-              <RoadMapLi className="ty-li">
-                {t(`Deploy the Trusted Verifier Node`)}
-              </RoadMapLi>
+            <Box />
 
-            </Grid>
-          </RoadMapCard>
-         
-
-          <RoadMapCard
-            type='right'
-            text='Q4 2022'
-            // data-aos="fade-left"
-            // data-aos-anchor-placement="bottom-top"
-            // data-aos-offset="1000"
-          >
-            <Grid
-              gridTemplateColumns={theme.isH5 ? '1fr' : '1fr 1fr'}
-              gap={theme.isH5 ? '19px' : '16px 10px'}
-              fontSize={theme.isH5 ? '12px' : '.3rem'}
+            <RoadmapHover
+              gap={'.24rem'}
+              color={'#ffffff'}
+              fontSize={'.3rem'}
               fontWeight={'500'}
+              flexDirection={'column'}
+              textAlign={'left'}
+              alignItems={'start'}
+            >
+              <Typography
+                fontSize={'.43rem'}
+                fontWeight={'bold'}
+                color={'#F6B91B'}
+              >Q4 2022</Typography>
+              <Typography>{t(`Launch the SBT-based credit system `)}</Typography>
+              <Typography>{t(`Operate the trusted verifier node`)}</Typography>
+              <Typography>{t(`DAO governance goes live`)}</Typography>
+            </RoadmapHover>
+
+            <RoadmapHover
+              gap={'.24rem'}
               color={'#ffffff'}
-            >
-              <RoadMapLi className="ty-li">
-                {t(`Launch the Trusted Verifier Node`)}
-              </RoadMapLi>
-
-              <RoadMapLi className="ty-li">
-                {t(`Launch the SBT-based credit system `)}
-              </RoadMapLi>
-              <RoadMapLi className="ty-li">
-                {t(`Launch the DAO Governance`)}
-              </RoadMapLi>
-
-            </Grid>
-          
-            
-          </RoadMapCard>
-
-          <RoadMapCard
-            type='left'
-            text='Q1 2023'
-            // data-aos="fade-right"
-            // data-aos-anchor-placement="bottom-top"
-            // data-aos-offset="1000"
-          >
-              <Grid
-                gridTemplateColumns={theme.isH5 ? '1fr' : '1fr 1fr'}
-                gap={theme.isH5 ? '19px' : '16px 10px'}
-                fontSize={theme.isH5 ? '12px' : '.3rem'}
-                fontWeight={'500'}
-                color={'#ffffff'}
-            >
-              <RoadMapLi className="ty-li">
-                {t(`Open the multi-functional API interface`)}
-              </RoadMapLi>
-
-              <RoadMapLi className="ty-li">
-                {t(`Connect to the Metaverse World`)}
-              </RoadMapLi>
-              <RoadMapLi className="ty-li">
-                {t(`Launch more Web3 applications based on community voting`)}
-              </RoadMapLi>
-              <RoadMapLi className="ty-li">
-                {t(`Upgrade the SBT-based credit system`)}
-              </RoadMapLi>
-              <RoadMapLi className="ty-li">
-                {t(`Enable creative expansion work`)}
-              </RoadMapLi>
-              <RoadMapLi className="ty-li">
-                {t(`Provide strategic incubation services`)}
-              </RoadMapLi>
-
-            </Grid>
-          </RoadMapCard>
-
-          <RoadMapCard
-            type='right'
-            text='Q2 2023'
-            // data-aos="fade-left"
-            // data-aos-anchor-placement="bottom-top"
-            // data-aos-offset="1000"
-          >
-            <Grid
-              gridTemplateColumns={theme.isH5 ? '1fr' : '1fr 1fr'}
-              gap={theme.isH5 ? '19px' : '16px 10px'}
-              fontSize={theme.isH5 ? '12px' : '.3rem'}
+              fontSize={'.3rem'}
               fontWeight={'500'}
-              color={'#ffffff'}
+              flexDirection={'column'}
+              alignItems={'end'}
+              textAlign={'right'}
             >
-              <RoadMapLi className="ty-li">
-                {t(`Provide customized platform services`)}
-              </RoadMapLi>
+              <Typography
+                fontSize={'.43rem'}
+                fontWeight={'bold'}
+                color={'#F6B91B'}
+              >Q1 2023</Typography>
+              <Typography>{t(`Open the multi-functional API interface `)}</Typography>
+              <Typography>{t(`Connect to the Metaverse World`)}</Typography>
+              <Typography>{t(`Launch more Web3 applications based on community voting`)}</Typography>
+              <Typography>{t(`Upgrade the SBT-based credit system`)}</Typography>
+              <Typography>{t(`Enable creative expansion work`)}</Typography>
+              <Typography>{t(`Provide strategic incubation services`)}</Typography>
+            </RoadmapHover>
 
-              <RoadMapLi className="ty-li">
-                {t(`Complete multi-chain deployment`)}
-              </RoadMapLi>
-              <RoadMapLi className="ty-li">
-                {t(`Formal nodes start the next round of staking`)}
-              </RoadMapLi>
-              <RoadMapLi className="ty-li">
-                {t(`More expansionary work… `)}
-              </RoadMapLi>
+            <Box />
 
-            </Grid>
-            
-          </RoadMapCard>
+            <Box />
+
+            <RoadmapHover 
+              gap={'.24rem'}
+              color={'#ffffff'}
+              fontSize={'.3rem'}
+              fontWeight={'500'}
+              flexDirection={'column'}
+              textAlign={'left'}
+              alignItems={'start'}
+            >
+              <Typography
+                fontSize={'.43rem'}
+                fontWeight={'bold'}
+                color={'#F6B91B'}
+              >Q2 2023</Typography>
+              <Typography>{t(`Provide customized platform services`)}</Typography>
+              <Typography>{t(`Complete multi-chain deployment`)}</Typography>
+              <Typography>{t(`Start the next round of formal node staking`)}</Typography>
+              <Typography>{t(`And more… `)}</Typography>
+            </RoadmapHover>
+          </Grid>
         </Column>
 
       </PartFive>
@@ -679,9 +675,9 @@ export default function Home() {
           // fontWeight={500}
           // color={'#ffffff'}
           textAlign={'center'}
-          // data-aos="fade-up"
-          // data-aos-anchor-placement="bottom-top"
-          // data-aos-offset="1000"
+        // data-aos="fade-up"
+        // data-aos-anchor-placement="bottom-top"
+        // data-aos-offset="1000"
         >
           {t(`Subscribe`)}
         </Title>
@@ -691,9 +687,9 @@ export default function Home() {
           color={'#ffffff'}
           textAlign={'center'}
           margin={theme.isH5 ? '34px auto 31px' : '47px auto 80px'}
-          // data-aos="fade-up"
-          // data-aos-anchor-placement="bottom-top"
-          // data-aos-offset="1000"
+        // data-aos="fade-up"
+        // data-aos-anchor-placement="bottom-top"
+        // data-aos-offset="1000"
         >
           {t(`Subscribe to the newsletter to hear about Getaverse updates and events.`)}
         </Typography>
@@ -703,9 +699,9 @@ export default function Home() {
           alignItems={'center'}
           flexDirection={theme.isH5 ? 'column' : 'row'}
           gap={theme.isH5 ? '17px' : '32px'}
-          // data-aos="fade-up"
-          // data-aos-anchor-placement="bottom-top"
-          // data-aos-offset="1000"
+        // data-aos="fade-up"
+        // data-aos-anchor-placement="bottom-top"
+        // data-aos-offset="1000"
         >
           <EmailIpt
             placeholder='Email'

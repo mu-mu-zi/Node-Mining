@@ -165,6 +165,7 @@ export const Title = styled(Box)`
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+    background-size: cover;
     ${({theme}) => theme.mediaWidth.sm`
       width: 83px;
       height: 52px;

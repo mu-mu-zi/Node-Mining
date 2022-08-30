@@ -5,6 +5,7 @@ import Box from "components/BaseElement";
 import Grid from "components/BaseElement/Grid";
 import { Typography } from '../../components/BaseElement/index';
 import { Z_INDEX } from "utils/global";
+import Flex from "components/BaseElement/Flex";
 
 export const Image = styled.img`
   display: block;
@@ -318,74 +319,43 @@ export const EmailIpt = styled.input`
     `}
 `
 
-export const RoadMapCard = styled.div<{type: 'left' | 'right', text: string}>`
-  border: 4px solid #F6B91B;
-  padding: 67px 61px 55px 105px;
-  transition: all 0.3s;
-  width: 100%;
+export const CoreTeamImg = styled(Box)`
   position: relative;
-  box-sizing: border-box;
-  &::before {
-    content: '${(props) =>props.text}';
-    position: absolute;
-    padding: 21px 66px;
-    color: #ffffff;
-    top: 0;
-    left: ${(props) =>props.type === 'left' ? '60px' : ''};
-    right: ${(props) =>props.type === 'right' ? '76px' : ''};
-    background: #F6B91B;
-    border-radius: 14px;
-    font-size: .4rem;
-    font-weight: bold;
-    /* transform: rotate(-2deg); */
-    transform: translateY(-60%) ${(props) =>props.type === 'right' ? 'rotate(2deg)' : 'rotate(-2deg)'} ;
-    ${({theme,type}) => theme.mediaWidth.sm`
-      font-size: 16px;
-      padding: 8px 28px;
-      left: ${type === 'left' ? '26px' : ''};
-      right: ${type === 'right' ? '24px' : ''};
-    `}
-  }
+`
+export const CoreTeamId = styled(Box)`
+  position: absolute;
+  left: .3rem;
+  bottom: .3rem;
+  color: #F6B91B;
+`
+
+export const Roadmap = styled(Box)`
+  position: absolute;
+  color: #ffffff;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  height: 100%;
+  width: 6px;
+  /* color: #F6B91B; */
+  background: #F6B91B;
+  border-radius: 3px;
+`
+
+export const RoadmapImg = styled.img`
+  position: absolute;
+  color: #ffffff;
+  left: 50%;
+  top: 20px;
+  transform: translateX(-50%);
+  width: .58rem;
+  height: .61rem;
+`
+
+export const RoadmapHover = styled(Flex)`
+  cursor: pointer;
   &:hover {
-    transform: scale(1.05);
-    border: 4px solid #00E88A;
-    &::before {
-      transition: all 0.3s;
-      background: #00E88A;
-      transform: translateY(-60%) rotate(0deg) scale(1.05);
-    }
-    .ty-li {
-      &::before {
-        background: #F6B91B;
-      }
-    }
+    color: #F6B91B;
   }
-  ${({theme}) => theme.mediaWidth.sm`
-    padding: 31px 13px 32px 54px;
-    font-size: 16px;
-  `}
 `
-export const RoadMapLi = styled(Typography)`
-  position: relative;
-  padding-left: 26px;
-  &::before {
-    content: '';
-    display: inline-block;
-    width: 15px;
-    height: 15px;
-    border-radius: 50%;
-    background: #00E88A;
-    margin-right: 11px;
-    position: absolute;
-    left: 0;
-    top: .5em;
-  ${({theme}) => theme.mediaWidth.sm`
-    width: 6px;
-    height: 6px;
-    margin-right: 4px;
-  `}
-  }
-  ${({theme}) => theme.mediaWidth.sm`
-    padding-left: 10px;
-  `}
-`
+
