@@ -1,3 +1,4 @@
+import { user_logout } from "utils/PubSubEvents";
 import Web3 from "web3";
 
 export interface ISignatrua {
@@ -21,7 +22,7 @@ export async function signString(str: string, address: string, Provider: any) : 
               resolve({origin: str, signatrue: res});
           } else {
               if(err.code === -32602){
-                  // PubSub.publish(wallet_logout);
+                  PubSub.publish(user_logout);
                   console.log(err)
               }
               reject(err);

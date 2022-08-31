@@ -15,11 +15,12 @@ import {
 import { Z_INDEX } from 'utils/global'
 import { Title } from 'pages/Digital/Digital.styled'
 import useTheme from 'hooks/useTheme'
-
+import { useNavigate } from 'react-router-dom';
 
 export default function Home() {
   const { t } = useTranslation()
   const { theme } = useTheme()
+  const navigate = useNavigate()
   const Advantages = [
     {
       icon: theme.isH5 ? require('assets/svg/index_part_five_1_h5.svg').default : require('assets/svg/index_part_five_1.svg').default,
@@ -47,15 +48,15 @@ export default function Home() {
   return (
     <>
       <Banner>
-        {/* <Typography
-          fontSize={"100px"}
+        <Typography
+          fontSize={theme.isH5 ? "46px" : "1rem"}
           fontFamily={"CRT-64"}
           fontWeight={"400"}
           color={"#F6B91B"}
-          marginBottom={"62px"}
+          // marginBottom={"62px"}
           style={{textShadow: "0px 0px 10px rgba(0,0,0,0.1600)"}}
           // data-aos="fade-up"
-        >{t(`GETAVERSE`)}</Typography> */}
+        >{t(`GETAVERSE`)}</Typography>
 
         <Describe
         // data-aos="fade-up"
@@ -65,6 +66,7 @@ export default function Home() {
 
         <FlyNode
         // data-aos="fade-up"
+          onClick={() => navigate('/nodes')}
         >
           {t(`APPLY FOR NODE`)}
         </FlyNode>
@@ -430,7 +432,9 @@ export default function Home() {
         // data-aos="fade-up"
         // data-aos-anchor-placement="bottom-top"
         >
-          <FlyNode>
+          <FlyNode
+            onClick={() => navigate('/nodes')}
+          >
             {t(`APPLY FOR NODE`)}
           </FlyNode>
         </Flex>
@@ -453,13 +457,14 @@ export default function Home() {
         </Title>
         {
           theme.isH5 ?
-            <Flex
-              gap={'25px'}
+            <Grid
+              gridGap={'25px'}
               flexDirection={'column'}
               marginTop={'50px'}
             >
-              <Flex
-                gap={'14px'}
+              <Grid
+                gridGap={'14px'}
+                gridTemplateColumns={'1fr 1fr'}
               >
                 <Image
                   style={{ width: '170px', height: '260px', borderRadius: '10px' }}
@@ -469,6 +474,7 @@ export default function Home() {
                   flexDirection={'column'}
                   alignItems={'start'}
                   justifyContent={'flex-end'}
+                  paddingBottom={'10px'}
                 >
                   <Typography
                     color="#F6B91B"
@@ -493,7 +499,7 @@ export default function Home() {
                     color={'#ffffff'}
                   >{t(`Marketing & financial consulting services for more than 5 blockchain projects;`)}</Typography>
                 </Flex>
-              </Flex>
+              </Grid>
               <Flex
                 gap={'14px'}
                 flexDirection={'row-reverse'}
@@ -506,6 +512,7 @@ export default function Home() {
                   alignItems={'flex-end'}
                   textAlign={'right'}
                   justifyContent={'flex-end'}
+                  paddingBottom={'10px'}
                 >
                   <Typography
                     color="#F6B91B"
@@ -543,6 +550,7 @@ export default function Home() {
                   flexDirection={'column'}
                   alignItems={'start'}
                   justifyContent={'flex-end'}
+                  paddingBottom={'10px'}
                 >
                   <Typography
                     color="#F6B91B"
@@ -569,7 +577,7 @@ export default function Home() {
                 </Flex>
               </Flex>
 
-            </Flex>
+            </Grid>
             :
             <Flex
               marginTop={theme.isH5 ? '50px' : '120px'}

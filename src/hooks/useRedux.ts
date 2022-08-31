@@ -4,7 +4,7 @@ import { useMemo } from 'react'
 import { appStoreSlice } from "store/appStoreSlice";
 import { IWallet } from "connectwallet/config";
 import { CoinList } from "http/api";
-
+import IAjax from 'http/types';
 
 export default function useRedux() {
   const store = useSelector((state: RootState) => state.appStore)
@@ -27,12 +27,15 @@ export default function useRedux() {
       setCoins(coins: CoinList[] | undefined) {
         dispatch(appStoreSlice.actions.setCoins(coins))
       },
-      logout(): void {
-        this.setToken(null);
-        this.setAddress("");
-        // this.clearUserInfo();
-        sessionStorage.removeItem('wallet_name');
-        sessionStorage.removeItem('token');
+      logout(): Promise<boolean> {
+        return new Promise((resolve, reject) => {
+          this.setToken(null);
+          this.setAddress("");
+          // this.clearUserInfo();
+          // sessionStorage.removeItem('wallet_name');
+          sessionStorage.removeItem('token');
+          resolve(true)
+        })
       }
     }
   }, [])

@@ -8,6 +8,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import ThemeProvider from 'theme';
 import "utils/rem"
+import AppProvider from 'AppProvider';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -16,9 +17,11 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
+        <AppProvider>
         {/* <ThemeProvider> */}
           {/* <GlobalStyle /> */}
           <App />
+        </AppProvider>
         {/* </ThemeProvider> */}
       </BrowserRouter>
     </Provider>

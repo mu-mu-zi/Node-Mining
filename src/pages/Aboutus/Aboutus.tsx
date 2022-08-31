@@ -41,10 +41,18 @@ export default function Aboutus() {
       >
         {t(`To learn more about the Getaverse, click to download the whitepaper and see more details.`)}
       </Typography>
-      
-      <EaseBtn>
-        {t(`Download White Paper`)}
-      </EaseBtn>
+      <a
+        download={'GetaverseWhitepaper.pdf'}
+        href={require('assets/GetaverseWhitepaper.pdf')}
+        target="_blank"
+        style={{
+          textDecoration: 'none'
+        }}
+      >
+        <EaseBtn>
+          {t(`Download White Paper`)}
+        </EaseBtn>
+      </a>
 
     </Banner>
   </>

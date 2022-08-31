@@ -1,6 +1,6 @@
 import OpenMessageBox, { MsgStatus } from "components/messageBox/MessageBox";
 import { NUMBER_REG, INT_REG, INPUT_NUMBER_REG, FLOAT_NUMBER } from "./global";
-
+import moment from "moment";
 
 export function getEventParentElement(element: HTMLElement, targetId: string): HTMLElement | null {
     if (!element || element.tagName === "BODY") {
@@ -69,3 +69,8 @@ export function isFloatNumber(str: string) {
 export function isEmptyObject(data: Object) {
     return !data || Object.keys(data).length === 0;
 }
+
+export function TimestampTransform(date: number) {
+    return moment(date).parseZone().format('YYYY-MM-DD HH:mm:ss')
+}
+

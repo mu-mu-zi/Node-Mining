@@ -10,7 +10,8 @@ export const PartTwo = styled(Box)`
   `}
 `
 
-export const Cooperation = styled(Box)`
+export const Cooperation = styled.a`
+  display: block;
   position: relative;
   padding: .87rem .24rem .4rem;
   background: #1A1919;
@@ -20,6 +21,7 @@ export const Cooperation = styled(Box)`
   gap: .17rem;
   /* max-width: 3.08rem; */
   box-sizing: border-box;
+  text-decoration: none;
   cursor: pointer;
   &:hover {
     transition: all 0.3s;

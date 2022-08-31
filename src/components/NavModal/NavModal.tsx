@@ -72,15 +72,15 @@ export default function NavModal(props: IOpenModal & AA) {
         <RouterLink onClick={() => props.destoryComponent()} to={"/digital"} className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`} >{t(`DID DIGITAL ID`)}</RouterLink>
         <RouterLink onClick={() => props.destoryComponent()} to={"/metaverse"} className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`} >{t(`METAVERSE`)}</RouterLink>
         <RouterLink
-          style={{pointerEvents:'none'}}
+          // style={{pointerEvents:'none'}}
           onClick={() => props.destoryComponent()}
           to={"/nodes"} className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`} >{t(`NODES`)}</RouterLink>
         <RouterLink
-          style={{pointerEvents:'none'}}
+          // style={{pointerEvents:'none'}}
           onClick={() => props.destoryComponent()}
           to={"/mynodes"} className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`} >{t(`MY NODES`)}</RouterLink>
         <RouterLink
-          style={{pointerEvents:'none'}}
+          // style={{pointerEvents:'none'}}
           onClick={() => props.destoryComponent()}
           to={"/aboutus"} className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`} >{t(`ABOUT US`)}</RouterLink>
         <Typography

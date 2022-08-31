@@ -15,7 +15,7 @@ import { useEffectState } from '../../hooks/useEffectState';
 import { EmptyStr } from '../../utils/global';
 import { Table, Td, Th, Tr } from 'components/BaseElement/Table';
 import styled from 'styled-components';
-import { Notice } from '../../utils/tools';
+import { Notice, TimestampTransform } from '../../utils/tools';
 import { MsgStatus } from 'components/messageBox/MessageBox';
 import { AwardRecords, award, pushRewardInfo, PushRewardInfo } from 'http/api';
 
@@ -344,7 +344,7 @@ export default function Invite() {
                             {t(`${item.award} ${item.symbol}`)}
                           </_Td>
                           <_Td textAlign={'center'} width={'2.04rem'}>
-                            {t(`${item.createTime}`)}
+                            {t(`${TimestampTransform(item.createTime)}`)}
                           </_Td>
                         </Tr>
                       })

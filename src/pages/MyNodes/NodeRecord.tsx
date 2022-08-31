@@ -7,11 +7,15 @@ import { RowCenter, RowStart } from 'components/BaseElement/Row';
 import { NodeRecordWrap, MyNode, ActiveNode } from './MyNodes.style';
 import Grid from 'components/BaseElement/Grid';
 import Normal from 'components/Button/Normal';
-import { GetNodeKey, getNodeKey, nodeList, NodeListRecords } from 'http/api';
+import { generateNodeKey, generateNonce, GetNodeKey, getNodeKey, nodeList, NodeListRecords } from 'http/api';
 import { useAsync } from 'react-use';
 import { useUpdateEffect } from 'ahooks';
 import { EmptyStr } from '../../utils/global';
-
+import { awaitWrap, Notice } from 'utils/tools';
+import { signString } from 'connectwallet/walletTools';
+import { useWeb3React } from '@web3-react/core';
+import { MsgStatus } from 'components/messageBox/MessageBox';
+import useRedux from 'hooks/useRedux'
 
 export default function NodeRecord() {
   const { t } = useTranslation()
@@ -20,7 +24,9 @@ export default function NodeRecord() {
   const [activeIndex, setActiveIndex] = useState<number>(0)
   const [data, setData] = useState<NodeListRecords[]>([])
   const [nodeInfo, setNodeInfo] = useState<GetNodeKey>()
-
+  const { account, provider } = useWeb3React()
+  const [reload, setReload] = useState<boolean>(false)
+  const {store} = useRedux()
   useAsync(async () => {
     let result = await nodeList({
       pageSize: 100,
@@ -29,20 +35,54 @@ export default function NodeRecord() {
     setData(result.data.records)
     setActiveNode(result.data.records[0])
     console.log(result)
-  },[])
+  }, [store.token])
 
-  const getNodeInfo = async() => {
-    if(!activeNode) return
-    let result = await getNodeKey(activeNode.id)
-    setNodeInfo(result.data)
-    console.log(result)
+  const getNodeInfo = async () => {
+    if (!activeNode) return
+    try {
+
+      let result = await getNodeKey(activeNode.id)
+      setNodeInfo(result.data)
+      console.log(result)
+    } catch (e) {
+      setNodeInfo({
+        apiKey: '',
+        apiSecret: ''
+      })
+    }
+  }
+  // cover key
+  const handleClick = async () => {
+    if (!account || !provider || !activeNode) return
+    let date = new Date().valueOf()
+    try {
+      
+      // const [nonceInfo, error] = await awaitWrap(generateNonce(account));
+      let signStr = JSON.stringify({
+        nodeId: activeNode.id,
+        timestamp: date,
+      })
+      const [signData, error] = await awaitWrap(signString(signStr, account, provider.provider));
+      if (signData) {
+        let result = await generateNodeKey({
+          originalData: signStr,
+          signature: signData.signatrue
+        })
+        setReload(!reload)
+      } else {
+        Notice('Failed to sign', MsgStatus.fail)
+      }
+    } catch (e) {
+      Notice(`${JSON.parse(JSON.stringify(e)).message}`, MsgStatus.fail)
+    }
   }
 
-  useUpdateEffect( () => {
+
+  useUpdateEffect(() => {
     // activeNode
     getNodeInfo()
     console.log(activeNode)
-  },[activeNode])
+  }, [activeNode, reload])
 
   return (
     <NodeRecordWrap>
@@ -63,9 +103,9 @@ export default function NodeRecord() {
           gridTemplateColumns={'repeat(4,1fr)'}
         >
           {
-            data.map((item,index) => {
+            data.map((item, index) => {
               return (
-                <ActiveNode key={index} 
+                <ActiveNode key={index}
                   onClick={() => {
                     setActiveNode(item);
                     setActiveIndex(index)
@@ -80,7 +120,7 @@ export default function NodeRecord() {
                     color={"#fff"}
                     textAlign={'center'}
                   >
-                    {t(`Nodes 01`)}
+                    {t(`Nodes ${item.id}`)}
                   </Typography>
                 </ActiveNode>
               )
@@ -99,32 +139,34 @@ export default function NodeRecord() {
           <ColumnStart
             gap=".16rem"
           >
-            <RowStart 
-              gap=".48rem" 
+            <RowStart
+              gap=".48rem"
               color="#fff"
               fontSize=".2rem"
               fontWeight="350"
             >
               <Typography minWidth="1.56rem">{t(`Apikey`)}</Typography>
-              <Typography>{nodeInfo?.apiKey ?? EmptyStr}</Typography>
+              <Typography>{nodeInfo?.apiKey || EmptyStr}</Typography>
             </RowStart>
-            <RowStart 
-              gap=".48rem" 
+            <RowStart
+              gap=".48rem"
               color="#fff"
               fontSize=".2rem"
               fontWeight="350"
             >
               <Typography minWidth="1.56rem">{t(`Cents earnings`)}</Typography>
-              <Typography>{nodeInfo?.apiSecret ?? EmptyStr}</Typography>
+              <Typography>{nodeInfo?.apiSecret || EmptyStr}</Typography>
             </RowStart>
           </ColumnStart>
           <RowCenter width="100%">
-            <Normal>
-              {t(`Settings`)}
+            <Normal
+              onClick={handleClick}
+            >
+              {t(`${nodeInfo?.apiSecret ? "Reset" : "Settings"}`)}
             </Normal>
           </RowCenter>
         </ColumnStart>
-        
+
 
       </Column>
     </NodeRecordWrap>

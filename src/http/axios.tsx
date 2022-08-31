@@ -1,6 +1,8 @@
 import axios, {AxiosRequestConfig, AxiosResponse} from 'axios';
 import { service_api } from 'utils/global';
+import { user_logout } from 'utils/PubSubEvents';
 import IAjax from './types';
+import PubSub from "pubsub-js";
 // import { showMessage } from '../common/utilTools';
 // import { MsgStatus } from 'src/common/enum';
 
@@ -35,8 +37,9 @@ axios.interceptors.response.use((response:AxiosResponse<IAjax>):Promise<any> => 
                 if (!response.data.success) {
                     //alert(response.data.message);
                     // showMessage(response.data.message,MsgStatus.warn);
-                    if (response.data.code === 4003) {
-                        // PubSub.publish(user_logout);
+                    if (response.data.code === 401) {
+                        PubSub.publish(user_logout);
+                        
                     }
                     return Promise.reject(response.data);
                 } else {

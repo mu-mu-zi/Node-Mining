@@ -202,7 +202,7 @@ export interface GenerateNodeKey {
 }
 
 export function generateNodeKey(data: {
-  originalData: string,
+  originalData: any,
   signature: string
 }) {
   return fetchPost<GenerateNodeKey>('/api/v1/node/generateNodeApiKey', {

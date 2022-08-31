@@ -4,3 +4,9 @@
   font-weight: 700;
   src: url('/RomicStd-Bold.otf');
 }
+@font-face {
+  font-family: 'CRT-64';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/CRT-64.otf');
+}

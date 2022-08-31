@@ -24,61 +24,73 @@ export default function Metaverse() {
       png: require('assets/svg/Metaverse/projects_1.svg').default,
       name: t(`Port3`),
       text: t(`The Gateway to Web3 Social Graph.`),
+      link: 'https://www.port3.io/',
     },
     {
       png: require('assets/svg/Metaverse/projects_2.svg').default,
       name: t(`Link3`),
       text: t(`Link3, powered by CyberConnect, is a Web3 social network of verifiable identities.`),
+      link: 'https://www.link3.io/',
     },
     {
       png: require('assets/svg/Metaverse/projects_3.svg').default,
       name: t(`Element`),
       text: t(`The First Community-driven Aggregated NFT Marketplace.`),
+      link: 'https://element.io/',
     },
     {
       png: require('assets/svg/Metaverse/projects_4.svg').default,
       name: t(`Aquanee`),
       text: t(`AQUANEE is a real-time Simulation game inspired by sea creatures. Players can breed their own pets and build an AQUANEE kingdom!`),
+      link: 'https://aquanee.com/#/',
     },
     {
       png: require('assets/svg/Metaverse/projects_5.svg').default,
       name: t(`MatthewRobotNFT`),
       text: t(`As a representative of the MetaFi, MatthewRobot is committed to exploring how to stand out in the Web3.`),
+      link: 'https://www.matthewrobot.com/',
     },
     {
       png: require('assets/svg/Metaverse/projects_6.svg').default,
       name: t(`Plato Farm`),
       text: t(`Plato Farm is a metaverse that uses blockchain technology to simulate the evolution of human civilization.`),
+      link: 'https://www.platofarm.game/index',
     },
     {
       png: require('assets/svg/Metaverse/projects_7.svg').default,
       name: t(`MetaBell`),
       text: t(`An innovative metaverse service provider.`),
+      link: 'https://www.metabell.io/',
     },
     {
       png: require('assets/svg/Metaverse/projects_8.svg').default,
       name: t(`SeekTiger`),
       text: t(`SeekTiger is a DAO ecological service platform based on WEB3.`),
+      link: 'https://www.seektiger.com/',
     },
     {
       png: require('assets/svg/Metaverse/projects_9.svg').default,
       name: t(`Okaleido`),
       text: t(`Multimedia NFT Trading Aggregator on BNB chain.`),
+      link: 'https://galaxy.eco/Okaleido/',
     },
     {
       png: require('assets/svg/Metaverse/projects_10.svg').default,
       name: t(`.Bit`),
       text: t(`.bit is a blockchain-based, open source, decentralized cross-chain account system that provides a worldwide unique naming system with a .bit suffix.`),
+      link: 'https://www.did.id/',
     },
     {
       png: require('assets/svg/Metaverse/projects_11.svg').default,
       name: t(`StarFish`),
       text: t(`Starfish OS is a starfish-style institution consensus collaboration system.`),
+      link: 'https://starfishlabs.dev/',
     },
     {
       png: require('assets/svg/Metaverse/projects_12.svg').default,
       name: t(`XLAND`),
       text: t(`XLAND is a 1:1 real earth reflection metaverse with LandFi.`),
+      link: 'https://xland.live/#/',
     },
   ]
 
@@ -461,7 +473,9 @@ export default function Metaverse() {
         >
           {
             cooperationProjects.map((item) => {
-              return <Cooperation key={item.name}>
+              return <Cooperation href={item.link} target={'_blank'} key={item.name}
+                
+              >
                 <CooperationSvg src={item.png} />
                 <Typography
                   fontSize={theme.isH5 ? "14px" : "28px"}

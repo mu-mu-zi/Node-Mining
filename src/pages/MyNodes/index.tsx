@@ -17,6 +17,8 @@ import { earnings, Earnings, myNode, MyNode } from 'http/api';
 import { useEffectState } from 'hooks/useEffectState';
 import useRedux from 'hooks/useRedux';
 import { EmptyStr } from 'utils/global';
+import { Notice } from 'utils/tools';
+import { MsgStatus } from 'components/messageBox/MessageBox';
 export default function MyNodes() {
   const { t } = useTranslation()
   const navigate = useNavigate()
@@ -35,9 +37,9 @@ export default function MyNodes() {
       state.earning = result1.data
       state.nodes = result2.data
     } else {
-      alert('Please login first')
+      Notice('Please login first', MsgStatus.warn)
     }
-  },[])
+  },[store.token])
 
 
 

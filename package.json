@@ -20,6 +20,7 @@
     "@web3-react/network": "^8.0.26-beta.0",
     "@web3-react/types": "^8.0.19-beta.0",
     "@web3-react/walletconnect": "^8.0.34-beta.0",
+    "@types/pubsub-js": "^1.8.3",
     "ahooks": "^3.7.0",
     "aos": "^2.3.4",
     "babel-jest": "^27.4.2",
@@ -82,7 +83,9 @@
     "webpack": "^5.64.4",
     "webpack-dev-server": "^4.6.0",
     "webpack-manifest-plugin": "^4.0.2",
-    "workbox-webpack-plugin": "^6.4.1"
+    "workbox-webpack-plugin": "^6.4.1",
+    "moment": "^2.29.3",
+    "pubsub-js": "^1.9.4"
   },
   "scripts": {
     "start": "node scripts/start.js",
