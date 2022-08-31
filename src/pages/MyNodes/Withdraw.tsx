@@ -50,18 +50,23 @@ export default function Withdraw() {
       setSelectCoin(selectOption[1])
   },[store.coins])
 
-  // useAsync
 
   const submit = async() => {
     if(!selectCoin || !state.amount) {
       Notice('Please enter correctly', MsgStatus.warn)
       return
     }
-    let result =  await apply({
-      coinId: selectCoin.value,
-      amount: Number(state.amount)
-    })
-    Notice('success', MsgStatus.warn)
+    try{
+
+      let result =  await apply({
+        coinId: selectCoin.value,
+        amount: Number(state.amount)
+      })
+      state.amount = '0'
+      Notice('success', MsgStatus.success)
+    }catch(e: any) {
+      Notice(`${e.message}`, MsgStatus.fail)
+    }
   }
 
   return (
@@ -89,7 +94,7 @@ export default function Withdraw() {
         </Row>
 
         <Flex 
-          gap=".6rem"
+          gap=".6rem" 
           color="#ffffff"
           background="#1A1919"
           borderRadius="8px"

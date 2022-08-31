@@ -320,10 +320,18 @@ export default function MyNodes() {
             background={'#D9D9D9'}
             borderRadius={'8px'}
           />
-
-          <Normal>
-            {t(`DOWNLOAD`)}
-          </Normal>
+          <a
+            download={'getaverse-node-v1.0-linux-amd64.tar.gz'}
+            href={require('assets/getaverse-node-v1.0-linux-amd64.tar.gz')}
+            target="_blank"
+            style={{
+              textDecoration: 'none'
+            }}
+          >
+            <Normal>
+              {t(`DOWNLOAD`)}
+            </Normal>
+          </a>
 
         </Column>
       </PartFive>

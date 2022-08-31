@@ -330,3 +330,7 @@ export const WithdrawMax = styled(Box)`
     background: ${({theme}) => theme.colors.hover};;
   }
 `
+
+export const PopoverInvite = styled(Box)`
+  
+`

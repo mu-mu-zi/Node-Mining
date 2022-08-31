@@ -3,8 +3,8 @@ import Box, { Typography } from 'components/BaseElement';
 import JumpBtn from 'components/Button/BackBtn';
 import { Column, ColumnStart } from '../../components/BaseElement/Column';
 import { useTranslation } from 'react-i18next';
-import { RowCenter, RowStart } from 'components/BaseElement/Row';
-import { NodeRecordWrap, MyNode, ActiveNode } from './MyNodes.style';
+import { Row, RowCenter, RowStart } from 'components/BaseElement/Row';
+import { NodeRecordWrap, MyNode, ActiveNode, PopoverInvite } from './MyNodes.style';
 import Grid from 'components/BaseElement/Grid';
 import Normal from 'components/Button/Normal';
 import { generateNodeKey, generateNonce, GetNodeKey, getNodeKey, nodeList, NodeListRecords } from 'http/api';
@@ -16,6 +16,9 @@ import { signString } from 'connectwallet/walletTools';
 import { useWeb3React } from '@web3-react/core';
 import { MsgStatus } from 'components/messageBox/MessageBox';
 import useRedux from 'hooks/useRedux'
+import CopyTypography from 'components/CopyTypography';
+import { Popover } from '@douyinfe/semi-ui';
+import { Icon } from 'components/BaseElement/Icon';
 
 export default function NodeRecord() {
   const { t } = useTranslation()
@@ -26,7 +29,7 @@ export default function NodeRecord() {
   const [nodeInfo, setNodeInfo] = useState<GetNodeKey>()
   const { account, provider } = useWeb3React()
   const [reload, setReload] = useState<boolean>(false)
-  const {store} = useRedux()
+  const { store } = useRedux()
   useAsync(async () => {
     let result = await nodeList({
       pageSize: 100,
@@ -56,7 +59,7 @@ export default function NodeRecord() {
     if (!account || !provider || !activeNode) return
     let date = new Date().valueOf()
     try {
-      
+
       // const [nonceInfo, error] = await awaitWrap(generateNonce(account));
       let signStr = JSON.stringify({
         nodeId: activeNode.id,
@@ -146,17 +149,38 @@ export default function NodeRecord() {
               fontWeight="350"
             >
               <Typography minWidth="1.56rem">{t(`Apikey`)}</Typography>
-              <Typography>{nodeInfo?.apiKey || EmptyStr}</Typography>
+              <Typography>{<CopyTypography>{nodeInfo?.apiKey}</CopyTypography> || EmptyStr}</Typography>
             </RowStart>
-            <RowStart
+            <Row
               gap=".48rem"
               color="#fff"
               fontSize=".2rem"
               fontWeight="350"
             >
               <Typography minWidth="1.56rem">{t(`Cents earnings`)}</Typography>
-              <Typography>{nodeInfo?.apiSecret || EmptyStr}</Typography>
-            </RowStart>
+              <Row gap='8px'>
+                <Typography>{nodeInfo?.apiSecret || EmptyStr}</Typography>
+                <Popover
+                  position='top'
+                  style={{ marginBottom: '10px' }}
+                  content={<PopoverInvite
+                    width={'2.4rem'}
+                    padding={'.1rem'}
+                    background={'#3D3D3D'}
+                    borderRadius={'4px'}
+                    color={'#ffffff'}
+                    fontSize={'.12rem'}
+                    fontWeight={400}
+                  >
+                    <Typography>{t(`import the node public-private key pair, you can successfully run the node to get the cents revenue`)}</Typography>
+                  </PopoverInvite>}
+                >
+                  <Icon src={require('assets/svg/icon_question.svg').default} alt="" />
+                </Popover>
+
+              </Row>
+
+            </Row>
           </ColumnStart>
           <RowCenter width="100%">
             <Normal

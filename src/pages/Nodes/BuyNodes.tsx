@@ -50,8 +50,8 @@ export default function BuyNodes() {
 
   const StepNext = () => {
     if(state.Invite === zeroAddress) {
-      Notice('Sorry, you are not eligible to purchase.' , MsgStatus.fail)
-      // setStep(2)
+      // Notice('Sorry, you are not eligible to purchase.' , MsgStatus.fail)
+      setStep(2)
     } else {
       setStep(2)
     }

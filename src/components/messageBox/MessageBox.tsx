@@ -8,9 +8,9 @@ import { useEffectState } from "hooks/useEffectState";
 import Toggle from "../toggle/Toggle";
 import useWidthChange from 'hooks/useWidthChange';
 
-const success_icon = require("assets/images/error.png");
+const success_icon = require("assets/images/success.png");
 const fail_icon = require("assets/images/error.png");
-const warn_icon = require("assets/images/error.png");
+const warn_icon = require("assets/images/success.png");
 const loading_icon = require("assets/images/loading.png");
 const icons = [success_icon, fail_icon, warn_icon, loading_icon];
 
@@ -54,7 +54,7 @@ function MessageBox(props: IMessageBox) {
     useEffect(() => {
         setTimeout(() => {
             state.active = false;
-        }, props.type === MsgStatus.loading ? 300 * 100 : 3 * 1000);
+        }, props.type === MsgStatus.loading ? 300 * 1000 : 3 * 1000);
     }, []);
 
     return (

@@ -3,8 +3,7 @@ import Input from "components/form/Input";
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
-  background: radial-gradient(transparent, #000 1px);
-  background-size: 14px 10px;
+  background: #191919;
   padding: .83rem 3.8rem 2.61rem;
 `
 

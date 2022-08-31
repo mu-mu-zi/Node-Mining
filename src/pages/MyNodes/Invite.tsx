@@ -3,7 +3,7 @@ import Box, { Typography } from 'components/BaseElement';
 import JumpBtn from 'components/Button/BackBtn';
 import { useTranslation } from 'react-i18next';
 import { Row, RowCenter, RowStart } from 'components/BaseElement/Row';
-import { Active, Invitation, InviteInput, InviteWrap, ProgressImg } from './MyNodes.style';
+import { Active, Invitation, InviteInput, InviteWrap, ProgressImg, PopoverInvite } from './MyNodes.style';
 import { Column, ColumnStart } from 'components/BaseElement/Column';
 import { Icon } from 'components/BaseElement/Icon';
 import Normal from 'components/Button/Normal';
@@ -18,7 +18,8 @@ import styled from 'styled-components';
 import { Notice, TimestampTransform } from '../../utils/tools';
 import { MsgStatus } from 'components/messageBox/MessageBox';
 import { AwardRecords, award, pushRewardInfo, PushRewardInfo } from 'http/api';
-
+import CopyTypography from 'components/CopyTypography';
+import { Popover } from '@douyinfe/semi-ui';
 
 const _Th = styled(Th)`
   padding: .08rem 0;
@@ -232,7 +233,25 @@ export default function Invite() {
                   fontWeight={'700'}
                   color={'#ffffff'}
                 >{t(`Invite Friends`)}</Typography>
-                <Icon src={require('assets/svg/icon_question.svg').default} alt="" />
+                <Popover
+                  position='top'
+                  style={{ marginBottom: '10px' }}
+                  content={<PopoverInvite
+                    width={'2.4rem'}
+                    padding={'.1rem'}
+                    background={'#3D3D3D'}
+                    borderRadius={'4px'}
+                    color={'#ffffff'}
+                    fontSize={'.12rem'}
+                    fontWeight={400}
+                  >
+                    <Typography>{t(`Invite friends to buy nodes and get direct push rewards:`)}</Typography>
+                    <Typography>{t(`1. 10% of the daily coins of your friend`)}</Typography>
+                    <Typography>{t(`2. 10% of node purchase amount`)}</Typography>
+                  </PopoverInvite>}
+                >
+                  <Icon src={require('assets/svg/icon_question.svg').default} alt="" />
+                </Popover>
               </Row>
 
               <InviteInput
@@ -304,7 +323,7 @@ export default function Invite() {
                           key={idx}
                         >
                           <_Td textAlign={'left'}>
-                            {t(`${item}`)}
+                            <CopyTypography>{item}</CopyTypography>
                           </_Td>
                         </Tr>
                       })
@@ -338,7 +357,7 @@ export default function Invite() {
                           key={idx}
                         >
                           <_Td textAlign={'left'} width={'2.6rem'}>
-                            {t(`${item.inviteesAddr}`)}
+                            <CopyTypography>{item.inviteesAddr}</CopyTypography>
                           </_Td>
                           <_Td textAlign={'center'} width={'2.6rem'}>
                             {t(`${item.award} ${item.symbol}`)}
@@ -367,7 +386,25 @@ export default function Invite() {
                 fontWeight={'700'}
                 color={'#ffffff'}
               >{t(`Invite Friends`)}</Typography>
-              <Icon src={require('assets/svg/icon_question.svg').default} alt="" />
+              <Popover
+                position='top'
+                style={{ marginBottom: '10px' }}
+                content={<PopoverInvite
+                  width={'2.4rem'}
+                  padding={'.1rem'}
+                  background={'#3D3D3D'}
+                  borderRadius={'4px'}
+                  color={'#ffffff'}
+                  fontSize={'.12rem'}
+                  fontWeight={400}
+                >
+                  <Typography>{t(`Invite friends to buy nodes and get direct push rewards:`)}</Typography>
+                  <Typography>{t(`1. 10% of the daily coins of your friend`)}</Typography>
+                  <Typography>{t(`2. 10% of node purchase amount`)}</Typography>
+                </PopoverInvite>}
+              >
+                <Icon src={require('assets/svg/icon_question.svg').default} alt="" />
+              </Popover>
             </Row>
             <Typography
               fontSize={'.2rem'}

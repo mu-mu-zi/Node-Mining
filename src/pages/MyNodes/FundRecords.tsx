@@ -29,7 +29,6 @@ const _Td = styled(Td)`
 
 export default function FundRecords() {
   const { t } = useTranslation()
-  const [record, setRecord] = useState<FundRecord[]>([])
   const state = useEffectState({
     withdraw: {} as WithdrawList,
     pageIndex: 10,
@@ -44,19 +43,6 @@ export default function FundRecords() {
     })
     state.withdraw = result.data
     state.withdrawRecords = result.data.records
-    const test = [
-      {
-        type: 'withdrawing coins',
-        amount: '-0.27 GW',
-        time: '2022-08-02 12:27:26',
-      },
-      {
-        type: 'withdrawing coins',
-        amount: '-0.27 GW',
-        time: '2022-08-02 12:27:26',
-      }
-    ]
-    setRecord(test)
   }, [])
 
   return (

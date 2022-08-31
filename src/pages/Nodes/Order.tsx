@@ -18,7 +18,7 @@ interface Iprops {
     count: number,
     Invite: string,
     price: BigNumber
-}
+  }
 }
 
 export default function Order(props: Iprops) {
@@ -31,20 +31,26 @@ export default function Order(props: Iprops) {
     try {
 
       if (!TgeMarket || !Usdt || !account) return
-      
+
       let tx: any
       let isApprove = await Usdt.allowance(account, ContractAddresses.TgeMarket)
-      if(Number(isApprove.toString()) < Number(state.price.toFixed())) {
-        console.log(state.price.div(10 ** Decimals).toFixed())
-        tx = await Usdt.approve(ContractAddresses.TgeMarket, state.price.toFixed())
-        Notice('Please wait, your approve will arrive soon.' , MsgStatus.loading)
-        await tx.wait()
-        CloseMessageBox()
+      if (Number(isApprove.toString()) < Number(state.price.toFixed())) {
+        try{
+
+          tx = await Usdt.approve(ContractAddresses.TgeMarket, state.price.toFixed())
+          Notice('Please wait, your approve will arrive soon.', MsgStatus.loading)
+          await tx.wait()
+          CloseMessageBox()
+        }catch(e:any) {
+          let msg = JSON.parse(JSON.stringify(e))
+          Notice(msg.reason, MsgStatus.fail)
+          return
+        }
       }
 
-      
+
       let tx1 = await TgeMarket.buy(state.count, state.price.toFixed(), _group, state.Invite)
-      Notice('Please wait, your node will arrive soon.' , MsgStatus.loading)
+      Notice('Please wait, your node will arrive soon.', MsgStatus.loading)
 
       await tx1.wait()
 
@@ -52,11 +58,13 @@ export default function Order(props: Iprops) {
 
       CloseMessageBox()
       props.setStep(3)
-    } catch(e) {
+    } catch (e) {
       console.log(e)
       CloseMessageBox()
-    } 
-      // await result.hash
+      let msg = JSON.parse(JSON.stringify(e))
+      Notice(msg.reason, MsgStatus.fail)
+    }
+    // await result.hash
     // 加载中。。。
   }
 
@@ -84,15 +92,18 @@ export default function Order(props: Iprops) {
           >
             {t(`Order Information`)}
           </Typography>
-          <Box />
+          <Box width={'.68rem'}/>
         </Row>
 
         <ColumnStart
           gap={'.32rem'}
+          width={'100%'}
+          maxWidth={'4.9rem'}
         >
 
-          <Row
-            gap=".16rem"
+          <Column
+            gap=".08rem"
+            width={'100%'}
           >
             <Typography
               minWidth={'1.64rem'}
@@ -100,20 +111,29 @@ export default function Order(props: Iprops) {
               fontSize={'.2rem'}
               fontWeight={'350'}
               color={'#fff'}
+              width={'100%'}
             >
               {t(`Name`)}
             </Typography>
-            <Row>
+            <Row
+              padding={'.11rem .16rem'}
+              background={'#212020'}
+              border={'1px solid #3D3D3D'}
+              borderRadius={'4px'}
+              width={'100%'}
+              boxSizing={'border-box'}
+            >
               <Typography
                 fontSize={'.16rem'}
                 fontWeight={'400'}
                 color={'#fff'}
               >{t(`Getaverse nodes`)}</Typography>
             </Row>
-          </Row>
+          </Column>
 
-          <Row
-            gap=".16rem"
+          <Column
+            gap=".08rem"
+            width={'100%'}
           >
             <Typography
               minWidth={'1.64rem'}
@@ -121,10 +141,18 @@ export default function Order(props: Iprops) {
               fontSize={'.2rem'}
               fontWeight={'350'}
               color={'#fff'}
+              width={'100%'}
             >
               {t(`Price`)}
             </Typography>
-            <Row gap=".08rem">
+            <Row
+              padding={'.11rem .16rem'}
+              border={'1px solid #3D3D3D'}
+              background={'#212020'}
+              borderRadius={'4px'}
+              width={'100%'}
+              boxSizing={'border-box'}
+              gap=".08rem">
               <IconPrice src={require('assets/svg/nodes_price.svg').default} />
               <Typography
                 fontSize={'.2rem'}
@@ -132,10 +160,11 @@ export default function Order(props: Iprops) {
                 color={'#fff'}
               >{state.price.div(10 ** Decimals).div(state.count).toFixed()}</Typography>
             </Row>
-          </Row>
+          </Column>
 
-          <Row
-            gap=".16rem"
+          <Column
+            gap=".08rem"
+            width={'100%'}
           >
             <Typography
               minWidth={'1.64rem'}
@@ -143,20 +172,29 @@ export default function Order(props: Iprops) {
               fontSize={'.2rem'}
               fontWeight={'350'}
               color={'#fff'}
+              width={'100%'}
             >
               {t(`Amount`)}
             </Typography>
-            <Row gap=".08rem">
+            <Row
+              padding={'.11rem .16rem'}
+              border={'1px solid #3D3D3D'}
+              background={'#212020'}
+              borderRadius={'4px'}
+              width={'100%'}
+              boxSizing={'border-box'}
+              gap=".08rem">
               <Typography
                 fontSize={'.2rem'}
                 fontWeight={'700'}
                 color={'#fff'}
               >{state.count}</Typography>
             </Row>
-          </Row>
+          </Column>
 
-          <Row
-            gap=".16rem"
+          <Column
+            gap=".08rem"
+            width={'100%'}
           >
             <Typography
               minWidth={'1.64rem'}
@@ -164,10 +202,18 @@ export default function Order(props: Iprops) {
               fontSize={'.2rem'}
               fontWeight={'350'}
               color={'#fff'}
+              width={'100%'}
             >
               {t(`Totals`)}
             </Typography>
-            <Row gap=".08rem">
+            <Row
+              padding={'.11rem .16rem'}
+              border={'1px solid #3D3D3D'}
+              background={'#212020'}
+              borderRadius={'4px'}
+              width={'100%'}
+              boxSizing={'border-box'}
+              gap=".08rem">
               <IconPrice src={require('assets/svg/nodes_price.svg').default} />
               <Typography
                 fontSize={'.2rem'}
@@ -175,10 +221,11 @@ export default function Order(props: Iprops) {
                 color={'#fff'}
               >{state.price.div(10 ** Decimals).toFixed()}</Typography>
             </Row>
-          </Row>
+          </Column>
 
-          <Row
-            gap=".16rem"
+          <Column
+            gap=".08rem"
+            width={'100%'}
           >
             <Typography
               minWidth={'1.64rem'}
@@ -186,17 +233,24 @@ export default function Order(props: Iprops) {
               fontSize={'.2rem'}
               fontWeight={'350'}
               color={'#fff'}
+              width={'100%'}
             >
               {t(`Referrer Address`)}
             </Typography>
-            <Row>
+            <Row
+              padding={'.11rem .16rem'}
+              border={'1px solid #3D3D3D'}
+              background={'#212020'}
+              borderRadius={'4px'}
+              width={'100%'}
+              boxSizing={'border-box'}>
               <Typography
                 fontSize={'.16rem'}
                 fontWeight={'400'}
                 color={'#fff'}
               >{t(`${state.Invite}`)}</Typography>
             </Row>
-          </Row>
+          </Column>
 
         </ColumnStart>
 
