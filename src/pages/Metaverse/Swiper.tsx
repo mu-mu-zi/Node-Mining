@@ -4,7 +4,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import Box from 'components/BaseElement';
 import {Autoplay} from "swiper";
 import 'swiper/css'
-import banner1 from 'assets/images/index_banner.png'
+import banner1 from 'assets/images/index_banner.jpg'
 import banner3 from 'assets/images/about_banner.png'
 import { Image } from 'pages/Home/Home.styled';
 import useTheme from 'hooks/useTheme';

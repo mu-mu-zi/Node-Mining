@@ -106,7 +106,16 @@ export default function ConnectModal(props: IOpenModal) {
             Object.values(WALLETS).map((item) => {
               return (
                 <Option key={item.name}
-                  onClick={ () => connect(item)}
+                  onClick={ () => {
+                    
+                    // if(window[item.keyword] || (window.ethereum && window.ethereum[item.keyword])) {
+
+                      connect(item)
+                    // }else {
+                      
+                    // }
+                  
+                  }}
                 
                 >
                   <img src={item.icon} alt="" />

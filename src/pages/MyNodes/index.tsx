@@ -37,7 +37,7 @@ export default function MyNodes() {
       state.earning = result1.data
       state.nodes = result2.data
     } else {
-      Notice('Please login first', MsgStatus.warn)
+      Notice('Please login first', MsgStatus.fail)
     }
   },[store.token])
 
@@ -321,9 +321,9 @@ export default function MyNodes() {
             borderRadius={'8px'}
           />
           <a
-            download={'getaverse-node-v1.0-linux-amd64.tar.gz'}
-            href={require('assets/getaverse-node-v1.0-linux-amd64.tar.gz')}
-            target="_blank"
+            download={'getaverse-node-v1.0'}
+            href={'https://getaverses.s3.ap-southeast-1.amazonaws.com/node/getaverse-node-v1.0.zip'}
+            // target="_blank"
             style={{
               textDecoration: 'none'
             }}

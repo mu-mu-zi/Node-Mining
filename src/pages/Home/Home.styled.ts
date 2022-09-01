@@ -18,8 +18,7 @@ export const Image = styled.img`
 
 export const Banner = styled.div`
   position: relative;
-  background-image: url('${require('assets/images/index_banner.png')}');
-  /* background-image: url('${require('assets/svg/banner.svg').default}'); */
+  background-image: url('${require('assets/images/index_banner.jpg')}');
   background-repeat: no-repeat;
   background-size: cover;
   background-color: #000;
