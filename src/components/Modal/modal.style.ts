@@ -20,12 +20,13 @@ export const ModalBox = styled.div`
         padding: 64px 102px 64px 102px;
         box-sizing: border-box;
         color: #fff;
-        border-radius: 0 12px 0 12px;
-        border: 3px solid transparent;
+        border-radius: 12px;
+        /* border: 3px solid transparent;
         background-image: linear-gradient(#000, #000),
                     linear-gradient(23.89deg, #AF6411 1.95%, #14FEF6 98.19%);
         background-origin: border-box;
-        background-clip: padding-box, border-box;
+        background-clip: padding-box, border-box; */
+        background-color: #191919;
         .close{
             position: absolute;
             right: 28px;

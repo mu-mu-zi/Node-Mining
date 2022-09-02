@@ -16,7 +16,7 @@ import { EmptyStr } from '../../utils/global';
 import { Table, Td, Th, Tr } from 'components/BaseElement/Table';
 import styled from 'styled-components';
 import { Notice, TimestampTransform } from '../../utils/tools';
-import { MsgStatus } from 'components/messageBox/MessageBox';
+import { CloseMessageBox, MsgStatus } from 'components/messageBox/MessageBox';
 import { AwardRecords, award, pushRewardInfo, PushRewardInfo } from 'http/api';
 import CopyTypography from 'components/CopyTypography';
 import { Popover } from '@douyinfe/semi-ui';
@@ -71,7 +71,10 @@ export default function Invite() {
     if (!TgeMarket || !account) return
     if (isAddress(state.friendWalletAddr)) {
       let tx = await TgeMarket.inviteUser(state.friendWalletAddr)
+      Notice('Waiting for invitation...', MsgStatus.loading)
       await tx.wait()
+      CloseMessageBox()
+      
       Notice('Invite success', MsgStatus.success)
       state.friendWalletAddr = ''
       setReload(!reload)

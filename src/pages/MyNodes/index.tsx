@@ -313,13 +313,21 @@ export default function MyNodes() {
           >
             Ubuntu20.04
           </Typography>
-
-          <Box
-            width={'1.45rem'}
-            height={'1.45rem'}
-            background={'#D9D9D9'}
-            borderRadius={'8px'}
-          />
+          <a
+            download={'uses documents'}
+            href={require('assets/usesDocuments.pdf')}
+            target="_blank"
+            style={{
+              textDecoration: 'none'
+            }}
+          >
+            <Box
+              width={'1.45rem'}
+              height={'1.45rem'}
+              background={'#D9D9D9'}
+              borderRadius={'8px'}
+            />
+          </a>
           <a
             download={'getaverse-node-v1.0'}
             href={'https://getaverses.s3.ap-southeast-1.amazonaws.com/node/getaverse-node-v1.0.zip'}

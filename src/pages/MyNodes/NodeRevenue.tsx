@@ -13,6 +13,7 @@ import { useEffectState } from '../../hooks/useEffectState';
 import { IncomeRecords, incomeRecords, nodeList, NodeList, nodeRevenue, Records, Revenue } from 'http/api';
 import { useAsync } from 'react-use';
 import { EmptyStr } from 'utils/global';
+import { TimestampTransform } from 'utils/tools';
 
 const _Th = styled(Th)`
   padding: .08rem 0;
@@ -40,7 +41,7 @@ export default function NodeRevenue() {
 
     let result = await incomeRecords({
       pageIndex: 1,
-      pageSize: 10
+      pageSize: 100
     })
     console.log(result)
     state.incomeRecords = result.data.records
@@ -221,7 +222,7 @@ export default function NodeRevenue() {
                         {t(`${item.amount} ${item.symbol}`)}
                       </_Td>
                       <_Td  textAlign={'center'} width={'2.04rem'}>
-                        {t(`${item.createTime}`)}
+                        {t(`${TimestampTransform(item.createTime)}`)}
                       </_Td>
                     </Tr>
                   })

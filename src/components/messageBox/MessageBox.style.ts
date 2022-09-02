@@ -15,6 +15,8 @@ export const MessageBoxStyle = styled.div`
     z-index: ${Z_INDEX.toast};
     pointer-events: none;
     box-shadow: 0px 4px 20px rgba(246, 185, 27, 0.25);  
+    max-width: 328px;
+    text-align: center;
     &.bottomRight{
         left: initial;
         top: initial;

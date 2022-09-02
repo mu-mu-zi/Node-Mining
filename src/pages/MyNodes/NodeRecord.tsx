@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Box, { Typography } from 'components/BaseElement';
 import JumpBtn from 'components/Button/BackBtn';
 import { Column, ColumnStart } from '../../components/BaseElement/Column';
@@ -19,6 +19,9 @@ import useRedux from 'hooks/useRedux'
 import CopyTypography from 'components/CopyTypography';
 import { Popover } from '@douyinfe/semi-ui';
 import { Icon } from 'components/BaseElement/Icon';
+import { ModalContext } from 'components/provider/ModalProvider';
+import ApisecretModal from 'components/ApisecretModal/ApisecretModal';
+
 
 export default function NodeRecord() {
   const { t } = useTranslation()
@@ -29,6 +32,7 @@ export default function NodeRecord() {
   const [nodeInfo, setNodeInfo] = useState<GetNodeKey>()
   const { account, provider } = useWeb3React()
   const [reload, setReload] = useState<boolean>(false)
+  const { openModal } = useContext(ModalContext);
   const { store } = useRedux()
   useAsync(async () => {
     let result = await nodeList({
@@ -56,10 +60,10 @@ export default function NodeRecord() {
   }
   // cover key
   const handleClick = async () => {
+
     if (!account || !provider || !activeNode) return
     let date = new Date().valueOf()
     try {
-
       // const [nonceInfo, error] = await awaitWrap(generateNonce(account));
       let signStr = JSON.stringify({
         nodeId: activeNode.id,
@@ -72,12 +76,17 @@ export default function NodeRecord() {
           signature: signData.signatrue
         })
         setReload(!reload)
+        openModal(ApisecretModal,{
+          apisecret: result.data.apiSecret,
+          name: activeNode.id,
+        })
       } else {
         Notice('Failed to sign', MsgStatus.fail)
       }
     } catch (e) {
       Notice(`${JSON.parse(JSON.stringify(e)).message}`, MsgStatus.fail)
     }
+
   }
 
 
@@ -102,7 +111,7 @@ export default function NodeRecord() {
         </RowStart>
 
         <Grid
-          gap={'1.68rem'}
+          gap={'.1rem 1.68rem'}
           gridTemplateColumns={'repeat(4,1fr)'}
         >
           {

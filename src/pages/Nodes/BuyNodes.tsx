@@ -30,11 +30,18 @@ export default function BuyNodes() {
   useAsync(async() => {
 
     if (!TgeMarket || !account) return
-    let result = await TgeMarket.getTotalCost(state.count)
-    state.price = new BigNumber(result.toString())
+    try{
+
+      let result = await TgeMarket.getTotalCost(state.count)
+      console.log('price1',result)
+      state.price = new BigNumber(result.toString())
+      console.log('price2',state.price)
+    }catch(e){
+      console.error(e)
+    }
 
 
-  },[state.count, account])
+  },[state.count, account,TgeMarket])
   // useEffect(() => {
   //   if (!TgeMarket || !account) return
 
@@ -42,16 +49,19 @@ export default function BuyNodes() {
   
   useAsync(async() => {
     if (!TgeMarket || !account) return
-
+    try{
     state.Invite = await TgeMarket.getInviter(account)
+    console.log('Invite',state.Invite)
+    }catch(e){
+      console.error(e)
+    }
 
-
-  },[account])
+  },[account,TgeMarket])
 
   const StepNext = () => {
-    if(state.Invite === zeroAddress) {
-      // Notice('Sorry, you are not eligible to purchase.' , MsgStatus.fail)
-      setStep(2)
+    if(state.Invite === zeroAddress || !state.Invite || state.Invite === EmptyStr) {
+      Notice('Sorry, you are not eligible to purchase.' , MsgStatus.fail)
+      // setStep(2)
     } else {
       setStep(2)
     }

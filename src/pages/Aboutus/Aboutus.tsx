@@ -43,7 +43,7 @@ export default function Aboutus() {
       </Typography>
       <a
         download={'GetaverseWhitepaper.pdf'}
-        href={require('assets/GetaverseWhitepaper.pdf')}
+        href={'https://getaverses.s3.ap-southeast-1.amazonaws.com/whitepaper/GetaverseWhitepaper.pdf'}
         target="_blank"
         style={{
           textDecoration: 'none'
