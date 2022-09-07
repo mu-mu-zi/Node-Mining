@@ -69,17 +69,22 @@ export default function Invite() {
   // inviteUser
   const inviteSubmit = async () => {
     if (!TgeMarket || !account) return
-    if (isAddress(state.friendWalletAddr)) {
-      let tx = await TgeMarket.inviteUser(state.friendWalletAddr)
-      Notice('Waiting for invitation...', MsgStatus.loading)
-      await tx.wait()
-      CloseMessageBox()
-      
-      Notice('Invite success', MsgStatus.success)
+    try{
+      if (isAddress(state.friendWalletAddr)) {
+        let tx = await TgeMarket.inviteUser(state.friendWalletAddr)
+        Notice('Waiting for invitation...', MsgStatus.loading)
+        await tx.wait()
+        CloseMessageBox()
+        
+        Notice('Invite success', MsgStatus.success)
+        state.friendWalletAddr = ''
+        setReload(!reload)
+      } else {
+        Notice('Not a valid address', MsgStatus.warn)
+      }
+    }catch(e) {
       state.friendWalletAddr = ''
-      setReload(!reload)
-    } else {
-      Notice('Not a valid address', MsgStatus.warn)
+      Notice(JSON.parse(JSON.stringify(e)).reason || 'error', MsgStatus.warn)
     }
   }
 
@@ -172,6 +177,7 @@ export default function Invite() {
                   fontWeight={'350'}
                   color={'#fff'}
                   whiteSpace={'nowrap'}
+                  fontStyle={'italic'}
                 >
                   {t(`Cumulative number of invitations`)}
                 </Typography>
@@ -191,6 +197,7 @@ export default function Invite() {
                   fontWeight={'350'}
                   color={'#fff'}
                   whiteSpace={'nowrap'}
+                  fontStyle={'italic'}
                 >
                   {t(`Cumulative Direct Push Bonus`)}
                 </Typography>
@@ -210,6 +217,7 @@ export default function Invite() {
                   fontWeight={'350'}
                   color={'#fff'}
                   whiteSpace={'nowrap'}
+                  fontStyle={'italic'}
                 >
                   {t(`Today's direct push bonus`)}
                 </Typography>
@@ -311,8 +319,8 @@ export default function Invite() {
                       fontWeight={'400'}
                       color={'#6B6B6B'}
                     >
-                      {/* <_Th textAlign={'left'}>{t(`Type`)}</_Th> */}
-                      <_Th textAlign={'left'}>{t(`User Info`)}</_Th>
+                      <_Th textAlign={'left'}>{t(`Number`)}</_Th>
+                      <_Th textAlign={'right'}>{t(`User Info`)}</_Th>
                       {/* <_Th>{t(`Time`)}</_Th> */}
                     </Tr>
                   </thead>
@@ -324,9 +332,13 @@ export default function Invite() {
                           fontWeight={'350'}
                           color={'#ffffff'}
                           key={idx}
+                          fontStyle={'italic'}
                         >
                           <_Td textAlign={'left'}>
-                            <CopyTypography>{item}</CopyTypography>
+                            <Typography>{idx+1}</Typography>
+                          </_Td>
+                          <_Td display={'flex'} justifyContent={'end'} textAlign={'right'} >
+                            <CopyTypography >{item}</CopyTypography>
                           </_Td>
                         </Tr>
                       })
@@ -347,7 +359,7 @@ export default function Invite() {
                     >
                       <_Th textAlign={'left'}>{t(`User Info`)}</_Th>
                       <_Th>{t(`Status`)}</_Th>
-                      <_Th>{t(`Time`)}</_Th>
+                      <_Th textAlign={'right'}>{t(`Time`)}</_Th>
                     </Tr>
                   </thead>
                   <tbody>
@@ -358,14 +370,15 @@ export default function Invite() {
                           fontWeight={'350'}
                           color={'#ffffff'}
                           key={idx}
+                          fontStyle={'italic'}
                         >
                           <_Td textAlign={'left'} width={'2.6rem'}>
                             <CopyTypography>{item.inviteesAddr}</CopyTypography>
                           </_Td>
-                          <_Td textAlign={'center'} width={'2.6rem'}>
-                            {t(`${item.award} ${item.symbol}`)}
+                          <_Td color={'#F6B91B'} textAlign={'right'} width={'2.6rem'}>
+                            {t(`+${item.award} ${item.symbol}`)}
                           </_Td>
-                          <_Td textAlign={'center'} width={'2.04rem'}>
+                          <_Td textAlign={'right'} width={'2.04rem'}>
                             {t(`${TimestampTransform(item.createTime)}`)}
                           </_Td>
                         </Tr>

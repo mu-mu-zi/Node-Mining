@@ -50,7 +50,7 @@ export default function Aboutus() {
         }}
       >
         <EaseBtn>
-          {t(`Download White Paper`)}
+          {t(`DOWNLOAD WHITE PAPER`)}
         </EaseBtn>
       </a>
 

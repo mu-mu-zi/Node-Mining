@@ -9,9 +9,9 @@ import Toggle from "../toggle/Toggle";
 import useWidthChange from 'hooks/useWidthChange';
 
 const success_icon = require("assets/images/success.png");
-const fail_icon = require("assets/images/error.png");
-const warn_icon = require("assets/images/success.png");
-const loading_icon = require("assets/images/loading.png");
+const fail_icon = require("assets/svg/fail_icon.svg").default;
+const warn_icon = require("assets/svg/warn_icon.svg").default;
+const loading_icon = require("assets/svg/loading_icon.svg").default;
 const icons = [success_icon, fail_icon, warn_icon, loading_icon];
 
 export enum MsgStatus {

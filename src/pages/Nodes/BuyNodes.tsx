@@ -60,8 +60,8 @@ export default function BuyNodes() {
 
   const StepNext = () => {
     if(state.Invite === zeroAddress || !state.Invite || state.Invite === EmptyStr) {
-      Notice('Sorry, you are not eligible to purchase.' , MsgStatus.fail)
-      // setStep(2)
+      // Notice('Sorry, you are not eligible to purchase.' , MsgStatus.fail)
+      setStep(2)
     } else {
       setStep(2)
     }
@@ -73,7 +73,7 @@ export default function BuyNodes() {
         step === 1 ?
         <>
           <JumpBtn
-            text="Back"
+            text="Nodes"
             path={-1}
           />
 

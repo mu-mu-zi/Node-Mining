@@ -259,6 +259,7 @@ export const Submit = styled(Box)`
   display: flex;
   align-items: center;
   padding: 0 16px;
+  font-weight: 700;
   background: #F6B91B;
   color: #000;
   height: 48px;

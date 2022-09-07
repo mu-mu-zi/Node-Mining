@@ -67,7 +67,7 @@ export default function NodeRevenue() {
       >
           <Box>
             <JumpBtn
-              text="Back"
+              text="MY NODES"
               path={-1}
               // onClick={() => props.setStep(1)}
             />
@@ -100,6 +100,7 @@ export default function NodeRevenue() {
             fontWeight={'350'}
             color={'#fff'}
             whiteSpace={'nowrap'}
+            fontStyle={'italic'}
           >
             {t(`Accumulated penny earnings (GW)`)}
           </Typography>
@@ -118,6 +119,7 @@ export default function NodeRevenue() {
             fontSize={'.2rem'}
             fontWeight={'350'}
             color={'#fff'}
+            fontStyle={'italic'}
           >
             {t(`Today's penny earnings (GW)`)}
           </Typography>
@@ -136,6 +138,7 @@ export default function NodeRevenue() {
             fontSize={'.2rem'}
             fontWeight={'350'}
             color={'#fff'}
+            fontStyle={'italic'}
           >
             {t(`Owning Nodes`)}
           </Typography>
@@ -218,8 +221,8 @@ export default function NodeRevenue() {
                       {/* <_Td  textAlign={'left'} width={'2.6rem'}>
                         {t(`${item.type}`)}
                       </_Td> */}
-                      <_Td  textAlign={'center'} width={'2.6rem'}>
-                        {t(`${item.amount} ${item.symbol}`)}
+                      <_Td  textAlign={'center'} width={'2.6rem'} color={'#F6B91B'}>
+                        {t(`+${item.amount} ${item.symbol}`)}
                       </_Td>
                       <_Td  textAlign={'center'} width={'2.04rem'}>
                         {t(`${TimestampTransform(item.createTime)}`)}

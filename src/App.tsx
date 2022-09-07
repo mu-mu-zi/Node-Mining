@@ -66,7 +66,7 @@ function App() {
     console.log(chainId)
     if(!chainId) return
     if(chainId !== 97) {
-      Notice('You are connected to an unsupported network, please switch to the main BSC network.', MsgStatus.fail)
+      Notice('You are connected to an unsupported network, please switch to the main BSC network.', MsgStatus.warn)
     }
   },[chainId])
 

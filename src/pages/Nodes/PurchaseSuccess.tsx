@@ -39,7 +39,7 @@ export default function PurchaseSuccess(props: Iprops) {
         <SecondBtn
           onClick={() => navigate('/mynodes')}
         >
-          {t(`View my nodes`)}
+          {t(`VIEW MY NODES`)}
         </SecondBtn>
       </Column>
     </>

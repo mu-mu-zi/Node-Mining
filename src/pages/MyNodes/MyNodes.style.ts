@@ -286,7 +286,7 @@ export const WithdrawInp = styled(Input)`
   }
 
 .input {
-    color: #6B6B6B;
+    color: #00E88A;
     border: none;
     outline: unset;
     ::placeholder {

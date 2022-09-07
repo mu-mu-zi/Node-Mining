@@ -16,10 +16,34 @@ export default function Footer() {
       >
         <Logo src={require('assets/svg/logo.svg').default} alt="" />
         <Icons>
-          <img src={require('assets/svg/icon_tg.svg').default} alt="" />
-          <img src={require('assets/svg/icon_m.svg').default} alt="" />
-          <img src={require('assets/svg/icon_dc.svg').default} alt="" />
-          <img src={require('assets/svg/icon_tw.svg').default} alt="" />
+          <a
+            href="https://t.me/Getaverse_Official"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <img src={require('assets/svg/icon_tg.svg').default} alt="" />
+          </a>
+          <a
+            href="https://medium.com/@GetaverseGlobal"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <img src={require('assets/svg/icon_m.svg').default} alt="" />
+          </a>
+          <a
+            href="https://discord.com/invite/vGXwF3TdEw"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <img src={require('assets/svg/icon_dc.svg').default} alt="" />
+          </a>
+          <a
+            href="https://twitter.com/GetaverseGlobal"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <img src={require('assets/svg/icon_tw.svg').default} alt="" />
+          </a>
         </Icons>
         <Connect>info@getaverses.com</Connect>
       </ColumnStart>

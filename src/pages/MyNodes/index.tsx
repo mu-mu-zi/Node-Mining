@@ -28,6 +28,9 @@ export default function MyNodes() {
     nodes: {} as MyNode,
   });
 
+  const JumpToBuyNodes = () => {
+    navigate("/nodes/buy")
+  }
 
   useAsync(async() => {
     if(store.token) {
@@ -289,7 +292,9 @@ export default function MyNodes() {
               {t(`The GW network is supported by users like you who run GW nodes on their own devices. By purchasing a GW node license, you have the opportunity to be rewarded for your contributions to the network. This includes GW, Limited Edition NFT, and the opportunity to help grow the GameWonderlab ecosystem.`)}
             </Typography>
 
-            <Normal>
+            <Normal
+              onClick={() => { JumpToBuyNodes() }}
+            >
               {t(`PURCHASE NODE`)}
             </Normal>
 
@@ -307,7 +312,7 @@ export default function MyNodes() {
         </Title>
         <Column gap='.32rem'>
           <Typography
-            color={'#fff'}
+            color={'#F6B91B'}
             fontSize={'.28rem'}
             fontWeight={'400'}
           >

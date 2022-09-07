@@ -11,7 +11,7 @@ import { useTgeMarket, useUsdt } from 'hooks/useContract';
 import { useWeb3React } from '@web3-react/core';
 import { ContractAddresses } from "utils/ContractAddresses";
 import { CloseMessageBox, MsgStatus } from 'components/messageBox/MessageBox';
-import { Notice } from 'utils/tools';
+import { formatAddress, Notice } from 'utils/tools';
 interface Iprops {
   setStep: React.Dispatch<React.SetStateAction<number>>
   state: {
@@ -248,7 +248,7 @@ export default function Order(props: Iprops) {
                 fontSize={'.16rem'}
                 fontWeight={'400'}
                 color={'#fff'}
-              >{t(`${state.Invite}`)}</Typography>
+              >{t(`${formatAddress(state.Invite)}`)}</Typography>
             </Row>
           </Column>
 
@@ -257,7 +257,7 @@ export default function Order(props: Iprops) {
         <PurchaseNode
           onClick={purchase}
         >
-          {t(`Purchase Node`)}
+          {t(`PURCHASE NODE`)}
         </PurchaseNode>
       </Column>
     </>

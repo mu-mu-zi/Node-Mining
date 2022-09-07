@@ -38,50 +38,55 @@ export default function ApisecretModal(props: IOpenModal & AA) {
       type={theme.isH5 ? 'modal' : 'modal'}
     // isH5={theme.isH5}
     // style={{ color: '#fff', height: '100%', width: '100%' }}
+      style={{background: "#3D3D3D" }}
     >
-      <Box>
+      <Box
+      
+        
+      >
         <Typography
-          fontSize={'20px'}
-          fontWeight='400'
+          fontSize={'.2rem'}
+          fontWeight='700'
           color="#ffffff"
           textAlign={'center'}
-          marginBottom={'36px'}
+          marginBottom={'16px'}
+
         >
           {`Node${props.name} Apisecret`}
         </Typography>
         <Typography
-          fontSize={'20px'}
+          fontSize={'.12rem'}
           fontWeight='400'
           color="#ffffff"
-          marginBottom={'13px'}
+          marginBottom={'16px'}
+          textAlign={'center'}
         >
           This is your Apisecret（Click to copy）
         </Typography>
 
         <Box
-          padding={'28px 12px'}
-          border={'1px solid #6B6B6B'}
+          padding={'.16rem .12rem'}
+          border={'1px dashed #6B6B6B'}
           borderRadius={'5px'}
-          marginBottom={'23px'}
+          marginBottom={'16px'}
           onClick={copy}
           cursor={'pointer'}
+          textAlign={'center'}
         >
           <Typography
-            color="#F94242"
-            fontSize={'16px'}
-            fontWeight={'400'}
+            color="#ffffff"
+            fontSize={'.12rem'}
+            fontWeight={'4500'}
           >
             {props.apisecret}
           </Typography>
         </Box>
 
         <Box
-          padding={'4px 12px'}
-          color={'#ffffff'}
-          fontSize={'10px'}
+          color={'#F6B91B'}
+          fontSize={'.12rem'}
           fontWeight={'400'}
-          border={'1px solid #6B6B6B'}
-          borderRadius={'5px'}
+          textAlign={'center'}
           // background={'#FFE6E6'}
         >
           Note: Never disclose this Apisecret, Apisecret is the key to running the node!
