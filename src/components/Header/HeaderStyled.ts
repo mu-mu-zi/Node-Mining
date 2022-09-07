@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import { RowBetween, Row } from "components/BaseElement/Row";
 import { Z_INDEX } from "utils/global";
+import Box from "components/BaseElement";
+import Flex from "components/BaseElement/Flex";
 
 export const HeaderOccupy = styled.div`
   position: relative;
@@ -111,6 +113,18 @@ export const Occupy = styled.div`
   margin-left: 16px;
   ${({theme}) => theme.mediaWidth.sm`
   display: block;
-  
   `}
 `
+export const Logout = styled(Flex)`
+  align-items: center;
+  justify-content: center;
+  background: #3D3D3D;
+  height: 1.18rem;
+  padding: 0 .66rem;
+  font-size: .2rem;
+  font-weight: 700;
+  white-space: nowrap;  
+  cursor: pointer;
+  box-sizing: border-box;
+`
+

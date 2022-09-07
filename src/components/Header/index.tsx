@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react'
 import useScrollPosition from '@react-hook/window-scroll'
-import { HeaderFrame, HeaderContent, ConnectWallet, HeaderLinks, Logo, HeaderOccupy, Menu, Occupy } from './HeaderStyled'
+import { HeaderFrame, HeaderContent, ConnectWallet, HeaderLinks, Logo, HeaderOccupy, Menu, Occupy, Logout } from './HeaderStyled'
 import RouterLink from './RouterLink';
 import { useTranslation } from 'react-i18next';
 import Box, { Typography } from 'components/BaseElement';
@@ -10,13 +10,15 @@ import ConnectModal from 'components/ConnectModal/ConnectModal';
 import NavModal from 'components/NavModal/NavModal';
 import useRedux from 'hooks/useRedux';
 import { formatAddress } from 'utils/tools';
+import { Popover } from '@douyinfe/semi-ui';
 
 
 export default function Header() {
   const { t } = useTranslation()
   const { openModal } = useContext(ModalContext);
-  const {store} = useRedux()
+  const {store, userDispatch} = useRedux()
   const [displayBtnStr, setDisplayBtnStr] = useState<string>()
+  const [showLogout,setShowLogout] = useState<boolean>(false)
   const scrollY = useScrollPosition()
 
   useEffect(() => {
@@ -26,6 +28,19 @@ export default function Header() {
       setDisplayBtnStr("CONNECT WALLET")
     }
   },[store.address])
+  const openBox = () => {
+    if(displayBtnStr !== "CONNECT WALLET") {
+      setShowLogout(true)
+    } else {
+      openModal(ConnectModal)
+    }
+    
+  }
+
+  const FnLogout = () => {
+    userDispatch.logout()
+    setShowLogout(false)
+  }
 
   return (
     <HeaderOccupy>
@@ -70,15 +85,28 @@ export default function Header() {
 
           </HeaderLinks>
         </HeaderContent>
-        <ConnectWallet
-          // style={{pointerEvents:'none'}}
-          draggable={true}
-          onClick={() => {
-            openModal(ConnectModal)
-          }}
+        <Popover
+          trigger='custom'
+          visible={showLogout}
+          position={'bottom'}
+          spacing={0}
+          onClickOutSide={() => setShowLogout(false)}
+          content={<Logout onClick={FnLogout}>
+            <Typography
+              color={'#F6B91B'}
+            >
+              LOG OUT
+            </Typography>
+          </Logout>}
         >
-            {t(`${displayBtnStr}`)}
-        </ConnectWallet>
+          <ConnectWallet
+            // style={{pointerEvents:'none'}}
+            draggable={true}
+            onClick={openBox}
+            >
+              {t(`${displayBtnStr}`)}
+          </ConnectWallet>
+        </Popover>
       </HeaderFrame>
     </HeaderOccupy>
   )
