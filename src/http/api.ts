@@ -128,6 +128,8 @@ export interface CoinList {
   image: string
   settleDecimal: number
   withdrawFee: number
+  availableAmount: number
+  totalAmount: number
 }
 
 export function coinList() {

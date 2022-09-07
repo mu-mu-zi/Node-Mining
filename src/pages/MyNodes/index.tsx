@@ -330,7 +330,7 @@ export default function MyNodes() {
           </a>
           <a
             download={'getaverse-node-v1.0'}
-            href={'https://getaverses.s3.ap-southeast-1.amazonaws.com/node/getaverse-node-v1.0.zip'}
+            href={'https://getaverses.s3.ap-southeast-1.amazonaws.com/node/getaverse-node-v2.0.tar.gz'}
             // target="_blank"
             style={{
               textDecoration: 'none'

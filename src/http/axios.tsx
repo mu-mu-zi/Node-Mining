@@ -5,6 +5,8 @@ import IAjax from './types';
 import PubSub from "pubsub-js";
 // import { showMessage } from '../common/utilTools';
 // import { MsgStatus } from 'src/common/enum';
+import { Notice } from '../utils/tools';
+import { MsgStatus } from 'components/messageBox/MessageBox';
 
 
 axios.defaults.baseURL = service_api;
@@ -22,6 +24,7 @@ axios.interceptors.request.use((config:myConfig) => {
                 // config.headers['Authorization'] = token;
                 config.headers['token'] = token;
             }
+            config.headers['Accept-Language'] = 'en-US';
         }
 
         return config;
@@ -36,6 +39,7 @@ axios.interceptors.response.use((response:AxiosResponse<IAjax>):Promise<any> => 
             if (response.data) {
                 if (!response.data.success) {
                     //alert(response.data.message);
+                    Notice(response.data.message, MsgStatus.fail)
                     // showMessage(response.data.message,MsgStatus.warn);
                     if (response.data.code === 401) {
                         PubSub.publish(user_logout);
@@ -46,6 +50,7 @@ axios.interceptors.response.use((response:AxiosResponse<IAjax>):Promise<any> => 
                     return Promise.resolve(response.data);
                 }
             } else {
+                
                 return Promise.reject("server busy!")
             }
         } else {

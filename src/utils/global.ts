@@ -12,7 +12,7 @@ export const nodeUrl = () => {
   return `https://mainnet.infura.io/v3/7d0afe54dc294b0685539de9451894a2`
 }
 
-export const service_api = process.env.NODE_ENV === "production" ? "http://getaverses.com/" : "http://getaverses.com/";
+export const service_api = process.env.NODE_ENV === "production" ? "https://getaverses.com" : "https://getaverses.com";
 
 export const EmptyStr = "--" 
 

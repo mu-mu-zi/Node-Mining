@@ -28,15 +28,28 @@ export default function Withdraw() {
   const [selectCoin, setSelectCoin] = useState<{text: string; value: number}>()
   const {store} = useRedux()
   const state = useEffectState({
-    asset: {} as MyAsset,
+    totalAssets: 0 as number,
+    available: 0 as number, 
     amount: '' as string,
     selectOption:[] as {text: string; value: number}[]
   })
 
   useAsync(async() => {
-    let result = await myAsset()
-    state.asset = result.data
-  },[])
+    if(!store.coins) return
+
+    let totalAmount: number = 0
+    let availableAmount: number = 0
+    store.coins.forEach((item) => {
+      if(item.id === selectCoin?.value) {
+        totalAmount = item.totalAmount
+        availableAmount = item.availableAmount
+      }
+    })
+
+    state.totalAssets = totalAmount
+    state.available = availableAmount
+    state.amount = '0'
+  },[selectCoin])
 
   useMemo(() => {
       let selectOption:{text: string; value: number}[] = []
@@ -107,11 +120,11 @@ export default function Withdraw() {
             <Typography
               fontSize={".2rem"}
               fontWeight={'350'}
-            >{t(`Total Assets (GETA) `)}</Typography>
+            >{t(`Total Assets (${selectCoin?.text}) `)}</Typography>
             <Typography
               fontSize={".2rem"}
               fontWeight={'700'}
-            >{state.asset.totalAsset}</Typography>
+            >{state.totalAssets}</Typography>
           </Column>
           <Column gap=".16rem">
             <Typography
@@ -121,7 +134,7 @@ export default function Withdraw() {
             <Typography
               fontSize={".2rem"}
               fontWeight={'700'}
-            >{state.asset.available}</Typography>
+            >{state.available}</Typography>
           </Column>
         </Flex>
 
@@ -182,7 +195,7 @@ export default function Withdraw() {
             // regex={[{regStr: NUMBER_REG, tips: ""}]}
             placeholder={'0'}
             right={<WithdrawMax className='submit' onClick={() => {
-              state.amount = `${state.asset.available || 0}`
+              state.amount = `${state.available || 0}`
             }}>MAX</WithdrawMax>}
             value={state.amount}
             onChange={(value) => {
