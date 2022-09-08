@@ -71,6 +71,9 @@ export const OptionContainer = styled.div`
     transform: translate(-50%, 100%);
     z-index: 100;
     padding-top: 16px;
+    ::-webkit-scrollbar{
+        display: none;
+    }
     &.right{
         right: 0;
         left: unset;

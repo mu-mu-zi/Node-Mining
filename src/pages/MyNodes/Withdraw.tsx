@@ -16,7 +16,7 @@ import { FLOAT_NUMBER, NUMBER_REG } from 'utils/global';
 import { isFloatNumber ,isInputNumber, Notice } from 'utils/tools';
 import { useEffectState } from 'hooks/useEffectState';
 import { useAsync } from 'react-use';
-import { apply, MyAsset, myAsset } from 'http/api';
+import { apply, coinList, MyAsset, myAsset } from 'http/api';
 import { MsgStatus } from 'components/messageBox/MessageBox';
 
 
@@ -26,13 +26,24 @@ import { MsgStatus } from 'components/messageBox/MessageBox';
 export default function Withdraw() {
   const { t } = useTranslation()
   const [selectCoin, setSelectCoin] = useState<{text: string; value: number}>()
-  const {store} = useRedux()
+  const {store, userDispatch} = useRedux()
+  const [reload, setReload] = useState<boolean>(false)
   const state = useEffectState({
     totalAssets: 0 as number,
     available: 0 as number, 
     amount: '' as string,
     selectOption:[] as {text: string; value: number}[]
   })
+
+  async function getCoinList() {
+    let result = await coinList()
+    userDispatch.setCoins(result.data)
+  }
+
+
+  useEffect(() => {
+    getCoinList()
+  },[reload])
 
   useAsync(async() => {
     if(!store.coins) return
@@ -75,6 +86,7 @@ export default function Withdraw() {
         coinId: selectCoin.value,
         amount: Number(state.amount)
       })
+      setReload(!reload)
       state.amount = '0'
       Notice('success', MsgStatus.success)
     }catch(e: any) {
@@ -92,7 +104,7 @@ export default function Withdraw() {
         >
           <Box>
             <JumpBtn
-              text="Back"
+              text="My Nodes"
               path={-1}
             />
           </Box>
@@ -100,6 +112,7 @@ export default function Withdraw() {
             fontSize={'.6rem'}
             fontWeight={'700'}
             color={'#fff'}
+            fontFamily={'RomicStd'}
           >
             {t(`withdrawing coins`)}
           </Typography>
@@ -151,7 +164,7 @@ export default function Withdraw() {
             {t(`Coins`)}
           </Typography>
 
-          <WithdrawInp 
+          <WithdrawInp
             disabled
             value={selectCoin?.text}
             right={

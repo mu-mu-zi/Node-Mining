@@ -82,7 +82,6 @@ export const IconLinks = styled(Column)`
 export const PartTwo = styled.div`
   padding-top: 155px;
   background: #000;
-  background-color: #fff;
   padding-left: 320px;
   padding-right: 320px;
   ${({theme}) => theme.mediaWidth.sm`

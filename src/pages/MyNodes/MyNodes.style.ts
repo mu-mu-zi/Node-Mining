@@ -41,6 +41,7 @@ export const Title = styled(Box)`
   font-size: .6rem;
   font-weight: 700;
   color: #fff;
+  font-family: 'RomicStd'
 `
 
 export const PartThree = styled(Box)`
@@ -237,7 +238,7 @@ export const Invitation = styled(Box)`
   transform: translateX(1px);
   &:hover {
     color: #fff;
-    background: ${({theme}) => theme.colors.hover};;
+    background: ${({theme}) => theme.colors.hover};
   }
 `
 

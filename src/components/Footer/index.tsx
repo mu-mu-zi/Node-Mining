@@ -4,10 +4,12 @@ import { RowStart } from 'components/BaseElement/Row'
 import React from 'react'
 import { Wrapper, About, Community, Logo, Connect, Icons } from './FooterStyled'
 import useTheme from 'hooks/useTheme';
+import { useNavigate } from 'react-router-dom';
 
 export default function Footer() {
   const { t } = useTranslation()
   const { theme } = useTheme()
+  const navigate = useNavigate()
   return (
     <Wrapper>
       <ColumnStart
@@ -53,18 +55,58 @@ export default function Footer() {
       >
         <About>
           <span>{t(`About`)}</span>
-          <span>{t(`DID Digital ID`)}</span>
-          <span>{t(`Metaverse`)}</span>
-          <span>{t(`Nodes`)}</span>
-          <span>{t(`My Nodes`)}</span>
-          <span>{t(`About Us`)}</span>
+          <span
+            style={{cursor: 'pointer'}}
+            onClick={() => navigate('digital')}
+          >{t(`DID Digital ID`)}</span>
+          <span
+            style={{cursor: 'pointer'}}
+            onClick={() => navigate('metaverse')}
+          >{t(`Metaverse`)}</span>
+          <span
+            style={{cursor: 'pointer'}}
+            onClick={() => navigate('nodes')}
+          >{t(`Nodes`)}</span>
+          <span
+            style={{cursor: 'pointer'}}
+            onClick={() => navigate('mynodes')}
+          >{t(`My Nodes`)}</span>
+          <span
+            style={{cursor: 'pointer'}}
+            onClick={() => navigate('aboutus')}
+          >{t(`About Us`)}</span>
         </About>
         <Community>
           <span>{t(`Community`)}</span>
-          <span>{t(`Telegram`)}</span>
-          <span>{t(`Medium`)}</span>
-          <span>{t(`Discord`)}</span>
-          <span>{t(`Twitter`)}</span>
+          <a
+            href="https://t.me/Getaverse_Official"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <span>{t(`Telegram`)}</span>
+          </a>
+          <a
+            href="https://medium.com/@GetaverseGlobal"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <span>{t(`Medium`)}</span>
+          </a>
+          <a
+            href="https://discord.com/invite/vGXwF3TdEw"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <span>{t(`Discord`)}</span>
+          </a>
+          <a
+            href="https://twitter.com/GetaverseGlobal"
+            target="_blank"
+            rel="noreferrer"
+          >
+
+            <span>{t(`Twitter`)}</span>
+          </a>
         </Community>
       </RowStart>
     </Wrapper>

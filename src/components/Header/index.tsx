@@ -11,35 +11,49 @@ import NavModal from 'components/NavModal/NavModal';
 import useRedux from 'hooks/useRedux';
 import { formatAddress } from 'utils/tools';
 import { Popover } from '@douyinfe/semi-ui';
+import { useWeb3React } from '@web3-react/core';
+import { adminAddress } from 'utils/global';
 
 
 export default function Header() {
   const { t } = useTranslation()
   const { openModal } = useContext(ModalContext);
-  const {store, userDispatch} = useRedux()
+  const { store, userDispatch } = useRedux()
   const [displayBtnStr, setDisplayBtnStr] = useState<string>()
-  const [showLogout,setShowLogout] = useState<boolean>(false)
+  const [showLogout, setShowLogout] = useState<boolean>(false)
+  const [showAdmin, setShowAdmin] = useState<boolean>(false)
   const customRef = useRef<HTMLDivElement | null>(null);
+  const { account } = useWeb3React()
   // const scrollY = useScrollPosition()
   const [width, setWidth] = useState(0);
+
   useLayoutEffect(() => {
-    if(!customRef.current) return
-    setWidth(customRef.current.offsetWidth);
-  }, []);
+    if (!customRef.current || !displayBtnStr) return
+    setWidth(customRef.current.offsetWidth - 3);
+  }, [displayBtnStr]);
+
   useEffect(() => {
-    if(store.address) {
+    if(adminAddress.toLowerCase() === account?.toLowerCase()) {
+      setShowAdmin(true)
+    } else {
+      setShowAdmin(false)
+    }
+  },[account])
+
+  useEffect(() => {
+    if (store.address) {
       setDisplayBtnStr(formatAddress(store.address))
     } else {
       setDisplayBtnStr("CONNECT WALLET")
     }
-  },[store.address])
+  }, [store.address])
   const openBox = () => {
-    if(displayBtnStr !== "CONNECT WALLET") {
+    if (displayBtnStr !== "CONNECT WALLET") {
       setShowLogout(true)
     } else {
       openModal(ConnectModal)
     }
-    
+
   }
 
   const FnLogout = () => {
@@ -50,7 +64,7 @@ export default function Header() {
   return (
     <HeaderOccupy>
       <HeaderFrame>
-        
+
         <HeaderContent>
           <Occupy />
           <Row>
@@ -58,35 +72,41 @@ export default function Header() {
           </Row>
           <Menu
             onClick={() => {
-              openModal(NavModal,{
-                
+              openModal(NavModal, {
+
               })
             }}
           >
             <img src={require('assets/svg/icon_menu.svg').default} alt="" />
           </Menu>
           <HeaderLinks>
-              <RouterLink to={"/"} className={({isActive}) => `nav-item ${isActive ? "active" : ""}`} >{t(`HOME`)}</RouterLink>
-              <RouterLink to={"/digital"} className={({isActive}) => `nav-item ${isActive ? "active" : ""}`} >{t(`DID DIGITAL ID`)}</RouterLink>
-              <RouterLink to={"/metaverse"} className={({isActive}) => `nav-item ${isActive ? "active" : ""}`} >{t(`METAVERSE`)}</RouterLink>
-              <RouterLink 
+            <RouterLink to={"/"} className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`} >{t(`HOME`)}</RouterLink>
+            <RouterLink to={"/digital"} className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`} >{t(`DID DIGITAL ID`)}</RouterLink>
+            <RouterLink to={"/metaverse"} className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`} >{t(`METAVERSE`)}</RouterLink>
+            <RouterLink
               // style={{pointerEvents:'none'}}
-               to={"/nodes"} className={({isActive}) => `nav-item ${isActive ? "active" : ""}`} >{t(`NODES`)}</RouterLink>
-              <RouterLink 
+              to={"/nodes"} className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`} >{t(`NODES`)}</RouterLink>
+            <RouterLink
               // style={{pointerEvents:'none'}}
-               to={"/mynodes"} className={({isActive}) => `nav-item ${isActive ? "active" : ""}`} >{t(`MY NODES`)}</RouterLink>
-              <RouterLink 
+              to={"/mynodes"} className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`} >{t(`MY NODES`)}</RouterLink>
+            <RouterLink
               // style={{pointerEvents:'none'}}
-               to={"/aboutus"} className={({isActive}) => `nav-item ${isActive ? "active" : ""}`} >{t(`ABOUT US`)}</RouterLink>
-              <Typography
-                display={'none'}
-                // fontSize={'20px'}
-                fontSize={'.2rem'}
-                fontWeight={'400'}
-                color={'#ffffff'}
-                cursor={'pointer'}
-                
-              >EN/CN</Typography>
+              to={"/aboutus"} className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`} >{t(`ABOUT US`)}</RouterLink>
+            <RouterLink
+              style={{
+                display: `${showAdmin ? "block" : "none"}`
+              }}
+              // style={{pointerEvents:'none'}}
+              to={"/admin"} className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`} >{t(`ADMIN`)}</RouterLink>
+            <Typography
+              display={'none'}
+              // fontSize={'20px'}
+              fontSize={'.2rem'}
+              fontWeight={'400'}
+              color={'#ffffff'}
+              cursor={'pointer'}
+
+            >EN/CN</Typography>
 
           </HeaderLinks>
         </HeaderContent>
@@ -96,9 +116,9 @@ export default function Header() {
           position={'bottom'}
           spacing={0}
           onClickOutSide={() => setShowLogout(false)}
-          content={<Logout 
-                    width={width + 'px'}
-                    onClick={FnLogout}>
+          content={<Logout
+            width={width + 'px'}
+            onClick={FnLogout}>
             <Typography
               color={'#F6B91B'}
             >
@@ -111,8 +131,8 @@ export default function Header() {
             // style={{pointerEvents:'none'}}
             draggable={true}
             onClick={openBox}
-            >
-              {t(`${displayBtnStr}`)}
+          >
+            {t(`${displayBtnStr}`)}
           </ConnectWallet>
         </Popover>
       </HeaderFrame>

@@ -40,6 +40,8 @@ export default function JumpBtn(props: Iprops) {
         fontSize={theme.isH5 ? '11px' : '.2rem'}
         fontWeight={'350'}
         color={'#fff'}
+        fontStyle={'italic'}
+        whiteSpace={'nowrap'}
       >
         {t(`${props.text}`)}
       </Typography>

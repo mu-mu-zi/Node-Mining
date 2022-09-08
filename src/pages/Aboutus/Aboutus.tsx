@@ -29,6 +29,7 @@ export default function Aboutus() {
         fontSize={'60px'}
         fontWeight={'700'}
         marginBottom={'.1rem'}
+        fontFamily={'RomicStd'}
       >
         {t(`About Us`)}
       </Typography>

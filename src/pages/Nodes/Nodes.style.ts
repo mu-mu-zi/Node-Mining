@@ -29,6 +29,7 @@ export const Title = styled(Box)`
   font-weight: 700;
   font-size: .6rem;
   color: #ffffff;
+  font-family: RomicStd;
 `
 export const RowCard = styled(Flex)`
   max-width: 3.89rem;

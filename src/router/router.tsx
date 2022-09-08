@@ -13,6 +13,7 @@ import FundRecords from 'pages/MyNodes/FundRecords'
 import Withdraw from 'pages/MyNodes/Withdraw';
 import NodeRecord from 'pages/MyNodes/NodeRecord';
 import Invite from 'pages/MyNodes/Invite';
+import Admin from 'pages/Admin/Admin';
 export default function Routers() {
 
   const history = useLocation()
@@ -72,6 +73,10 @@ export default function Routers() {
     {
       element: <Aboutus />,
       path: "/aboutus",
+    },
+    {
+      element: <Admin />,
+      path: "/admin",
     },
   ]
 

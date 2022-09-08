@@ -89,6 +89,7 @@ export default function Order(props: Iprops) {
             fontSize={'.6rem'}
             fontWeight={'700'}
             color={'#fff'}
+            fontFamily={'RomicStd'}
           >
             {t(`Order Information`)}
           </Typography>

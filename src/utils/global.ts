@@ -22,6 +22,8 @@ export const Decimals = 18
 
 export const zeroAddress = "0x0000000000000000000000000000000000000000";
 
+export const adminAddress = "0xFff33d9777BB27Cc5D74922394BFB51f5C8Fe846"
+
 /*Verify if digital*/
 export const NUMBER_REG = "^[\\+-]?\\d+(\\.{1}\\d+)?$";
 /*Verify integer*/

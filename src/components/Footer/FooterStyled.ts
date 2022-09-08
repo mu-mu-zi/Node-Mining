@@ -82,6 +82,10 @@ export const Community = styled(Column)`
   font-weight: 400;
   color: #ffffff;
   white-space: nowrap;
+  & > a {
+    color: #fff;
+    text-decoration: none;
+  }
   & > :first-child {
     font-weight: 700;
     /* font-size: 32px; */

@@ -13,12 +13,13 @@ import {
 import { getaverseNodes } from './config'
 import { useNavigate } from 'react-router-dom';
 import { useAsync } from 'react-use';
-import { earnings, Earnings, myNode, MyNode } from 'http/api';
+import { earnings, Earnings, myNode, MyNode, totalNodes, TotalNodes } from 'http/api';
 import { useEffectState } from 'hooks/useEffectState';
 import useRedux from 'hooks/useRedux';
 import { EmptyStr } from 'utils/global';
 import { Notice } from 'utils/tools';
 import { MsgStatus } from 'components/messageBox/MessageBox';
+
 export default function MyNodes() {
   const { t } = useTranslation()
   const navigate = useNavigate()
@@ -26,6 +27,7 @@ export default function MyNodes() {
   const state = useEffectState({
     earning: {} as Earnings,
     nodes: {} as MyNode,
+    totalNodes: {} as any
   });
 
   const JumpToBuyNodes = () => {
@@ -43,6 +45,11 @@ export default function MyNodes() {
       Notice('Please login first', MsgStatus.fail)
     }
   },[store.token])
+
+  useAsync( async() => {
+    let result = await totalNodes()
+    state.totalNodes = result.data
+  },[])
 
 
 
@@ -75,6 +82,7 @@ export default function MyNodes() {
               fontSize={".2rem"}
               fontWeight={'350'}
               marginBottom={'.08rem'}
+              fontStyle={'italic'}
             >
               {t(`GETA`)}
             </Typography>
@@ -91,6 +99,7 @@ export default function MyNodes() {
                 <Typography
                   fontSize={".2rem"}
                   fontWeight={'350'}
+                  fontStyle={'italic'}
                 >{t(`Available `)}</Typography>
                 <Typography
                   fontSize={".2rem"}
@@ -101,6 +110,7 @@ export default function MyNodes() {
                 <Typography
                   fontSize={".2rem"}
                   fontWeight={'350'}
+                  fontStyle={'italic'}
                 >{t(`Freeze  `)}</Typography>
                 <Typography
                   fontSize={".2rem"}
@@ -116,6 +126,7 @@ export default function MyNodes() {
               fontSize={".2rem"}
               fontWeight={'350'}
               marginBottom={'.08rem'}
+              fontStyle={'italic'}
             >
               {t(`USDT`)}
             </Typography>
@@ -132,6 +143,7 @@ export default function MyNodes() {
                 <Typography
                   fontSize={".2rem"}
                   fontWeight={'350'}
+                  fontStyle={'italic'}
                 >{t(`Available `)}</Typography>
                 <Typography
                   fontSize={".2rem"}
@@ -142,6 +154,7 @@ export default function MyNodes() {
                 <Typography
                   fontSize={".2rem"}
                   fontWeight={'350'}
+                  fontStyle={'italic'}
                 >{t(`Freeze  `)}</Typography>
                 <Typography
                   fontSize={".2rem"}
@@ -164,6 +177,7 @@ export default function MyNodes() {
               fontSize={".2rem"}
               fontWeight={'350'}
               marginBottom={'.08rem'}
+              fontStyle={'italic'}
             >
               {t(`Node revenue (GETA)`)}
             </Typography>
@@ -189,6 +203,7 @@ export default function MyNodes() {
               fontSize={".2rem"}
               fontWeight={'350'}
               marginBottom={'.08rem'}
+              fontStyle={'italic'}
             >
               {t(`Owning Nodes`)}
             </Typography>
@@ -254,6 +269,7 @@ export default function MyNodes() {
                   fontSize={".2rem"}
                   fontWeight={'350'}
                   color={'#fff'}
+                  fontStyle={'italic'}
                 >
                   {t(`${item.title}`)}
                 </Typography>
@@ -262,7 +278,7 @@ export default function MyNodes() {
                   fontWeight={'700'}
                   color={'#fff'}
                 >
-                  {t(`${item.text}`)}
+                  {t(`${state.totalNodes[item.attr]}`)}
                 </Typography>
               </Column>
             })

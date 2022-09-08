@@ -28,10 +28,11 @@ function App() {
   const {account,provider} = useWeb3React()
   const { getGenerateNonce } = useGenerateNonce()
   const [coins, setCoins] = useState<CoinList[]>()
+
   useEffect(() => {
     AOS.init();
     getCoinList()
-  }, []);
+  }, [account]);
   useEffect(() => {
     const namespace = PubSub.subscribe(user_logout, () => {
       userDispatch.logout()
@@ -49,14 +50,16 @@ function App() {
       }catch(e) {
         // userDispatch.logout()
       }
+    } else {
+      userDispatch.logout()
     }
   }, []);
 
-  useEffect(() => {
-    if(!account) {
-      userDispatch.logout()
-    }
-  },[account])
+  // useEffect(() => {
+  //   if(!account) {
+  //     userDispatch.logout()
+  //   }
+  // },[account])
 
   useEffect(() => {
     

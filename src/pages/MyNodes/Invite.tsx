@@ -142,6 +142,7 @@ export default function Invite() {
           fontSize={'.6rem'}
           fontWeight={'700'}
           color={'#fff'}
+          fontFamily={'RomicStd'}
         >
           {t(`Invite Friends`)}
         </Typography>

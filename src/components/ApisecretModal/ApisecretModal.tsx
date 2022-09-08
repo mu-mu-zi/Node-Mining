@@ -29,7 +29,7 @@ export default function ApisecretModal(props: IOpenModal & AA) {
       document.execCommand('copy', true);
       document.body.removeChild(textarea);
     }
-    Notice("Copy successfully",MsgStatus.success)
+    Notice("Replication success.",MsgStatus.success)
   }
 
   return (

@@ -226,3 +226,13 @@ export function pushRewardInfo() {
 
   })
 }
+export interface TotalNodes {
+  globalNode:number
+  runNode:number
+  total:number
+  efficientNode: number
+}
+
+export function totalNodes() {
+  return fetchPost<TotalNodes>('/api/v1/node/nodes')
+}

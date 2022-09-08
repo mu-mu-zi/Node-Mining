@@ -111,8 +111,8 @@ export default function NodeRecord() {
         </RowStart>
 
         <Grid
-          gap={'.1rem 1.68rem'}
-          gridTemplateColumns={'repeat(4,1fr)'}
+          gap={'.3rem 1.2rem'}
+          gridTemplateColumns={'repeat(5,1fr)'}
         >
           {
             data.map((item, index) => {
