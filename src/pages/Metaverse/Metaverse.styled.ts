@@ -73,13 +73,10 @@ export const ActivatingSvg = styled.img`
 `
 
 export const PartThree = styled(Box)`
-  background: radial-gradient(transparent, #000 1px);
-  background-size: 14px 10px;
-  background: #000000;
+  background: #000;
   padding: 125px 251px 160px;
   ${({theme}) => theme.mediaWidth.sm`
     padding: 40px 16px 0;
-    background: #000000;
   `}
 `
 export const PartFive = styled(Box)`

@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useContext, useState, useEffect, useRef, useLayoutEffect } from 'react'
 import useScrollPosition from '@react-hook/window-scroll'
 import { HeaderFrame, HeaderContent, ConnectWallet, HeaderLinks, Logo, HeaderOccupy, Menu, Occupy, Logout } from './HeaderStyled'
 import RouterLink from './RouterLink';
@@ -19,8 +19,13 @@ export default function Header() {
   const {store, userDispatch} = useRedux()
   const [displayBtnStr, setDisplayBtnStr] = useState<string>()
   const [showLogout,setShowLogout] = useState<boolean>(false)
-  const scrollY = useScrollPosition()
-
+  const customRef = useRef<HTMLDivElement | null>(null);
+  // const scrollY = useScrollPosition()
+  const [width, setWidth] = useState(0);
+  useLayoutEffect(() => {
+    if(!customRef.current) return
+    setWidth(customRef.current.offsetWidth);
+  }, []);
   useEffect(() => {
     if(store.address) {
       setDisplayBtnStr(formatAddress(store.address))
@@ -91,7 +96,9 @@ export default function Header() {
           position={'bottom'}
           spacing={0}
           onClickOutSide={() => setShowLogout(false)}
-          content={<Logout onClick={FnLogout}>
+          content={<Logout 
+                    width={width + 'px'}
+                    onClick={FnLogout}>
             <Typography
               color={'#F6B91B'}
             >
@@ -100,6 +107,7 @@ export default function Header() {
           </Logout>}
         >
           <ConnectWallet
+            ref={customRef}
             // style={{pointerEvents:'none'}}
             draggable={true}
             onClick={openBox}

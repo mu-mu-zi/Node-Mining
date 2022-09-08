@@ -18,8 +18,7 @@ export const Banner = styled.div`
   /* pointer-events: none; */
 `
 export const Content = styled.div`
-  background: radial-gradient(transparent, #000 1px);
-  background-size: 14px 10px;
+  background: #000;
   padding: 22px 3.6rem 170px;
   position: relative;
 `

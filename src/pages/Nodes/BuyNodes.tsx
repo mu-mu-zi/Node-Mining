@@ -28,7 +28,6 @@ export default function BuyNodes() {
     price: new BigNumber(0)
   })
   useAsync(async() => {
-
     if (!TgeMarket || !account) return
     try{
 
@@ -60,8 +59,8 @@ export default function BuyNodes() {
 
   const StepNext = () => {
     if(state.Invite === zeroAddress || !state.Invite || state.Invite === EmptyStr) {
-      // Notice('Sorry, you are not eligible to purchase.' , MsgStatus.fail)
-      setStep(2)
+      Notice('Sorry, you are not eligible to purchase.' , MsgStatus.fail)
+      // setStep(2)
     } else {
       setStep(2)
     }

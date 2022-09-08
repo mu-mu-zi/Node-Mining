@@ -81,15 +81,12 @@ export const IconLinks = styled(Column)`
 
 export const PartTwo = styled.div`
   padding-top: 155px;
-  background: radial-gradient(transparent, #000 1px);
-  background-size: 14px 10px;
+  background: #000;
   background-color: #fff;
   padding-left: 320px;
   padding-right: 320px;
   ${({theme}) => theme.mediaWidth.sm`
     padding: 25px 20px 0;
-    background: radial-gradient(transparent, #000 .6px);
-    background-size: 16px 10px;
   `}
 `
 
@@ -211,12 +208,9 @@ export const Card = styled(Box)`
 
 export const PartFour = styled.div`
     padding: 104px 320px 138px;
-    background: radial-gradient(transparent, #000 1px);
-    background-size: 14px 10px;
+    background: #000;
   ${({theme}) => theme.mediaWidth.sm`
     padding: 39px 20px 68px;
-    background: radial-gradient(transparent, #000 .6px);
-    background-size: 16px 10px;
   `}
 `
 
@@ -260,13 +254,10 @@ export const PartnersBg = styled.div`
 `
 
 export const PartSix = styled.div`
-  background: radial-gradient(transparent, #000 1px);
-  background-size: 14px 10px;
+  background: #000;
   padding: 250px 320px 423px;
   ${({theme}) => theme.mediaWidth.sm`
       padding: 70px 20px 173px;
-      background: radial-gradient(transparent, #000 .6px);
-      background-size: 16px 10px;
   `}
 
 `

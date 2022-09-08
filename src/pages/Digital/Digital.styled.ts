@@ -139,12 +139,10 @@ export const Submit = styled(Box)`
 `
 
 export const PartTwo = styled.div`
-  background: radial-gradient(transparent, #000 1px);
-  background-size: 14px 10px;
+  background: #000;
   padding: 168px 360px 72px;
   ${({theme}) => theme.mediaWidth.sm`
     padding: 59px 16px 0;
-    background: #000000;
   `}
 `
 

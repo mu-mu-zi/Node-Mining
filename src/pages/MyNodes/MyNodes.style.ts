@@ -9,8 +9,8 @@ export const Warpper = styled.div`
   display: grid;
   gap: .32rem;
 
-  background: radial-gradient(transparent, #000 1px);
-  background-size: 14px 10px;
+  background: #000;
+
   padding: 1.03rem 3.6rem .15rem;
 `
 export const InviteWarpper = styled(Flex)`
@@ -84,14 +84,12 @@ export const NodesLogo = styled.img`
 `
 
 export const PartFive = styled(Box)`
-  background: radial-gradient(transparent, #000 1px);
-  background-size: 14px 10px;
+  background: #000;
   padding: .6rem 3.6rem .63rem;
 `
 
 export const RevenueWrap = styled(Box)`
-  background: radial-gradient(transparent, #000 1px);
-  background-size: 14px 10px;
+  background: #000;
   padding: .64rem 4.18rem 2.5rem;
   min-height: 4rem;
 `
@@ -114,21 +112,18 @@ export const Active = styled(Box)`
 `
 
 export const WithdrawWrap = styled(Box)`
-  background: radial-gradient(transparent, #000 1px);
-  background-size: 14px 10px;
+  background: #000;
   padding: .64rem 4.18rem 2.5rem;
   min-height: 4rem;
 `
 
 export const FundRecordsWrap = styled(Box)`
-  background: radial-gradient(transparent, #000 1px);
-  background-size: 14px 10px;
+  background: #000;
   padding: .64rem 4.18rem 2.5rem;
   min-height: 4rem;
 `
 export const NodeRecordWrap = styled(Box)`
-  background: radial-gradient(transparent, #000 1px);
-  background-size: 14px 10px;
+  background: #000;
   padding: .81rem 4.18rem 2.5rem;
   min-height: 4rem;
 `
@@ -154,8 +149,7 @@ export const MyNode = styled(Row)`
 `
 
 export const InviteWrap = styled(Box)`
-  background: radial-gradient(transparent, #000 1px);
-  background-size: 14px 10px;
+  background: #000;
   padding: .62rem 3.6rem 2.5rem;
   min-height: 4rem;
 `

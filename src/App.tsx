@@ -53,8 +53,15 @@ function App() {
   }, []);
 
   useEffect(() => {
+    if(!account) {
+      userDispatch.logout()
+    }
+  },[account])
 
-    if (accounts && store.address && accounts[0] !== store.address) {
+  useEffect(() => {
+    
+
+    if (accounts && store.address && accounts[0].toLowerCase() !== store.address.toLowerCase()) {
       
       console.log('aaaa',accounts,store.address)
       console.log('aaaa',account)
