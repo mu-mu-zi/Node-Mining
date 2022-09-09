@@ -12,7 +12,7 @@ import { useAsync } from 'react-use';
 import { isAddress, useTgeMarket } from 'hooks/useContract';
 import { useWeb3React } from '@web3-react/core';
 import { useEffectState } from '../../hooks/useEffectState';
-import { EmptyStr } from '../../utils/global';
+import { adminAddress, EmptyStr } from '../../utils/global';
 import { Table, Td, Th, Tr } from 'components/BaseElement/Table';
 import styled from 'styled-components';
 import { Notice, TimestampTransform } from '../../utils/tools';
@@ -46,6 +46,10 @@ export default function Invite() {
   useAsync(async () => {
     if (!TgeMarket || !account) return
     try {
+      if(adminAddress.toLowerCase() === account?.toLowerCase()) {
+        setIsAllow(true)
+        return
+      }
       let result = await TgeMarket.getTokensOf(account)
       if (result?.length > 0) {
         setIsAllow(true)
@@ -55,7 +59,7 @@ export default function Invite() {
     } catch (e) {
       setIsAllow(false)
     }
-  }, [account])
+  }, [account,TgeMarket])
   useAsync(async () => {
     if (!TgeMarket || !account) return
     try {
