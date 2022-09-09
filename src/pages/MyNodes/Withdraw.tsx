@@ -18,6 +18,7 @@ import { useEffectState } from 'hooks/useEffectState';
 import { useAsync } from 'react-use';
 import { apply, coinList, MyAsset, myAsset } from 'http/api';
 import { MsgStatus } from 'components/messageBox/MessageBox';
+import { useWeb3React } from '@web3-react/core';
 
 
 
@@ -27,12 +28,14 @@ export default function Withdraw() {
   const { t } = useTranslation()
   const [selectCoin, setSelectCoin] = useState<{text: string; value: number}>()
   const {store, userDispatch} = useRedux()
+  const {account} = useWeb3React()
   const [reload, setReload] = useState<boolean>(false)
   const state = useEffectState({
     totalAssets: 0 as number,
     available: 0 as number, 
     amount: '' as string,
-    selectOption:[] as {text: string; value: number}[]
+    selectOption:[] as {text: string; value: number}[],
+    fee: 0 as number
   })
 
   async function getCoinList() {
@@ -43,23 +46,26 @@ export default function Withdraw() {
 
   useEffect(() => {
     getCoinList()
-  },[reload])
+  },[reload,account])
 
   useAsync(async() => {
     if(!store.coins) return
 
     let totalAmount: number = 0
     let availableAmount: number = 0
+    let withdrawFee: number = 0
     store.coins.forEach((item) => {
       if(item.id === selectCoin?.value) {
         totalAmount = item.totalAmount
         availableAmount = item.availableAmount
+        withdrawFee = item.withdrawFee
       }
     })
 
     state.totalAssets = totalAmount
     state.available = availableAmount
-    state.amount = '0'
+    state.fee = withdrawFee
+    state.amount = ''
   },[selectCoin])
 
   useMemo(() => {
@@ -87,7 +93,7 @@ export default function Withdraw() {
         amount: Number(state.amount)
       })
       setReload(!reload)
-      state.amount = '0'
+      state.amount = ''
       Notice('success', MsgStatus.success)
     }catch(e: any) {
       Notice(`${e.message}`, MsgStatus.fail)
@@ -225,7 +231,7 @@ export default function Withdraw() {
           color={'#6B6B6B'}  
           marginBottom={'.22rem'}
         >
-          {t(`Handling fee: 0.32 GETA`)}
+          {t(`Handling fee: ${state.fee} ${selectCoin?.text}`)}
         </Typography>
 
         <Normal
