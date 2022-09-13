@@ -19,6 +19,7 @@ import { useAsync } from 'react-use';
 import { apply, coinList, MyAsset, myAsset } from 'http/api';
 import { MsgStatus } from 'components/messageBox/MessageBox';
 import { useWeb3React } from '@web3-react/core';
+import useTheme from '../../hooks/useTheme';
 
 
 
@@ -30,6 +31,7 @@ export default function Withdraw() {
   const {store, userDispatch} = useRedux()
   const {account} = useWeb3React()
   const [reload, setReload] = useState<boolean>(false)
+  const { theme } = useTheme()
   const state = useEffectState({
     totalAssets: 0 as number,
     available: 0 as number, 
@@ -102,68 +104,77 @@ export default function Withdraw() {
 
   return (
     <WithdrawWrap>
-      <Column>
+      <Column
+        position={'relative'}
+      >
+        <Box
+          position={theme.isH5 ? 'relative' : 'absolute'}
+          alignSelf={theme.isH5 ? 'start' : ''}
+          top={'.2rem'}
+          left={'0'}
+        >
+          <JumpBtn
+            text="My Nodes"
+            path={-1}
+          />
+        </Box>
         <Row
           width={"100%"}
-          justifyContent={'space-between'}
-          marginBottom={'1.15rem'}
+          justifyContent={'center'}
+          alignItems={'center'}
+          marginBottom={theme.isH5 ? '32px' : '1.15rem'}
+          
         >
-          <Box>
-            <JumpBtn
-              text="My Nodes"
-              path={-1}
-            />
-          </Box>
           <Typography
-            fontSize={'.6rem'}
+            fontSize={theme.isH5 ? '20px' : '.6rem'}
             fontWeight={'700'}
             color={'#fff'}
             fontFamily={'RomicStd'}
           >
             {t(`withdrawing coins`)}
           </Typography>
-          <div />
         </Row>
 
         <Flex 
-          gap=".6rem" 
+          gap={theme.isH5 ? '60px' : ".6rem"} 
           color="#ffffff"
           background="#1A1919"
           borderRadius="8px"
-          padding=".21rem .85rem"
-          marginBottom={'.43rem'}
+          padding={theme.isH5 ? '26.5px 10px' : ".21rem .85rem"}
+          marginBottom={theme.isH5 ? '16px' : '.43rem'}
+          justifyContent={theme.isH5 ? 'center' : ""}
           // width={'4.7rem'}
           boxSizing={'border-box'}
         >
-          <Column gap=".16rem">
+          <Column gap={theme.isH5 ? '16px' : ".16rem"}>
             <Typography
-              fontSize={".2rem"}
+              fontSize={theme.isH5 ? '12px' : ".2rem"}
               fontWeight={'350'}
             >{t(`Total Assets (${selectCoin?.text}) `)}</Typography>
             <Typography
-              fontSize={".2rem"}
+              fontSize={theme.isH5 ? '20px' : ".2rem"}
               fontWeight={'700'}
             >{state.totalAssets}</Typography>
           </Column>
-          <Column gap=".16rem">
+          <Column gap={theme.isH5 ? '16px' : ".16rem"}>
             <Typography
-              fontSize={".2rem"}
+              fontSize={theme.isH5 ? '12px' : ".2rem"}
               fontWeight={'350'}
             >{t(`Available`)}</Typography>
             <Typography
-              fontSize={".2rem"}
+              fontSize={theme.isH5 ? '20px' : ".2rem"}
               fontWeight={'700'}
             >{state.available}</Typography>
           </Column>
         </Flex>
 
         <Row
-          marginBottom={'.24rem'}
+          marginBottom={theme.isH5 ? '32px' : '.24rem'}
           justifyContent={'space-between'}
-          width={'4.64rem'}
+          width={theme.isH5 ? '100%' : '4.64rem'}
         >
           <Typography
-            fontSize={'.2rem'}
+            fontSize={theme.isH5 ? '12px' : '.2rem'}
             fontWeight={'700'}
             color={'#ffffff'}
           >
@@ -175,7 +186,7 @@ export default function Withdraw() {
             value={selectCoin?.text}
             right={
               <RowCenter
-                height={'.38rem'}
+                height={theme.isH5 ? '32px' : '.38rem'}
                 cursor={'pointer'}
               >
                 <DropDown
@@ -199,12 +210,12 @@ export default function Withdraw() {
 
         </Row>
         <Row
-          marginBottom={'.64rem'}
+          marginBottom={theme.isH5 ? '16px' : '.64rem'}
           justifyContent={'space-between'}
-          width={'4.64rem'}
+          width={theme.isH5 ? '100%' : '4.64rem'}
         >
           <Typography
-            fontSize={'.2rem'}
+            fontSize={theme.isH5 ? '12px' : '.2rem'}
             fontWeight={'700'}
             color={'#ffffff'}
           >
@@ -226,16 +237,19 @@ export default function Withdraw() {
         </Row>
 
         <Typography
-          fontSize={'.2rem'}
+          fontSize={theme.isH5 ? '12px' : '.2rem'}
           fontWeight={'400'}
           color={'#6B6B6B'}  
-          marginBottom={'.22rem'}
+          marginBottom={theme.isH5 ? '27px' : '.22rem'}
         >
           {t(`Handling fee: ${state.fee} ${selectCoin?.text}`)}
         </Typography>
 
         <Normal
           onClick={submit}
+          style={{
+            margin: theme.isH5 ? 'auto' : ''
+          }}
         >
           {t(`WITHDRAW COINS`)}
         </Normal>

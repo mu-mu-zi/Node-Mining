@@ -4,6 +4,7 @@ import Flex from 'components/BaseElement/Flex';
 import { Row, RowStart } from 'components/BaseElement/Row';
 import Input from 'components/form/Input';
 import styled from 'styled-components';
+import { Z_INDEX } from 'utils/global';
 
 export const Warpper = styled.div`
   display: grid;
@@ -12,6 +13,9 @@ export const Warpper = styled.div`
   background: #000;
 
   padding: 1.03rem 3.6rem .15rem;
+  ${({theme}) => theme.mediaWidth.sm`
+    padding: 32px 16px 16px;
+  `}
 `
 export const InviteWarpper = styled(Flex)`
   justify-content: space-between;
@@ -19,17 +23,28 @@ export const InviteWarpper = styled(Flex)`
   background: rgba(0, 232, 138, .4);
   padding: .5rem 1.56rem .3rem .34rem;
   border-radius: 8px;
+  ${({theme}) => theme.mediaWidth.sm`
+    padding: 24px 44px 28px;
+    flex-direction: column;
+  `}
 `
 
 export const InviteIcon = styled.img`
   width: 1.24rem;
   height: 1rem;
+  ${({theme}) => theme.mediaWidth.sm`
+    width: 60px;
+    height: 48px;
+  `}
 `
 
 export const PartTwo = styled(Box)`
   position: relative;
   background: #000;
   padding: .71rem 3.60rem .88rem;
+  ${({theme}) => theme.mediaWidth.sm`
+    padding: 0 16px;
+  `}
 `
 
 export const PartTwoBg = styled.img`
@@ -41,13 +56,20 @@ export const Title = styled(Box)`
   font-size: .6rem;
   font-weight: 700;
   color: #fff;
-  font-family: 'RomicStd'
+  font-family: 'RomicStd';
+  ${({theme}) => theme.mediaWidth.sm`
+    font-size: 20px;
+    
+  `}
 `
 
 export const PartThree = styled(Box)`
   background: #000;
   padding-top: 2.56rem;
   padding-bottom: .98rem;
+  ${({theme}) => theme.mediaWidth.sm`
+    padding: 39px 16px 52px;
+  `}
 `
 
 export const LineCut = styled(RowStart)`
@@ -63,6 +85,9 @@ export const LineCut = styled(RowStart)`
       left: 0;
       top: 50%;
       /* transform: translate(-50%, -50%); */
+      ${({theme}) => theme.mediaWidth.sm`
+        display: none;
+      `}
     }
     &::after{
       content: '';
@@ -75,24 +100,43 @@ export const LineCut = styled(RowStart)`
       right: 0;
       top: 50%;
       transform: rotate(180deg);
+      ${({theme}) => theme.mediaWidth.sm`
+        display: none;
+      `}
     }
+    ${({theme}) => theme.mediaWidth.sm`
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    `}
 `
 
 export const NodesLogo = styled.img`
   width: 1.8rem;
   height: 1.56rem;
   margin: .3rem 0 0 .18rem;
+  ${({theme}) => theme.mediaWidth.sm`
+    width: 44px;
+    height: 44px;
+    margin: 0 0 8px;
+  `}
 `
 
 export const PartFive = styled(Box)`
   background: #000;
   padding: .6rem 3.6rem .63rem;
+  ${({theme}) => theme.mediaWidth.sm`
+    padding: 19px 25px 16px;
+  `}
 `
 
 export const RevenueWrap = styled(Box)`
   background: #000;
   padding: .64rem 4.18rem 2.5rem;
   min-height: 4rem;
+  ${({theme}) => theme.mediaWidth.sm`
+    padding: 16px;
+  `}
 `
 
 export const Active = styled(Box)`
@@ -108,6 +152,9 @@ export const Active = styled(Box)`
       position: absolute;
       bottom: -0.12rem;
       left: 0;
+      ${({theme}) => theme.mediaWidth.sm`
+        bottom: -9px;
+      `}
     }
   }
 `
@@ -116,17 +163,26 @@ export const WithdrawWrap = styled(Box)`
   background: #000;
   padding: .64rem 4.18rem 2.5rem;
   min-height: 4rem;
+  ${({theme}) => theme.mediaWidth.sm`
+    padding: 16px;
+  `}
 `
 
 export const FundRecordsWrap = styled(Box)`
   background: #000;
   padding: .64rem 4.18rem 2.5rem;
   min-height: 4rem;
+  ${({theme}) => theme.mediaWidth.sm`
+    padding: 16px;
+  `}
 `
 export const NodeRecordWrap = styled(Box)`
   background: #000;
   padding: .81rem 4.18rem 2.5rem;
   min-height: 4rem;
+  ${({theme}) => theme.mediaWidth.sm`
+    padding: 16px;
+  `}
 `
 
 export const ActiveNode = styled(Column)`
@@ -153,6 +209,9 @@ export const InviteWrap = styled(Box)`
   background: #000;
   padding: .62rem 3.6rem 2.5rem;
   min-height: 4rem;
+  ${({theme}) => theme.mediaWidth.sm`
+    padding: 16px;
+  `}
 `
 
 export const ProgressImg = styled.img`
@@ -169,6 +228,11 @@ export const InviteInput = styled(Input)`
   padding: 0 0 0 12px;
   box-sizing: border-box;
   height: .48rem;
+  ${({theme}) => theme.mediaWidth.sm`
+    height: 32px;
+    border-radius: 25px;
+    border: 1px solid #6B6B6B;
+  `}
   &:hover {
     border: 2px solid #00E88A;
     color: #00E88A;
@@ -201,6 +265,9 @@ export const InviteInput = styled(Input)`
     color: #6B6B6B;
     border: none;
     outline: unset;
+    ${({theme}) => theme.mediaWidth.sm`
+      font-size: 11px;
+    `}
     ::placeholder {
       color: #6B6B6B;
     }
@@ -240,6 +307,12 @@ export const Invitation = styled(Box)`
     color: #fff;
     background: ${({theme}) => theme.colors.hover};
   }
+  ${({theme}) => theme.mediaWidth.sm`
+    height: 32px;
+    padding: 8px;
+    font-size: 12px;
+    border-radius: 48px;
+  `}
 `
 
 
@@ -252,6 +325,12 @@ export const WithdrawInp = styled(Input)`
   padding: 0 0 0 12px;
   box-sizing: border-box;
   height: .4rem;
+  ${({theme}) => theme.mediaWidth.sm`
+    height: 32px;
+    width: 279px;
+    max-width: initial;
+    font-size: 12px;
+  `}
   &:hover {
     border: 2px solid #00E88A;
     color: #00E88A;
@@ -305,6 +384,9 @@ export const WithdrawInp = styled(Input)`
         color: #00E88A;
       }
     }
+    ${({theme}) => theme.mediaWidth.sm`
+      font-size: 12px;
+    `}
   }
 `
 
@@ -324,8 +406,34 @@ export const WithdrawMax = styled(Box)`
     color: #fff;
     background: ${({theme}) => theme.colors.hover};;
   }
+  ${({theme}) => theme.mediaWidth.sm`
+    height: 22px;
+    width: 44px;
+    font-size: 11px;
+    border-radius: 48px;
+    text-align: center;
+    margin-right: 6px;
+    line-height: 22px;
+  `}
 `
 
 export const PopoverInvite = styled(Box)`
   
+`
+
+export const WithdrawCoinsH5 = styled(Flex)`
+  display: none;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  align-items: center;
+  justify-content: center;
+  z-index: ${Z_INDEX.footer_nav};
+  background-color: #1A1919;
+  padding: 10px;
+  box-sizing: border-box;
+  ${({theme}) => theme.mediaWidth.sm`
+    display: flex;
+  `}
 `

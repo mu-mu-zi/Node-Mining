@@ -11,7 +11,7 @@ import { generateNodeKey, generateNonce, GetNodeKey, getNodeKey, nodeList, NodeL
 import { useAsync } from 'react-use';
 import { useUpdateEffect } from 'ahooks';
 import { EmptyStr } from '../../utils/global';
-import { awaitWrap, Notice } from 'utils/tools';
+import { awaitWrap, formatAddress, Notice } from 'utils/tools';
 import { signString } from 'connectwallet/walletTools';
 import { useWeb3React } from '@web3-react/core';
 import { MsgStatus } from 'components/messageBox/MessageBox';
@@ -21,6 +21,7 @@ import { Popover } from '@douyinfe/semi-ui';
 import { Icon } from 'components/BaseElement/Icon';
 import { ModalContext } from 'components/provider/ModalProvider';
 import ApisecretModal from 'components/ApisecretModal/ApisecretModal';
+import useTheme from 'hooks/useTheme';
 
 
 export default function NodeRecord() {
@@ -33,6 +34,7 @@ export default function NodeRecord() {
   const { account, provider } = useWeb3React()
   const [reload, setReload] = useState<boolean>(false)
   const { openModal } = useContext(ModalContext);
+  const { theme } = useTheme()
   const { store } = useRedux()
   useAsync(async () => {
     let result = await nodeList({
@@ -99,10 +101,11 @@ export default function NodeRecord() {
   return (
     <NodeRecordWrap>
       <Column
-        gap=".64rem"
+        gap={theme.isH5 ? '16px' : ".64rem"}
       >
         <RowStart
           width={'100%'}
+          marginBottom={theme.isH5 ? '40px' : ''}
         >
           <JumpBtn
             text="Back"
@@ -111,8 +114,11 @@ export default function NodeRecord() {
         </RowStart>
 
         <Grid
-          gap={'.3rem 1.2rem'}
-          gridTemplateColumns={'repeat(5,1fr)'}
+          width={'100%'}
+          overflowX={theme.isH5 ? 'scroll' : 'unset'}
+          
+          gap={theme.isH5 ? '32px' : '.3rem 1.2rem'}
+          gridTemplateColumns={theme.isH5 ? `repeat(${data.length},1fr)` : 'repeat(5,1fr)'}
         >
           {
             data.map((item, index) => {
@@ -124,10 +130,15 @@ export default function NodeRecord() {
                   }}
                 >
                   <MyNode className={`${activeIndex === index ? 'node-png-active' : ''} `}>
-                    <img src={require('assets/images/Nodes/logo_n.png')} alt="" />
+                    <img 
+                      style={{
+                        width: theme.isH5 ? '64px' : 'initial',
+                        height: theme.isH5 ? '64px' : 'initial',
+                      }}
+                      src={require('assets/images/Nodes/logo_n.png')} alt="" />
                   </MyNode>
                   <Typography
-                    fontSize={'.2rem'}
+                    fontSize={theme.isH5 ? '12px' : '.2rem'}
                     fontWeight={'350'}
                     color={"#fff"}
                     textAlign={'center'}
@@ -143,42 +154,43 @@ export default function NodeRecord() {
         <ColumnStart
           background={"#1A1919"}
           borderRadius={'4px'}
-          padding={'.75rem 1.17rem .39rem .24rem'}
-          gap={'.59rem'}
+          padding={theme.isH5 ? '16px 24px 20px' : '.75rem 1.17rem .39rem .24rem'}
+          gap={theme.isH5 ? '24px' : '.59rem'}
           width={'100%'}
           boxSizing={'border-box'}
         >
           <ColumnStart
-            gap=".16rem"
+            gap={theme.isH5 ? '16px' : ".16rem"}
           >
             <RowStart
-              gap=".48rem"
+              gap={theme.isH5 ? '48px' : ".48rem"}
               color="#fff"
-              fontSize=".2rem"
+              fontSize={theme.isH5 ? '12px' : ".2rem"}
+              fontStyle={'italic'}
               fontWeight="350"
             >
-              <Typography minWidth="1.56rem">{t(`Apikey`)}</Typography>
-              <Typography>{<CopyTypography>{nodeInfo?.apiKey}</CopyTypography> || EmptyStr}</Typography>
+              <Typography minWidth={theme.isH5 ? '88px' : "1.56rem"}>{t(`Apikey`)}</Typography>
+              <Typography>{<CopyTypography>{theme.isH5 ? formatAddress(nodeInfo?.apiKey || '') : nodeInfo?.apiKey}</CopyTypography> || EmptyStr}</Typography>
             </RowStart>
             <Row
-              gap=".48rem"
+              gap={theme.isH5 ? '48px' : ".48rem"}
               color="#fff"
-              fontSize=".2rem"
+              fontSize={theme.isH5 ? '12px' : ".2rem"}
               fontWeight="350"
             >
-              <Typography minWidth="1.56rem">{t(`Cents earnings`)}</Typography>
+              <Typography minWidth={theme.isH5 ? '88px' : "1.56rem"}>{t(`Cents earnings`)}</Typography>
               <Row gap='8px'>
-                <Typography>{nodeInfo?.apiSecret || EmptyStr}</Typography>
+                <Typography>{formatAddress(nodeInfo?.apiSecret || EmptyStr)}</Typography>
                 <Popover
                   position='top'
                   style={{ marginBottom: '10px' }}
                   content={<PopoverInvite
-                    width={'2.4rem'}
-                    padding={'.1rem'}
+                    width={theme.isH5 ? '150px' : '2.4rem'}
+                    padding={theme.isH5 ? '10px' : '.1rem'}
                     background={'#3D3D3D'}
                     borderRadius={'4px'}
                     color={'#ffffff'}
-                    fontSize={'.12rem'}
+                    fontSize={theme.isH5 ? '12px' : '.12rem'}
                     fontWeight={400}
                   >
                     <Typography>{t(`import the node public-private key pair, you can successfully run the node to get the cents revenue`)}</Typography>
@@ -195,7 +207,7 @@ export default function NodeRecord() {
             <Normal
               onClick={handleClick}
             >
-              {t(`${nodeInfo?.apiSecret ? "Reset" : "Settings"}`)}
+              {t(`${nodeInfo?.apiSecret ? "RESET" : "SETTINGS"}`)}
             </Normal>
           </RowCenter>
         </ColumnStart>

@@ -20,17 +20,23 @@ import { RowCenter } from 'components/BaseElement/Row';
 import DropDown from 'components/dropDown/DropDown';
 import { useAsync } from 'react-use';
 import { BigNumber } from 'ethers';
+import useTheme from '../../hooks/useTheme';
 
 const Warpper = styled.div`
-position: relative;
-background: #000;
-/* display: flex;
-flex-direction: column;
-align-items: center;
-justify-content: center; */
-height: 9.06rem;
-/* padding-top: 108px; */
-box-sizing: border-box;
+  position: relative;
+  background: #000;
+  /* display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; */
+  height: 9.06rem;
+  /* padding-top: 108px; */
+  box-sizing: border-box;
+  ${({theme}) => theme.mediaWidth.sm`
+    height: 100%;
+    min-height: 500px;
+    padding: 0 32px;
+  `}
 `
 
 const SeMiTabs = styled(Tabs)`
@@ -56,6 +62,14 @@ const SeMiTabs = styled(Tabs)`
     .semi-tabs-tab-active {
       color: #F6B91B;
     }
+    .semi-tabs-pane {
+      overflow: unset;
+    }
+    ${({theme}) => theme.mediaWidth.sm`
+      display: flex;
+      width: 100%;
+      justify-content: center;
+    `}
   }
 `
 
@@ -68,6 +82,7 @@ export default function Admin() {
   const navigate = useNavigate()
   const TgeMarket = useTgeMarket()
   const [reload, setReload] = useState<boolean>()
+  const { theme } = useTheme()
   
   const state = useEffectState({
     address: '' as string,
@@ -149,7 +164,8 @@ export default function Admin() {
   return (<>
     <Warpper>
 
-      <SeMiTabs tabPosition="left" type="button" className="abs">
+      <SeMiTabs tabPosition={theme.isH5 ? "top" : "left"} type="button" className="abs">
+
         <TabPane
           tab={
             <Typography>
@@ -163,20 +179,20 @@ export default function Admin() {
           }}
         >
           <Column
-            width={'3.7rem'}
-            margin={ '.64rem auto 0'}
+            width={theme.isH5 ? '100%' : '3.7rem'}
+            margin={theme.isH5 ? '32px 0px' : '.64rem auto 0'}
           >
             <Title
-              marginBottom={'.64rem'}
+              marginBottom={theme.isH5 ? '48px' : '.64rem'}
             >
               {t(`Casting`)}
             </Title>
 
             <Typography
-              fontSize={".2rem"}
+              fontSize={theme.isH5 ? '12px' : ".2rem"}
               fontWeight={'700'}
               color={'#fff'}
-              marginBottom={'.2rem'}
+              marginBottom={theme.isH5 ? '20px' : '.2rem'}
               alignSelf= 'self-start'
             >
               Amount
@@ -192,7 +208,7 @@ export default function Admin() {
               }}
             />
             <Box
-              marginTop={'.56rem'}
+              marginTop={theme.isH5 ? '23px' : '.56rem'}
             >
               <Normal
                 onClick={FnCast}
@@ -216,20 +232,20 @@ export default function Admin() {
           }}
         >
           <Column
-            width={'3.7rem'}
-            margin={ '.64rem auto 0'}
+            width={theme.isH5 ? '100%' : '3.7rem'}
+            margin={theme.isH5 ? '32px 0px' : '.64rem auto 0'}
           >
             <Title
-              marginBottom={'.64rem'}
+              marginBottom={theme.isH5 ? '48px' : '.64rem'}
             >
               {t(`Transfer`)}
             </Title>
 
             <Typography
-              fontSize={".2rem"}
+              fontSize={theme.isH5 ? '12px' : ".2rem"}
               fontWeight={'700'}
               color={'#fff'}
-              marginBottom={'.2rem'}
+              marginBottom={theme.isH5 ? '20px' : '.2rem'}
               alignSelf= 'self-start'
             >
               Transfer Address
@@ -243,12 +259,12 @@ export default function Admin() {
               }}
             />
             <Typography
-              fontSize={".2rem"}
+              fontSize={theme.isH5 ? '12px' : ".2rem"}
               fontWeight={'700'}
               color={'#fff'}
-              marginBottom={'.2rem'}
+              marginBottom={theme.isH5 ? '20px' : '.2rem'}
               alignSelf= 'self-start'
-              marginTop={'.35rem'}
+              marginTop={theme.isH5 ? '16px' : '.35rem'}
             >
               Details (optional)
             </Typography>
@@ -258,7 +274,7 @@ export default function Admin() {
               value={state.selectValue?.text}
               right={
                 <RowCenter
-                  height={'.38rem'}
+                  height={theme.isH5 ? '32px' : '.38rem'}
                   cursor={'pointer'}
                 >
                   <DropDown
@@ -271,7 +287,7 @@ export default function Admin() {
                     menuStyle={{
                       width: '100%',
                       paddingTop: '0',
-                      height: '1.38rem',
+                      height: theme.isH5 ? '120px' : '1.38rem',
                       overflow: 'overlay',
                     }}
                     onChange={(selectd:any) => {
@@ -289,7 +305,7 @@ export default function Admin() {
               }
             />
             <Box
-              marginTop={'.56rem'}
+              marginTop={theme.isH5 ? '16px' : '.56rem'}
             >
               <Normal
                 onClick={FnTransfer}

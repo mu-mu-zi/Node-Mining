@@ -16,11 +16,18 @@ export const Banner = styled.div`
   /* padding-top: 385px; */
   box-sizing: border-box;
   /* pointer-events: none; */
+  background-position: center;
+  ${({theme}) => theme.mediaWidth.sm`
+    height: 327px;
+  `}
 `
 export const Content = styled.div`
   background: #000;
   padding: 22px 3.6rem 170px;
   position: relative;
+  ${({theme}) => theme.mediaWidth.sm`
+    padding: 16px;
+  `}
 `
 
 export const Title = styled(Box)`
@@ -30,6 +37,9 @@ export const Title = styled(Box)`
   font-size: .6rem;
   color: #ffffff;
   font-family: RomicStd;
+  ${({theme}) => theme.mediaWidth.sm`
+    font-size: 20px;
+  `}
 `
 export const RowCard = styled(Flex)`
   max-width: 3.89rem;
@@ -40,4 +50,8 @@ export const RowCard = styled(Flex)`
   justify-content: start;
   align-items: center;
   margin-top: .8rem;
+  ${({theme}) => theme.mediaWidth.sm`
+    max-width: initial;
+    padding: 16px;
+  `}
 `

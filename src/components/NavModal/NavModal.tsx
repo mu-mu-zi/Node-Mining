@@ -4,12 +4,14 @@ import { useTranslation } from 'react-i18next';
 import useTheme from "hooks/useTheme";
 import Normal from "components/Button/Normal";
 import ConnectModal from "components/ConnectModal/ConnectModal";
-import { useContext } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import Box, { Typography } from "components/BaseElement";
 import RouterLink from "components/Header/RouterLink";
 import { Column } from "components/BaseElement/Column";
 import styled from "styled-components";
 import JumpBtn from "components/Button/BackBtn";
+import { adminAddress } from 'utils/global';
+import { useWeb3React } from "@web3-react/core";
 interface AA {
 
 }
@@ -47,7 +49,16 @@ const ConnectWallet = styled.div`
 export default function NavModal(props: IOpenModal & AA) {
   const { t } = useTranslation()
   const { openModal } = useContext(ModalContext);
+  const [showAdmin, setShowAdmin] = useState<boolean>(false)
   const { theme } = useTheme()
+  const { account } = useWeb3React()
+  useEffect(() => {
+    if(adminAddress.toLowerCase() === account?.toLowerCase()) {
+      setShowAdmin(true)
+    } else {
+      setShowAdmin(false)
+    }
+  },[account])
   return (
     <Modal
       onClose={() => props.destoryComponent()}
@@ -83,6 +94,13 @@ export default function NavModal(props: IOpenModal & AA) {
           // style={{pointerEvents:'none'}}
           onClick={() => props.destoryComponent()}
           to={"/aboutus"} className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`} >{t(`ABOUT US`)}</RouterLink>
+        <RouterLink
+          style={{
+            display: `${showAdmin ? "block" : "none"}`
+          }}
+          // style={{pointerEvents:'none'}}
+          onClick={() => props.destoryComponent()}
+          to={"/admin"} className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`} >{t(`ADMIN`)}</RouterLink>
         <Typography
           display={'none'}
           fontSize={'20px'}

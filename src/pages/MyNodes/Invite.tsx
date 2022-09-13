@@ -15,17 +15,22 @@ import { useEffectState } from '../../hooks/useEffectState';
 import { adminAddress, EmptyStr } from '../../utils/global';
 import { Table, Td, Th, Tr } from 'components/BaseElement/Table';
 import styled from 'styled-components';
-import { Notice, TimestampTransform } from '../../utils/tools';
+import { formatAddress, Notice, TimestampTransform } from '../../utils/tools';
 import { CloseMessageBox, MsgStatus } from 'components/messageBox/MessageBox';
 import { AwardRecords, award, pushRewardInfo, PushRewardInfo } from 'http/api';
 import CopyTypography from 'components/CopyTypography';
 import { Popover } from '@douyinfe/semi-ui';
+import useTheme from '../../hooks/useTheme';
+import Flex from 'components/BaseElement/Flex';
 
 const _Th = styled(Th)`
   padding: .08rem 0;
 `
 const _Td = styled(Td)`
   padding: .08rem 0;
+  ${({theme}) => theme.mediaWidth.sm`
+    padding: 8px 0;
+  `}
 `
 
 export default function Invite() {
@@ -36,6 +41,7 @@ export default function Invite() {
   const [type, setType] = useState<Number>(1)
   const [reload, setReload] = useState<Boolean>(false)
   const { account } = useWeb3React()
+  const {theme} = useTheme()
   const state = useEffectState({
     invitationsTotal: 0 as number,
     invitationRecord: [] as Array<string>,
@@ -143,7 +149,7 @@ export default function Invite() {
           />
         </Box>
         <Typography
-          fontSize={'.6rem'}
+          fontSize={theme.isH5 ? '20px' : '.6rem'}
           fontWeight={'700'}
           color={'#fff'}
           fontFamily={'RomicStd'}
@@ -155,30 +161,109 @@ export default function Invite() {
 
       <RowCenter
         marginBottom={'.64rem'}
+        style={{
+          display: theme.isH5 ? 'none' : 'flex'
+        }}
       >
         <ProgressImg src={require('assets/images/progress_bar.png')} />
       </RowCenter>
 
+      <ColumnStart
+        marginBottom={'16px'}
+        gap={'10px'}
+        style={{
+          display: theme.isH5 ? 'flex' : 'none'
+        }}
+      >
+        <RowCenter
+          gap={'8px'}
+        >
+          <RowCenter
+            width={'20px'}
+            height={'20px'}
+            color={'#00E88A'}
+            border={'1px solid #00E88A'}
+            borderRadius={'50%'}
+          >1</RowCenter>
+          <Typography
+            fontSize={'12px'}
+            fontStyle={'italic'}
+            color={'#fff'}
+            fontWeight={'350'}
+          >
+            {t(`Step 1: Buy nodes to get the invitation qualification`)}
+          </Typography>
+        </RowCenter>
+        <RowCenter
+          gap={'8px'}
+        >
+          <RowCenter
+            width={'20px'}
+            height={'20px'}
+            color={'#00E88A'}
+            border={'1px solid #00E88A'}
+            borderRadius={'50%'}
+          >2</RowCenter>
+          <Typography
+            fontSize={'12px'}
+            fontStyle={'italic'}
+            color={'#fff'}
+            fontWeight={'350'}
+          >
+            {t(`Step 2: Invite friends to register and buy nodes`)}
+          </Typography>
+        </RowCenter>
+        <RowCenter
+          gap={'8px'}
+        >
+          <RowCenter
+            width={'20px'}
+            height={'20px'}
+            color={'#00E88A'}
+            border={'1px solid #00E88A'}
+            borderRadius={'50%'}
+          >3</RowCenter>
+          <Typography
+            fontSize={'12px'}
+            fontStyle={'italic'}
+            color={'#fff'}
+            fontWeight={'350'}
+          >
+            {t(`Step 3: Get direct push bonus`)}
+          </Typography>
+        </RowCenter>
+
+      </ColumnStart>
+
+
+
       {
         isAllow ? <>
           <ColumnStart
-            padding={'.48rem .36rem .44rem'}
+            padding={theme.isH5 ? '16px' : '.48rem .36rem .44rem'}
             background={'#1A1919'}
             borderRadius={'8px'}
-            gap=".32rem"
+            gap={theme.isH5 ? '32px' : ".32rem"}
           >
             <RowStart
               gap={'.64rem'}
-              padding={'.27rem .16rem'}
+              padding={theme.isH5 ? '0' : '.27rem .16rem'}
               justifyContent='center'
               width='100%'
               boxSizing='border-box'
+              style={{
+                flexDirection: theme.isH5 ? 'column' : 'row',
+                alignItems: theme.isH5 ? 'start' : 'center',
+              }}
             >
               <Column
-                gap={'.08rem'}
+                gap={theme.isH5 ? '8px' : '.08rem'}
+                style={{
+                  alignItems: theme.isH5 ? 'start' : 'center',
+                }}
               >
                 <Typography
-                  fontSize={".2rem"}
+                  fontSize={theme.isH5 ? '12px' : ".2rem"}
                   fontWeight={'350'}
                   color={'#fff'}
                   whiteSpace={'nowrap'}
@@ -187,7 +272,7 @@ export default function Invite() {
                   {t(`Cumulative number of invitations`)}
                 </Typography>
                 <Typography
-                  fontSize={".2rem"}
+                  fontSize={theme.isH5 ? '20px' : ".2rem"}
                   fontWeight={'700'}
                   color={'#F6B91B'}
                 >
@@ -195,10 +280,13 @@ export default function Invite() {
                 </Typography>
               </Column>
               <Column
-                gap={'.08rem'}
+                gap={theme.isH5 ? '8px' : '.08rem'}
+                style={{
+                  alignItems: theme.isH5 ? 'start' : 'center',
+                }}
               >
                 <Typography
-                  fontSize={".2rem"}
+                  fontSize={theme.isH5 ? '12px' : ".2rem"}
                   fontWeight={'350'}
                   color={'#fff'}
                   whiteSpace={'nowrap'}
@@ -207,18 +295,21 @@ export default function Invite() {
                   {t(`Cumulative Direct Push Bonus`)}
                 </Typography>
                 <Typography
-                  fontSize={".2rem"}
+                  fontSize={theme.isH5 ? '20px' : ".2rem"}
                   fontWeight={'700'}
                   color={'#F6B91B'}
                 >
-                  {`${state.totalBonus.totalIncome} GETA/${state.totalBonus.usdtTotalIncome} USDT`}
+                  {`${state.totalBonus.totalIncome ?? EmptyStr} GETA/${state.totalBonus.usdtTotalIncome ?? EmptyStr} USDT`}
                 </Typography>
               </Column>
               <Column
-                gap={'.08rem'}
+                gap={theme.isH5 ? '8px' : '.08rem'}
+                style={{
+                  alignItems: theme.isH5 ? 'start' : 'center',
+                }}
               >
                 <Typography
-                  fontSize={".2rem"}
+                  fontSize={theme.isH5 ? '12px' : ".2rem"}
                   fontWeight={'350'}
                   color={'#fff'}
                   whiteSpace={'nowrap'}
@@ -227,7 +318,7 @@ export default function Invite() {
                   {t(`Today's direct push bonus`)}
                 </Typography>
                 <Typography
-                  fontSize={".2rem"}
+                  fontSize={theme.isH5 ? '20px' : ".2rem"}
                   fontWeight={'700'}
                   color={'#F6B91B'}
                 >
@@ -237,15 +328,15 @@ export default function Invite() {
             </RowStart>
 
             <ColumnStart
-              gap={'.16rem'}
-              padding={'0rem .16rem'}
+              gap={theme.isH5 ? '16px' : '.16rem'}
+              padding={theme.isH5 ? '0' : '0rem .16rem'}
               justifyContent='center'
               width='100%'
               boxSizing='border-box'
             >
-              <Row gap=".08rem">
+              <Row gap={theme.isH5 ? '4px' : ".08rem"}>
                 <Typography
-                  fontSize={'.2rem'}
+                  fontSize={theme.isH5 ? '12px' : '.2rem'}
                   fontWeight={'700'}
                   color={'#ffffff'}
                 >{t(`Invite Friends`)}</Typography>
@@ -253,12 +344,12 @@ export default function Invite() {
                   position='top'
                   style={{ marginBottom: '10px' }}
                   content={<PopoverInvite
-                    width={'2.4rem'}
-                    padding={'.1rem'}
+                    width={theme.isH5 ? '150px' : '2.4rem'}
+                    padding={theme.isH5 ? '10px' : '.1rem'}
                     background={'#3D3D3D'}
                     borderRadius={'4px'}
                     color={'#ffffff'}
-                    fontSize={'.12rem'}
+                    fontSize={theme.isH5 ? '11px' : '.12rem'}
                     fontWeight={400}
                   >
                     <Typography>{t(`Invite friends to buy nodes and get direct push rewards:`)}</Typography>
@@ -281,22 +372,22 @@ export default function Invite() {
             </ColumnStart>
           </ColumnStart>
           <Box
-            border={"4px solid #3D3D3D"}
+            border={theme.isH5 ? '1px solid #3D3D3D' : "4px solid #3D3D3D"}
             borderRadius={'4px'}
-            padding={'.188rem .24rem'}
+            padding={theme.isH5 ? '16px 16px 25px' : '.188rem .24rem'}
             width={'100%'}
             boxSizing={'border-box'}
-            marginTop={'.64rem'}
+            marginTop={theme.isH5 ? '16px' : '.64rem'}
           >
 
             <Row
               width={'100%'}
-              paddingBottom={'.1rem'}
+              paddingBottom={theme.isH5 ? '8px' : '.1rem'}
 
-              borderBottom={'2px solid #3D3D3D'}
-              gap={".32rem"}
+              borderBottom={theme.isH5 ? '1px solid #3D3D3D' : '2px solid #3D3D3D'}
+              gap={theme.isH5 ? '32px' : ".32rem"}
               color={'#ffffff '}
-              fontSize={'.2rem'}
+              fontSize={theme.isH5 ? '12px' : '.2rem'}
               fontWeight={'700'}
             >
               <Active
@@ -320,7 +411,7 @@ export default function Invite() {
                 >
                   <thead>
                     <Tr
-                      fontSize={'.2rem'}
+                      fontSize={theme.isH5 ? '12px' : '.2rem'}
                       fontWeight={'400'}
                       color={'#6B6B6B'}
                     >
@@ -333,7 +424,7 @@ export default function Invite() {
                     {
                       state.invitationRecord && state.invitationRecord.map((item, idx) => {
                         return <Tr
-                          fontSize={'.2rem'}
+                          fontSize={theme.isH5 ? '11px' : '.2rem'}
                           fontWeight={'350'}
                           color={'#ffffff'}
                           key={idx}
@@ -343,7 +434,7 @@ export default function Invite() {
                             <Typography>{idx+1}</Typography>
                           </_Td>
                           <_Td display={'flex'} justifyContent={'end'} textAlign={'right'} >
-                            <CopyTypography >{item}</CopyTypography>
+                            <CopyTypography >{theme.isH5 ? formatAddress(item) : item}</CopyTypography>
                           </_Td>
                         </Tr>
                       })
@@ -358,12 +449,12 @@ export default function Invite() {
                 >
                   <thead>
                     <Tr
-                      fontSize={'.2rem'}
+                      fontSize={theme.isH5 ? '12px' : '.2rem'}
                       fontWeight={'400'}
                       color={'#6B6B6B'}
                     >
                       <_Th textAlign={'left'}>{t(`User Info`)}</_Th>
-                      <_Th>{t(`Status`)}</_Th>
+                      <_Th textAlign={theme.isH5 ? 'left' : 'center'} >{t(`Amount`)}</_Th>
                       <_Th textAlign={'right'}>{t(`Time`)}</_Th>
                     </Tr>
                   </thead>
@@ -371,16 +462,16 @@ export default function Invite() {
                     {
                       state.directPushBonus && state.directPushBonus.map((item, idx: number) => {
                         return <Tr
-                          fontSize={'.2rem'}
+                          fontSize={theme.isH5 ? '11px' : '.2rem'}
                           fontWeight={'350'}
                           color={'#ffffff'}
                           key={idx}
                           fontStyle={'italic'}
                         >
                           <_Td textAlign={'left'} width={'2.6rem'}>
-                            <CopyTypography>{item.inviteesAddr}</CopyTypography>
+                            <CopyTypography>{theme.isH5 ? formatAddress(item.inviteesAddr) : item.inviteesAddr}</CopyTypography>
                           </_Td>
-                          <_Td color={'#F6B91B'} textAlign={'right'} width={'2.6rem'}>
+                          <_Td color={'#F6B91B'} textAlign={theme.isH5 ? 'left' : 'right'} width={'2.6rem'}>
                             {t(`+${item.award} ${item.symbol}`)}
                           </_Td>
                           <_Td textAlign={'right'} width={'2.04rem'}>
@@ -396,14 +487,14 @@ export default function Invite() {
         </>
           :
           <ColumnStart
-            padding={'.85rem 1.36rem'}
+            padding={theme.isH5 ? '24px 16px' : '.85rem 1.36rem'}
             background={'#1A1919'}
             borderRadius={'8px'}
-            gap=".16rem"
+            gap={theme.isH5 ? '16px' : ".16rem"}
           >
-            <Row gap=".08rem">
+            <Row gap={theme.isH5 ? '8px' : ".08rem"}>
               <Typography
-                fontSize={'.2rem'}
+                fontSize={theme.isH5 ? '11px' : '.2rem'}
                 fontWeight={'700'}
                 color={'#ffffff'}
               >{t(`Invite Friends`)}</Typography>
@@ -411,12 +502,12 @@ export default function Invite() {
                 position='top'
                 style={{ marginBottom: '10px' }}
                 content={<PopoverInvite
-                  width={'2.4rem'}
-                  padding={'.1rem'}
+                  width={theme.isH5 ? '200px' : '2.4rem'}
+                  padding={theme.isH5 ? '10px' : '.1rem'}
                   background={'#3D3D3D'}
                   borderRadius={'4px'}
                   color={'#ffffff'}
-                  fontSize={'.12rem'}
+                  fontSize={theme.isH5 ? '11px' : '.12rem'}
                   fontWeight={400}
                 >
                   <Typography>{t(`Invite friends to buy nodes and get direct push rewards:`)}</Typography>
@@ -428,7 +519,7 @@ export default function Invite() {
               </Popover>
             </Row>
             <Typography
-              fontSize={'.2rem'}
+              fontSize={theme.isH5 ? '12px' : '.2rem'}
               fontWeight={'400'}
               color={'#6B6B6B'}
             >
@@ -437,7 +528,7 @@ export default function Invite() {
             <Normal
               onClick={() => navigate('/nodes')}
             >
-              {t(`Purchase Node`)}
+              {t(`PURCHASE NODE`)}
             </Normal>
           </ColumnStart>
       }

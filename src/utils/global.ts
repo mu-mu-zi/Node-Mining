@@ -1,8 +1,10 @@
 export const Z_INDEX = {
   toast: 10001,
   modal: 10000,
+  
   fixed_links: 9000,
   header_nav: 8000,
+  footer_nav: 8000,
   banner_text: 1001,
   banner: 1000,
   index_vision: 100,

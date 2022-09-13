@@ -13,7 +13,7 @@ import styled from 'styled-components';
 import { useAsync } from 'react-use';
 import { withdrawList, WithdrawList, WithdrawRecords } from 'http/api';
 import { useEffectState } from 'hooks/useEffectState';
-
+import useTheme from '../../hooks/useTheme';
 interface FundRecord {
   type: string
   amount: string
@@ -29,6 +29,7 @@ const _Td = styled(Td)`
 
 export default function FundRecords() {
   const { t } = useTranslation()
+  const { theme } = useTheme()
   const state = useEffectState({
     withdraw: {} as WithdrawList,
     pageIndex: 10,
@@ -48,38 +49,45 @@ export default function FundRecords() {
   return (
     <FundRecordsWrap>
       <Column
-        gap=".34rem"
+        gap={theme.isH5 ? '0' : ".34rem"}
+        position={'relative'}
       >
+        <Box
+          position={theme.isH5 ? 'relative' : 'absolute'}
+          alignSelf={theme.isH5 ? 'start' : ''}
+          top={'.2rem'}
+          left={'0'}
+        >
+          <JumpBtn
+            text="Back"
+            path={-1}
+          // onClick={() => props.setStep(1)}
+          />
+        </Box>
         <Row
           width={"100%"}
-          justifyContent={'space-between'}
+          justifyContent={'center'}
+          alignItems={'center'}
+          marginBottom={theme.isH5 ? '32px' : '0'}
         >
-          <Box>
-            <JumpBtn
-              text="Back"
-              path={-1}
-            // onClick={() => props.setStep(1)}
-            />
-          </Box>
           <Typography
-            fontSize={'.6rem'}
+            fontSize={theme.isH5 ? '20px' : '.6rem'}
             fontWeight={'700'}
             color={'#fff'}
           >
             {t(`Funding records`)}
           </Typography>
-          <Box />
         </Row>
 
         <Box
-          border={"4px solid #3D3D3D"}
+          border={theme.isH5 ? '1px solid #3D3D3D' : "4px solid #3D3D3D"}
           borderRadius={'4px'}
-          padding={'.465rem .55rem .465rem .16rem'}
+          padding={theme.isH5 ? '14.8px 8px' : '.465rem .55rem .465rem .16rem'}
           width={'100%'}
           boxSizing={'border-box'}
         >
           <Typography
-            fontSize={".32rem"}
+            fontSize={theme.isH5 ? '16px' : ".32rem"}
             fontWeight={'700'}
             color={'#fff'}
           >
@@ -94,7 +102,7 @@ export default function FundRecords() {
           >
             <thead>
               <Tr
-                fontSize={'.2rem'}
+                fontSize={theme.isH5 ? '12px' : '.2rem'}
                 fontWeight={'400'}
                 color={'#6B6B6B'}
               >
@@ -107,18 +115,18 @@ export default function FundRecords() {
               {
                 state.withdrawRecords.map((item,idx) => {
                   return <Tr  
-                    fontSize={'.2rem'}
+                    fontSize={theme.isH5 ? '11px' : '.2rem'}
                     fontWeight={'350'}
                     color={'#ffffff'}
                     key={idx}
                   >
-                    <_Td  textAlign={'left'} width={'2.6rem'}>
+                    <_Td  textAlign={'left'} width={theme.isH5 ? '104px' : '2.6rem'}>
                       {t(`${item.coinName}`)}
                     </_Td>
-                    <_Td  textAlign={'center'} width={'2.6rem'}>
+                    <_Td  textAlign={'center'} width={theme.isH5 ? '82px' : '2.6rem'}>
                       {t(`${item.amount}`)}
                     </_Td>
-                    <_Td  textAlign={'center'} width={'2.04rem'}>
+                    <_Td  textAlign={'center'} width={theme.isH5 ? '101px' : '2.04rem'}>
                       {t(`${item.updateTime}`)}
                     </_Td>
                   </Tr>

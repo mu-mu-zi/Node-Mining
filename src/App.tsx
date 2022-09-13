@@ -20,6 +20,7 @@ import { MsgStatus } from './components/messageBox/MessageBox';
 const Medium = styled.div`
   flex: 1;
   width: 100%;
+  background-color: #000;
 `
 
 function App() {

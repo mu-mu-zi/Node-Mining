@@ -12,6 +12,8 @@ import { useWeb3React } from '@web3-react/core';
 import { ContractAddresses } from "utils/ContractAddresses";
 import { CloseMessageBox, MsgStatus } from 'components/messageBox/MessageBox';
 import { formatAddress, Notice } from 'utils/tools';
+import useTheme from '../../hooks/useTheme';
+import Normal from '../../components/Button/Normal';
 interface Iprops {
   setStep: React.Dispatch<React.SetStateAction<number>>
   state: {
@@ -24,6 +26,7 @@ interface Iprops {
 export default function Order(props: Iprops) {
   const { state } = props
   const { t } = useTranslation()
+  const { theme } = useTheme()
   const TgeMarket = useTgeMarket()
   const Usdt = useUsdt()
   const { account } = useWeb3React()
@@ -31,12 +34,11 @@ export default function Order(props: Iprops) {
     try {
 
       if (!TgeMarket || !Usdt || !account) return
-
       let tx: any
       let isApprove = await Usdt.allowance(account, ContractAddresses.TgeMarket)
+      // console.log(isApprove.toString())
       if (Number(isApprove.toString()) < Number(state.price.toFixed())) {
         try{
-
           tx = await Usdt.approve(ContractAddresses.TgeMarket, state.price.toFixed())
           Notice('Please wait, your approve will arrive soon.', MsgStatus.loading)
           await tx.wait()
@@ -47,7 +49,11 @@ export default function Order(props: Iprops) {
           return
         }
       }
-
+      
+      // console.log('isApprove =>',isApprove.toString())
+      // console.log('count =>',state.count)
+      // console.log('price =>',state.price.toFixed())
+      // console.log('_group =>',_group)
 
       let tx1 = await TgeMarket.buy(state.count, state.price.toFixed(), _group, state.Invite)
       Notice('Please wait, your node will arrive soon.', MsgStatus.loading)
@@ -71,13 +77,14 @@ export default function Order(props: Iprops) {
   return (
     <>
       <Column
-        gap=".4rem"
+        gap={theme.isH5 ? '16px' : ".4rem"}
       >
         <Row
           width={"100%"}
-          justifyContent={'space-between'}
+          justifyContent={theme.isH5 ? 'center' : 'space-between'}
         >
           <Box
+            display={theme.isH5 ? 'none' : 'block'} 
           >
             <JumpBtn
               text="Back"
@@ -86,7 +93,7 @@ export default function Order(props: Iprops) {
             />
           </Box>
           <Typography
-            fontSize={'.6rem'}
+            fontSize={theme.isH5 ? '20px' : '.6rem'}
             fontWeight={'700'}
             color={'#fff'}
             fontFamily={'RomicStd'}
@@ -97,19 +104,19 @@ export default function Order(props: Iprops) {
         </Row>
 
         <ColumnStart
-          gap={'.32rem'}
+          gap={theme.isH5 ? '8px' : '.32rem'}
           width={'100%'}
-          maxWidth={'4.9rem'}
+          maxWidth={theme.isH5 ? '100%' : '4.9rem'}
         >
 
           <Column
-            gap=".08rem"
+            gap={theme.isH5 ? '4px' : ".08rem"}
             width={'100%'}
           >
             <Typography
-              minWidth={'1.64rem'}
+              minWidth={theme.isH5 ? '100%' : '1.64rem'}
               textAlign={'left'}
-              fontSize={'.2rem'}
+              fontSize={theme.isH5 ? '14px' : '.2rem'}
               fontWeight={'350'}
               color={'#fff'}
               width={'100%'}
@@ -117,7 +124,7 @@ export default function Order(props: Iprops) {
               {t(`Name`)}
             </Typography>
             <Row
-              padding={'.11rem .16rem'}
+              padding={theme.isH5 ? '9.5px 16px' : '.11rem .16rem'}
               background={'#212020'}
               border={'1px solid #3D3D3D'}
               borderRadius={'4px'}
@@ -125,7 +132,7 @@ export default function Order(props: Iprops) {
               boxSizing={'border-box'}
             >
               <Typography
-                fontSize={'.16rem'}
+                fontSize={theme.isH5 ? '16px' : '.16rem'}
                 fontWeight={'400'}
                 color={'#fff'}
               >{t(`Getaverse nodes`)}</Typography>
@@ -133,13 +140,13 @@ export default function Order(props: Iprops) {
           </Column>
 
           <Column
-            gap=".08rem"
+            gap={theme.isH5 ? '8px' : ".08rem"}
             width={'100%'}
           >
             <Typography
-              minWidth={'1.64rem'}
+              minWidth={theme.isH5 ? '100%' : '1.64rem'}
               textAlign={'left'}
-              fontSize={'.2rem'}
+              fontSize={theme.isH5 ? '14px' : '.2rem'}
               fontWeight={'350'}
               color={'#fff'}
               width={'100%'}
@@ -147,16 +154,16 @@ export default function Order(props: Iprops) {
               {t(`Price`)}
             </Typography>
             <Row
-              padding={'.11rem .16rem'}
+              padding={theme.isH5 ? '9.5px 16px' : '.11rem .16rem'}
               border={'1px solid #3D3D3D'}
               background={'#212020'}
               borderRadius={'4px'}
               width={'100%'}
               boxSizing={'border-box'}
-              gap=".08rem">
+              gap={theme.isH5 ? '8px' : ".08rem"}>
               <IconPrice src={require('assets/svg/nodes_price.svg').default} />
               <Typography
-                fontSize={'.2rem'}
+                fontSize={theme.isH5 ? '16px' : '.2rem'}
                 fontWeight={'700'}
                 color={'#fff'}
               >{state.price.div(10 ** Decimals).div(state.count).toFixed()}</Typography>
@@ -164,13 +171,13 @@ export default function Order(props: Iprops) {
           </Column>
 
           <Column
-            gap=".08rem"
+            gap={theme.isH5 ? '8px' : ".08rem"}
             width={'100%'}
           >
             <Typography
-              minWidth={'1.64rem'}
+              minWidth={theme.isH5 ? '100%' : '1.64rem'}
               textAlign={'left'}
-              fontSize={'.2rem'}
+              fontSize={theme.isH5 ? '14px' : '.2rem'}
               fontWeight={'350'}
               color={'#fff'}
               width={'100%'}
@@ -178,15 +185,15 @@ export default function Order(props: Iprops) {
               {t(`Amount`)}
             </Typography>
             <Row
-              padding={'.11rem .16rem'}
+              padding={theme.isH5 ? '9.5px 16px' : '.11rem .16rem'}
               border={'1px solid #3D3D3D'}
               background={'#212020'}
               borderRadius={'4px'}
               width={'100%'}
               boxSizing={'border-box'}
-              gap=".08rem">
+              gap={theme.isH5 ? '8px' : ".08rem"}>
               <Typography
-                fontSize={'.2rem'}
+                fontSize={theme.isH5 ? '16px' : '.2rem'}
                 fontWeight={'700'}
                 color={'#fff'}
               >{state.count}</Typography>
@@ -194,13 +201,13 @@ export default function Order(props: Iprops) {
           </Column>
 
           <Column
-            gap=".08rem"
+            gap={theme.isH5 ? '8px' : ".08rem"}
             width={'100%'}
           >
             <Typography
-              minWidth={'1.64rem'}
+              minWidth={theme.isH5 ? '100%' : '1.64rem'}
               textAlign={'left'}
-              fontSize={'.2rem'}
+              fontSize={theme.isH5 ? '14px' : '.2rem'}
               fontWeight={'350'}
               color={'#fff'}
               width={'100%'}
@@ -208,16 +215,16 @@ export default function Order(props: Iprops) {
               {t(`Totals`)}
             </Typography>
             <Row
-              padding={'.11rem .16rem'}
+              padding={theme.isH5 ? '9.5px 16px' : '.11rem .16rem'}
               border={'1px solid #3D3D3D'}
               background={'#212020'}
               borderRadius={'4px'}
               width={'100%'}
               boxSizing={'border-box'}
-              gap=".08rem">
+              gap={theme.isH5 ? '8px' : ".08rem"}>
               <IconPrice src={require('assets/svg/nodes_price.svg').default} />
               <Typography
-                fontSize={'.2rem'}
+                fontSize={theme.isH5 ? '16px' : '.2rem'}
                 fontWeight={'700'}
                 color={'#fff'}
               >{state.price.div(10 ** Decimals).toFixed()}</Typography>
@@ -225,13 +232,13 @@ export default function Order(props: Iprops) {
           </Column>
 
           <Column
-            gap=".08rem"
+            gap={theme.isH5 ? '8px' : ".08rem"}
             width={'100%'}
           >
             <Typography
-              minWidth={'1.64rem'}
+              minWidth={theme.isH5 ? '100%' : '1.64rem'}
               textAlign={'left'}
-              fontSize={'.2rem'}
+              fontSize={theme.isH5 ? '14px' : '.2rem'}
               fontWeight={'350'}
               color={'#fff'}
               width={'100%'}
@@ -239,14 +246,14 @@ export default function Order(props: Iprops) {
               {t(`Referrer Address`)}
             </Typography>
             <Row
-              padding={'.11rem .16rem'}
+              padding={theme.isH5 ? '9.5px 16px' : '.11rem .16rem'}
               border={'1px solid #3D3D3D'}
               background={'#212020'}
               borderRadius={'4px'}
               width={'100%'}
               boxSizing={'border-box'}>
               <Typography
-                fontSize={'.16rem'}
+                fontSize={theme.isH5 ? '16px' : '.16rem'}
                 fontWeight={'400'}
                 color={'#fff'}
               >{t(`${formatAddress(state.Invite)}`)}</Typography>
@@ -255,11 +262,11 @@ export default function Order(props: Iprops) {
 
         </ColumnStart>
 
-        <PurchaseNode
+        <Normal
           onClick={purchase}
         >
           {t(`PURCHASE NODE`)}
-        </PurchaseNode>
+        </Normal>
       </Column>
     </>
   )

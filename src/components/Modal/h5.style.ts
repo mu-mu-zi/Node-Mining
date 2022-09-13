@@ -37,8 +37,10 @@ export const ModalBox = styled.div`
             }
         }
         .modal_content{
-            padding: 16px 32px 32px;
+            padding: 16px 15px 32px;
             background-color: #191919;
+            width: 100%;
+            box-sizing: border-box;
             /* max-height: 70vh;
             overflow: auto; */
         }

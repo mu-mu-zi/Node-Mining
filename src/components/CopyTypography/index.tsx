@@ -5,6 +5,7 @@ import { MsgStatus } from 'components/messageBox/MessageBox';
 import React, { ReactNode } from 'react'
 import { Notice } from 'utils/tools';
 import { EmptyStr } from '../../utils/global';
+import useTheme from '../../hooks/useTheme';
 
 
 interface Iprops {
@@ -13,7 +14,7 @@ interface Iprops {
 }
 
 export default function CopyTypography(props:Iprops) {
-
+  const { theme } = useTheme()
   const copy = () => {
     const text = `${props.children}`;
     if (navigator.clipboard) {
@@ -36,7 +37,12 @@ export default function CopyTypography(props:Iprops) {
     alignItems={'center'}
   >
     <Typography marginRight={'8px'}>{props.children}</Typography>
-    <Icon cursor={'pointer'} onClick={copy} src={ props.icon || require('assets/images/icon_copy.png')} />
+    <Icon 
+      style={{
+        width: theme.isH5 ? '12px' : '' ,
+        height: theme.isH5 ? '12px' : '',
+      }}
+      cursor={'pointer'} onClick={copy} src={ props.icon || require('assets/images/icon_copy.png')} />
   </Flex> : <Typography>{EmptyStr}</Typography>)
 
 }

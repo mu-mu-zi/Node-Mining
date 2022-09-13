@@ -14,6 +14,7 @@ import { IncomeRecords, incomeRecords, nodeList, NodeList, nodeRevenue, Records,
 import { useAsync } from 'react-use';
 import { EmptyStr } from 'utils/global';
 import { TimestampTransform } from 'utils/tools';
+import useTheme from '../../hooks/useTheme';
 
 const _Th = styled(Th)`
   padding: .08rem 0;
@@ -30,11 +31,11 @@ export default function NodeRevenue() {
     incomeRecords: [] as Records[]
   })
   const [type, setType] = useState<Number>(1)
+const { theme } = useTheme()
 
   useAsync(async() => {
 
     let result = await nodeRevenue()
-  
     state.revenue = result.data
   }, [])
   useAsync(async() => {
@@ -59,23 +60,32 @@ export default function NodeRevenue() {
   return ( 
   <RevenueWrap>
     <Column
-      gap=".34rem"
+      gap={theme.isH5 ? '0' : ".34rem"}
+      position={'relative'}
     >
+      <Box
+        position={theme.isH5 ? 'relative' : 'absolute'}
+        alignSelf={theme.isH5 ? 'start' : ''}
+        top={'.2rem'}
+        left={'0'}
+      >
+        <JumpBtn
+          text="MY NODES"
+          path={-1}
+          // onClick={() => props.setStep(1)}
+        />
+      </Box>
       <Row
         width={"100%"}
-        justifyContent={'space-between'}
+        justifyContent={'center'}
+        alignItems={'center'}
+        marginBottom={theme.isH5 ? '32px' : '0'}
       >
-          <Box>
-            <JumpBtn
-              text="MY NODES"
-              path={-1}
-              // onClick={() => props.setStep(1)}
-            />
-          </Box>
           <Typography
-            fontSize={'.6rem'}
+            fontSize={theme.isH5 ? '20px' : '.6rem'}
             fontWeight={'700'}
             color={'#fff'}
+            fontFamily={'RomicStd'}
           >
             {t(`Node revenue`)}
           </Typography>
@@ -83,20 +93,24 @@ export default function NodeRevenue() {
       </Row>
 
       <Grid
-        gridTemplateColumns={'repeat(3,1fr)'}
+        gridTemplateColumns={theme.isH5 ? '1fr' : 'repeat(3,1fr)'}
         alignItems={'center'}
         width={'100%'}
-        padding={'.68rem .16rem'}
-        gap={'.2rem'}
+        padding={theme.isH5 ? '16px 16px 28px' : '.68rem .16rem'}
+        gap={theme.isH5 ? '16px' : '.2rem'}
         background={'#1A1919'}
         borderRadius={'4px'}
         boxSizing={'border-box'}
+        marginBottom={theme.isH5 ? '16px' : ''}
       >
         <Column
-          gap={".08rem"}
+          gap={theme.isH5 ? '8px' : ".08rem"}
+          style={{
+            alignItems: theme.isH5 ? 'start' : 'center'
+          }}
         >
           <Typography
-            fontSize={'.2rem'}
+            fontSize={theme.isH5 ? '12px' : '.2rem'}
             fontWeight={'350'}
             color={'#fff'}
             whiteSpace={'nowrap'}
@@ -105,7 +119,7 @@ export default function NodeRevenue() {
             {t(`Accumulated penny earnings (GW)`)}
           </Typography>
           <Typography
-            fontSize={'.32rem'}
+            fontSize={theme.isH5 ? '20px' : '.32rem'}
             fontWeight={'700'}
             color={'#fff'}
           >
@@ -113,10 +127,13 @@ export default function NodeRevenue() {
           </Typography>
         </Column>
         <Column
-          gap={".08rem"}
+          gap={theme.isH5 ? '8px' : ".08rem"}
+          style={{
+            alignItems: theme.isH5 ? 'start' : 'center'
+          }}
         >
           <Typography
-            fontSize={'.2rem'}
+            fontSize={theme.isH5 ? '12px' : '.2rem'}
             fontWeight={'350'}
             color={'#fff'}
             fontStyle={'italic'}
@@ -124,7 +141,7 @@ export default function NodeRevenue() {
             {t(`Today's penny earnings (GW)`)}
           </Typography>
           <Typography
-            fontSize={'.32rem'}
+            fontSize={theme.isH5 ? '20px' : '.32rem'}
             fontWeight={'700'}
             color={'#fff'}
           >
@@ -132,10 +149,13 @@ export default function NodeRevenue() {
           </Typography>
         </Column>
         <Column
-          gap={".08rem"}
+          gap={theme.isH5 ? '8px' : ".08rem"}
+          style={{
+            alignItems: theme.isH5 ? 'start' : 'center'
+          }}
         >
           <Typography
-            fontSize={'.2rem'}
+            fontSize={theme.isH5 ? '12px' : '.2rem'}
             fontWeight={'350'}
             color={'#fff'}
             fontStyle={'italic'}
@@ -143,7 +163,7 @@ export default function NodeRevenue() {
             {t(`Owning Nodes`)}
           </Typography>
           <Typography
-            fontSize={'.32rem'}
+            fontSize={theme.isH5 ? '20px' : '.32rem'}
             fontWeight={'700'}
             color={'#fff'}
           >
@@ -153,30 +173,30 @@ export default function NodeRevenue() {
       </Grid>
 
       <Box
-        border={"4px solid #3D3D3D"}
-        borderRadius={'4px'}
-        padding={'.188rem 0'}
+        border={theme.isH5 ? '1px solid #3D3D3D' : "4px solid #3D3D3D"}
+        borderRadius={theme.isH5 ? '1px' : '4px'}
+        padding={theme.isH5 ? '14px 0' : '.188rem 0'}
         width={'100%'}
         boxSizing={'border-box'}
       >
         <Typography
-          fontSize={".32rem"}
+          fontSize={theme.isH5 ? '16px' : ".32rem"}
           fontWeight={'700'}
           color={'#fff'}
-          paddingLeft={'.16rem'}
-          marginBottom={'.16rem'}
+          paddingLeft={theme.isH5 ? '8px' : '.16rem'}
+          marginBottom={theme.isH5 ? '8px' : '.16rem'}
         >
           {t(`Record`)}
         </Typography>
         
         <Row
           width={'100%'}
-          paddingBottom={'.1rem'}
+          paddingBottom={theme.isH5 ? '8px' : '.1rem'}
 
           borderBottom={'2px solid #3D3D3D'}
-          gap={".32rem"}
+          gap={theme.isH5 ? '32px' : ".32rem"}
           color={'#ffffff '}
-          fontSize={'.2rem'}
+          fontSize={theme.isH5 ? '12px' : '.2rem'}
           fontWeight={'700'}
         >
           <Active
@@ -240,7 +260,7 @@ export default function NodeRevenue() {
             >
               <thead>
                 <Tr
-                  fontSize={'.2rem'}
+                  fontSize={theme.isH5 ? '12px' : '.2rem'}
                   fontWeight={'400'}
                   color={'#6B6B6B'}
                 >
@@ -253,7 +273,7 @@ export default function NodeRevenue() {
                 {
                   state.purchase.records.map((item, idx) => {
                     return <Tr  
-                      fontSize={'.2rem'}
+                      fontSize={theme.isH5 ? '11px' : '.2rem'}
                       fontWeight={'350'}
                       color={'#ffffff'}
                       key={idx}

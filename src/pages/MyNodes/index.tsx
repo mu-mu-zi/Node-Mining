@@ -8,7 +8,7 @@ import { Column, ColumnStart } from 'components/BaseElement/Column';
 import Flex from 'components/BaseElement/Flex';
 import {
   Warpper, InviteWarpper, InviteIcon, PartTwo, Title, PartThree, NodesLogo,
-  PartFive, LineCut, PartTwoBg
+  PartFive, LineCut, PartTwoBg, WithdrawCoinsH5
 } from './MyNodes.style'
 import { getaverseNodes } from './config'
 import { useNavigate } from 'react-router-dom';
@@ -19,11 +19,13 @@ import useRedux from 'hooks/useRedux';
 import { EmptyStr } from 'utils/global';
 import { Notice } from 'utils/tools';
 import { MsgStatus } from 'components/messageBox/MessageBox';
+import useTheme from '../../hooks/useTheme';
 
 export default function MyNodes() {
   const { t } = useTranslation()
   const navigate = useNavigate()
-  const {store} = useRedux()
+  const { store } = useRedux()
+  const { theme } = useTheme()
   const state = useEffectState({
     earning: {} as Earnings,
     nodes: {} as MyNode,
@@ -47,22 +49,35 @@ export default function MyNodes() {
   },[store.token])
 
   useAsync( async() => {
-    let result = await totalNodes()
-    state.totalNodes = result.data
-  },[])
+    if(store.token) {
+      let result = await totalNodes()
+      state.totalNodes = result.data
+    }
+  },[store.token])
 
 
 
   return (
     <>
+      <WithdrawCoinsH5>
+        <Normal
+          onClick={() => navigate('/mynodes/withdrawingcoins')}
+        >
+          {t(`WITHDRAW COINS`)}
+        </Normal>
+      </WithdrawCoinsH5>
+
       <Warpper>
         <Row
-          justifyContent={'space-between'}
+          justifyContent={ theme.isH5 ? 'center' : 'space-between'}
         >
           <Title>
             {t(`My Nodes`)}
           </Title>
           <Normal
+            style={{
+              display: theme.isH5 ? 'none' : 'block'
+            }}
             onClick={() => navigate('/mynodes/withdrawingcoins')}
           >
             {t(`WITHDRAW COINS`)}
@@ -70,50 +85,51 @@ export default function MyNodes() {
         </Row>
         {/* funds */}
         <Grid
-          padding={'.48rem .88rem'}
-          gridTemplateColumns={'1fr 1fr'}
+          padding={theme.isH5 ? '12.5px 0' : '.48rem .88rem'}
+          gridTemplateColumns={theme.isH5 ? '1fr' : '1fr 1fr'}
           background={'#1A1919'}
           borderRadius={'8px'}
           cursor={'pointer'}
           onClick={() => navigate('/mynodes/fundrecords')}
+          gap={theme.isH5 ? '32px' : ""}
         >
           <Column color={'#fff'}>
             <Typography
-              fontSize={".2rem"}
+              fontSize={theme.isH5 ? '12px' : ".2rem"}
               fontWeight={'350'}
-              marginBottom={'.08rem'}
+              marginBottom={theme.isH5 ? '8px' : '.08rem'}
               fontStyle={'italic'}
             >
               {t(`GETA`)}
             </Typography>
             <Typography
-              fontSize={".6rem"}
+              fontSize={theme.isH5 ? '20px' : ".6rem"}
               fontWeight={'700'}
-              marginBottom={'.32rem'}
+              marginBottom={theme.isH5 ? '8px' : '.32rem'}
             >
               {state.earning.getaTotalFunds ?? EmptyStr}
             </Typography>
 
-            <Flex gap=".6rem">
-              <Column gap=".16rem">
+            <Flex gap={theme.isH5 ? '60px' : ".6rem"}>
+              <Column gap={theme.isH5 ? '8px' : ".16rem"}>
                 <Typography
-                  fontSize={".2rem"}
+                  fontSize={theme.isH5 ? '12px' : ".2rem"}
                   fontWeight={'350'}
                   fontStyle={'italic'}
                 >{t(`Available `)}</Typography>
                 <Typography
-                  fontSize={".2rem"}
+                  fontSize={theme.isH5 ? '14px' : ".2rem"}
                   fontWeight={'700'}
                 >{state.earning.getaAvailableAmount ?? EmptyStr}</Typography>
               </Column>
-              <Column gap=".16rem">
+              <Column gap={theme.isH5 ? '8px' : ".16rem"}>
                 <Typography
-                  fontSize={".2rem"}
+                  fontSize={theme.isH5 ? '12px' : ".2rem"}
                   fontWeight={'350'}
                   fontStyle={'italic'}
                 >{t(`Freeze  `)}</Typography>
                 <Typography
-                  fontSize={".2rem"}
+                  fontSize={theme.isH5 ? '14px' : ".2rem"}
                   fontWeight={'700'}
                 >{state.earning.getafreezeAmount ?? EmptyStr}</Typography>
               </Column>
@@ -123,41 +139,41 @@ export default function MyNodes() {
           </Column>
           <Column color={'#fff'}>
             <Typography
-              fontSize={".2rem"}
+              fontSize={theme.isH5 ? '12px' : ".2rem"}
               fontWeight={'350'}
-              marginBottom={'.08rem'}
+              marginBottom={theme.isH5 ? '8px' : '.08rem'}
               fontStyle={'italic'}
             >
               {t(`USDT`)}
             </Typography>
             <Typography
-              fontSize={".6rem"}
+              fontSize={theme.isH5 ? '14px' : ".6rem"}
               fontWeight={'700'}
-              marginBottom={'.32rem'}
+              marginBottom={theme.isH5 ? '8px' : '.32rem'}
             >
               {state.earning.ustdTotalFunds ?? EmptyStr}
             </Typography>
 
-            <Flex gap=".6rem">
-              <Column gap=".16rem">
+            <Flex gap={theme.isH5 ? '60px' : ".6rem"}>
+              <Column gap={theme.isH5 ? '8px' : ".16rem"}>
                 <Typography
-                  fontSize={".2rem"}
+                  fontSize={theme.isH5 ? '12px' : ".2rem"}
                   fontWeight={'350'}
                   fontStyle={'italic'}
                 >{t(`Available `)}</Typography>
                 <Typography
-                  fontSize={".2rem"}
+                  fontSize={theme.isH5 ? '14px' : ".2rem"}
                   fontWeight={'700'}
                 >{state.earning.ustdAvailableAmount ?? EmptyStr}</Typography>
               </Column>
-              <Column gap=".16rem">
+              <Column gap={theme.isH5 ? '8px' : ".16rem"}>
                 <Typography
-                  fontSize={".2rem"}
+                  fontSize={theme.isH5 ? '12px' : ".2rem"}
                   fontWeight={'350'}
                   fontStyle={'italic'}
                 >{t(`Freeze  `)}</Typography>
                 <Typography
-                  fontSize={".2rem"}
+                  fontSize={theme.isH5 ? '14px' : ".2rem"}
                   fontWeight={'700'}
                 >{state.earning.ustdfreezeAmount ?? EmptyStr}</Typography>
               </Column>
@@ -167,26 +183,27 @@ export default function MyNodes() {
 
         {/* funds Record */}
         <Grid
-          padding={'.48rem .88rem'}
-          gridTemplateColumns={'1fr 1fr'}
+          padding={theme.isH5 ? '12.5px 0' : '.48rem .88rem'}
+          gridTemplateColumns={theme.isH5 ? '1fr' : '1fr 1fr'}
           background={'#1A1919'}
           borderRadius={'8px'}
+          gap={theme.isH5 ? '32px' : ""}
         >
           <Column color={'#fff'}>
             <Typography
-              fontSize={".2rem"}
+              fontSize={theme.isH5 ? '12px' : ".2rem"}
               fontWeight={'350'}
-              marginBottom={'.08rem'}
+              marginBottom={theme.isH5 ? '8px' : '.08rem'}
               fontStyle={'italic'}
             >
               {t(`Node revenue (GETA)`)}
             </Typography>
             <Typography
-              fontSize={".6rem"}
+              fontSize={theme.isH5 ? '14px' : ".6rem"}
               fontWeight={'700'}
-              marginBottom={'.32rem'}
+              marginBottom={theme.isH5 ? '16px' : '.32rem'}
             >
-              {state.nodes.income}
+              {state.nodes.income ?? EmptyStr}
             </Typography>
 
             <Normal
@@ -200,19 +217,19 @@ export default function MyNodes() {
 
           <Column color={'#fff'}>
             <Typography
-              fontSize={".2rem"}
+              fontSize={theme.isH5 ? '12px' : ".2rem"}
               fontWeight={'350'}
-              marginBottom={'.08rem'}
+              marginBottom={theme.isH5 ? '5px' : '.08rem'}
               fontStyle={'italic'}
             >
               {t(`Owning Nodes`)}
             </Typography>
             <Typography
-              fontSize={".6rem"}
+              fontSize={theme.isH5 ? '14px' : ".6rem"}
               fontWeight={'700'}
-              marginBottom={'.32rem'}
+              marginBottom={theme.isH5 ? '16px' : '.32rem'}
             >
-              {state.nodes.myNode}
+              {state.nodes.myNode ?? EmptyStr}
             </Typography>
 
             <Normal
@@ -228,14 +245,16 @@ export default function MyNodes() {
         </Grid>
 
         <InviteWarpper>
-          <Flex>
+          <Flex
+            alignItems={'center'}
+          >
             <InviteIcon src={require('assets/images/Nodes/invite_icon.png')} />
             <Typography
-              fontSize={".22rem"}
+              fontSize={theme.isH5 ? '12px' : ".22rem"}
               fontWeight={'700'}
               color={'#fff'}
-              maxWidth={'2.87rem'}
-              marginLeft={'.3rem'}
+              maxWidth={theme.isH5 ? '165px' : '2.87rem'}
+              marginLeft={theme.isH5 ? '30px' : '.3rem'}
               textAlign={'center'}
             >
               {t(`Now invite your friends to get GW coins bonus`)}
@@ -244,6 +263,9 @@ export default function MyNodes() {
 
           <Normal
             onClick={() => navigate('/mynodes/invitefriends')}
+            style={{
+              margin: theme.isH5 ? '16px auto 0' : '' 
+            }}
           >
             {t(`INVITE NOW`)}
           </Normal>
@@ -257,16 +279,21 @@ export default function MyNodes() {
           {t(`Getaverse nodes`)}
         </Title>
         <Grid
-          gridTemplateColumns={'repeat(4,1fr)'}
-          gap=".4rem"
-          marginTop=".48rem"
+          gridTemplateColumns={theme.isH5 ? 'repeat(2,1fr)' : 'repeat(4,1fr)'}
+          gap={theme.isH5 ? '16px 8px' : ".4rem"}
+          marginTop={theme.isH5 ? '16px' : ".48rem"}
         >
           {
             getaverseNodes && getaverseNodes.map(item => {
-              return <Column gap='.16rem' key={item.title}>
-                <img src={item.icon} alt="" />
+              return <Column gap={theme.isH5 ? "16px" : '.16rem'} key={item.title}>
+                <img 
+                  style={{
+                    width: theme.isH5 ? "48.5px" : "",
+                    height: theme.isH5 ? "44px" : "",
+                  }}
+                  src={item.icon} alt="" />
                 <Typography
-                  fontSize={".2rem"}
+                  fontSize={theme.isH5 ? "12px" : ".2rem"}
                   fontWeight={'350'}
                   color={'#fff'}
                   fontStyle={'italic'}
@@ -274,11 +301,11 @@ export default function MyNodes() {
                   {t(`${item.title}`)}
                 </Typography>
                 <Typography
-                  fontSize={".2rem"}
+                  fontSize={theme.isH5 ? "14px" : ".2rem"}
                   fontWeight={'700'}
                   color={'#fff'}
                 >
-                  {t(`${state.totalNodes[item.attr]}`)}
+                  {t(`${state.totalNodes[item.attr] ?? EmptyStr}`)}
                 </Typography>
               </Column>
             })
@@ -294,21 +321,29 @@ export default function MyNodes() {
         >
           <NodesLogo src={require('assets/svg/logo_node.svg').default} />
           <ColumnStart
-            gap=".24rem"
+            gap={theme.isH5 ? "8px" : ".24rem"}
             color="#fff"
           >
-            <Title>
+            <Title
+              style={{
+                margin: theme.isH5 ? "auto" : ""
+              }}
+            >
               {t(`Getaverse nodes`)}
             </Title>
             <Typography
-              fontSize={'.2rem'}
+              fontSize={theme.isH5 ? "12px" : '.2rem'}
               fontWeight={'400'}
-              maxWidth={'7.43rem'}
+              maxWidth={theme.isH5 ? "302px" : '7.43rem'}
+              textAlign={theme.isH5 ? "center" : 'left'}
             >
               {t(`The GW network is supported by users like you who run GW nodes on their own devices. By purchasing a GW node license, you have the opportunity to be rewarded for your contributions to the network. This includes GW, Limited Edition NFT, and the opportunity to help grow the GameWonderlab ecosystem.`)}
             </Typography>
 
             <Normal
+              style={{
+                margin: theme.isH5 ? "auto" : ""
+              }}
               onClick={() => { JumpToBuyNodes() }}
             >
               {t(`PURCHASE NODE`)}
@@ -322,14 +357,14 @@ export default function MyNodes() {
       <PartFive>
         <Title
           textAlign={'center'}
-          marginBottom={'.52rem'}
+          marginBottom={theme.isH5 ? "16px" : '.52rem'}
         >
           {t(`Node Software`)}
         </Title>
-        <Column gap='.32rem'>
+        <Column gap={theme.isH5 ? "16px" : '.32rem'}>
           <Typography
             color={'#F6B91B'}
-            fontSize={'.28rem'}
+            fontSize={theme.isH5 ? "14px" : '.28rem'}
             fontWeight={'400'}
           >
             Ubuntu20.04
@@ -343,8 +378,8 @@ export default function MyNodes() {
             }}
           >
             <Box
-              width={'1.45rem'}
-              height={'1.45rem'}
+              width={theme.isH5 ? "80px" : '1.45rem'}
+              height={theme.isH5 ? "80px" : '1.45rem'}
               background={'#D9D9D9'}
               borderRadius={'8px'}
             />

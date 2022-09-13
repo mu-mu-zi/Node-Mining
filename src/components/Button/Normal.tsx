@@ -15,13 +15,17 @@ const Node = styled(Box)`
     /* border: 1px solid ${({theme}) => theme.colors.hover}; */
     color: #fff;
     background: ${({theme}) => theme.colors.hover};;
-
   }
+  ${({theme}) => theme.mediaWidth.sm`
+    padding: 10.5px 52px;
+    font-size: 11px;
+    font-weight: 800;
+  `}
 `
 
 export default function Normal(props: any) {
   
-  return <Node onClick={props.onClick}>
+  return <Node style={props.style} onClick={props.onClick}>
     {props.children}
   </Node>
 }

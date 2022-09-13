@@ -4,29 +4,36 @@ import styled from 'styled-components'
 import { Typography } from '../../components/BaseElement/index';
 import { useTranslation } from 'react-i18next';
 import { EaseBtn } from 'components/Button';
+import useTheme from 'hooks/useTheme';
+import Normal from '../../components/Button/Normal';
 
 const Banner = styled.div`
-position: relative;
-background-image: url('${require('assets/images/about_banner.png')}');
-background-repeat: no-repeat;
-background-size: cover;
-display: flex;
-flex-direction: column;
-align-items: center;
-justify-content: center;
-height: 9.06rem;
-/* padding-top: 108px; */
-box-sizing: border-box;
+  position: relative;
+  background-image: url('${require('assets/images/about_banner.png')}');
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 9.06rem;
+  /* padding-top: 108px; */
+  box-sizing: border-box;
+  background-position: center;
+  ${({theme}) => theme.mediaWidth.sm`
+      height: 500px; 
+  `}
 `
 
 
 export default function Aboutus() {
   const {t} = useTranslation()
+  const {theme} = useTheme()
   return <>
     <Banner>
       <Typography
         color={'#fff'}
-        fontSize={'60px'}
+        fontSize={theme.isH5 ? '20px' : '.6rem'}
         fontWeight={'700'}
         marginBottom={'.1rem'}
         fontFamily={'RomicStd'}
@@ -36,9 +43,11 @@ export default function Aboutus() {
 
       <Typography
         color={'#fff'}
-        fontSize={'20px'}
+        fontSize={theme.isH5 ? '16px' : '20px'}
         fontWeight={'400'}
-        marginBottom={'1.3rem'}
+        margin={theme.isH5 ? '16px 61.5px' : ''}
+        marginBottom={theme.isH5 ? '16px' : '1.3rem'}
+        textAlign={'center'}
       >
         {t(`To learn more about the Getaverse, click to download the whitepaper and see more details.`)}
       </Typography>
@@ -50,9 +59,9 @@ export default function Aboutus() {
           textDecoration: 'none'
         }}
       >
-        <EaseBtn>
+        <Normal>
           {t(`DOWNLOAD WHITE PAPER`)}
-        </EaseBtn>
+        </Normal>
       </a>
 
     </Banner>

@@ -11,60 +11,77 @@ import { Image } from 'pages/Home/Home.styled'
 import Grid from 'components/BaseElement/Grid';
 import Collapse from 'components/Collapse/Collapse';
 import { useNavigate } from 'react-router-dom';
+import useTheme from 'hooks/useTheme'
+import Normal from 'components/Button/Normal';
 
 export default function Index() {
   const { t } = useTranslation()
   const navigate = useNavigate()
+  const { theme } = useTheme()
   const JumpToBuyNodes = () => {
     navigate("/nodes/buy")
   }
   return (
     <>
       <Banner>
-
         <Typography
-          fontSize={'.2rem'}
+          fontSize={theme.isH5 ? "16px" : '.2rem'}
           fontWeight={'400'}
           color={'#fff'}
           marginBottom={'60px'}
+          maxWidth={theme.isH5 ? "100%" : "984px"}
+          margin={theme.isH5 ? "0 61.5px 16px" : '0 0 60px'}
+          textAlign={'center'}
         >
           {t(`Decentralized network by providing computing resources`)}
         </Typography>
 
-        <EaseBtn
+        <Normal
           onClick={() => {console.log('click');JumpToBuyNodes()}}
         >
           {t(`PURCHASE NODE`)}
-        </EaseBtn>
-
+        </Normal>
       </Banner>
+
       <Content>
         <Flex
-          gap={'43px'}
+          gap={theme.isH5 ? "8px" : '43px'}
+          flexDirection={theme.isH5 ? 'column' : 'row'}
           justifyContent={'center'}
           alignItems={'center'}
-          marginBottom={'.6rem'}
+          marginBottom={theme.isH5 ? "24px" : '.6rem'}
         >
-          <img src={require('assets/svg/Metaverse/meta_five_1.svg').default} alt="" />
-          <ColumnStart>
+          <img
+            style={{
+              width: theme.isH5 ? "44px" : "",
+              height: theme.isH5 ? "44px" : "",
+            }}
+            src={require('assets/svg/Metaverse/meta_five_1.svg').default} alt="" />
+          <ColumnStart
+            textAlign={theme.isH5 ? "center" : 'start'}
+            
+          >
             <Typography
-              fontSize="14px"
+              fontSize={theme.isH5 ? "11px" : "14px"}
               fontWeight="400"
               color="#ffffff"
+              width={'100%'}
             >
               {t(`DECENTRALIZED ECOSYSTEM`)}
             </Typography>
             <Typography
-              fontSize="36px"
+              width={'100%'}
+              fontSize={theme.isH5 ? "18px" : "36px"}
               fontWeight="700"
               color="#ffffff"
-              margin={'11px 0 14px'}
+              margin={theme.isH5 ? "8px 0 8px" : '11px 0 14px'}
             >
               {t(`Supported by the user's node community `)}
             </Typography>
 
             <Typography
-              fontSize="20px"
+              width={'100%'}
+              fontSize={theme.isH5 ? "11px" : "20px"}
               fontWeight="400"
               color="#ffffff"
             >
@@ -77,39 +94,46 @@ export default function Index() {
           position={'absolute'}
           left={'0'}
           width={'100%'}
-          minWidth={'1300px'}
+          minWidth={theme.isH5 ? "100%" : '1300px'}
           zIndex={Z_INDEX.index_vision}
 
         >
           <Image
-            style={{ width: '100%' }} src={require('assets/svg/index_part_four_1.svg').default} alt="" />
+            style={{ width: '100%' }} src={theme.isH5 ? require('assets/images/Nodes/nodes_part_four_1_h5.png') : require('assets/svg/index_part_four_1.svg').default} alt="" />
         </Box>
 
         <Box
-          marginTop={'3rem'}
+          marginTop={theme.isH5 ? "112px" : '3rem'}
         >
-          <Title>
+          <Title
+            marginBottom={theme.isH5 ? "32px" : ""}
+          >
             {t(`Node Owner Rewards`)}
           </Title>
           <Grid
-            gridTemplateColumns={'repeat(3,1fr)'}
+            gridTemplateColumns={theme.isH5 ? "1fr" : 'repeat(3,1fr)'}
             gap={'16px'}
           >
 
             <RowCard>
-              <Image src={require('assets/images/Nodes/reward_1.png')} alt='' />
+              <Image
+                style={{
+                  width: theme.isH5 ? "44px" : "",
+                  height: theme.isH5 ? "44px" : "",
+                }}
+                src={require('assets/images/Nodes/reward_1.png')} alt='' />
               <Typography
                 fontWeight='400'
-                fontSize='28px'
+                fontSize={theme.isH5 ? "14px" : '28px'}
                 color='#F6B91B'
                 textAlign={'center'}
-                margin={'32px 0 '}
+                margin={theme.isH5 ? "8px 0" : '32px 0 '}
               >
                 {t(`DAILY GETAVERSE TOKEN REWARDS`)}
               </Typography>
               <Typography
                 fontWeight='350'
-                fontSize='22px'
+                fontSize={theme.isH5 ? "11px" : '22px'}
                 color='#ffffff'
                 textAlign={'center'}
               >
@@ -117,19 +141,24 @@ export default function Index() {
               </Typography>
             </RowCard>
             <RowCard>
-              <Image src={require('assets/images/Nodes/reward_2.png')} alt='' />
+              <Image 
+                style={{
+                  width: theme.isH5 ? "44px" : "",
+                  height: theme.isH5 ? "44px" : "",
+                }}
+                src={require('assets/images/Nodes/reward_2.png')} alt='' />
               <Typography
                 fontWeight='400'
-                fontSize='28px'
+                fontSize={theme.isH5 ? "14px" : '28px'}
                 color='#F6B91B'
                 textAlign={'center'}
-                margin={'32px 0 '}
+                margin={theme.isH5 ? "8px 0" : '32px 0 '}
               >
                 {t(`VOTING RIGHTS`)}
               </Typography>
               <Typography
                 fontWeight='350'
-                fontSize='22px'
+                fontSize={theme.isH5 ? "11px" : '22px'}
                 color='#ffffff'
                 textAlign={'center'}
               >
@@ -137,19 +166,24 @@ export default function Index() {
               </Typography>
             </RowCard>
             <RowCard>
-              <Image src={require('assets/images/Nodes/reward_3.png')} alt='' />
+              <Image 
+                style={{
+                  width: theme.isH5 ? "44px" : "",
+                  height: theme.isH5 ? "44px" : "",
+                }}
+                src={require('assets/images/Nodes/reward_3.png')} alt='' />
               <Typography
                 fontWeight='400'
-                fontSize='28px'
+                fontSize={theme.isH5 ? "14px" : '28px'}
                 color='#F6B91B'
                 textAlign={'center'}
-                margin={'32px 0 '}
+                margin={theme.isH5 ? "8px 0" : '32px 0 '}
               >
                 {t(`EXCLUSIVE NON-PROPRIETARY TECHNOLOGY`)}
               </Typography>
               <Typography
                 fontWeight='350'
-                fontSize='22px'
+                fontSize={theme.isH5 ? "11px" : '22px'}
                 color='#ffffff'
                 textAlign={'center'}
               >
@@ -162,7 +196,9 @@ export default function Index() {
         <Box
           marginTop={'1.56rem'}
         >
-          <Title>
+          <Title
+            margin={theme.isH5 ? "51px 0" : ""}
+          >
             {t(`Frequently Asked Questions`)}
           </Title>
           <Column
