@@ -54,6 +54,23 @@ export function formatAddress(address: string, start = 6, end = 4) {
     return address.replace(reg, "$1...$2")
 }
 
+export function filterBanner(result: any[], num: number) {
+    let arr = result.filter((item) => {
+        return item.bannerLocation === num
+    })
+    arr.sort((a, b) => {
+        return a.weights - b.weights
+    })
+    console.log(arr)
+    let banners: { image: string }[] = []
+    arr.forEach(item => {
+        banners.push({
+            image: item.imageUrl
+        })
+    })
+    return banners
+}
+
 export function isNumber(str: string) {
     return new RegExp(NUMBER_REG, "gi").test(str);
 }

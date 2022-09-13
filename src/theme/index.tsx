@@ -52,6 +52,7 @@ export default function ThemeProvider({ children }: { children: React.ReactNode 
     return {
       normal: '#F6B91B',
       hover: '#00E88A',
+      disabled: '#3D3D3D',
     }
   }
 

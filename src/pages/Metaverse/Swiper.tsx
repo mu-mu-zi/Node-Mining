@@ -2,32 +2,51 @@
 import React,{useState,useRef, useEffect} from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import Box from 'components/BaseElement';
-import {Autoplay} from "swiper";
+import {Autoplay,Pagination} from "swiper";
 import 'swiper/css'
-import banner1 from 'assets/images/index_banner.jpg'
-import banner3 from 'assets/images/about_banner.png'
+import 'swiper/css/pagination';
 import { Image } from 'pages/Home/Home.styled';
 import useTheme from 'hooks/useTheme';
+import { useAsync } from 'react-use';
+import { getBanners } from 'http/api';
+import { filterBanner } from 'utils/tools';
+import styled from 'styled-components';
+
+const SwiperStyled = styled(Swiper)`
+  .swiper-pagination-bullet {
+    background-color: #666666;
+    width: 32px;
+    height: 5px;
+    opacity: 1;
+    border-radius: 0;
+  }
+  .bullet-active {
+    background-color: #F6B91B;
+    width: 32px;
+    height: 5px;
+    opacity: 1;
+    border-radius: 0;
+  }
+  .swiper-pagination {
+    bottom: 300px;
+  }
+`
 
 export default function BannerSwiper() {
   const [list, setList] = useState<any>()
   const {theme} = useTheme()
-  useEffect(() => {
-    const aa = [
-      {
-        image: banner1
-      },
-      {
-        image: banner3
-      }
-    ]
-    setList(aa)
+
+
+  useAsync( async() => {
+    let result = await getBanners()
+    let banners = filterBanner(result.data, 3)
+    setList(banners)
   },[])
   
 
 
   return (
-    <Swiper 
+    <SwiperStyled 
       className="swiper"
       loop={true}
       speed= {1000}
@@ -37,11 +56,20 @@ export default function BannerSwiper() {
         pauseOnMouseEnter: false
       }}
       transition-timing-function={'ease-out'}
-      modules={[Autoplay]}
+      modules={[Autoplay, Pagination]}
+      pagination={{
+        el: '.swiper-pagination',
+        clickable:true,
+        bulletClass: 'swiper-pagination-bullet',
+        bulletActiveClass: 'bullet-active'
+      }}
+      style={{
+        minHeight: theme.isH5 ? '327px' : '860px'
+      }}
     >
       {
         list && list.map((item:any,index:any) => {
-        return <SwiperSlide  key={index} style={{ height: theme.isH5 ? '327px' : '600px'}}>
+        return <SwiperSlide  key={index} style={{ height: theme.isH5 ? '327px' : '860px'}}>
             <Image style={{ width: '100%', height: '100%'}} src={item.image} alt="" />
           </SwiperSlide>
         })
@@ -49,7 +77,7 @@ export default function BannerSwiper() {
 
       {/* <div className='swiper-button-prev'></div>
       <div className='swiper-button-next'></div> */}
-
-    </Swiper>
+      <div className="swiper-pagination"></div>
+    </SwiperStyled>
   )
 }

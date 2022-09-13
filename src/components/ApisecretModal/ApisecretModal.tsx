@@ -38,7 +38,7 @@ export default function ApisecretModal(props: IOpenModal & AA) {
       type={theme.isH5 ? 'modal' : 'modal'}
     // isH5={theme.isH5}
     // style={{ color: '#fff', height: '100%', width: '100%' }}
-      style={{background: "#3D3D3D" }}
+      style={{background: "#3D3D3D", width: '277px', padding: '32px 16px' }}
     >
       <Box
       
@@ -76,7 +76,10 @@ export default function ApisecretModal(props: IOpenModal & AA) {
           <Typography
             color="#ffffff"
             fontSize={'.12rem'}
-            fontWeight={'4500'}
+            fontWeight={'450'}
+            style={{
+              wordBreak: 'break-all'
+            }}
           >
             {props.apisecret}
           </Typography>

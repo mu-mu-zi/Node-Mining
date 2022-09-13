@@ -25,6 +25,7 @@ import Flex from 'components/BaseElement/Flex';
 
 const _Th = styled(Th)`
   padding: .08rem 0;
+  font-weight: 400;
 `
 const _Td = styled(Td)`
   padding: .08rem 0;
@@ -144,7 +145,7 @@ export default function Invite() {
           }}
         >
           <JumpBtn
-            text="Back"
+            text="BAck"
             path={-1}
           />
         </Box>
@@ -322,7 +323,7 @@ export default function Invite() {
                   fontWeight={'700'}
                   color={'#F6B91B'}
                 >
-                  {`${state.totalBonus.todayIncome} GETA/${state.totalBonus.usdtTodayIncome} USDT`}
+                  {`${state.totalBonus.todayIncome ?? EmptyStr} GETA/${state.totalBonus.usdtTodayIncome ?? EmptyStr} USDT`}
                 </Typography>
               </Column>
             </RowStart>

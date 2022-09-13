@@ -61,7 +61,9 @@ export default function BuyNodes() {
     if (!TgeMarket || !account) return
     try {
       state.Invite = await TgeMarket.getInviter(account)
-      console.log('Invite', state.Invite)
+      if(state.Invite === zeroAddress) {
+        state.Invite = EmptyStr
+      }
     } catch (e) {
       console.error(e)
     }
@@ -70,7 +72,7 @@ export default function BuyNodes() {
 
   const StepNext = () => {
     if (state.Invite === zeroAddress || !state.Invite || state.Invite === EmptyStr) {
-      Notice('Sorry, you are not eligible to purchase.', MsgStatus.fail)
+      Notice('Sorry, you are not eligible to purchase.', MsgStatus.warn)
       // setStep(2)
     } else {
       setStep(2)
@@ -83,7 +85,7 @@ export default function BuyNodes() {
         step === 1 ?
           <>
             <JumpBtn
-              text="Nodes"
+              text="NODES"
               path={-1}
             />
 
@@ -227,7 +229,7 @@ export default function BuyNodes() {
           step === 2 ?
             theme.isH5 ? <>
               <JumpBtn
-                text="Nodes"
+                text="NODES"
                 path={-1}
               />
 

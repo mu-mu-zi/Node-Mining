@@ -32,6 +32,7 @@ function App() {
 
   useEffect(() => {
     AOS.init();
+    if(!store.token) return
     getCoinList()
   }, [account]);
   useEffect(() => {

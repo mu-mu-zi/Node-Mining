@@ -79,11 +79,12 @@ export const LineCut = styled(RowStart)`
       position: absolute;
       background-image: url('${require('assets/images/Home/line_cat.png')}');
       background-repeat: no-repeat;
-      width: 354px;
-      height: 54px;
+      width: 3.54rem;
+      height: .54rem;
       display: inline-block;
       left: 0;
       top: 50%;
+      background-size: contain;
       /* transform: translate(-50%, -50%); */
       ${({theme}) => theme.mediaWidth.sm`
         display: none;
@@ -94,12 +95,13 @@ export const LineCut = styled(RowStart)`
       position: absolute;
       background-image: url('${require('assets/images/Home/line_cat.png')}');
       background-repeat: no-repeat;
-      width: 354px;
-      height: 54px;
+      width: 3.54rem;
+      height: .54rem;
       display: inline-block;
       right: 0;
       top: 50%;
       transform: rotate(180deg);
+      background-size: contain;
       ${({theme}) => theme.mediaWidth.sm`
         display: none;
       `}

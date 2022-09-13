@@ -9,6 +9,7 @@ type Color = string
 export interface Colors {
   normal: Color,
   hover: Color,
+  disabled: Color,
 }
 
 declare module 'styled-components' {

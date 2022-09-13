@@ -6,6 +6,7 @@ import Grid from "components/BaseElement/Grid";
 import { Typography } from '../../components/BaseElement/index';
 import { Z_INDEX } from "utils/global";
 import Flex from "components/BaseElement/Flex";
+import { url } from "inspector";
 
 export const Image = styled.img`
   display: block;
@@ -16,9 +17,9 @@ export const Image = styled.img`
   max-height: 100%;  
 `
 
-export const Banner = styled.div`
+export const Banner = styled.div<{banner:string}>`
   position: relative;
-  background-image: url('${require('assets/images/index_banner.jpg')}');
+  background-image: url(${({banner}) => `"${banner}"`});
   background-repeat: no-repeat;
   background-size: cover;
   background-color: #000;
@@ -166,12 +167,13 @@ export const LineCut = styled(Box)`
     position: absolute;
     background-image: url('${require('assets/images/Home/line_cat.png')}');
     background-repeat: no-repeat;
-    width: 354px;
-    height: 54px;
+    width: 3.54rem;
+    height: .54rem;
     display: inline-block;
     left: -320px;
     top: 200px;
     /* transform: translate(-50%, -50%); */
+    background-size: contain;
     ${({theme}) => theme.mediaWidth.sm`
       display: none;
     `}
@@ -181,12 +183,13 @@ export const LineCut = styled(Box)`
     position: absolute;
     background-image: url('${require('assets/images/Home/line_cat.png')}');
     background-repeat: no-repeat;
-    width: 354px;
-    height: 54px;
+    width: 3.54rem;
+    height: .54rem;
     display: inline-block;
     right: -320px;
     top: 200px;
     transform: rotate(180deg);
+    background-size: contain;
     ${({theme}) => theme.mediaWidth.sm`
       display: none;
     `}

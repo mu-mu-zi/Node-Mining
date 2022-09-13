@@ -61,6 +61,7 @@ export default function MyNodes() {
     <>
       <WithdrawCoinsH5>
         <Normal
+          name={store.token ? '' : 'disabled'}
           onClick={() => navigate('/mynodes/withdrawingcoins')}
         >
           {t(`WITHDRAW COINS`)}
@@ -75,6 +76,7 @@ export default function MyNodes() {
             {t(`My Nodes`)}
           </Title>
           <Normal
+            name={store.token ? '' : 'disabled'}
             style={{
               display: theme.isH5 ? 'none' : 'block'
             }}

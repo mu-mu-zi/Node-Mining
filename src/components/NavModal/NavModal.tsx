@@ -72,7 +72,7 @@ export default function NavModal(props: IOpenModal & AA) {
       >
 
       <JumpBtn
-        text="Back"
+        text="BACK"
         // path={-1}
         onClick={() => props.destoryComponent()}
         />

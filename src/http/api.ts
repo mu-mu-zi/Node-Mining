@@ -37,6 +37,28 @@ export interface Earnings {
   getafreezeAmount: number
 }
 
+export interface Banners {
+  introduction: string,
+  id: number,
+  bannerName: string,
+  bannerLocation: number,
+  imageUrl: string,
+  status: number,
+  weights: number,
+  language: string,
+  starTime: string,
+  endTime: string,
+  createTime: string,
+  updateTime:string ,
+}
+
+export function getBanners() {
+  return fetchPost<Banners[]>('/api/v1/banner/banners',{
+    pageIndex: 1,
+    pageSize: 999
+  })
+}
+
 export function earnings() {
   return fetchGet<Earnings>('/api/v1/asset/myEarnings')
 }

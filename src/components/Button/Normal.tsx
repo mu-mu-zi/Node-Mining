@@ -16,6 +16,11 @@ const Node = styled(Box)`
     color: #fff;
     background: ${({theme}) => theme.colors.hover};;
   }
+  &.disabled {
+    background: ${({theme}) => theme.colors.disabled};
+    cursor: not-allowed;
+    pointer-events: none;
+  }
   ${({theme}) => theme.mediaWidth.sm`
     padding: 10.5px 52px;
     font-size: 11px;
@@ -25,7 +30,7 @@ const Node = styled(Box)`
 
 export default function Normal(props: any) {
   
-  return <Node style={props.style} onClick={props.onClick}>
+  return <Node className={props.name} style={props.style} onClick={props.onClick}>
     {props.children}
   </Node>
 }

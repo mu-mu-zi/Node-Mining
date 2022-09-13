@@ -64,7 +64,7 @@ function MessageBox(props: IMessageBox) {
             <MessageBoxStyle>
                 <h3 className={`flex-row title ${props.type === MsgStatus.loading ? 'loading' : ''} `} style={props.titleStyle}>
                     <img src={props.type ? icons[props.type] : icons[MsgStatus.success]} className={"icon"} alt="" />
-                        { props.type === MsgStatus.loading ? <div className='text'>Loading...</div> : null}
+                        { props.type === MsgStatus.loading ? <div className='text' style={{fontFamily: "RomicStd"}}>Loading...</div> : null}
                     <div>{props.title}</div>
                 </h3>
                 <Toggle vIf={!!props.subtitle}>

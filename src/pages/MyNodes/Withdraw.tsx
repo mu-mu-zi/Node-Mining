@@ -114,7 +114,7 @@ export default function Withdraw() {
           left={'0'}
         >
           <JumpBtn
-            text="My Nodes"
+            text="MY NODES"
             path={-1}
           />
         </Box>

@@ -108,7 +108,7 @@ export default function NodeRecord() {
           marginBottom={theme.isH5 ? '40px' : ''}
         >
           <JumpBtn
-            text="Back"
+            text="BACk"
             path={-1}
           />
         </RowStart>
@@ -180,7 +180,7 @@ export default function NodeRecord() {
             >
               <Typography minWidth={theme.isH5 ? '88px' : "1.56rem"}>{t(`Cents earnings`)}</Typography>
               <Row gap='8px'>
-                <Typography>{formatAddress(nodeInfo?.apiSecret || EmptyStr)}</Typography>
+                <Typography>{theme.isH5 ? formatAddress(nodeInfo?.apiSecret || EmptyStr) : nodeInfo?.apiSecret || EmptyStr}</Typography>
                 <Popover
                   position='top'
                   style={{ marginBottom: '10px' }}

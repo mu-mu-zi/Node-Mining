@@ -3,9 +3,9 @@ import Flex from "components/BaseElement/Flex";
 import Input from "components/form/Input";
 import styled from "styled-components";
 
-export const Banner = styled.div`
+export const Banner = styled.div<{banner:string}>`
 position: relative;
-background-image: url('${require('assets/images/digital_banner.png')}');
+background-image: url(${({banner}) => `"${banner}"`});
 background-repeat: no-repeat;
 background-size: cover;
 display: flex;

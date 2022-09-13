@@ -87,7 +87,7 @@ export default function Order(props: Iprops) {
             display={theme.isH5 ? 'none' : 'block'} 
           >
             <JumpBtn
-              text="Back"
+              text="BACK"
               onClick={() => props.setStep(1)}
             // path={-1}
             />

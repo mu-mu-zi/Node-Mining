@@ -59,7 +59,7 @@ export default function FundRecords() {
           left={'0'}
         >
           <JumpBtn
-            text="Back"
+            text="BACK"
             path={-1}
           // onClick={() => props.setStep(1)}
           />

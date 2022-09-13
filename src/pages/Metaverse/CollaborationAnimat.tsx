@@ -31,7 +31,7 @@ export default function CollaborationAnimate(props: Animation) {
       loop={true}
       speed= {speed}
       autoplay={{
-        delay: 1000 * 2,
+        delay: 1000 * 3,
         disableOnInteraction: false,
         pauseOnMouseEnter: false
       }}

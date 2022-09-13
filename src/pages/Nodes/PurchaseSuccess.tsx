@@ -20,7 +20,7 @@ export default function PurchaseSuccess(props: Iprops) {
   return (
     <>
       <JumpBtn
-        text="Back"
+        text="BACK"
         onClick={() => props.setStep(2)}
       />
 

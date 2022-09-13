@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Box, { Typography } from 'components/BaseElement'
 import { Column, ColumnStart } from 'components/BaseElement/Column'
 import Flex from 'components/BaseElement/Flex'
@@ -16,11 +16,21 @@ import { Z_INDEX } from 'utils/global'
 import { Title } from 'pages/Digital/Digital.styled'
 import useTheme from 'hooks/useTheme'
 import { useNavigate } from 'react-router-dom';
+import { getBanners } from 'http/api'
+import { useAsync } from 'react-use'
+import { filterBanner } from 'utils/tools'
 
 export default function Home() {
   const { t } = useTranslation()
   const { theme } = useTheme()
   const navigate = useNavigate()
+  const [banner, setBanner] = useState<string>('')
+  useAsync( async() => {
+    let result = await getBanners()
+
+    let banners = filterBanner(result.data, 1)
+    setBanner(banners[0].image)
+  },[])
   const Advantages = [
     {
       icon: theme.isH5 ? require('assets/svg/index_part_five_1_h5.svg').default : require('assets/svg/index_part_five_1.svg').default,
@@ -47,7 +57,7 @@ export default function Home() {
 
   return (
     <>
-      <Banner>
+      <Banner banner={banner}>
         <Typography
           fontSize={theme.isH5 ? "46px" : "1rem"}
           fontFamily={"CRT-64"}

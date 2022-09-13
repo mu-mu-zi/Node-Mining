@@ -55,6 +55,7 @@ export const MessageBoxStyle = styled.div`
         height: 32px;
         /* margin-right: 16px; */
         text-align: center;
+        margin-bottom: 8px;
     }
     .content{
         font-size: 20px;

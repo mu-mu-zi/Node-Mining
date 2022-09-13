@@ -1,6 +1,6 @@
 import Box, { Typography } from 'components/BaseElement'
 import Flex from 'components/BaseElement/Flex'
-import React from 'react'
+import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Banner, EmailIpt, PartTwo, Title, IdentityCard, PartThree
   , EmailInput, Submit
@@ -10,13 +10,23 @@ import { RowCenter } from 'components/BaseElement/Row'
 import Input from 'components/form/Input'
 import Grid from 'components/BaseElement/Grid'
 import useTheme from 'hooks/useTheme'
+import { getBanners } from 'http/api'
+import { useAsync } from 'react-use'
+import { filterBanner } from 'utils/tools'
 
 export default function Digital() {
   const { theme } = useTheme()
   const { t } = useTranslation()
+  const [banner, setBanner] = useState<string>('')
+  useAsync( async() => {
+    let result = await getBanners()
+    
+    let banners = filterBanner(result.data, 2)
+    setBanner(banners[0].image)
+  },[])
   return (
     <>
-      <Banner>
+      <Banner banner={banner}>
         {/* <Typography
           fontSize={"100px"}
           fontFamily={"CRT-64"}
