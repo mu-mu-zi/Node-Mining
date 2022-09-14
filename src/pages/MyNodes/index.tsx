@@ -20,6 +20,7 @@ import { EmptyStr } from 'utils/global';
 import { Notice } from 'utils/tools';
 import { MsgStatus } from 'components/messageBox/MessageBox';
 import useTheme from '../../hooks/useTheme';
+import { Icon } from 'components/BaseElement/Icon';
 
 export default function MyNodes() {
   const { t } = useTranslation()
@@ -259,7 +260,7 @@ export default function MyNodes() {
               marginLeft={theme.isH5 ? '30px' : '.3rem'}
               textAlign={'center'}
             >
-              {t(`Now invite your friends to get GW GETA Tokens`)}
+              {t(`Now invite your friends to get GETA Tokens`)}
             </Typography>
           </Flex>
 
@@ -379,11 +380,13 @@ export default function MyNodes() {
               textDecoration: 'none'
             }}
           >
-            <Box
+            <Icon
+              display={'block'}
               width={theme.isH5 ? "80px" : '1.45rem'}
               height={theme.isH5 ? "80px" : '1.45rem'}
               background={'#D9D9D9'}
               borderRadius={'8px'}
+              src={require('assets/images/img_ubuntu.png')}
             />
           </a>
           <a
