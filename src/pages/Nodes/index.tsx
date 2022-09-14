@@ -25,7 +25,7 @@ export default function Index() {
     <>
       <Banner>
         <Typography
-          fontSize={theme.isH5 ? "16px" : '.2rem'}
+          fontSize={theme.isH5 ? "20px" : '.3rem'}
           fontWeight={'400'}
           color={'#fff'}
           marginBottom={'60px'}

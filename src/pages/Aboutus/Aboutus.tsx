@@ -43,7 +43,7 @@ export default function Aboutus() {
 
       <Typography
         color={'#fff'}
-        fontSize={theme.isH5 ? '16px' : '20px'}
+        fontSize={theme.isH5 ? '20px' : '30px'}
         fontWeight={'400'}
         margin={theme.isH5 ? '16px 61.5px' : ''}
         marginBottom={theme.isH5 ? '16px' : '1.3rem'}
