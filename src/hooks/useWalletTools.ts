@@ -25,6 +25,7 @@ export default function useWalletTools() {
 
   // 获取当前连接组
   const connector = useMemo(() => {
+    // to do
     return store.walletInfo?.connector || WALLETS.MetaMask.connector
   },[store.walletInfo])
 

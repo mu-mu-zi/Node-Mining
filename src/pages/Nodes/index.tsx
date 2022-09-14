@@ -56,7 +56,7 @@ export default function Index() {
               width: theme.isH5 ? "44px" : "",
               height: theme.isH5 ? "44px" : "",
             }}
-            src={require('assets/svg/Metaverse/meta_five_1.svg').default} alt="" />
+            src={require('assets/images/Metaverse/meta_five_1.png')} alt="" />
           <ColumnStart
             textAlign={theme.isH5 ? "center" : 'start'}
             

@@ -49,7 +49,7 @@ export default function Aboutus() {
         marginBottom={theme.isH5 ? '16px' : '1.3rem'}
         textAlign={'center'}
       >
-        {t(`To learn more about the Getaverse, click to download the whitepaper and see more details.`)}
+        {t(theme.isH5 ? `Decentralized network by providing computing resources` : `To learn more about the Getaverse, click to download the whitepaper and see more details.`)}
       </Typography>
       <a
         download={'GetaverseWhitepaper.pdf'}

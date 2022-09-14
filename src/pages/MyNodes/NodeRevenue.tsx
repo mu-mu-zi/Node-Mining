@@ -224,7 +224,7 @@ const { theme } = useTheme()
                   fontWeight={'400'}
                   color={'#6B6B6B'}
                 >
-                  {/* <_Th textAlign={'left'}>{t(`Type`)}</_Th> */}
+                  <_Th textAlign={'left'}>{t(`Type`)}</_Th>
                   <_Th>{t(`Amount`)}</_Th>
                   <_Th>{t(`Time`)}</_Th>
                 </Tr>
@@ -235,12 +235,13 @@ const { theme } = useTheme()
                     return <Tr  
                       fontSize={'.2rem'}
                       fontWeight={'350'}
+                      fontStyle={'italic'}
                       color={'#ffffff'}
                       key={idx}
                     >
-                      {/* <_Td  textAlign={'left'} width={'2.6rem'}>
-                        {t(`${item.type}`)}
-                      </_Td> */}
+                      <_Td  textAlign={'left'} width={'2.6rem'}>
+                        {t(`Cents earnings`)}
+                      </_Td>
                       <_Td  textAlign={'center'} width={'2.6rem'} color={'#F6B91B'}>
                         {t(`+${item.amount} ${item.symbol}`)}
                       </_Td>

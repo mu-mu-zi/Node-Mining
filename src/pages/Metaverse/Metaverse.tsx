@@ -602,7 +602,7 @@ export default function Metaverse() {
               width: theme.isH5 ? '44px' : 'auto',
               maxHeight: theme.isH5 ? '44px' : 'auto',
             }}
-            src={require('assets/svg/Metaverse/meta_five_1.svg').default} alt="" />
+            src={require('assets/images/Metaverse/meta_five_1.png')} alt="" />
           <ColumnStart>
             <Typography
               fontSize={theme.isH5 ? "18px" : "36px"}

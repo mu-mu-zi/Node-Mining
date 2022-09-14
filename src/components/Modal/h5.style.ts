@@ -10,7 +10,7 @@ export const ModalBox = styled.div`
     bottom: 0;
     z-index: ${Z_INDEX.modal};
     white-space: normal;
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: rgba(0, 0, 0);
     .modal_content_box{
         position: absolute;
         left: 0;

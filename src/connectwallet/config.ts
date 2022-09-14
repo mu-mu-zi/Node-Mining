@@ -76,8 +76,8 @@ export const WALLETS: {[propsName: string]: IWallet} = {
       name: 'BitKeepWallet',
       icon: require("assets/images/icon_bitkeepwallet.png"),
       style: {width: "inherit"},
-      download: "https://www.bnbchain.org/en/binance-wallet",
-      keyword: "isBitKeepWallet",
+      download: "https://bitkeep.com/download?type=0&theme=light",
+      keyword: "isBitKeep",
       hooks: injectedHooks,
       // connector: bscConnector
       connector: injected,

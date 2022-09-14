@@ -58,6 +58,16 @@ export default function Home() {
   return (
     <>
       <Banner banner={banner}>
+        <Box
+          position={'absolute'}
+          bottom={'44px'}
+          left={'50%'}
+          transform={'translateX(-50%)'}
+          display={theme.isH5 ? 'block' : 'none'}
+        >
+          <Image src={require('assets/images/Home/downArrow.png')} alt="" />
+        </Box>
+
         <Typography
           fontSize={theme.isH5 ? "46px" : "1rem"}
           fontFamily={"CRT-64"}
@@ -141,7 +151,7 @@ export default function Home() {
           <Title
             marginBottom={theme.isH5 ? "21px" : '60px'}
             display={'inline-block'}
-            style={{ textAlign: 'left' }}
+            style={{ textAlign: 'left', display: theme.isH5 ? 'flex' : 'inline-block', justifyContent: 'center' }}
           // textAlign={'left'}
           // data-aos-anchor-placement="bottom-top"
           // data-aos="fade-right" 
@@ -416,7 +426,7 @@ export default function Home() {
             color={'#ffffff'}
             textAlign={'center'}
             maxWidth={'1266px'}
-            marginBottom={'.2rem'}
+            marginBottom={theme.isH5 ? '16px' : '.2rem'}
           // data-aos="fade-up"
           // data-aos-anchor-placement="bottom-top"
           >

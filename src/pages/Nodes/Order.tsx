@@ -21,6 +21,7 @@ interface Iprops {
     Invite: string,
     price: BigNumber
   }
+  destoryComponent?: any
 }
 
 export default function Order(props: Iprops) {
@@ -49,7 +50,6 @@ export default function Order(props: Iprops) {
           return
         }
       }
-      
       // console.log('isApprove =>',isApprove.toString())
       // console.log('count =>',state.count)
       // console.log('price =>',state.price.toFixed())
@@ -63,6 +63,9 @@ export default function Order(props: Iprops) {
       console.log(tx1)
 
       CloseMessageBox()
+      if(props.destoryComponent) {
+        props.destoryComponent()
+      }
       props.setStep(3)
     } catch (e) {
       console.log(e)

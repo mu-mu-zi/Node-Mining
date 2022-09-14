@@ -63,7 +63,7 @@ export default function NavModal(props: IOpenModal & AA) {
     <Modal
       onClose={() => props.destoryComponent()}
       type={theme.isH5 ? 'drawer' : 'drawer'}
-    // isH5={theme.isH5}
+      isH5={theme.isH5}
     // style={{ color: '#fff', height: '100%', width: '100%' }}
     >
       <Box

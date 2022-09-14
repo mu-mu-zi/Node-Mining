@@ -118,6 +118,7 @@ export default function FundRecords() {
                     fontSize={theme.isH5 ? '11px' : '.2rem'}
                     fontWeight={'350'}
                     color={'#ffffff'}
+                    fontStyle={'italic'}
                     key={idx}
                   >
                     <_Td  textAlign={'left'} width={theme.isH5 ? '104px' : '2.6rem'}>

@@ -108,7 +108,7 @@ export default function NodeRecord() {
           marginBottom={theme.isH5 ? '40px' : ''}
         >
           <JumpBtn
-            text="BACk"
+            text="MY NODES"
             path={-1}
           />
         </RowStart>

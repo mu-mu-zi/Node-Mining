@@ -17,8 +17,8 @@ export const PngNode = styled.img`
   width: 3.84rem;
   height: 3.84rem;
   ${({theme}) => theme.mediaWidth.sm`
-    width: 343px;
-    height: 343px;
+    width: 100%;
+    height: 100%;
   `}
 `
 export const IconPrice = styled.img`

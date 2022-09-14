@@ -130,35 +130,41 @@ export default function Invite() {
 
   return (
     <InviteWrap>
-      <Row
+      <Column
         width={"100%"}
         justifyContent={'center'}
-        marginBottom={'.88rem'}
+        marginBottom={theme.isH5 ? '16px' : '.88rem'}
         position={'relative'}
       >
         <Box
-          position={'absolute'}
-          top={'50%'}
-          left={'1.55rem'}
-          style={{
-            transform: 'translate(-50%, -50%)'
-          }}
+          position={theme.isH5 ? 'relative' : 'absolute'}
+          alignSelf={theme.isH5 ? 'start' : ''}
+          top={'.2rem'}
+          left={'0'}
         >
           <JumpBtn
-            text="BAck"
+            text="MY NODES"
             path={-1}
+          // onClick={() => props.setStep(1)}
           />
         </Box>
-        <Typography
-          fontSize={theme.isH5 ? '20px' : '.6rem'}
-          fontWeight={'700'}
-          color={'#fff'}
-          fontFamily={'RomicStd'}
+        <Row
+          width={"100%"}
+          justifyContent={'center'}
+          alignItems={'center'}
+          // marginBottom={theme.isH5 ? '16px' : '0'}
         >
-          {t(`Invite Friends`)}
-        </Typography>
-        <div />
-      </Row>
+          <Typography
+            fontSize={theme.isH5 ? '20px' : '.6rem'}
+            fontWeight={'700'}
+            color={'#fff'}
+            fontFamily={'RomicStd'}
+          >
+            {t(`Invite Friends`)}
+          </Typography>
+          <Box />
+        </Row>
+      </Column>
 
       <RowCenter
         marginBottom={'.64rem'}
@@ -275,7 +281,7 @@ export default function Invite() {
                 <Typography
                   fontSize={theme.isH5 ? '20px' : ".2rem"}
                   fontWeight={'700'}
-                  color={'#F6B91B'}
+                  color={theme.isH5 ? '#ffffff' : '#F6B91B'}
                 >
                   {state.invitationsTotal ?? EmptyStr}
                 </Typography>
@@ -298,7 +304,7 @@ export default function Invite() {
                 <Typography
                   fontSize={theme.isH5 ? '20px' : ".2rem"}
                   fontWeight={'700'}
-                  color={'#F6B91B'}
+                  color={theme.isH5 ? '#ffffff' : '#F6B91B'}
                 >
                   {`${state.totalBonus.totalIncome ?? EmptyStr} GETA/${state.totalBonus.usdtTotalIncome ?? EmptyStr} USDT`}
                 </Typography>
@@ -321,7 +327,7 @@ export default function Invite() {
                 <Typography
                   fontSize={theme.isH5 ? '20px' : ".2rem"}
                   fontWeight={'700'}
-                  color={'#F6B91B'}
+                  color={theme.isH5 ? '#ffffff' : '#F6B91B'}
                 >
                   {`${state.totalBonus.todayIncome ?? EmptyStr} GETA/${state.totalBonus.usdtTodayIncome ?? EmptyStr} USDT`}
                 </Typography>

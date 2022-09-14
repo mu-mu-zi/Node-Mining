@@ -26,7 +26,7 @@ export default function OrderModal(props: IOpenModal & AA) {
       isH5={true}
       style={{ color: '#fff', height: '100%', width: '100%', display:'flex', alignItems:'end' }}
     >
-      <Order setStep={setStep} state={state} />
+      <Order destoryComponent={props.destoryComponent} setStep={setStep} state={state} />
     </Modal>
   )
 }

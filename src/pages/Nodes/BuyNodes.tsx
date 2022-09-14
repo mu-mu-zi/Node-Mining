@@ -29,7 +29,7 @@ export default function BuyNodes() {
   const TgeMarket = useTgeMarket()
   const { account } = useWeb3React()
   const { theme } = useTheme()
-  const {isH5} = useWidthChange()
+  const { isH5 } = useWidthChange()
   const state = useEffectState({
     count: 1 as number,
     Invite: EmptyStr as string,
@@ -49,7 +49,7 @@ export default function BuyNodes() {
 
   }, [state.count, account, TgeMarket])
   useEffect(() => {
-    if (step !== 2 || !isH5 ) return
+    if (step !== 2 || !isH5) return
     openModal(OrderModal, {
       setStep: setStep,
       state: state
@@ -61,7 +61,7 @@ export default function BuyNodes() {
     if (!TgeMarket || !account) return
     try {
       state.Invite = await TgeMarket.getInviter(account)
-      if(state.Invite === zeroAddress) {
+      if (state.Invite === zeroAddress) {
         state.Invite = EmptyStr
       }
     } catch (e) {
@@ -163,7 +163,7 @@ export default function BuyNodes() {
                         src={require('assets/svg/Ellipse_sub.svg').default}
                         onClick={() => {
                           if (state.count <= 1) {
-                            alert('cant')
+                            Notice('The quantity cannot be less than 1', MsgStatus.warn)
                             return
                           }
                           state.count = state.count - 1
@@ -307,7 +307,7 @@ export default function BuyNodes() {
                           src={require('assets/svg/Ellipse_sub.svg').default}
                           onClick={() => {
                             if (state.count <= 1) {
-                              alert('cant')
+                              Notice('The quantity cannot be less than 1', MsgStatus.warn)
                               return
                             }
                             state.count = state.count - 1

@@ -25,7 +25,7 @@ export default function PurchaseSuccess(props: Iprops) {
       />
 
       <Column
-        marginTop={theme.isH5 ? '16px' : '.61rem'}
+        marginTop={theme.isH5 ? '106px' : '.61rem'}
         gap={theme.isH5 ? '16px' : '0'}
       >
         <SuccessNode src={require('assets/images/Nodes/PurchaseSuccess.png')} alt="" />

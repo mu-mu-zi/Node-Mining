@@ -36,6 +36,7 @@ interface Space1<ThemeType extends Theme = RequiredTheme> {
   cursor?: ResponsiveValue<CSS.Property.Cursor, ThemeType> | undefined;
   boxSizing?: ResponsiveValue<CSS.Property.BoxSizing, ThemeType> | undefined;
   whiteSpace?: ResponsiveValue<CSS.Property.WhiteSpace, ThemeType> | undefined;
+  transform?: ResponsiveValue<CSS.Property.Transform, ThemeType> | undefined;
 }
 
 // export interface CursorProps<ThemeType extends Theme = RequiredTheme> {
@@ -57,7 +58,8 @@ const Box = styled.div<BoxProps>`
   ${system({
     cursor: true,
     boxSizing: true,
-    whiteSpace: true
+    whiteSpace: true,
+    transform: true
   })};
 `
 

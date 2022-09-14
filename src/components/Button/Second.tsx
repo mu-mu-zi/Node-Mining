@@ -15,8 +15,11 @@ const Node = styled(Box)`
     border: 1px solid ${({theme}) => theme.colors.hover};
     color: ${({theme}) => theme.colors.hover};
     /* background: ${({theme}) => theme.colors.hover};; */
-
   }
+  ${({theme}) => theme.mediaWidth.sm`
+    padding: 8px 52px;
+    font-size: 12px;
+  `}
 `
 
 export default function SecondBtn(props: any) {

@@ -21,6 +21,7 @@ import DropDown from 'components/dropDown/DropDown';
 import { useAsync } from 'react-use';
 import { BigNumber } from 'ethers';
 import useTheme from '../../hooks/useTheme';
+import { ContractAddresses } from 'utils/ContractAddresses';
 
 const Warpper = styled.div`
   position: relative;
@@ -94,7 +95,7 @@ export default function Admin() {
   useAsync(async () => {
     if (!TgeMarket || !account) return
     try {
-      let result = await TgeMarket.getTokensOf('0xDb8050EcFcb88379234C5aedac57BD3f7259E1aa')
+      let result = await TgeMarket.getTokensOf(`${ContractAddresses.TgeMarket}`)
       let arr: any = []
       let obj: any = {}
       result.forEach((item) => {
@@ -287,7 +288,7 @@ export default function Admin() {
                     menuStyle={{
                       width: '100%',
                       paddingTop: '0',
-                      height: theme.isH5 ? '120px' : '1.38rem',
+                      height: theme.isH5 ? '100px' : '1.38rem',
                       overflow: 'overlay',
                     }}
                     onChange={(selectd:any) => {

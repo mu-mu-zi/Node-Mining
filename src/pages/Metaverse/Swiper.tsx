@@ -19,6 +19,10 @@ const SwiperStyled = styled(Swiper)`
     height: 5px;
     opacity: 1;
     border-radius: 0;
+    ${({ theme }) => theme.mediaWidth.sm`
+      width: 16px;
+      height: 3px;
+    `}
   }
   .bullet-active {
     background-color: #F6B91B;
@@ -26,9 +30,16 @@ const SwiperStyled = styled(Swiper)`
     height: 5px;
     opacity: 1;
     border-radius: 0;
+    ${({ theme }) => theme.mediaWidth.sm`
+      width: 16px;
+      height: 3px;
+    `}
   }
   .swiper-pagination {
     bottom: 300px;
+    ${({ theme }) => theme.mediaWidth.sm`
+      bottom: 16px;
+    `}
   }
 `
 

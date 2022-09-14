@@ -329,7 +329,7 @@ export const WithdrawInp = styled(Input)`
   height: .4rem;
   ${({theme}) => theme.mediaWidth.sm`
     height: 32px;
-    width: 279px;
+    width: 100%;
     max-width: initial;
     font-size: 12px;
   `}
