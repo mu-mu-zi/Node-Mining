@@ -64,7 +64,7 @@ export default function MyNodes() {
           name={store.token ? '' : 'disabled'}
           onClick={() => navigate('/mynodes/withdrawingcoins')}
         >
-          {t(`WITHDRAW COINS`)}
+          {t(`Withdraw`)}
         </Normal>
       </WithdrawCoinsH5>
 
@@ -73,7 +73,7 @@ export default function MyNodes() {
           justifyContent={ theme.isH5 ? 'center' : 'space-between'}
         >
           <Title>
-            {t(`My Nodes`)}
+            {t(`My Node`)}
           </Title>
           <Normal
             name={store.token ? '' : 'disabled'}
@@ -82,7 +82,7 @@ export default function MyNodes() {
             }}
             onClick={() => navigate('/mynodes/withdrawingcoins')}
           >
-            {t(`WITHDRAW COINS`)}
+            {t(`Withdraw`)}
           </Normal>
         </Row>
         {/* funds */}
@@ -259,7 +259,7 @@ export default function MyNodes() {
               marginLeft={theme.isH5 ? '30px' : '.3rem'}
               textAlign={'center'}
             >
-              {t(`Now invite your friends to get GW coins bonus`)}
+              {t(`Now invite your friends to get GW GETA Tokens`)}
             </Typography>
           </Flex>
 
@@ -339,7 +339,7 @@ export default function MyNodes() {
               maxWidth={theme.isH5 ? "302px" : '7.43rem'}
               textAlign={theme.isH5 ? "center" : 'left'}
             >
-              {t(`The GW network is supported by users like you who run GW nodes on their own devices. By purchasing a GW node license, you have the opportunity to be rewarded for your contributions to the network. This includes GW, Limited Edition NFT, and the opportunity to help grow the GameWonderlab ecosystem.`)}
+              {t(`The Getaverse network is supported by users like you who run Getaverse nodes on their own devices. By purchasing a Getaverse node license, you have the opportunity to be rewarded for your contributions to the network. This includes GETA, Limited Edition NFT, and the opportunity to help grow the GameWonderlab ecosystem.`)}
             </Typography>
 
             <Normal

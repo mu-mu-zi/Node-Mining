@@ -88,7 +88,7 @@ export default function Header() {
               to={"/nodes"} className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`} >{t(`NODES`)}</RouterLink>
             <RouterLink
               // style={{pointerEvents:'none'}}
-              to={"/mynodes"} className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`} >{t(`MY NODES`)}</RouterLink>
+              to={"/mynodes"} className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`} >{t(`MY NODE`)}</RouterLink>
             <RouterLink
               // style={{pointerEvents:'none'}}
               to={"/aboutus"} className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`} >{t(`ABOUT US`)}</RouterLink>

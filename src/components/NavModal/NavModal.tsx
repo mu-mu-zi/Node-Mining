@@ -89,7 +89,7 @@ export default function NavModal(props: IOpenModal & AA) {
         <RouterLink
           // style={{pointerEvents:'none'}}
           onClick={() => props.destoryComponent()}
-          to={"/mynodes"} className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`} >{t(`MY NODES`)}</RouterLink>
+          to={"/mynodes"} className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`} >{t(`MY NODE`)}</RouterLink>
         <RouterLink
           // style={{pointerEvents:'none'}}
           onClick={() => props.destoryComponent()}

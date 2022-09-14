@@ -108,7 +108,7 @@ export default function Index() {
           <Title
             marginBottom={theme.isH5 ? "32px" : ""}
           >
-            {t(`Node Owner Rewards`)}
+            {t(`Rewards for Node Owners`)}
           </Title>
           <Grid
             gridTemplateColumns={theme.isH5 ? "1fr" : 'repeat(3,1fr)'}
@@ -137,7 +137,7 @@ export default function Index() {
                 color='#ffffff'
                 textAlign={'center'}
               >
-                {t(`Getaverse operators will be rewarded with tokens for daily Getaverse node work.`)}
+                {t(`The Getaverse node owners will be rewarded with GETA tokens by operating their Getaverse nodes.`)}
               </Typography>
             </RowCard>
             <RowCard>
@@ -162,7 +162,7 @@ export default function Index() {
                 color='#ffffff'
                 textAlign={'center'}
               >
-                {t(`Each node will be able to vote on proposed changes to the Getaverse, and nodes will also have greater voting power throughout the Getaverse.`)}
+                {t(`Each node will be able to vote on proposed changes to the Getaverse, and the node owners will also have greater voting power throughout the Getaverse.`)}
               </Typography>
             </RowCard>
             <RowCard>
@@ -179,7 +179,7 @@ export default function Index() {
                 textAlign={'center'}
                 margin={theme.isH5 ? "8px 0" : '32px 0 '}
               >
-                {t(`EXCLUSIVE NON-PROPRIETARY TECHNOLOGY`)}
+                {t(`EXCLUSIVE REWARDS`)}
               </Typography>
               <Typography
                 fontWeight='350'
@@ -187,7 +187,7 @@ export default function Index() {
                 color='#ffffff'
                 textAlign={'center'}
               >
-                {t(`Node owners will also receive NFT drops and token rewards based on their reputation score as a node operator and general community member.`)}
+                {t(`The node owners will also receive NFT drops and token rewards based on their reputation score as a node owner and general community member.`)}
               </Typography>
             </RowCard>
           </Grid>

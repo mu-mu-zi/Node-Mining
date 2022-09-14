@@ -91,7 +91,7 @@ export default function FundRecords() {
             fontWeight={'700'}
             color={'#fff'}
           >
-            {t(`Coin withdrawal record`)}
+            {t(`Withdrawal Record`)}
           </Typography>
 
           <Table
