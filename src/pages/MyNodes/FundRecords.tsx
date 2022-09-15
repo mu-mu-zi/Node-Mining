@@ -32,8 +32,8 @@ export default function FundRecords() {
   const { theme } = useTheme()
   const state = useEffectState({
     withdraw: {} as WithdrawList,
-    pageIndex: 10,
-    pageSize: 1,
+    pageIndex: 1,
+    pageSize: 100,
     withdrawRecords: [] as WithdrawRecords[]
   })
 
@@ -59,7 +59,7 @@ export default function FundRecords() {
           left={'0'}
         >
           <JumpBtn
-            text="BACK"
+            text="MY NODES"
             path={-1}
           // onClick={() => props.setStep(1)}
           />
@@ -74,6 +74,7 @@ export default function FundRecords() {
             fontSize={theme.isH5 ? '20px' : '.6rem'}
             fontWeight={'700'}
             color={'#fff'}
+            fontFamily={'RomicStd'}
           >
             {t(`Funding records`)}
           </Typography>
@@ -108,7 +109,7 @@ export default function FundRecords() {
               >
                 <_Th textAlign={'left'}>{t(`Type`)}</_Th>
                 <_Th>{t(`Amount`)}</_Th>
-                <_Th>{t(`Time`)}</_Th>
+                <_Th textAlign={'right'}>{t(`Time`)}</_Th>
               </Tr>
             </thead>
             <tbody>
@@ -122,12 +123,13 @@ export default function FundRecords() {
                     key={idx}
                   >
                     <_Td  textAlign={'left'} width={theme.isH5 ? '104px' : '2.6rem'}>
-                      {t(`${item.coinName}`)}
+                      {/* {t(`${item.coinName}`)} */}
+                      {t(`withdrawing coins`)}
                     </_Td>
                     <_Td  textAlign={'center'} width={theme.isH5 ? '82px' : '2.6rem'}>
                       {t(`${item.amount}`)}
                     </_Td>
-                    <_Td  textAlign={'center'} width={theme.isH5 ? '101px' : '2.04rem'}>
+                    <_Td  textAlign={'right'} width={theme.isH5 ? '101px' : '2.04rem'}>
                       {t(`${item.updateTime}`)}
                     </_Td>
                   </Tr>

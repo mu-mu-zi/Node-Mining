@@ -9,12 +9,11 @@ export const MessageBoxStyle = styled.div`
     /* transform: translate(-50%, -50%); */
     /*width: 358px;*/
     padding: 24px;
-    background: rgba(0, 0, 0, 0.35);
+    background: #3D3D3D;
     border-radius: 8px 0 0 8px;
     box-sizing: border-box;
     z-index: ${Z_INDEX.toast};
     pointer-events: none;
-    box-shadow: 0px 4px 20px rgba(246, 185, 27, 0.25);  
     max-width: 328px;
     text-align: center;
     &.bottomRight{
@@ -29,8 +28,8 @@ export const MessageBoxStyle = styled.div`
         justify-content: center;
     }
     .title{
-        font-size: 20px;
-        font-weight: 500;
+        font-size: 12px;
+        font-weight: 400;
         line-height: 31px;
         color: #fff;
         word-break: break-word;

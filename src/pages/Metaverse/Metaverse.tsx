@@ -505,6 +505,7 @@ export default function Metaverse() {
                   fontSize={theme.isH5 ? "11px" : "18px"}
                   fontWeight="350"
                   color="#ffffff"
+                  fontStyle={'italic'}
                 >
                   {item.text}
                 </Typography>

@@ -45,7 +45,7 @@ export default function ApisecretModal(props: IOpenModal & AA) {
         
       >
         <Typography
-          fontSize={'.2rem'}
+          fontSize={'20px'}
           fontWeight='700'
           color="#ffffff"
           textAlign={'center'}
@@ -55,7 +55,7 @@ export default function ApisecretModal(props: IOpenModal & AA) {
           {`Node${props.name} Apisecret`}
         </Typography>
         <Typography
-          fontSize={'.12rem'}
+          fontSize={'12px'}
           fontWeight='400'
           color="#ffffff"
           marginBottom={'16px'}

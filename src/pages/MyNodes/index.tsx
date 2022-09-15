@@ -366,20 +366,13 @@ export default function MyNodes() {
         </Title>
         <Column gap={theme.isH5 ? "16px" : '.32rem'}>
           <Typography
-            color={'#F6B91B'}
+            color={'#ffffff'}
             fontSize={theme.isH5 ? "14px" : '.28rem'}
             fontWeight={'400'}
           >
             Ubuntu20.04
           </Typography>
-          <a
-            download={'uses documents'}
-            href={require('assets/usesDocuments.pdf')}
-            target="_blank"
-            style={{
-              textDecoration: 'none'
-            }}
-          >
+        
             <Icon
               display={'block'}
               width={theme.isH5 ? "80px" : '1.45rem'}
@@ -388,7 +381,25 @@ export default function MyNodes() {
               borderRadius={'8px'}
               src={require('assets/images/img_ubuntu.png')}
             />
-          </a>
+
+          <Typography
+            color={'#ffffff'}
+            fontSize={theme.isH5 ? "12px" : '.20rem'}
+            fontWeight={'400'}
+          >
+            (Click 
+            <a
+              download={'GetaverseUsesDocuments'}
+              href={require('assets/GetaverseUsesDocuments.pdf')}
+              target="_blank"
+              style={{
+
+                color: "#F6B91B"
+              }}
+            > Ubuntu 20.04 </a>
+             to download instructions)
+          </Typography>
+
           <a
             download={'getaverse-node-v1.0'}
             href={'https://getaverses.s3.ap-southeast-1.amazonaws.com/node/getaverse-node-v2.0.tar.gz'}

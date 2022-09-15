@@ -16,7 +16,7 @@ export const MessageBoxStyle = styled.div`
 
     position: absolute;
     padding: 16px 16px 16px 20px;
-    background: rgba(0,0,0,0.35);
+    background: #3D3D3D;
     border-radius: 0 8px 0 8px;
     margin-top: 8px;
     box-sizing: border-box;
@@ -34,7 +34,7 @@ export const MessageBoxStyle = styled.div`
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    box-shadow: 0px 4px 20px rgba(246, 185, 27, 0.25);  
+    /* box-shadow: 0px 4px 20px rgba(246, 185, 27, 0.25);   */
     border-radius: 8px;
     max-width: 328px;
 

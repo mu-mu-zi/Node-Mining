@@ -22,6 +22,9 @@ export default function OrderModal(props: IOpenModal & AA) {
         props.destoryComponent();
         setStep(1)
       }}
+      containerStyle={{
+        backgroundColor: 'rgba(0,0,0,.6)'
+      }}
       type={'h5'}
       isH5={true}
       style={{ color: '#fff', height: '100%', width: '100%', display:'flex', alignItems:'end' }}

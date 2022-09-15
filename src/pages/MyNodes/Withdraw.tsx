@@ -172,10 +172,12 @@ export default function Withdraw() {
           marginBottom={theme.isH5 ? '32px' : '.24rem'}
           justifyContent={'space-between'}
           width={theme.isH5 ? '100%' : '4.64rem'}
+          gap={theme.isH5 ? '20px' : ''}
         >
           <Typography
             fontSize={theme.isH5 ? '12px' : '.2rem'}
             fontWeight={'700'}
+            minWidth={theme.isH5 ? '50px' : 'initial'}
             color={'#ffffff'}
           >
             {t(`Coins`)}
@@ -213,11 +215,13 @@ export default function Withdraw() {
           marginBottom={theme.isH5 ? '16px' : '.64rem'}
           justifyContent={'space-between'}
           width={theme.isH5 ? '100%' : '4.64rem'}
+          gap={theme.isH5 ? '20px' : ''}
         >
           <Typography
             fontSize={theme.isH5 ? '12px' : '.2rem'}
             fontWeight={'700'}
             color={'#ffffff'}
+            minWidth={theme.isH5 ? '50px' : 'initial'}
           >
             {t(`Amount`)}
           </Typography>

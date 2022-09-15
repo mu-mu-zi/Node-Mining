@@ -115,6 +115,7 @@ export default function Digital() {
               fontSize={theme.isH5 ? "11px" : '22px'}
               color='#ffffff'
               textAlign={'center'}
+              fontStyle={'italic'}
             >
               {t(`Getaverse enforces the security, privacy and confidentiality of identifiable data through blockchain encryption methods, and custom DIDs provide a user-friendly experience.`)}
             </Typography>
@@ -140,6 +141,7 @@ export default function Digital() {
               fontSize={theme.isH5 ? "11px" : '22px'}
               color='#ffffff'
               textAlign={'center'}
+              fontStyle={'italic'}
             >
               {t(`Getaverse uses blockchain technology to enforce ownership of digital identities and their associated credentials. This essentially means that the identity owner has full control over personally identifiable information.`)}
             </Typography>
@@ -165,6 +167,7 @@ export default function Digital() {
               fontSize={theme.isH5 ? "11px" : '22px'}
               color='#ffffff'
               textAlign={'center'}
+              fontStyle={'italic'}
             >
               {t(`The data related to the identity is anchored on the blockchain, and the authentication process does not depend on the user who provided the identity.`)}
             </Typography>

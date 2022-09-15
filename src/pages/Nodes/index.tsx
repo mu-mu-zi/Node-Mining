@@ -135,6 +135,7 @@ export default function Index() {
                 fontWeight='350'
                 fontSize={theme.isH5 ? "11px" : '22px'}
                 color='#ffffff'
+                fontStyle={"italic"}
                 textAlign={'center'}
               >
                 {t(`The Getaverse node owners will be rewarded with GETA tokens by operating their Getaverse nodes.`)}
