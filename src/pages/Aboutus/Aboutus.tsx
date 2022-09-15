@@ -38,7 +38,7 @@ export default function Aboutus() {
         marginBottom={'.1rem'}
         fontFamily={'RomicStd'}
       >
-        {t(`About Us`)}
+        {t(`WHITEPAPER`)}
       </Typography>
 
       <Typography

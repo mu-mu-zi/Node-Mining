@@ -93,7 +93,7 @@ export default function NavModal(props: IOpenModal & AA) {
         <RouterLink
           // style={{pointerEvents:'none'}}
           onClick={() => props.destoryComponent()}
-          to={"/aboutus"} className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`} >{t(`ABOUT US`)}</RouterLink>
+          to={"/aboutus"} className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`} >{t(`WHITEPAPER`)}</RouterLink>
         <RouterLink
           style={{
             display: `${showAdmin ? "block" : "none"}`

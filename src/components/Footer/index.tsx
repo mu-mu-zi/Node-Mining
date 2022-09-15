@@ -74,7 +74,7 @@ export default function Footer() {
           <span
             style={{cursor: 'pointer'}}
             onClick={() => navigate('aboutus')}
-          >{t(`About Us`)}</span>
+          >{t(`WHITEPAPER`)}</span>
         </About>
         <Community>
           <span>{t(`Community`)}</span>
