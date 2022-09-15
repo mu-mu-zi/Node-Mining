@@ -1,5 +1,5 @@
 import Box, { Typography } from 'components/BaseElement'
-import React from 'react'
+import React, { useState } from 'react'
 import { Z_INDEX } from 'utils/global'
 import Swiper from './Swiper'
 import { useTranslation } from 'react-i18next';
@@ -15,10 +15,27 @@ import Flex from 'components/BaseElement/Flex';
 import { ColumnStart } from 'components/BaseElement/Column';
 import CollaborationAnimate from './CollaborationAnimat';
 import useTheme from 'hooks/useTheme';
+import { submitEmail } from 'http/api';
+import { Notice, isEmail } from 'utils/tools';
+import { MsgStatus } from 'components/messageBox/MessageBox';
 
 export default function Metaverse() {
   const { t } = useTranslation()
   const { theme } = useTheme()
+  const [email, setEmail] = useState<string>('')
+
+  const FnSubmit = async () => {
+    if(!isEmail(email)){
+      Notice('Please enter the correct email address', MsgStatus.fail)
+      return
+    }
+    let result = await submitEmail(email)
+    if(result.data) {
+      setEmail('')
+      Notice('success', MsgStatus.success)
+    }
+  }
+
   const cooperationProjects: CooperationProjects[] = [
     {
       png: require('assets/svg/Metaverse/projects_1.svg').default,
@@ -626,8 +643,12 @@ export default function Metaverse() {
             /> */}
             <EmailInput
               placeholder='Enter your email address'
-              right={<Submit className='submit' onClick={() => console.log('aabb')}>SUBMIT</Submit>}
+              right={<Submit className='submit' onClick={FnSubmit}>SUBMIT</Submit>}
               inputClassName="email-input"
+              value={email}
+              onChange={(value) => {
+                  setEmail(value)
+              }}
             />
 
 

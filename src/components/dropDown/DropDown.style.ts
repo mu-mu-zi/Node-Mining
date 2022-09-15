@@ -70,7 +70,7 @@ export const OptionContainer = styled.div`
     bottom: 0;
     transform: translate(-50%, 100%);
     z-index: 100;
-    padding-top: 16px;
+    padding-top: 10px;
     ::-webkit-scrollbar{
         display: none;
     }

@@ -7,6 +7,7 @@ import { Typography } from '../../components/BaseElement/index';
 import { Z_INDEX } from "utils/global";
 import Flex from "components/BaseElement/Flex";
 import { url } from "inspector";
+import Input from "components/form/Input";
 
 export const Image = styled.img`
   display: block;
@@ -264,51 +265,87 @@ export const PartSix = styled.div`
 
 `
 
-export const EmailIpt = styled.input`
-    background: transparent;
-    border: 2px solid #666666;
-    border-radius: 40px;
-    padding: 21px 48px;
-    font-size: .28rem;
-    width: 100%;
-    max-width: 773px;
-    box-sizing: border-box;
-    color: #fff;
+export const EmailIpt = styled(Input)`
+  background: transparent;
+  border: 2px solid #6B6B6B;
+  border-radius: 60px;
+  width: 100%;
+  max-width: 7.73rem;
+  padding: 0 0 0 .12rem;
+  box-sizing: border-box;
+  height: .81rem;
+  ${({theme}) => theme.mediaWidth.sm`
+    height: 42px;
+    max-width: initial;
+    border: 1px solid #6B6B6B;
+  `}
+  &:hover {
+    border: 2px solid #00E88A;
+    color: #00E88A;
+    ${({theme}) => theme.mediaWidth.sm`
+      border: 1px solid #00E88A;
+    `}
+    .email-input {
+
+      ::placeholder {
+        color: #00E88A;
+      }
+    }
+    .submit {
+      background: #00E88A;
+    }
+  }
+  &:active {
+    border: 2px solid #00E88A;
+    color: #00E88A;
+    ${({theme}) => theme.mediaWidth.sm`
+      border: 1px solid #00E88A;
+    `}
+    ::placeholder {
+      color: #00E88A;
+    }
+  }
+  &:focus {
+    border: 2px solid #00E88A;
+    color: #00E88A;
+    ${({theme}) => theme.mediaWidth.sm`
+      border: 1px solid #00E88A;
+    `}
+    ::placeholder {
+      color: #00E88A;
+    }
+  }
+
+  .email-input {
+    color: #6B6B6B;
+    border: none;
     outline: unset;
-    &::after {
-      content: 'SUBMIT'
+    padding-left: 16px;
+    ${({theme}) => theme.mediaWidth.sm`
+      font-size: 11px;
+    `}
+    ::placeholder {
+      color: #6B6B6B;
     }
     &:hover {
-      border: 2px solid #00E88A;
       color: #00E88A;
       ::placeholder {
         color: #00E88A;
       }
     }
     &:active {
-      border: 2px solid #00E88A;
       color: #00E88A;
       ::placeholder {
         color: #00E88A;
       }
     }
     &:focus {
-      border: 2px solid #00E88A;
       color: #00E88A;
       ::placeholder {
         color: #00E88A;
       }
     }
-    ${({theme}) => theme.mediaWidth.sm`
-      max-width: 200px;
-      border: 2px solid #00E88A;
-      font-size: 18px;
-      color: #00E88A;
-      padding: 9px 26px;
-      ::placeholder {
-        color: #00E88A;
-      }
-    `}
+  }
 `
 
 export const CoreTeamImg = styled(Box)`

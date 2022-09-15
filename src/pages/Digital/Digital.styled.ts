@@ -17,7 +17,7 @@ height: 860px;
 box-sizing: border-box;
 background-position: center;
 ${({theme}) => theme.mediaWidth.sm`
-    height: 327px;
+    height: 623px;
 `}
 `
 

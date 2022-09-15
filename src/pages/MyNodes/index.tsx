@@ -65,7 +65,7 @@ export default function MyNodes() {
           name={store.token ? '' : 'disabled'}
           onClick={() => navigate('/mynodes/withdrawingcoins')}
         >
-          {t(`Withdraw`)}
+          {t(`WITHDRAW`)}
         </Normal>
       </WithdrawCoinsH5>
 
@@ -83,7 +83,7 @@ export default function MyNodes() {
             }}
             onClick={() => navigate('/mynodes/withdrawingcoins')}
           >
-            {t(`Withdraw`)}
+            {t(`WITHDRAW`)}
           </Normal>
         </Row>
         {/* funds */}

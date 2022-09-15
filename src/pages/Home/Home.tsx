@@ -19,6 +19,9 @@ import { useNavigate } from 'react-router-dom';
 import { getBanners } from 'http/api'
 import { useAsync } from 'react-use'
 import { filterBanner } from 'utils/tools'
+import { submitEmail } from 'http/api';
+import { Notice, isEmail } from 'utils/tools';
+import { MsgStatus } from 'components/messageBox/MessageBox';
 
 export default function Home() {
   const { t } = useTranslation()
@@ -27,10 +30,29 @@ export default function Home() {
   const [banner, setBanner] = useState<string>('')
   useAsync( async() => {
     let result = await getBanners()
-
     let banners = filterBanner(result.data, 1)
     setBanner(banners[0].image)
   },[])
+  const [email, setEmail] = useState<string>('')
+
+  const FnSubmit = async () => {
+    if(!isEmail(email)){
+      Notice('Please enter the correct email address', MsgStatus.fail)
+      return
+    }
+    try{
+
+      let result = await submitEmail(email)
+      console.log(result)
+      if(result.data) {
+        setEmail('')
+        Notice('success', MsgStatus.success)
+      }
+    }catch(e) {
+      console.log(e)
+    }
+  }
+
   const Advantages = [
     {
       icon: theme.isH5 ? require('assets/svg/index_part_five_1_h5.svg').default : require('assets/svg/index_part_five_1.svg').default,
@@ -860,10 +882,16 @@ export default function Home() {
         >
           <EmailIpt
             placeholder='Email'
+            inputClassName="email-input"
+            value={email}
+            onChange={(value) => {
+                setEmail(value)
+            }}
           />
           <FlyNode
             maxWidth={theme.isH5 ? '200px' : 'initial'}
             width={theme.isH5 ? '100%' : 'initial'}
+            onClick={FnSubmit}
           >
             {t(`SUBMIT`)}
           </FlyNode>

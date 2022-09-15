@@ -75,12 +75,12 @@ export default function BannerSwiper() {
         bulletActiveClass: 'bullet-active'
       }}
       style={{
-        minHeight: theme.isH5 ? '327px' : '860px'
+        minHeight: theme.isH5 ? '623px' : '860px'
       }}
     >
       {
         list && list.map((item:any,index:any) => {
-        return <SwiperSlide  key={index} style={{ height: theme.isH5 ? '327px' : '860px'}}>
+        return <SwiperSlide  key={index} style={{ height: theme.isH5 ? '623px' : '860px'}}>
             <Image style={{ width: '100%', height: '100%'}} src={item.image} alt="" />
           </SwiperSlide>
         })

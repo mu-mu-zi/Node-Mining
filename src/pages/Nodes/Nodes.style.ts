@@ -18,7 +18,7 @@ export const Banner = styled.div`
   /* pointer-events: none; */
   background-position: center;
   ${({theme}) => theme.mediaWidth.sm`
-    height: 327px;
+    height: 623px;
   `}
 `
 export const Content = styled.div`

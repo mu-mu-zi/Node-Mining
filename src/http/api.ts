@@ -258,3 +258,9 @@ export interface TotalNodes {
 export function totalNodes() {
   return fetchPost<TotalNodes>('/api/v1/node/nodes')
 }
+
+export function submitEmail(email:string) {
+  return fetchPost<boolean>('/api/v1/email/submitEmail',{
+    email
+  })
+}
