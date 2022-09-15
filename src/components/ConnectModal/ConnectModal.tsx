@@ -8,7 +8,7 @@ import { ConnectWalletModalStyle, Option } from './ConnectWalletModal.style'
 import useTheme from "hooks/useTheme";
 import { CHAIN_ID } from "connectwallet/hooks";
 import {useEffect} from 'react';
-import {useWeb3React} from '@web3-react/core';
+// import {useWeb3React} from '@web3-react/core';
 import useRedux from "hooks/useRedux";
 import { useAsync } from 'react-use';
 import useWalletTools from "hooks/useWalletTools";
@@ -19,44 +19,55 @@ import { loginApi } from '../../http/api';
 import { MsgStatus } from "components/messageBox/MessageBox";
 
 export default function ConnectModal(props: IOpenModal) {
-  const {account,chainId,provider} = useWeb3React()
+  // const {provider} = useWeb3React()
   const {t} = useTranslation()
   const {theme} = useTheme()
   const { store, userDispatch } = useRedux()
-  const {activate,deactivate} = useWalletTools()
+  const { activate, deactivate, accounts, chainId, provider} = useWalletTools()
   const { getGenerateNonce } = useGenerateNonce()
 
   useEffect(() => {
-    if(store.walletInfo) {
+    if(sessionStorage.getItem("wallet_name")) {
+      console.log('123124ashfgdasjugfrasjh')
+      console.log('accounts',accounts)
       activate()
     }
   },[store])
 
   useEffect(() => {
-    if (chainId && account) {
+    console.log('accounts', accounts)
+    if (chainId && accounts) {
+      console.log('333')
+      const walletAddress = accounts[0];
       if (store.token) {
         // props.onConnect?.(walletAddress);
         // userDispatch.setAddress(account)
         // props.destoryComponent();
       } else {
+        console.log('walletAddress',walletAddress)
+        console.log('chainId',chainId)
         if (chainId !== CHAINS.BSC.chainId) {
           Notice('You are connected to an unsupported network, please switch to the main BSC network.',MsgStatus.fail)
           deactivate()
           userDispatch.setWalletInfo(null)
         } else {
-          sign(account)
+          sign(walletAddress)
         }
       }
     }
-  },[account, chainId])
+  },[accounts, chainId, store.token, ])
 
   const connect = async (item:IWallet) => {
+    console.log('connect',item)
+    console.log('provider',provider)
+    console.log('111')
     userDispatch.setWalletInfo(item)
     // await item.connector.activate(CHAIN_ID)
     // props.destoryComponent()
   }
 
   const sign = async (address:string) => {
+    console.log('444')
     let [signData, error] = await awaitWrap(getGenerateNonce(address, provider));
     if(signData) {
       login(address, signData.signatrue)
@@ -103,17 +114,17 @@ export default function ConnectModal(props: IOpenModal) {
           gap="16px"
         >
           {
-            Object.values(WALLETS).map((item) => {
+            Object.values(WALLETS).map((item,index) => {
               return (
-                <Option key={item.name}
+                <Option key={index}
                   onClick={ () => {
-                    
-                    // if(window[item.keyword] || (window.ethereum && window.ethereum[item.keyword])) {
+                    // @ts-ignore
+                    if (window[item.keyword] || ( window.solana && window.solana[item.keyword] || window.ethereum && window.ethereum[item.keyword])) {
 
                       connect(item)
-                    // }else {
-                      
-                    // }
+                    }else {
+                      window.open(`${item.download}`)
+                    }
                   
                   }}
                 

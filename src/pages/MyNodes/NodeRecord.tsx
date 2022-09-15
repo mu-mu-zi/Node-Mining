@@ -22,6 +22,7 @@ import { Icon } from 'components/BaseElement/Icon';
 import { ModalContext } from 'components/provider/ModalProvider';
 import ApisecretModal from 'components/ApisecretModal/ApisecretModal';
 import useTheme from 'hooks/useTheme';
+import useWalletTools from 'hooks/useWalletTools';
 
 
 export default function NodeRecord() {
@@ -31,7 +32,8 @@ export default function NodeRecord() {
   const [activeIndex, setActiveIndex] = useState<number>(0)
   const [data, setData] = useState<NodeListRecords[]>([])
   const [nodeInfo, setNodeInfo] = useState<GetNodeKey>()
-  const { account, provider } = useWeb3React()
+  // const { account, provider } = useWeb3React()
+  const { accounts, provider } = useWalletTools()
   const [reload, setReload] = useState<boolean>(false)
   const { openModal } = useContext(ModalContext);
   const { theme } = useTheme()
@@ -62,9 +64,9 @@ export default function NodeRecord() {
   }
   // cover key
   const handleClick = async () => {
-
-    if (!account || !provider || !activeNode) return
+    if (!accounts || !provider || !activeNode) return
     let date = new Date().valueOf()
+    let account = accounts[0]
     try {
       // const [nonceInfo, error] = await awaitWrap(generateNonce(account));
       let signStr = JSON.stringify({
@@ -143,7 +145,7 @@ export default function NodeRecord() {
                     color={"#fff"}
                     textAlign={'center'}
                   >
-                    {t(`Nodes ${item.id}`)}
+                    {t(`Nodes ${item.tokenId}`)}
                   </Typography>
                 </ActiveNode>
               )

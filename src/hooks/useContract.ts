@@ -11,6 +11,7 @@ import {USDT} from "ABI/types";
 import { ContractAddresses } from "utils/ContractAddresses";
 import TgeMarket_ABI from "ABI/TgeMarket.json" 
 import USDT_ABI from "ABI/USDT.json" 
+import useWalletTools from "./useWalletTools";
 // export const useExampleContract = (address: string, withSignerIfPossible = true) => {
 //   return useContract(address, ContractAbi, withSignerIfPossible);
 // };
@@ -56,7 +57,9 @@ export function useContract<T extends Contract = Contract>(
   ABI: any,
   withSignerIfPossible = true
 ): T | null {
-  const {provider, account, chainId} = useWeb3React()
+  // const {provider, account, chainId} = useWeb3React()
+  const { accounts, chainId, provider} = useWalletTools()
+  let account = accounts && accounts[0]
   return useMemo(() => {
     if (!address || !ABI || !provider || !chainId) return null
     try {

@@ -27,6 +27,7 @@ export const MessageBoxStyle = styled.div`
 
     width: 100%;
     display: flex;
+    
     justify-content: center;
     align-items: center;
     height: 75px;
@@ -44,6 +45,8 @@ export const MessageBoxStyle = styled.div`
         transform: none;
     }
     .title{
+        flex-direction: column;
+        gap: 5px;
         font-size: 16px;
         font-weight: 600;
         line-height: 130%;

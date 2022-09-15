@@ -50,7 +50,7 @@ export default function ApisecretModal(props: IOpenModal & AA) {
           color="#ffffff"
           textAlign={'center'}
           marginBottom={'16px'}
-
+          fontFamily={'RomicStd'}
         >
           {`Node${props.name} Apisecret`}
         </Typography>

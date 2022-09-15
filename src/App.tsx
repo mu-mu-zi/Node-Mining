@@ -15,7 +15,7 @@ import PubSub from "pubsub-js";
 import useWalletTools from 'hooks/useWalletTools';
 import { awaitWrap, Notice } from 'utils/tools';
 import { useGenerateNonce } from "hooks/useGenerateNonce";
-import { useWeb3React } from '@web3-react/core';
+// import { useWeb3React } from '@web3-react/core';
 import { MsgStatus } from './components/messageBox/MessageBox';
 const Medium = styled.div`
   flex: 1;
@@ -25,8 +25,9 @@ const Medium = styled.div`
 
 function App() {
   const { store, userDispatch } = useRedux()
-  const {activate, accounts, chainId} = useWalletTools();
-  const {account,provider} = useWeb3React()
+  const { activate, accounts, chainId, provider } = useWalletTools();
+  // const {account,provider} = useWeb3React()
+  
   const { getGenerateNonce } = useGenerateNonce()
   const [coins, setCoins] = useState<CoinList[]>()
 
@@ -34,7 +35,7 @@ function App() {
     AOS.init();
     if(!store.token) return
     getCoinList()
-  }, [account]);
+  }, [accounts]);
   useEffect(() => {
     const namespace = PubSub.subscribe(user_logout, () => {
       userDispatch.logout()
@@ -69,16 +70,16 @@ function App() {
     if (accounts && store.address && accounts[0].toLowerCase() !== store.address.toLowerCase()) {
       
       console.log('aaaa',accounts,store.address)
-      console.log('aaaa',account)
+
       toggleAccount(accounts[0], provider);
     }
-  }, [accounts, store.address, provider, account]);
+  }, [accounts, store.address, provider]);
 
   useEffect(() => {
     console.log(chainId)
     if(!chainId) return
     if(chainId !== 97) {
-      Notice('You are connected to an unsupported network, please switch to the main BSC network.', MsgStatus.warn)
+      Notice('You are connected to an unsupported network, please switch to the main BSC network.', MsgStatus.fail)
     }
   },[chainId])
 

@@ -22,6 +22,7 @@ import { useAsync } from 'react-use';
 import { BigNumber } from 'ethers';
 import useTheme from '../../hooks/useTheme';
 import { ContractAddresses } from 'utils/ContractAddresses';
+import useWalletTools from 'hooks/useWalletTools';
 
 const Warpper = styled.div`
   position: relative;
@@ -79,7 +80,8 @@ const SeMiTabs = styled(Tabs)`
 
 export default function Admin() {
   const { t } = useTranslation()
-  const { account, provider } = useWeb3React()
+  // const { account, provider } = useWeb3React()
+  const { accounts, provider } = useWalletTools()
   const navigate = useNavigate()
   const TgeMarket = useTgeMarket()
   const [reload, setReload] = useState<boolean>()
@@ -93,7 +95,8 @@ export default function Admin() {
   })
 
   useAsync(async () => {
-    if (!TgeMarket || !account) return
+    if (!TgeMarket || !accounts) return
+    let account = accounts[0]
     try {
       let result = await TgeMarket.getTokensOf(`${ContractAddresses.TgeMarket}`)
       let arr: any = []
@@ -118,16 +121,18 @@ export default function Admin() {
     } catch (e) {
       console.log(e)
     }
-  }, [account,reload])
+  }, [accounts,reload])
 
   useEffect(() => {
+    let account = accounts && accounts[0]
     if (adminAddress.toLowerCase() !== account?.toLowerCase()) {
       navigate('/')
     }
-  }, [account])
+  }, [accounts])
 
   const FnCast = async () => {
-    if (!TgeMarket || !account) return
+    if (!TgeMarket || !accounts) return
+    let account = accounts[0]
     try {
       let tx = await TgeMarket.adminMint(state.amount)
       Notice('Waiting for Cast...', MsgStatus.loading)
@@ -144,7 +149,8 @@ export default function Admin() {
   }
 
   const FnTransfer = async () => {
-    if (!TgeMarket || !account || !state.selectValue.value) return
+    if (!TgeMarket || !accounts || !state.selectValue.value) return
+    let account = accounts[0]
     try {
       console.log(state.selectValue.value,state.address)
       let tx = await TgeMarket.adminTransfer(state.selectValue.value, state.address, _group)
@@ -288,7 +294,7 @@ export default function Admin() {
                     menuStyle={{
                       width: '100%',
                       paddingTop: '0',
-                      height: theme.isH5 ? '100px' : '1.38rem',
+                      height: theme.isH5 ? '100px' : '3.7rem',
                       overflow: 'overlay',
                     }}
                     onChange={(selectd:any) => {

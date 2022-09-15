@@ -557,6 +557,7 @@ export default function Metaverse() {
                     fontWeight="350"
                     color="#ffffff"
                     textAlign={'center'}
+                    fontStyle={'italic'}
                   >
                     {item.text}
                   </Typography>

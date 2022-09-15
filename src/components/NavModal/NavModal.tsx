@@ -12,6 +12,8 @@ import styled from "styled-components";
 import JumpBtn from "components/Button/BackBtn";
 import { adminAddress } from 'utils/global';
 import { useWeb3React } from "@web3-react/core";
+import useWalletTools from '../../hooks/useWalletTools';
+import useRedux from "hooks/useRedux";
 interface AA {
 
 }
@@ -51,14 +53,33 @@ export default function NavModal(props: IOpenModal & AA) {
   const { openModal } = useContext(ModalContext);
   const [showAdmin, setShowAdmin] = useState<boolean>(false)
   const { theme } = useTheme()
-  const { account } = useWeb3React()
+  const { store, userDispatch } = useRedux()
+  const [showLogout, setShowLogout] = useState<boolean>(false)
+  // const { account } = useWeb3React()
+  const { accounts, deactivate } = useWalletTools()
   useEffect(() => {
+    let account = accounts && accounts[0]
     if(adminAddress.toLowerCase() === account?.toLowerCase()) {
       setShowAdmin(true)
     } else {
       setShowAdmin(false)
     }
-  },[account])
+  },[accounts])
+
+  useEffect(() => {
+    if (store.address) {
+      setShowLogout(true)
+    } else {
+      setShowLogout(false)
+    }
+  }, [store.address])
+
+  const FnLogout = () => {
+    userDispatch.logout()
+    deactivate()
+    setShowLogout(false)
+    props.destoryComponent()
+  }
   return (
     <Modal
       onClose={() => props.destoryComponent()}
@@ -112,11 +133,15 @@ export default function NavModal(props: IOpenModal & AA) {
 
       <ConnectWallet
         onClick={() => {
-          openModal(ConnectModal);
-          props.destoryComponent()
+          if(!showLogout) {
+            openModal(ConnectModal);
+            props.destoryComponent()
+          } else {
+            FnLogout()
+          }
         }}
       >
-        {t(`Connect Wallet`)}
+          {t(`${showLogout ? 'LOG OUT' : 'Connect Wallet'}`)}
       </ConnectWallet>
 
       </HeaderLinks>

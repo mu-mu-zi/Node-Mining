@@ -1,6 +1,7 @@
 import {initializeConnector, Web3ReactHooks, Web3ReactProvider} from "@web3-react/core";
 import {MetaMask} from "@web3-react/metamask";
 import {WalletConnect} from "@web3-react/walletconnect";
+// import { BitKeep } from '@web3-react/bitkeep'
 // import {nodeUrl, simpleRpcProvider} from "../utils/rpcUrl";
 // import {CoinbaseWallet} from "@web3-react/coinbase-wallet";
 import NpicsLogo from "../assets/images/home/login.svg"
@@ -9,10 +10,18 @@ import {ReactNode, useMemo} from "react";
 import {Network} from "@web3-react/network";
 import {Connector} from "@web3-react/types";
 import { nodeUrl } from "utils/global";
+import { BitKeep } from 'web3-bitkeep'
+
+
+// import { BitKeepWalletAdapter } from "@solana/wallet-adapter-bitkeep"
+
 function onError(error: Error) {
   console.log('asdasdasdsad')
   console.debug(`web-react error => ${error}`)
 }
+// BitKeep
+// @ts-ignore
+export const [bitKeep, bitKeepHooks] = initializeConnector<BitKeep>((actions) => new BitKeep({ actions }))
 
 // MetaMask
 export const [injected, injectedHooks] = initializeConnector<MetaMask>((actions: any) => new MetaMask({actions, onError}))

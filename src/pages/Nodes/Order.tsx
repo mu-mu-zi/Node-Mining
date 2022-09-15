@@ -14,6 +14,7 @@ import { CloseMessageBox, MsgStatus } from 'components/messageBox/MessageBox';
 import { formatAddress, Notice } from 'utils/tools';
 import useTheme from '../../hooks/useTheme';
 import Normal from '../../components/Button/Normal';
+import useWalletTools from 'hooks/useWalletTools';
 interface Iprops {
   setStep: React.Dispatch<React.SetStateAction<number>>
   state: {
@@ -30,11 +31,13 @@ export default function Order(props: Iprops) {
   const { theme } = useTheme()
   const TgeMarket = useTgeMarket()
   const Usdt = useUsdt()
-  const { account } = useWeb3React()
+  // const { account } = useWeb3React()
+  const { accounts } = useWalletTools()
   const purchase = async () => {
     try {
 
-      if (!TgeMarket || !Usdt || !account) return
+      if (!TgeMarket || !Usdt || !accounts) return
+      let account = accounts[0]
       let tx: any
       let isApprove = await Usdt.allowance(account, ContractAddresses.TgeMarket)
       // console.log(isApprove.toString())

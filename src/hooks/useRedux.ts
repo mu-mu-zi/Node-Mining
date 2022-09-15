@@ -32,7 +32,7 @@ export default function useRedux() {
           this.setToken(null);
           this.setAddress("");
           // this.clearUserInfo();
-          // sessionStorage.removeItem('wallet_name');
+          sessionStorage.removeItem('wallet_name');
           sessionStorage.removeItem('token');
           resolve(true)
         })

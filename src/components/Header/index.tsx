@@ -13,6 +13,7 @@ import { formatAddress } from 'utils/tools';
 import { Popover } from '@douyinfe/semi-ui';
 import { useWeb3React } from '@web3-react/core';
 import { adminAddress } from 'utils/global';
+import useWalletTools from 'hooks/useWalletTools';
 
 
 export default function Header() {
@@ -23,7 +24,8 @@ export default function Header() {
   const [showLogout, setShowLogout] = useState<boolean>(false)
   const [showAdmin, setShowAdmin] = useState<boolean>(false)
   const customRef = useRef<HTMLDivElement | null>(null);
-  const { account } = useWeb3React()
+  // const { account } = useWeb3React()
+  const { activate, deactivate, accounts, chainId, provider} = useWalletTools()
   // const scrollY = useScrollPosition()
   const [width, setWidth] = useState(0);
 
@@ -33,12 +35,14 @@ export default function Header() {
   }, [displayBtnStr]);
 
   useEffect(() => {
+    if(!accounts) return
+    let account = accounts[0]
     if(adminAddress.toLowerCase() === account?.toLowerCase()) {
       setShowAdmin(true)
     } else {
       setShowAdmin(false)
     }
-  },[account])
+  },[accounts])
 
   useEffect(() => {
     if (store.address) {
@@ -58,6 +62,7 @@ export default function Header() {
 
   const FnLogout = () => {
     userDispatch.logout()
+    deactivate()
     setShowLogout(false)
   }
 

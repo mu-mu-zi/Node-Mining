@@ -22,6 +22,7 @@ import CopyTypography from 'components/CopyTypography';
 import { Popover } from '@douyinfe/semi-ui';
 import useTheme from '../../hooks/useTheme';
 import Flex from 'components/BaseElement/Flex';
+import useWalletTools from 'hooks/useWalletTools';
 
 const _Th = styled(Th)`
   padding: .08rem 0;
@@ -42,6 +43,7 @@ export default function Invite() {
   const [type, setType] = useState<Number>(1)
   const [reload, setReload] = useState<Boolean>(false)
   const { account } = useWeb3React()
+  const { accounts } = useWalletTools()
   const {theme} = useTheme()
   const state = useEffectState({
     invitationsTotal: 0 as number,
@@ -51,7 +53,8 @@ export default function Invite() {
     totalBonus: {} as PushRewardInfo
   })
   useAsync(async () => {
-    if (!TgeMarket || !account) return
+    if (!TgeMarket || !accounts) return
+    let account = accounts[0]
     try {
       if(adminAddress.toLowerCase() === account?.toLowerCase()) {
         setIsAllow(true)
@@ -66,9 +69,10 @@ export default function Invite() {
     } catch (e) {
       setIsAllow(false)
     }
-  }, [account,TgeMarket])
+  }, [accounts,TgeMarket])
   useAsync(async () => {
-    if (!TgeMarket || !account) return
+    if (!TgeMarket || !accounts) return
+    let account = accounts[0]
     try {
       let result = await TgeMarket.getMyInviteCount(account)
       console.log(result)
@@ -76,10 +80,10 @@ export default function Invite() {
     } catch (e) {
 
     }
-  }, [account, reload])
+  }, [accounts, reload])
   // inviteUser
   const inviteSubmit = async () => {
-    if (!TgeMarket || !account) return
+    if (!TgeMarket || !accounts) return
     try{
       if (isAddress(state.friendWalletAddr)) {
         let tx = await TgeMarket.inviteUser(state.friendWalletAddr)
@@ -116,7 +120,8 @@ export default function Invite() {
 
   // Invitation Record
   useAsync(async () => {
-    if (!TgeMarket || !account || !state.invitationsTotal) return
+    if (!TgeMarket || !accounts || !state.invitationsTotal) return
+    let account = accounts[0]
     let array: Array<string> = []
     for (let i = 1; i <= state.invitationsTotal; i++) {
       let result = await TgeMarket.getMyInviteUser(account, i)
@@ -125,7 +130,7 @@ export default function Invite() {
     console.log(array)
     state.invitationRecord = array
 
-  }, [account, state.invitationsTotal, reload])
+  }, [accounts, state.invitationsTotal, reload])
 
 
   return (

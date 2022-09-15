@@ -162,6 +162,7 @@ export default function Index() {
                 fontSize={theme.isH5 ? "11px" : '22px'}
                 color='#ffffff'
                 textAlign={'center'}
+                fontStyle={"italic"}
               >
                 {t(`Each node will be able to vote on proposed changes to the Getaverse, and the node owners will also have greater voting power throughout the Getaverse.`)}
               </Typography>
@@ -187,6 +188,7 @@ export default function Index() {
                 fontSize={theme.isH5 ? "11px" : '22px'}
                 color='#ffffff'
                 textAlign={'center'}
+                fontStyle={"italic"}
               >
                 {t(`The node owners will also receive NFT drops and token rewards based on their reputation score as a node owner and general community member.`)}
               </Typography>

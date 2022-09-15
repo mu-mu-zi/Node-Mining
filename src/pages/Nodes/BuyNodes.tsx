@@ -21,22 +21,25 @@ import Normal from '../../components/Button/Normal';
 import OrderModal from 'components/OrderModal/OrderModal'
 import { ModalContext } from 'components/provider/ModalProvider'
 import useWidthChange from '../../hooks/useWidthChange';
+import useWalletTools from 'hooks/useWalletTools'
 
 export default function BuyNodes() {
   const { t } = useTranslation()
   const [step, setStep] = useState<number>(1)
   const { openModal } = useContext(ModalContext);
   const TgeMarket = useTgeMarket()
-  const { account } = useWeb3React()
+  // const { account } = useWeb3React()
   const { theme } = useTheme()
   const { isH5 } = useWidthChange()
+  const { accounts } = useWalletTools()
   const state = useEffectState({
     count: 1 as number,
     Invite: EmptyStr as string,
     price: new BigNumber(0)
   })
   useAsync(async () => {
-    if (!TgeMarket || !account) return
+    if (!TgeMarket || !accounts) return
+    let account = accounts[0]
     try {
       let result = await TgeMarket.getTotalCost(state.count)
       console.log('price1', result)
@@ -47,18 +50,12 @@ export default function BuyNodes() {
     }
 
 
-  }, [state.count, account, TgeMarket])
-  useEffect(() => {
-    if (step !== 2 || !isH5) return
-    openModal(OrderModal, {
-      setStep: setStep,
-      state: state
-    })
-
-  }, [step])
-
+  }, [state.count, accounts, TgeMarket])
+  
   useAsync(async () => {
-    if (!TgeMarket || !account) return
+    console.log('accounts', accounts[0])
+    if (!TgeMarket || !accounts) return
+    let account = accounts[0]
     try {
       state.Invite = await TgeMarket.getInviter(account)
       if (state.Invite === zeroAddress) {
@@ -68,7 +65,17 @@ export default function BuyNodes() {
       console.error(e)
     }
 
-  }, [account, TgeMarket])
+  }, [accounts, TgeMarket])
+
+  useEffect(() => {
+    if (step !== 2 || !isH5) return
+    openModal(OrderModal, {
+      setStep: setStep,
+      state: state
+    })
+
+  }, [step])
+
 
   const StepNext = () => {
     if (state.Invite === zeroAddress || !state.Invite || state.Invite === EmptyStr) {
@@ -102,7 +109,7 @@ export default function BuyNodes() {
                 width={'100%'}
               >
                 <Typography
-                  fontSize={'.32rem'}
+                  fontSize={theme.isH5 ? "18px" : '.32rem'}
                   fontWeight={'700'}
                   color={'#fff'}
                 >
@@ -115,6 +122,7 @@ export default function BuyNodes() {
                   <Typography
                     fontSize={theme.isH5 ? "12px" : '.2rem'}
                     fontWeight={'350'}
+                    fontStyle={"italic"}
                     color={theme.isH5 ? "#6B6B6B" : '#fff'}
                   >
                     {t(`Run nodes and earn Getaverse tokens and NFT rewards, supported by the user's node community.`)}

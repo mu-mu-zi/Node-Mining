@@ -204,6 +204,7 @@ export default function Home() {
                 fontSize={theme.isH5 ? '16px' : '.28rem'}
                 fontWeight='400'
                 textAlign={'center'}
+                fontStyle={'italic'}
               // data-aos-anchor-placement="bottom-top"
               // data-aos="fade-up-right"
               >
@@ -230,6 +231,7 @@ export default function Home() {
                 fontSize={theme.isH5 ? '16px' : '.28rem'}
                 fontWeight='400'
                 textAlign={'center'}
+                fontStyle={'italic'}
               // data-aos="fade-up-left"
               // data-aos-anchor-placement="bottom-top"
               >
@@ -306,7 +308,7 @@ export default function Home() {
                     src={item.icon} alt=""
                   />
                   <Typography fontSize={theme.isH5 ? '18px' : ".28rem"} fontWeight={"bold"} margin={"24px 0 16px"} color="#F6B91B">{item.title}</Typography>
-                  <Typography fontSize={theme.isH5 ? '16px' : ".22rem"} color="#F5F5F5">{item.text}</Typography>
+                  <Typography fontStyle={'italic'} fontSize={theme.isH5 ? '16px' : ".22rem"} color="#F5F5F5">{item.text}</Typography>
                 </Card>
               )
             })
@@ -534,11 +536,13 @@ export default function Home() {
                     fontSize={'14px'}
                     fontWeight={'normal'}
                     color={'#ffffff'}
+                    fontStyle={'italic'}
                   >{t(`More than 5 years of crypto investment experience;`)}</Typography>
                   <Typography
                     fontSize={'14px'}
                     fontWeight={'normal'}
                     color={'#ffffff'}
+                    fontStyle={'italic'}
                   >{t(`Marketing & financial consulting services for more than 5 blockchain projects;`)}</Typography>
                 </Flex>
               </Grid>
@@ -574,11 +578,13 @@ export default function Home() {
                     fontSize={'14px'}
                     fontWeight={'normal'}
                     color={'#ffffff'}
+                    fontStyle={'italic'}
                   >{t(`More than 5 years of project management experience;`)}</Typography>
                   <Typography
                     fontSize={'14px'}
                     fontWeight={'normal'}
                     color={'#ffffff'}
+                    fontStyle={'italic'}
                   >{t(`Worked for blue chip companies and startups;`)}</Typography>
                 </Flex>
               </Flex>
@@ -610,11 +616,13 @@ export default function Home() {
                     fontSize={'14px'}
                     fontWeight={'normal'}
                     color={'#ffffff'}
+                    fontStyle={'italic'}
                   >{t(`More than 7 years of executive experience in IT strategy and cybersecurity;`)}</Typography>
                   <Typography
                     fontSize={'14px'}
                     fontWeight={'normal'}
                     color={'#ffffff'}
+                    fontStyle={'italic'}
                   >{t(`Previously CTO of a multinational enterprise software company.`)}</Typography>
                 </Flex>
               </Flex>

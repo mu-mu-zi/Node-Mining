@@ -1,6 +1,6 @@
 
 import {CSSProperties} from "react";
-import { injected ,injectedHooks } from "./hooks";
+import { injected ,injectedHooks, bitKeep, bitKeepHooks } from "./hooks";
 
 export type IWallet = {
     name: string
@@ -78,9 +78,9 @@ export const WALLETS: {[propsName: string]: IWallet} = {
       style: {width: "inherit"},
       download: "https://bitkeep.com/download?type=0&theme=light",
       keyword: "isBitKeep",
-      hooks: injectedHooks,
-      // connector: bscConnector
-      connector: injected,
+      hooks: bitKeepHooks,
+      // connector: BitKeepConnector
+      connector: bitKeep,
     }
 };
 
