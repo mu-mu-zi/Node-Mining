@@ -150,6 +150,7 @@ export default function Withdraw() {
             <Typography
               fontSize={theme.isH5 ? '12px' : ".2rem"}
               fontWeight={'350'}
+              fontStyle={'italic'}
             >{t(`Total Assets (${selectCoin?.text}) `)}</Typography>
             <Typography
               fontSize={theme.isH5 ? '20px' : ".2rem"}
@@ -160,6 +161,7 @@ export default function Withdraw() {
             <Typography
               fontSize={theme.isH5 ? '12px' : ".2rem"}
               fontWeight={'350'}
+              fontStyle={'italic'}
             >{t(`Available`)}</Typography>
             <Typography
               fontSize={theme.isH5 ? '20px' : ".2rem"}

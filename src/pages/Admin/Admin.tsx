@@ -279,6 +279,7 @@ export default function Admin() {
             <WithdrawInp
               disabled
               value={state.selectValue?.text}
+              inputClassName={'adminInput'}
               right={
                 <RowCenter
                   height={theme.isH5 ? '32px' : '.38rem'}

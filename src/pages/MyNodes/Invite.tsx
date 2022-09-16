@@ -23,6 +23,7 @@ import { Popover } from '@douyinfe/semi-ui';
 import useTheme from '../../hooks/useTheme';
 import Flex from 'components/BaseElement/Flex';
 import useWalletTools from 'hooks/useWalletTools';
+import useRedux from 'hooks/useRedux';
 
 const _Th = styled(Th)`
   padding: .08rem 0;
@@ -32,6 +33,24 @@ const _Td = styled(Td)`
   padding: .08rem 0;
   ${({theme}) => theme.mediaWidth.sm`
     padding: 8px 0;
+  `}
+`
+const _Tr = styled(Tr)`
+  display:table;
+  width:100%;
+  table-layout:fixed;
+`
+const _Tbody = styled.tbody`
+  display: block;
+  max-height: 4.6rem;
+  height: 100%;
+  overflow: scroll;
+  ::-webkit-scrollbar{
+    display: none;
+  }
+  ${({theme}) => theme.mediaWidth.sm`
+    max-height: 400px;
+    height: 100%;
   `}
 `
 
@@ -44,6 +63,7 @@ export default function Invite() {
   const [reload, setReload] = useState<Boolean>(false)
   const { account } = useWeb3React()
   const { accounts } = useWalletTools()
+  const { store } = useRedux()
   const {theme} = useTheme()
   const state = useEffectState({
     invitationsTotal: 0 as number,
@@ -108,7 +128,7 @@ export default function Invite() {
   useAsync(async () => {
     let result = await pushRewardInfo()
     state.totalBonus = result.data
-  }, [])
+  }, [store.token])
 
   // Direct Push Bonus
   useAsync(async () => {
@@ -312,7 +332,26 @@ export default function Invite() {
                   fontWeight={'700'}
                   color={theme.isH5 ? '#ffffff' : '#F6B91B'}
                 >
-                  {`${state.totalBonus.totalIncome ?? EmptyStr} GETA/${state.totalBonus.usdtTotalIncome ?? EmptyStr} USDT`}
+                  {state.totalBonus.totalIncome ?? EmptyStr}
+                  <Typography
+                    display={'inline-block'}
+                    fontSize={theme.isH5 ? '12px' : ".12rem"}
+                    fontWeight={'700'}
+                    color={theme.isH5 ? '#ffffff' : '#F6B91B'}
+                    marginLeft={'5px'}
+                  >
+                    {`GETA`}
+                  </Typography>
+                  /{state.totalBonus.usdtTotalIncome ?? EmptyStr}
+                  <Typography
+                    display={'inline-block'}
+                    fontSize={theme.isH5 ? '12px' : ".12rem"}
+                    fontWeight={'700'}
+                    color={theme.isH5 ? '#ffffff' : '#F6B91B'}
+                    marginLeft={'5px'}
+                  >
+                    {` USDT`}
+                  </Typography>
                 </Typography>
               </Column>
               <Column
@@ -322,7 +361,7 @@ export default function Invite() {
                 }}
               >
                 <Typography
-                  fontSize={theme.isH5 ? '12px' : ".2rem"}
+                  fontSize={theme.isH5 ? '12px' : ".12rem"}
                   fontWeight={'350'}
                   color={'#fff'}
                   whiteSpace={'nowrap'}
@@ -335,7 +374,26 @@ export default function Invite() {
                   fontWeight={'700'}
                   color={theme.isH5 ? '#ffffff' : '#F6B91B'}
                 >
-                  {`${state.totalBonus.todayIncome ?? EmptyStr} GETA/${state.totalBonus.usdtTodayIncome ?? EmptyStr} USDT`}
+                  {state.totalBonus.todayIncome ?? EmptyStr}
+                  <Typography
+                    display={'inline-block'}
+                    fontSize={theme.isH5 ? '12px' : ".12rem"}
+                    fontWeight={'700'}
+                    color={theme.isH5 ? '#ffffff' : '#F6B91B'}
+                    marginLeft={'5px'}
+                  >
+                    {` GETA`}
+                  </Typography>
+                  /{state.totalBonus.usdtTodayIncome ?? EmptyStr}
+                  <Typography
+                    display={'inline-block'}
+                    fontSize={theme.isH5 ? '12px' : ".12rem"}
+                    fontWeight={'700'}
+                    color={theme.isH5 ? '#ffffff' : '#F6B91B'}
+                    marginLeft={'5px'}
+                  >
+                    {` USDT`}
+                  </Typography>
                 </Typography>
               </Column>
             </RowStart>
@@ -422,8 +480,14 @@ export default function Invite() {
                   paddingLeft={'.24rem'}
                   marginTop={'.16rem'}
                 >
-                  <thead>
-                    <Tr
+                  <thead
+                    style={{
+                      display:'table',
+                      width:'100%',
+                      tableLayout:'fixed',
+                    }}
+                  >
+                    <_Tr
                       fontSize={theme.isH5 ? '12px' : '.2rem'}
                       fontWeight={'400'}
                       color={'#6B6B6B'}
@@ -431,12 +495,12 @@ export default function Invite() {
                       <_Th textAlign={'left'}>{t(`Number`)}</_Th>
                       <_Th textAlign={'right'}>{t(`User Info`)}</_Th>
                       {/* <_Th>{t(`Time`)}</_Th> */}
-                    </Tr>
+                    </_Tr>
                   </thead>
-                  <tbody>
+                  <_Tbody>
                     {
                       state.invitationRecord && state.invitationRecord.map((item, idx) => {
-                        return <Tr
+                        return <_Tr
                           fontSize={theme.isH5 ? '11px' : '.2rem'}
                           fontWeight={'350'}
                           color={'#ffffff'}
@@ -449,10 +513,10 @@ export default function Invite() {
                           <_Td display={'flex'} justifyContent={'end'} textAlign={'right'} >
                             <CopyTypography >{theme.isH5 ? formatAddress(item) : item}</CopyTypography>
                           </_Td>
-                        </Tr>
+                        </_Tr>
                       })
                     }
-                  </tbody>
+                  </_Tbody>
                 </Table> :
                 <Table
                   color={'#fff'}
@@ -460,8 +524,14 @@ export default function Invite() {
                   paddingLeft={'.24rem'}
                   marginTop={'.16rem'}
                 >
-                  <thead>
-                    <Tr
+                  <thead
+                    style={{
+                      display:'table',
+                      width:'100%',
+                      tableLayout:'fixed',
+                    }}
+                  >
+                    <_Tr
                       fontSize={theme.isH5 ? '12px' : '.2rem'}
                       fontWeight={'400'}
                       color={'#6B6B6B'}
@@ -469,31 +539,32 @@ export default function Invite() {
                       <_Th textAlign={'left'}>{t(`User Info`)}</_Th>
                       <_Th textAlign={theme.isH5 ? 'left' : 'center'} >{t(`Amount`)}</_Th>
                       <_Th textAlign={'right'}>{t(`Time`)}</_Th>
-                    </Tr>
+                    </_Tr>
                   </thead>
-                  <tbody>
-                    {
-                      state.directPushBonus && state.directPushBonus.map((item, idx: number) => {
-                        return <Tr
-                          fontSize={theme.isH5 ? '11px' : '.2rem'}
-                          fontWeight={'350'}
-                          color={'#ffffff'}
-                          key={idx}
-                          fontStyle={'italic'}
-                        >
-                          <_Td textAlign={'left'} width={'2.6rem'}>
-                            <CopyTypography>{theme.isH5 ? formatAddress(item.inviteesAddr) : item.inviteesAddr}</CopyTypography>
-                          </_Td>
-                          <_Td color={'#F6B91B'} textAlign={theme.isH5 ? 'left' : 'right'} width={'2.6rem'}>
-                            {t(`+${item.award} ${item.symbol}`)}
-                          </_Td>
-                          <_Td textAlign={'right'} width={'2.04rem'}>
-                            {t(`${TimestampTransform(item.createTime)}`)}
-                          </_Td>
-                        </Tr>
-                      })
-                    }
-                  </tbody>
+                    <_Tbody
+                    >
+                      {
+                        state.directPushBonus && state.directPushBonus.map((item, idx: number) => {
+                          return <_Tr
+                            fontSize={theme.isH5 ? '11px' : '.2rem'}
+                            fontWeight={'350'}
+                            color={'#ffffff'}
+                            key={idx}
+                            fontStyle={'italic'}
+                          >
+                            <_Td textAlign={'left'} width={'2.6rem'}>
+                              <CopyTypography>{theme.isH5 ? formatAddress(item.inviteesAddr) : item.inviteesAddr}</CopyTypography>
+                            </_Td>
+                            <_Td color={'#F6B91B'} textAlign={theme.isH5 ? 'left' : 'right'} width={'2.6rem'}>
+                              {t(`+${item.award} ${item.symbol}`)}
+                            </_Td>
+                            <_Td textAlign={'right'} width={'2.04rem'}>
+                              {t(`${TimestampTransform(item.createTime)}`)}
+                            </_Td>
+                          </_Tr>
+                        })
+                      }
+                  </_Tbody>
                 </Table>
             }
           </Box>

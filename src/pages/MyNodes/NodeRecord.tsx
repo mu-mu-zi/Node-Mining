@@ -82,7 +82,7 @@ export default function NodeRecord() {
         setReload(!reload)
         openModal(ApisecretModal,{
           apisecret: result.data.apiSecret,
-          name: activeNode.id,
+          name: activeNode.tokenId,
         })
       } else {
         Notice('Failed to sign', MsgStatus.fail)

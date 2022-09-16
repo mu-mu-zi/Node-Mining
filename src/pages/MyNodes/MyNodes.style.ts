@@ -327,6 +327,7 @@ export const WithdrawInp = styled(Input)`
   padding: 0 0 0 12px;
   box-sizing: border-box;
   height: .4rem;
+
   ${({theme}) => theme.mediaWidth.sm`
     height: 32px;
     width: 100%;
@@ -389,6 +390,9 @@ export const WithdrawInp = styled(Input)`
     ${({theme}) => theme.mediaWidth.sm`
       font-size: 12px;
     `}
+  }
+  .adminInput {
+    color: #ffffff;
   }
 `
 

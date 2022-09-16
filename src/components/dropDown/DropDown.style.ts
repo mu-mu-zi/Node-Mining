@@ -79,6 +79,16 @@ export const OptionContainer = styled.div`
         left: unset;
         transform: translate(0, 100%);
     }
+    &.menuName {
+        ul {
+            .active {
+                color: #F6B91B;
+            }
+            li {
+                text-align: left;
+            }
+        }
+    }
 `;
 export const Option = styled.ul<{optionBgColor?: string}>`
     list-style: none;

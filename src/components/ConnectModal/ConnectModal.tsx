@@ -32,7 +32,7 @@ export default function ConnectModal(props: IOpenModal) {
       console.log('accounts',accounts)
       activate()
     }
-  },[store])
+  },[store.walletInfo])
 
   useEffect(() => {
     console.log('accounts', accounts)

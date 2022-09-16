@@ -210,6 +210,9 @@ export default function MyNodes() {
             </Typography>
 
             <Normal
+              style={{
+                display: state.nodes.income ? "block" : "none"
+              }}
               onClick={() => navigate('/mynodes/noderevenue')}
             >
               CHECK
@@ -236,6 +239,9 @@ export default function MyNodes() {
             </Typography>
 
             <Normal
+              style={{
+                display: state.nodes.income ? "block" : "none"
+              }}
               onClick={() => navigate('/mynodes/noderecord')}
             >
               CHECK
@@ -389,8 +395,8 @@ export default function MyNodes() {
           >
             (Click 
             <a
-              download={'GetaverseUsesDocuments'}
-              href={require('assets/GetaverseUsesDocuments.pdf')}
+              download={'GetaverseMiningProgramUsesDocuments'}
+              href={require('assets/GetaverseMiningProgramUsesDocuments.pdf')}
               target="_blank"
               style={{
 

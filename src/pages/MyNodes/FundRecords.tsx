@@ -127,7 +127,7 @@ export default function FundRecords() {
                       {t(`withdrawing coins`)}
                     </_Td>
                     <_Td  textAlign={'center'} width={theme.isH5 ? '82px' : '2.6rem'}>
-                      {t(`${item.amount}`)}
+                      {t(`${'-' + item.amount + " " + item.coinName}`)}
                     </_Td>
                     <_Td  textAlign={'right'} width={theme.isH5 ? '101px' : '2.04rem'}>
                       {t(`${item.updateTime}`)}
