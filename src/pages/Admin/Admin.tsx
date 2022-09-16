@@ -118,8 +118,8 @@ export default function Admin() {
       state.selectOption = arr
       state.selectValue = obj
       console.log(state.selectOption)
-    } catch (e) {
-      console.log(e)
+    } catch (e: any) {
+      Notice(JSON.parse(JSON.stringify(e.reason)), MsgStatus.fail)
     }
   }, [accounts,reload])
 
@@ -296,6 +296,7 @@ export default function Admin() {
                       paddingTop: '0',
                       height: theme.isH5 ? '100px' : '3.7rem',
                       overflow: 'overlay',
+                      top: theme.isH5 ? '-65px' : '-3.2rem'
                     }}
                     onChange={(selectd:any) => {
                       state.selectValue = selectd

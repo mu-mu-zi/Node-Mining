@@ -32,6 +32,7 @@ export default function BuyNodes() {
   const { theme } = useTheme()
   const { isH5 } = useWidthChange()
   const { accounts } = useWalletTools()
+  const { account } = useWeb3React()
   const state = useEffectState({
     count: 1 as number,
     Invite: EmptyStr as string,
@@ -42,15 +43,14 @@ export default function BuyNodes() {
     let account = accounts[0]
     try {
       let result = await TgeMarket.getTotalCost(state.count)
-      console.log('price1', result)
+      console.log(result.toString())
       state.price = new BigNumber(result.toString())
-      console.log('price2', state.price)
-    } catch (e) {
-      console.error(e)
+    } catch (e: any) {
+      Notice(JSON.parse(JSON.stringify(e.reason)), MsgStatus.fail)
     }
 
 
-  }, [state.count, accounts, TgeMarket])
+  }, [state.count, accounts, TgeMarket, account])
   
   useAsync(async () => {
     console.log('accounts', accounts[0])
@@ -61,11 +61,11 @@ export default function BuyNodes() {
       if (state.Invite === zeroAddress) {
         state.Invite = EmptyStr
       }
-    } catch (e) {
-      console.error(e)
+    } catch (e: any) {
+      Notice(JSON.parse(JSON.stringify(e.reason)), MsgStatus.fail)
     }
 
-  }, [accounts, TgeMarket])
+  }, [accounts, TgeMarket, account])
 
   useEffect(() => {
     if (step !== 2 || !isH5) return

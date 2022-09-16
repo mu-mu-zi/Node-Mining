@@ -66,8 +66,9 @@ export default function Invite() {
       } else {
         setIsAllow(false)
       }
-    } catch (e) {
+    } catch (e: any) {
       setIsAllow(false)
+      Notice(JSON.parse(JSON.stringify(e.reason)), MsgStatus.fail)
     }
   }, [accounts,TgeMarket])
   useAsync(async () => {
@@ -77,8 +78,8 @@ export default function Invite() {
       let result = await TgeMarket.getMyInviteCount(account)
       console.log(result)
       state.invitationsTotal = result.toNumber()
-    } catch (e) {
-
+    } catch (e: any) {
+      Notice(JSON.parse(JSON.stringify(e.reason)), MsgStatus.fail)
     }
   }, [accounts, reload])
   // inviteUser
@@ -375,7 +376,7 @@ export default function Invite() {
 
               <InviteInput
                 placeholder={`Enter your friend's wallet address`}
-                right={<Invitation className='submit' onClick={inviteSubmit}>Invitation</Invitation>}
+                right={<Invitation className='submit' onClick={inviteSubmit}>INVITATION</Invitation>}
                 value={state.friendWalletAddr}
                 onChange={(value) => {
                   state.friendWalletAddr = value

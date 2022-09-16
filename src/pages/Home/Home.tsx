@@ -357,7 +357,7 @@ export default function Home() {
               maxWidth={theme.isH5 ? '100%' : '10.02rem'}
 
               paddingBottom={theme.isH5 ? '50px' : '0'}
-              borderBottom={theme.isH5 ? '5px dashed #00E88A' : 'none'}
+              borderBottom={theme.isH5 ? '2px dashed #00E88A' : 'none'}
             // data-aos="fade-up"
             // data-aos-anchor-placement="bottom-top"
             >

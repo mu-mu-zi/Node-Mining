@@ -245,7 +245,7 @@ const { theme } = useTheme()
                       <_Td  textAlign={'center'} width={'2.6rem'} color={'#F6B91B'}>
                         {t(`+${item.amount} ${item.symbol}`)}
                       </_Td>
-                      <_Td  textAlign={'center'} width={'2.04rem'}>
+                      <_Td  textAlign={'right'} width={'2.04rem'}>
                         {t(`${TimestampTransform(item.createTime)}`)}
                       </_Td>
                     </Tr>

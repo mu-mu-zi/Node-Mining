@@ -241,6 +241,9 @@ export default function Withdraw() {
         </Row>
 
         <Typography
+          boxSizing={'border-box'}
+          paddingLeft={theme.isH5 ? '75px' : '0'}
+          width={theme.isH5 ? '100%' : 'initial'}
           fontSize={theme.isH5 ? '12px' : '.2rem'}
           fontWeight={'400'}
           color={'#6B6B6B'}  

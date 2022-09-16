@@ -52,26 +52,26 @@ export const WALLETS: {[propsName: string]: IWallet} = {
       // connector: metaMask
       connector: injected,
     },
-    ImToken: {
-      name: 'ImToken',
-      icon: require("assets/images/icon_imtoken.png"),
-      style: {width: "inherit"},
-      download: "https://token.im/",
-      keyword: "isImToken",
-      hooks: injectedHooks,
-      // connector: metaMask
-      connector: injected,
-    },
-    MathWallet: {
-      name: 'MathWallet',
-      icon: require("assets/images/icon_mathwallet.png"),
-      style: {width: "inherit"},
-      download: "https://mathwallet.org/",
-      keyword: "isMathWallet",
-      hooks: injectedHooks,
-      // connector: metaMask
-      connector: injected,
-    },
+    // ImToken: {
+    //   name: 'ImToken',
+    //   icon: require("assets/images/icon_imtoken.png"),
+    //   style: {width: "inherit"},
+    //   download: "https://token.im/",
+    //   keyword: "isImToken",
+    //   hooks: injectedHooks,
+    //   // connector: metaMask
+    //   connector: injected,
+    // },
+    // MathWallet: {
+    //   name: 'MathWallet',
+    //   icon: require("assets/images/icon_mathwallet.png"),
+    //   style: {width: "inherit"},
+    //   download: "https://mathwallet.org/",
+    //   keyword: "isMathWallet",
+    //   hooks: injectedHooks,
+    //   // connector: metaMask
+    //   connector: injected,
+    // },
     BitKeepWallet: {
       name: 'BitKeepWallet',
       icon: require("assets/images/icon_bitkeepwallet.png"),

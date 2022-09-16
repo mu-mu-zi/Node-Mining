@@ -17,6 +17,7 @@ import { awaitWrap, Notice } from 'utils/tools';
 import { useGenerateNonce } from "hooks/useGenerateNonce";
 // import { useWeb3React } from '@web3-react/core';
 import { MsgStatus } from './components/messageBox/MessageBox';
+import { CHAINS } from 'connectwallet/config';
 const Medium = styled.div`
   flex: 1;
   width: 100%;
@@ -78,7 +79,7 @@ function App() {
   useEffect(() => {
     console.log(chainId)
     if(!chainId) return
-    if(chainId !== 97) {
+    if(chainId !== CHAINS.BSC.chainId) {
       Notice('You are connected to an unsupported network, please switch to the main BSC network.', MsgStatus.fail)
     }
   },[chainId])

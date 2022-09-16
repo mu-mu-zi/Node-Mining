@@ -276,8 +276,10 @@ export const EmailIpt = styled(Input)`
   height: .81rem;
   ${({theme}) => theme.mediaWidth.sm`
     height: 42px;
-    max-width: initial;
-    border: 1px solid #6B6B6B;
+    max-width: 200px;
+    border: 1px solid #00E88A;
+    color: #00E88A;
+    
   `}
   &:hover {
     border: 2px solid #00E88A;
@@ -321,11 +323,15 @@ export const EmailIpt = styled(Input)`
     border: none;
     outline: unset;
     padding-left: 16px;
-    ${({theme}) => theme.mediaWidth.sm`
+    ${({ theme }) => theme.mediaWidth.sm`
       font-size: 11px;
+      color: #00E88A;
     `}
     ::placeholder {
       color: #6B6B6B;
+    ${({ theme }) => theme.mediaWidth.sm`
+      color: #00E88A;
+    `}
     }
     &:hover {
       color: #00E88A;
