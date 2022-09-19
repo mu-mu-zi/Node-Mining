@@ -28,8 +28,6 @@ export default function ConnectModal(props: IOpenModal) {
 
   useEffect(() => {
     if(sessionStorage.getItem("wallet_name")) {
-      console.log('123124ashfgdasjugfrasjh')
-      console.log('accounts',accounts)
       activate()
     }
   },[store.walletInfo])
@@ -58,16 +56,14 @@ export default function ConnectModal(props: IOpenModal) {
   },[accounts, chainId, store.token, ])
 
   const connect = async (item:IWallet) => {
-    console.log('connect',item)
-    console.log('provider',provider)
-    console.log('111')
+
     userDispatch.setWalletInfo(item)
     // await item.connector.activate(CHAIN_ID)
     // props.destoryComponent()
   }
 
   const sign = async (address:string) => {
-    console.log('444')
+
     let [signData, error] = await awaitWrap(getGenerateNonce(address, provider));
     if(signData) {
       login(address, signData.signatrue)

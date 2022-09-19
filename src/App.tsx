@@ -70,14 +70,11 @@ function App() {
 
     if (accounts && store.address && accounts[0].toLowerCase() !== store.address.toLowerCase()) {
       
-      console.log('aaaa',accounts,store.address)
-
       toggleAccount(accounts[0], provider);
     }
   }, [accounts, store.address, provider]);
 
   useEffect(() => {
-    console.log(chainId)
     if(!chainId) return
     if(chainId !== CHAINS.BSC.chainId) {
       Notice('You are connected to an unsupported network, please switch to the main BSC network.', MsgStatus.fail)
@@ -86,12 +83,10 @@ function App() {
 
   async function toggleAccount(address: string, provider: any) {
     let result = await userDispatch.logout()
-    console.log(result)
+
     if(result) {
       let [signData, error] = await awaitWrap(getGenerateNonce(address, provider));
-      console.log(signData)
       if (signData) {
-        console.log(signData)
         let signature = signData.signatrue
         loginApi({ address, signature }).then((res) => {
           userDispatch.setToken(res.data.token)

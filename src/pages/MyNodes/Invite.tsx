@@ -24,6 +24,7 @@ import useTheme from '../../hooks/useTheme';
 import Flex from 'components/BaseElement/Flex';
 import useWalletTools from 'hooks/useWalletTools';
 import useRedux from 'hooks/useRedux';
+import { ScrollBox } from './NodeRevenue';
 
 const _Th = styled(Th)`
   padding: .08rem 0;
@@ -33,24 +34,6 @@ const _Td = styled(Td)`
   padding: .08rem 0;
   ${({theme}) => theme.mediaWidth.sm`
     padding: 8px 0;
-  `}
-`
-const _Tr = styled(Tr)`
-  display:table;
-  width:100%;
-  table-layout:fixed;
-`
-const _Tbody = styled.tbody`
-  display: block;
-  max-height: 4.6rem;
-  height: 100%;
-  overflow: scroll;
-  ::-webkit-scrollbar{
-    display: none;
-  }
-  ${({theme}) => theme.mediaWidth.sm`
-    max-height: 400px;
-    height: 100%;
   `}
 `
 
@@ -474,20 +457,15 @@ export default function Invite() {
             {
 
               type === 1 ?
+              <ScrollBox>
                 <Table
                   color={'#fff'}
                   width={'100%'}
                   paddingLeft={'.24rem'}
                   marginTop={'.16rem'}
                 >
-                  <thead
-                    style={{
-                      display:'table',
-                      width:'100%',
-                      tableLayout:'fixed',
-                    }}
-                  >
-                    <_Tr
+                  <thead>
+                    <Tr
                       fontSize={theme.isH5 ? '12px' : '.2rem'}
                       fontWeight={'400'}
                       color={'#6B6B6B'}
@@ -495,12 +473,12 @@ export default function Invite() {
                       <_Th textAlign={'left'}>{t(`Number`)}</_Th>
                       <_Th textAlign={'right'}>{t(`User Info`)}</_Th>
                       {/* <_Th>{t(`Time`)}</_Th> */}
-                    </_Tr>
+                    </Tr>
                   </thead>
-                  <_Tbody>
+                  <tbody>
                     {
                       state.invitationRecord && state.invitationRecord.map((item, idx) => {
-                        return <_Tr
+                        return <Tr
                           fontSize={theme.isH5 ? '11px' : '.2rem'}
                           fontWeight={'350'}
                           color={'#ffffff'}
@@ -513,59 +491,56 @@ export default function Invite() {
                           <_Td display={'flex'} justifyContent={'end'} textAlign={'right'} >
                             <CopyTypography >{theme.isH5 ? formatAddress(item) : item}</CopyTypography>
                           </_Td>
-                        </_Tr>
+                        </Tr>
                       })
                     }
-                  </_Tbody>
-                </Table> :
-                <Table
-                  color={'#fff'}
-                  width={'100%'}
-                  paddingLeft={'.24rem'}
-                  marginTop={'.16rem'}
-                >
-                  <thead
-                    style={{
-                      display:'table',
-                      width:'100%',
-                      tableLayout:'fixed',
-                    }}
-                  >
-                    <_Tr
-                      fontSize={theme.isH5 ? '12px' : '.2rem'}
-                      fontWeight={'400'}
-                      color={'#6B6B6B'}
-                    >
-                      <_Th textAlign={'left'}>{t(`User Info`)}</_Th>
-                      <_Th textAlign={theme.isH5 ? 'left' : 'center'} >{t(`Amount`)}</_Th>
-                      <_Th textAlign={'right'}>{t(`Time`)}</_Th>
-                    </_Tr>
-                  </thead>
-                    <_Tbody
-                    >
-                      {
-                        state.directPushBonus && state.directPushBonus.map((item, idx: number) => {
-                          return <_Tr
-                            fontSize={theme.isH5 ? '11px' : '.2rem'}
-                            fontWeight={'350'}
-                            color={'#ffffff'}
-                            key={idx}
-                            fontStyle={'italic'}
-                          >
-                            <_Td textAlign={'left'} width={'2.6rem'}>
-                              <CopyTypography>{theme.isH5 ? formatAddress(item.inviteesAddr) : item.inviteesAddr}</CopyTypography>
-                            </_Td>
-                            <_Td color={'#F6B91B'} textAlign={theme.isH5 ? 'left' : 'right'} width={'2.6rem'}>
-                              {t(`+${item.award} ${item.symbol}`)}
-                            </_Td>
-                            <_Td textAlign={'right'} width={'2.04rem'}>
-                              {t(`${TimestampTransform(item.createTime)}`)}
-                            </_Td>
-                          </_Tr>
-                        })
-                      }
-                  </_Tbody>
+                  </tbody>
                 </Table>
+              </ScrollBox> :
+                <ScrollBox>
+                  <Table
+                    color={'#fff'}
+                    width={'100%'}
+                    paddingLeft={'.24rem'}
+                    marginTop={'.16rem'}
+                  >
+                    <thead>
+                      <Tr
+                        fontSize={theme.isH5 ? '12px' : '.2rem'}
+                        fontWeight={'400'}
+                        color={'#6B6B6B'}
+                      >
+                        <_Th textAlign={'left'}>{t(`User Info`)}</_Th>
+                        <_Th textAlign={theme.isH5 ? 'left' : 'right'} >{t(`Amount`)}</_Th>
+                        <_Th textAlign={'right'}>{t(`Time`)}</_Th>
+                      </Tr>
+                    </thead>
+                      <tbody
+                      >
+                        {
+                          state.directPushBonus && state.directPushBonus.map((item, idx: number) => {
+                            return <Tr
+                              fontSize={theme.isH5 ? '11px' : '.2rem'}
+                              fontWeight={'350'}
+                              color={'#ffffff'}
+                              key={idx}
+                              fontStyle={'italic'}
+                            >
+                              <_Td textAlign={'left'} width={'2.6rem'}>
+                                <CopyTypography>{theme.isH5 ? formatAddress(item.inviteesAddr) : item.inviteesAddr}</CopyTypography>
+                              </_Td>
+                              <_Td color={'#F6B91B'} textAlign={theme.isH5 ? 'left' : 'right'} width={'2.6rem'}>
+                                {t(`+${item.award} ${item.symbol}`)}
+                              </_Td>
+                              <_Td textAlign={'right'} width={'2.04rem'}>
+                                {t(`${TimestampTransform(item.createTime)}`)}
+                              </_Td>
+                            </Tr>
+                          })
+                        }
+                    </tbody>
+                  </Table>
+                </ScrollBox>
             }
           </Box>
         </>

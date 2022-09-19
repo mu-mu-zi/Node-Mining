@@ -23,6 +23,26 @@ const _Td = styled(Td)`
   padding: .08rem 0;
 `
 
+export const ScrollBox = styled(Box)`
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    max-height: 5rem;
+    height: 100%;
+    position: relative;
+    ::-webkit-scrollbar{
+      display: none;
+    }
+    thead {
+      position: sticky;
+      top: 0;
+      background: #000;
+    }
+    ${({theme}) => theme.mediaWidth.sm`
+      max-height: 370px;
+    `}
+`
+
 export default function NodeRevenue() {
   const {t} = useTranslation()
   const state = useEffectState({
@@ -212,87 +232,93 @@ const { theme } = useTheme()
         {
 
           type === 1 ? 
-          <Table
-              color={'#fff'}
-              width={'100%'}
-              paddingLeft={'.24rem'}
-              marginTop={'.16rem'}
-            >
-              <thead>
-                <Tr
-                  fontSize={'.2rem'}
-                  fontWeight={'400'}
-                  color={'#6B6B6B'}
-                >
-                  <_Th textAlign={'left'}>{t(`Type`)}</_Th>
-                  <_Th>{t(`Amount`)}</_Th>
-                  <_Th>{t(`Time`)}</_Th>
-                </Tr>
-              </thead>
-              <tbody>
-                {
-                  state.incomeRecords && state.incomeRecords.map((item,idx) => {
-                    return <Tr  
-                      fontSize={'.2rem'}
-                      fontWeight={'350'}
-                      fontStyle={'italic'}
-                      color={'#ffffff'}
-                      key={idx}
-                    >
-                      <_Td  textAlign={'left'} width={'2.6rem'}>
-                        {t(`Cents earnings`)}
-                      </_Td>
-                      <_Td  textAlign={'center'} width={'2.6rem'} color={'#F6B91B'}>
-                        {t(`+${item.amount} ${item.symbol}`)}
-                      </_Td>
-                      <_Td  textAlign={'right'} width={'2.04rem'}>
-                        {t(`${TimestampTransform(item.createTime)}`)}
-                      </_Td>
-                    </Tr>
-                  })
-                }
-              </tbody>
-          </Table> : 
-          <Table
-              color={'#fff'}
-              width={'100%'}
-              paddingLeft={'.24rem'}
-              marginTop={'.16rem'}
-            >
-              <thead>
-                <Tr
-                  fontSize={theme.isH5 ? '12px' : '.2rem'}
-                  fontWeight={'400'}
-                  color={'#6B6B6B'}
-                >
-                  <_Th textAlign={'left'}>{t(`Name`)}</_Th>
-                  <_Th>{t(`Amount`)}</_Th>
-                  <_Th>{t(`Time`)}</_Th>
-                </Tr>
-              </thead>
-              <tbody>
-                {
-                  state.purchase.records.map((item, idx) => {
-                    return <Tr  
-                      fontSize={theme.isH5 ? '11px' : '.2rem'}
-                      fontWeight={'350'}
-                      color={'#ffffff'}
-                      key={idx}
-                    >
-                      <_Td  textAlign={'left'} width={'2.6rem'}>
-                        {t(`${item.tokenId}`)}
-                      </_Td>
-                      <_Td  textAlign={'center'} width={'2.6rem'}>
-                        {t(`${item.price} ${item.coinName}`)}
-                      </_Td>
-                      <_Td  textAlign={'center'} width={'2.04rem'}>
-                        {t(`${item.createTime}`)}
-                      </_Td>
-                    </Tr>
-                  })
-                }
-              </tbody>
-          </Table>
+          <ScrollBox>
+            <Table
+                color={'#fff'}
+                width={'100%'}
+                paddingLeft={'.24rem'}
+                paddingRight={'.24rem'}
+                marginTop={'.16rem'}
+              >
+                <thead>
+                  <Tr
+                    fontSize={'.2rem'}
+                    fontWeight={'400'}
+                    color={'#6B6B6B'}
+                  >
+                    <_Th textAlign={'left'}>{t(`Type`)}</_Th>
+                    <_Th>{t(`Amount`)}</_Th>
+                    <_Th>{t(`Time`)}</_Th>
+                  </Tr>
+                </thead>
+                <tbody>
+                  {
+                    state.incomeRecords && state.incomeRecords.map((item,idx) => {
+                      return <Tr  
+                        fontSize={'.2rem'}
+                        fontWeight={'350'}
+                        fontStyle={'italic'}
+                        color={'#ffffff'}
+                        key={idx}
+                      >
+                        <_Td  textAlign={'left'} width={'2.6rem'}>
+                          {t(`Cents earnings`)}
+                        </_Td>
+                        <_Td  textAlign={'center'} width={'2.6rem'} color={'#F6B91B'}>
+                          {t(`+${item.amount} ${item.symbol}`)}
+                        </_Td>
+                        <_Td  textAlign={'right'} width={'2.04rem'}>
+                          {t(`${TimestampTransform(item.createTime)}`)}
+                        </_Td>
+                      </Tr>
+                    })
+                  }
+                </tbody>
+            </Table>
+          </ScrollBox> : 
+          <ScrollBox>
+            <Table
+                color={'#fff'}
+                width={'100%'}
+                paddingLeft={'.24rem'}
+                paddingRight={'.24rem'}
+                marginTop={'.16rem'}
+              >
+                <thead>
+                  <Tr
+                    fontSize={theme.isH5 ? '12px' : '.2rem'}
+                    fontWeight={'400'}
+                    color={'#6B6B6B'}
+                  >
+                    <_Th textAlign={'left'}>{t(`Name`)}</_Th>
+                    <_Th>{t(`Amount`)}</_Th>
+                    <_Th>{t(`Time`)}</_Th>
+                  </Tr>
+                </thead>
+                <tbody>
+                  {
+                    state.purchase && state.purchase.records.map((item, idx) => {
+                      return <Tr  
+                        fontSize={theme.isH5 ? '11px' : '.2rem'}
+                        fontWeight={'350'}
+                        color={'#ffffff'}
+                        key={idx}
+                      >
+                        <_Td  textAlign={'left'} width={'2.6rem'}>
+                          {t(`${item.tokenId}`)}
+                        </_Td>
+                        <_Td  textAlign={'center'} width={'2.6rem'}>
+                          {t(`${item.price} ${item.coinName}`)}
+                        </_Td>
+                        <_Td  textAlign={'right'} width={'2.04rem'}>
+                          {t(`${item.createTime}`)}
+                        </_Td>
+                      </Tr>
+                    })
+                  }
+                </tbody>
+            </Table>
+          </ScrollBox>
         }
 
       </Box>
