@@ -264,3 +264,7 @@ export function submitEmail(email:string) {
     email
   })
 }
+
+export function getInveted() {
+  return fetchPost<string>('/api/v1/user/inviteAddr')
+}

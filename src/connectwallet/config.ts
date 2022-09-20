@@ -25,10 +25,27 @@ export const getWalletInfoByName = function(name: string | null):IWallet | null 
 export const CHAINS = {
   BSC: {
       name: "BSC-Test",
-      fullName: "Binance Smart Chain",
+      chainName: "Binance Smart Chain",
+      nativeCurrency: {
+        decimals: 18,
+        name: "BNB",
+        symbol: "BNB"
+      },
       // icon: require("src/assets/images/BNB 1.png"),
       chainId: 97,
-      node: "https://apis-sj.ankr.com/4819f8b2e4a2491da76b28b9d3aaf96b/c3b85bea4a6b3c020eec29cacb6e5f21/binance/full/test"
+      rpcUrls: " https://data-seed-prebsc-1-s1.binance.org:8545"
+  },
+  ETH: {
+      name: "ETH-Test",
+      chainName: "Ethereum",
+      nativeCurrency: {
+        decimals: 18,
+        name: "ETH",
+        symbol: "ETH"
+      },
+      // icon: require("src/assets/images/BNB 1.png"),
+      chainId: 5,
+      rpcUrls: "https://data-seed-prebsc-1-s1.binance.org:8545"
   }
 };
 

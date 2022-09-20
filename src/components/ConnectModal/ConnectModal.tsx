@@ -44,7 +44,7 @@ export default function ConnectModal(props: IOpenModal) {
       } else {
         console.log('walletAddress',walletAddress)
         console.log('chainId',chainId)
-        if (chainId !== CHAINS.BSC.chainId) {
+        if (chainId !== CHAINS.BSC.chainId && chainId !== CHAINS.ETH.chainId) {
           Notice('You are connected to an unsupported network, please switch to the main BSC network.',MsgStatus.fail)
           deactivate()
           userDispatch.setWalletInfo(null)
@@ -56,7 +56,7 @@ export default function ConnectModal(props: IOpenModal) {
   },[accounts, chainId, store.token, ])
 
   const connect = async (item:IWallet) => {
-
+    console.log('item',item)
     userDispatch.setWalletInfo(item)
     // await item.connector.activate(CHAIN_ID)
     // props.destoryComponent()

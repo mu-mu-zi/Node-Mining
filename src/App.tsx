@@ -26,7 +26,7 @@ const Medium = styled.div`
 
 function App() {
   const { store, userDispatch } = useRedux()
-  const { activate, accounts, chainId, provider } = useWalletTools();
+  const { deactivate, activate, accounts, chainId, provider } = useWalletTools();
   // const {account,provider} = useWeb3React()
   
   const { getGenerateNonce } = useGenerateNonce()
@@ -40,6 +40,7 @@ function App() {
   useEffect(() => {
     const namespace = PubSub.subscribe(user_logout, () => {
       userDispatch.logout()
+      deactivate()
     });
     return () => {
       PubSub.unsubscribe(namespace);
@@ -66,18 +67,30 @@ function App() {
   // },[account])
 
   useEffect(() => {
-    
-
     if (accounts && store.address && accounts[0].toLowerCase() !== store.address.toLowerCase()) {
       
       toggleAccount(accounts[0], provider);
     }
   }, [accounts, store.address, provider]);
 
+  useAsync(async() => {
+    if(chainId === CHAINS.BSC.chainId || chainId === CHAINS.ETH.chainId) {
+
+      try {
+        await store.walletInfo?.connector.activate()
+        setTimeout(() => store.walletInfo?.connector.activate(), 500)
+      } catch (e: any) {
+        Notice(JSON.parse(JSON.stringify(e.reason)),MsgStatus.fail)
+      }
+    }
+  },[chainId])
+
   useEffect(() => {
+    
     if(!chainId) return
-    if(chainId !== CHAINS.BSC.chainId) {
-      Notice('You are connected to an unsupported network, please switch to the main BSC network.', MsgStatus.fail)
+ 
+    if(chainId !== CHAINS.BSC.chainId && chainId !== CHAINS.ETH.chainId) {
+      Notice('You are connected to an unsupported network, please switch to the BSC master network or the ETH master network.', MsgStatus.fail)
     }
   },[chainId])
 

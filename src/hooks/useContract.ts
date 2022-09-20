@@ -1,16 +1,18 @@
 import { useMemo } from "react";
 // import { useActiveWeb3React } from "hooks/useActiveWeb3React";
-import {useWeb3React} from "@web3-react/core";
+import { useWeb3React } from "@web3-react/core";
 import { JsonRpcSigner, Web3Provider, JsonRpcProvider } from "@ethersproject/providers";
 import { AddressZero } from "@ethersproject/constants";
 // import { Contract } from "@ethersproject/contracts";
 import { getAddress } from "@ethersproject/address";
-import {Contract} from "ethers";
-import {TgeMarket} from "ABI/types";
-import {USDT} from "ABI/types";
+import { Contract } from "ethers";
+import { TgeMarket } from "ABI/types";
+import { USDT } from "ABI/types";
+import { EthBuy } from "ABI/types";
 import { ContractAddresses } from "utils/ContractAddresses";
-import TgeMarket_ABI from "ABI/TgeMarket.json" 
-import USDT_ABI from "ABI/USDT.json" 
+import TgeMarket_ABI from "ABI/TgeMarket.json"
+import USDT_ABI from "ABI/USDT.json"
+import EthBuy_ABI from "ABI/EthBuy.json"
 import useWalletTools from "./useWalletTools";
 // export const useExampleContract = (address: string, withSignerIfPossible = true) => {
 //   return useContract(address, ContractAbi, withSignerIfPossible);
@@ -84,4 +86,12 @@ export function useTgeMarket(withSignerIfPossible?:boolean) {
 
 export function useUsdt(withSignerIfPossible?:boolean) {
   return useContract<USDT>(ContractAddresses.Usdt, USDT_ABI, withSignerIfPossible)
-} 
+}
+
+export function useEthBuy(withSignerIfPossible?:boolean) {
+  return useContract<EthBuy>( ContractAddresses.EthTgeMarket, EthBuy_ABI, withSignerIfPossible)
+}
+
+export function useEthUsdt(withSignerIfPossible?:boolean) {
+  return useContract<USDT>( ContractAddresses.EthUsdt, USDT_ABI, withSignerIfPossible)
+}

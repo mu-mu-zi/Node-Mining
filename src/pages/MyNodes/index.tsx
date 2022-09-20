@@ -199,7 +199,7 @@ export default function MyNodes() {
               marginBottom={theme.isH5 ? '8px' : '.08rem'}
               fontStyle={'italic'}
             >
-              {t(`Node revenue (GETA)`)}
+              {t(`Node Revenue (GETA)`)}
             </Typography>
             <Typography
               fontSize={theme.isH5 ? '14px' : ".6rem"}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback, useMemo } from 'react'
+import React, { useEffect, useState, useCallback, useMemo, useContext } from 'react'
 import Box, { Typography } from 'components/BaseElement';
 import JumpBtn from 'components/Button/BackBtn';
 import { Column } from '../../components/BaseElement/Column';
@@ -20,6 +20,11 @@ import { apply, coinList, MyAsset, myAsset } from 'http/api';
 import { MsgStatus } from 'components/messageBox/MessageBox';
 import { useWeb3React } from '@web3-react/core';
 import useTheme from '../../hooks/useTheme';
+import useWalletTools from '../../hooks/useWalletTools';
+import { CHAINS } from 'connectwallet/config';
+import { injected } from 'connectwallet/hooks';
+import { ModalContext } from 'components/provider/ModalProvider';
+import Network from 'components/NetCheckModal/Network';
 
 
 
@@ -30,8 +35,10 @@ export default function Withdraw() {
   const [selectCoin, setSelectCoin] = useState<{text: string; value: number}>()
   const {store, userDispatch} = useRedux()
   const {account} = useWeb3React()
+  const { accounts, chainId } = useWalletTools()
   const [reload, setReload] = useState<boolean>(false)
   const { theme } = useTheme()
+  const { openModal } = useContext(ModalContext);
   const state = useEffectState({
     totalAssets: 0 as number,
     available: 0 as number, 
@@ -47,8 +54,10 @@ export default function Withdraw() {
 
 
   useEffect(() => {
+    
+    if(!store.token) return
     getCoinList()
-  },[reload,account])
+  },[reload,accounts,account,store.token])
 
   useAsync(async() => {
     if(!store.coins) return
@@ -86,6 +95,13 @@ export default function Withdraw() {
   const submit = async() => {
     if(!selectCoin || !state.amount) {
       Notice('Please enter correctly', MsgStatus.warn)
+      return
+    }
+    if(chainId !== CHAINS.BSC.chainId) {
+      // Notice('You are connected to an unsupported network, please switch to the main BSC network.', MsgStatus.fail)
+      openModal(Network)
+      // await store.walletInfo?.connector.activate(CHAINS.BSC)
+
       return
     }
     try{

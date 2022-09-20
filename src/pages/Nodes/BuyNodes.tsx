@@ -7,7 +7,7 @@ import { Wrapper, OrderInput, IconPrice, PngNode, PurchaseNode } from './BuyNode
 import { useTranslation } from 'react-i18next';
 import Order from './Order'
 import PurchaseSuccess from './PurchaseSuccess'
-import { useTgeMarket } from 'hooks/useContract'
+import { useTgeMarket, useEthBuy } from 'hooks/useContract'
 import { useAsync } from 'react-use'
 import { useWeb3React } from '@web3-react/core'
 import { useEffectState } from 'hooks/useEffectState'
@@ -22,50 +22,80 @@ import OrderModal from 'components/OrderModal/OrderModal'
 import { ModalContext } from 'components/provider/ModalProvider'
 import useWidthChange from '../../hooks/useWidthChange';
 import useWalletTools from 'hooks/useWalletTools'
+import { CHAINS } from 'connectwallet/config'
+import { getInveted } from 'http/api'
+import useRedux from '../../hooks/useRedux';
+
 
 export default function BuyNodes() {
   const { t } = useTranslation()
   const [step, setStep] = useState<number>(1)
   const { openModal } = useContext(ModalContext);
+  const { store } = useRedux()
   const TgeMarket = useTgeMarket()
+  const EthBuy =  useEthBuy()
   // const { account } = useWeb3React()
   const { theme } = useTheme()
   const { isH5 } = useWidthChange()
-  const { accounts } = useWalletTools()
+  const { accounts, chainId } = useWalletTools()
   const { account } = useWeb3React()
   const state = useEffectState({
     count: 1 as number,
     Invite: EmptyStr as string,
     price: new BigNumber(0)
   })
+
   useAsync(async () => {
-    if (!TgeMarket || !accounts) return
-    let account = accounts[0]
+    
+    if (!TgeMarket || !accounts || !EthBuy) return
+    let accounta = accounts[0]
     try {
+      if(chainId === CHAINS.ETH.chainId) {
+        let result = await EthBuy.getNodePrice()
+        state.price = new BigNumber(result.toString())
+        console.log('testtest',result.toString())
+        return
+      }
+
       let result = await TgeMarket.getTotalCost(state.count)
-      console.log(result.toString())
       state.price = new BigNumber(result.toString())
+
+
     } catch (e: any) {
-      Notice(JSON.parse(JSON.stringify(e.reason)), MsgStatus.fail)
+      state.price = new BigNumber(0)
+      Notice(JSON.parse(JSON.stringify(e.reason)) || JSON.parse(JSON.stringify(e.message)), MsgStatus.fail)
     }
 
 
-  }, [state.count, accounts, TgeMarket, account])
+  }, [state.count, accounts, TgeMarket, account, chainId])
   
   useAsync(async () => {
-    console.log('accounts', accounts[0])
-    if (!TgeMarket || !accounts) return
+    
+    if (!TgeMarket || !accounts || !store.token) return
     let account = accounts[0]
     try {
+
+      if(chainId === CHAINS.ETH.chainId) {
+        let result = await getInveted()
+        state.Invite = result.data
+        if (state.Invite === zeroAddress) {
+          state.Invite = EmptyStr
+        }
+        return
+      }
+
       state.Invite = await TgeMarket.getInviter(account)
       if (state.Invite === zeroAddress) {
         state.Invite = EmptyStr
       }
+
+
     } catch (e: any) {
-      Notice(JSON.parse(JSON.stringify(e.reason)), MsgStatus.fail)
+      state.Invite = EmptyStr
+      Notice(JSON.parse(JSON.stringify(e.reason)) || JSON.parse(JSON.stringify(e.message)), MsgStatus.fail)
     }
 
-  }, [accounts, TgeMarket, account])
+  }, [accounts, TgeMarket, account, chainId, store.token])
 
   useEffect(() => {
     if (step !== 2 || !isH5) return
@@ -163,7 +193,7 @@ export default function BuyNodes() {
                     </Typography>
                     <Row gap={theme.isH5 ? "8px" : ".08rem"}>
 
-                      <img
+                      {/* <img
                         style={{
                           width: theme.isH5 ? "18px" : '',
                           height: theme.isH5 ? "18px" : '',
@@ -176,13 +206,13 @@ export default function BuyNodes() {
                           }
                           state.count = state.count - 1
                         }}
-                      />
+                      /> */}
 
                       <OrderInput
                         value={state.count}
                       />
 
-                      <img
+                      {/* <img
                         style={{
                           width: theme.isH5 ? "18px" : '',
                           height: theme.isH5 ? "18px" : '',
@@ -191,7 +221,7 @@ export default function BuyNodes() {
                         onClick={() => {
                           state.count = state.count + 1
                         }}
-                      />
+                      /> */}
                     </Row>
                   </Row>
                   <Row

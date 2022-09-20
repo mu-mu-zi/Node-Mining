@@ -84,7 +84,7 @@ export default function Invite() {
     } catch (e: any) {
       Notice(JSON.parse(JSON.stringify(e.reason)), MsgStatus.fail)
     }
-  }, [accounts, reload])
+  }, [accounts, reload,TgeMarket])
   // inviteUser
   const inviteSubmit = async () => {
     if (!TgeMarket || !accounts) return

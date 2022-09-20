@@ -7,7 +7,7 @@ import Box, { Typography } from '../../components/BaseElement/index';
 import { useTranslation } from 'react-i18next';
 import BigNumber from "bignumber.js";
 import { Decimals, _group } from 'utils/global'
-import { useTgeMarket, useUsdt } from 'hooks/useContract';
+import { useTgeMarket, useUsdt, useEthUsdt, useEthBuy } from 'hooks/useContract';
 import { useWeb3React } from '@web3-react/core';
 import { ContractAddresses } from "utils/ContractAddresses";
 import { CloseMessageBox, MsgStatus } from 'components/messageBox/MessageBox';
@@ -15,6 +15,8 @@ import { formatAddress, Notice } from 'utils/tools';
 import useTheme from '../../hooks/useTheme';
 import Normal from '../../components/Button/Normal';
 import useWalletTools from 'hooks/useWalletTools';
+import { CHAINS } from 'connectwallet/config';
+
 interface Iprops {
   setStep: React.Dispatch<React.SetStateAction<number>>
   state: {
@@ -31,50 +33,52 @@ export default function Order(props: Iprops) {
   const { theme } = useTheme()
   const TgeMarket = useTgeMarket()
   const Usdt = useUsdt()
+  const EthUsdt = useEthUsdt()
+  const EthBuy = useEthBuy()
   // const { account } = useWeb3React()
-  const { accounts } = useWalletTools()
+  const { accounts, chainId } = useWalletTools()
   const purchase = async () => {
     try {
 
-      if (!TgeMarket || !Usdt || !accounts) return
+      if (!TgeMarket || !Usdt || !accounts || !EthUsdt || !EthBuy) return
+      let Ucontract = Usdt
+      let approveAddr = ContractAddresses.TgeMarket
+      if(chainId === CHAINS.ETH.chainId) {
+        Ucontract = EthUsdt
+        approveAddr = ContractAddresses.EthTgeMarket
+      }
       let account = accounts[0]
       let tx: any
-      let isApprove = await Usdt.allowance(account, ContractAddresses.TgeMarket)
-      // console.log(isApprove.toString())
+      let isApprove = await Ucontract.allowance(account, approveAddr)
       if (Number(isApprove.toString()) < Number(state.price.toFixed())) {
         try{
-          tx = await Usdt.approve(ContractAddresses.TgeMarket, state.price.toFixed())
+          tx = await Ucontract.approve(approveAddr, state.price.toFixed())
           Notice('Please wait, your approve will arrive soon.', MsgStatus.loading)
           await tx.wait()
           CloseMessageBox()
         }catch(e:any) {
           let msg = JSON.parse(JSON.stringify(e))
-          Notice(msg.reason, MsgStatus.fail)
+          Notice(msg.reason || msg.message, MsgStatus.fail)
           return
         }
       }
-      // console.log('isApprove =>',isApprove.toString())
-      // console.log('count =>',state.count)
-      // console.log('price =>',state.price.toFixed())
-      // console.log('_group =>',_group)
-
-      let tx1 = await TgeMarket.buy(state.count, state.price.toFixed(), _group, state.Invite)
+      let tx1 = null
+      if(chainId === CHAINS.ETH.chainId) {
+        tx1 = await EthBuy.buy()
+      } else {
+        tx1 = await TgeMarket.buy(state.count, state.price.toFixed(), _group, state.Invite)
+      }
       Notice('Please wait, your node will arrive soon.', MsgStatus.loading)
-
       await tx1.wait()
-
-      console.log(tx1)
-
       CloseMessageBox()
       if(props.destoryComponent) {
         props.destoryComponent()
       }
       props.setStep(3)
     } catch (e) {
-      console.log(e)
       CloseMessageBox()
       let msg = JSON.parse(JSON.stringify(e))
-      Notice(msg.reason, MsgStatus.fail)
+      Notice(msg.reason || msg.message, MsgStatus.fail)
     }
     // await result.hash
     // 加载中。。。

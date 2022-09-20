@@ -16,7 +16,7 @@ import { BitKeep } from 'web3-bitkeep'
 // import { BitKeepWalletAdapter } from "@solana/wallet-adapter-bitkeep"
 
 function onError(error: Error) {
-  console.log('asdasdasdsad')
+
   console.debug(`web-react error => ${error}`)
 }
 // BitKeep
