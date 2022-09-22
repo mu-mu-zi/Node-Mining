@@ -7,7 +7,7 @@ import { CHAINS, IWallet, WALLETS } from "connectwallet/config";
 import { ConnectWalletModalStyle, Option } from './ConnectWalletModal.style'
 import useTheme from "hooks/useTheme";
 import { CHAIN_ID } from "connectwallet/hooks";
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 // import {useWeb3React} from '@web3-react/core';
 import useRedux from "hooks/useRedux";
 import { useAsync } from 'react-use';
@@ -25,12 +25,13 @@ export default function ConnectModal(props: IOpenModal) {
   const { store, userDispatch } = useRedux()
   const { activate, deactivate, accounts, chainId, provider} = useWalletTools()
   const { getGenerateNonce } = useGenerateNonce()
+  const [isClick, setIsClick] = useState<boolean>(false)
 
   useEffect(() => {
     if(sessionStorage.getItem("wallet_name")) {
       activate()
     }
-  },[store.walletInfo])
+  },[store.walletInfo,isClick])
 
   useEffect(() => {
     console.log('accounts', accounts)
@@ -45,7 +46,7 @@ export default function ConnectModal(props: IOpenModal) {
         console.log('walletAddress',walletAddress)
         console.log('chainId',chainId)
         if (chainId !== CHAINS.BSC.chainId && chainId !== CHAINS.ETH.chainId) {
-          Notice('You are connected to an unsupported network, please switch to the main BSC network.',MsgStatus.fail)
+          Notice('You are connected to an unsupported network, please switch to the BSC master network or the ETH master network.',MsgStatus.fail)
           deactivate()
           userDispatch.setWalletInfo(null)
         } else {
@@ -58,8 +59,8 @@ export default function ConnectModal(props: IOpenModal) {
   const connect = async (item:IWallet) => {
     console.log('item',item)
     userDispatch.setWalletInfo(item)
-    // await item.connector.activate(CHAIN_ID)
-    // props.destoryComponent()
+    // fix Token expires or the account is squeezed off the line for the first time after the connection does not take effect
+    setIsClick(!isClick)
   }
 
   const sign = async (address:string) => {

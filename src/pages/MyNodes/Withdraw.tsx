@@ -98,10 +98,7 @@ export default function Withdraw() {
       return
     }
     if(chainId !== CHAINS.BSC.chainId) {
-      // Notice('You are connected to an unsupported network, please switch to the main BSC network.', MsgStatus.fail)
       openModal(Network)
-      // await store.walletInfo?.connector.activate(CHAINS.BSC)
-
       return
     }
     try{

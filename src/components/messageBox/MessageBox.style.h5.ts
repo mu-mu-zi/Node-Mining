@@ -13,7 +13,6 @@ export const MessageBoxStyle = styled.div`
     margin-top: 8px;
     box-sizing: border-box;
     pointer-events: none; */
-
     position: absolute;
     padding: 16px 16px 16px 20px;
     background: #3D3D3D;
@@ -30,7 +29,6 @@ export const MessageBoxStyle = styled.div`
     
     justify-content: center;
     align-items: center;
-    height: 75px;
     position: fixed;
     left: 50%;
     top: 50%;
@@ -38,7 +36,7 @@ export const MessageBoxStyle = styled.div`
     /* box-shadow: 0px 4px 20px rgba(246, 185, 27, 0.25);   */
     border-radius: 8px;
     max-width: 328px;
-
+    height: max-content;
     &.bottomRight{
         left: initial;
         top: initial;

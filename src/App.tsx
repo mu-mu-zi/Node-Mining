@@ -68,7 +68,6 @@ function App() {
 
   useEffect(() => {
     if (accounts && store.address && accounts[0].toLowerCase() !== store.address.toLowerCase()) {
-      
       toggleAccount(accounts[0], provider);
     }
   }, [accounts, store.address, provider]);
@@ -95,11 +94,15 @@ function App() {
   },[chainId])
 
   async function toggleAccount(address: string, provider: any) {
+    deactivate()
     let result = await userDispatch.logout()
 
     if(result) {
+      activate()
+      console.log('store.walletInfo',store.walletInfo)
       let [signData, error] = await awaitWrap(getGenerateNonce(address, provider));
       if (signData) {
+        userDispatch.setWalletInfo(store.walletInfo)
         let signature = signData.signatrue
         loginApi({ address, signature }).then((res) => {
           userDispatch.setToken(res.data.token)

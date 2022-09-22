@@ -23,6 +23,7 @@ import { BigNumber } from 'ethers';
 import useTheme from '../../hooks/useTheme';
 import { ContractAddresses } from 'utils/ContractAddresses';
 import useWalletTools from 'hooks/useWalletTools';
+import { CHAINS } from 'connectwallet/config';
 
 const Warpper = styled.div`
   position: relative;
@@ -81,7 +82,7 @@ const SeMiTabs = styled(Tabs)`
 export default function Admin() {
   const { t } = useTranslation()
   // const { account, provider } = useWeb3React()
-  const { accounts, provider } = useWalletTools()
+  const { accounts, provider, chainId } = useWalletTools()
   const navigate = useNavigate()
   const TgeMarket = useTgeMarket()
   const [reload, setReload] = useState<boolean>()
@@ -128,7 +129,11 @@ export default function Admin() {
     if (adminAddress.toLowerCase() !== account?.toLowerCase()) {
       navigate('/')
     }
-  }, [accounts])
+    if(chainId !== CHAINS.BSC.chainId) {
+      navigate('/')
+      Notice('You are connected to an unsupported network, please switch to the BSC master network.', MsgStatus.fail)
+    }
+  }, [accounts, chainId])
 
   const FnCast = async () => {
     if (!TgeMarket || !accounts) return

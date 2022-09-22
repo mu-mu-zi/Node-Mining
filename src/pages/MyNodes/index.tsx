@@ -21,10 +21,13 @@ import { Notice } from 'utils/tools';
 import { MsgStatus } from 'components/messageBox/MessageBox';
 import useTheme from '../../hooks/useTheme';
 import { Icon } from 'components/BaseElement/Icon';
+import useWalletTools from 'hooks/useWalletTools';
+import { CHAINS } from 'connectwallet/config';
 
 export default function MyNodes() {
   const { t } = useTranslation()
   const navigate = useNavigate()
+  const { chainId } = useWalletTools()
   const { store } = useRedux()
   const { theme } = useTheme()
   const state = useEffectState({
@@ -62,7 +65,7 @@ export default function MyNodes() {
     <>
       <WithdrawCoinsH5>
         <Normal
-          name={store.token ? '' : 'disabled'}
+          name={store.token ? chainId !== CHAINS.BSC.chainId ? 'disabled' : '' : 'disabled'}
           onClick={() => navigate('/mynodes/withdrawingcoins')}
         >
           {t(`WITHDRAW`)}
@@ -77,7 +80,7 @@ export default function MyNodes() {
             {t(`My Node`)}
           </Title>
           <Normal
-            name={store.token ? '' : 'disabled'}
+            name={store.token ? chainId !== CHAINS.BSC.chainId ? 'disabled' : '' : 'disabled'}
             style={{
               display: theme.isH5 ? 'none' : 'block'
             }}
@@ -272,6 +275,7 @@ export default function MyNodes() {
 
           <Normal
             onClick={() => navigate('/mynodes/invitefriends')}
+            name={store.token ? chainId !== CHAINS.BSC.chainId ? 'disabled' : '' : 'disabled'}
             style={{
               margin: theme.isH5 ? '16px auto 0' : '' 
             }}
@@ -396,10 +400,9 @@ export default function MyNodes() {
             (Click 
             <a
               download={'GetaverseMiningProgramUsesDocuments'}
-              href={require('assets/GetaverseMiningProgramUsesDocuments.pdf')}
+              href={'https://getaverses.s3.ap-southeast-1.amazonaws.com/node/Getaverse-node.pdf'}
               target="_blank"
               style={{
-
                 color: "#F6B91B"
               }}
             > Ubuntu 20.04 </a>
@@ -408,7 +411,7 @@ export default function MyNodes() {
 
           <a
             download={'getaverse-node-v1.0'}
-            href={'https://getaverses.s3.ap-southeast-1.amazonaws.com/node/getaverse-node-v2.0.tar.gz'}
+            href={'https://getaverses.s3.ap-southeast-1.amazonaws.com/node/getaverse-node-v2.0.zip'}
             // target="_blank"
             style={{
               textDecoration: 'none'

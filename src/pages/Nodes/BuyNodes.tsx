@@ -63,6 +63,10 @@ export default function BuyNodes() {
 
     } catch (e: any) {
       state.price = new BigNumber(0)
+      if(chainId !== CHAINS.ETH.chainId && chainId !== CHAINS.BSC.chainId) {
+        Notice('You are connected to an unsupported network, please switch to the BSC master network or the ETH master network.', MsgStatus.fail)
+        return
+      }
       Notice(JSON.parse(JSON.stringify(e.reason)) || JSON.parse(JSON.stringify(e.message)), MsgStatus.fail)
     }
 
@@ -77,7 +81,8 @@ export default function BuyNodes() {
 
       if(chainId === CHAINS.ETH.chainId) {
         let result = await getInveted()
-        state.Invite = result.data
+        state.Invite = result.data ? result.data :  EmptyStr
+        console.log('123',state.Invite)
         if (state.Invite === zeroAddress) {
           state.Invite = EmptyStr
         }
@@ -92,6 +97,10 @@ export default function BuyNodes() {
 
     } catch (e: any) {
       state.Invite = EmptyStr
+      if(chainId !== CHAINS.ETH.chainId && chainId !== CHAINS.BSC.chainId) {
+        Notice('You are connected to an unsupported network, please switch to the BSC master network or the ETH master network.', MsgStatus.fail)
+        return
+      }
       Notice(JSON.parse(JSON.stringify(e.reason)) || JSON.parse(JSON.stringify(e.message)), MsgStatus.fail)
     }
 
@@ -108,6 +117,10 @@ export default function BuyNodes() {
 
 
   const StepNext = () => {
+    if(chainId !== CHAINS.ETH.chainId && chainId !== CHAINS.BSC.chainId) {
+      Notice('You are connected to an unsupported network, please switch to the BSC master network or the ETH master network.', MsgStatus.fail)
+      return
+    }
     if (state.Invite === zeroAddress || !state.Invite || state.Invite === EmptyStr) {
       Notice('Sorry, you are not eligible to purchase.', MsgStatus.warn)
       // setStep(2)
@@ -209,6 +222,7 @@ export default function BuyNodes() {
                       /> */}
 
                       <OrderInput
+                        disabled={true}
                         value={state.count}
                       />
 

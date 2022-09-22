@@ -73,7 +73,7 @@ export default function Invite() {
       setIsAllow(false)
       Notice(JSON.parse(JSON.stringify(e.reason)), MsgStatus.fail)
     }
-  }, [accounts,TgeMarket])
+  }, [accounts, TgeMarket, account])
   useAsync(async () => {
     if (!TgeMarket || !accounts) return
     let account = accounts[0]
@@ -84,7 +84,7 @@ export default function Invite() {
     } catch (e: any) {
       Notice(JSON.parse(JSON.stringify(e.reason)), MsgStatus.fail)
     }
-  }, [accounts, reload,TgeMarket])
+  }, [accounts, reload, TgeMarket, account, store.token])
   // inviteUser
   const inviteSubmit = async () => {
     if (!TgeMarket || !accounts) return
@@ -120,11 +120,15 @@ export default function Invite() {
       pageSize: 100,
     })
     state.directPushBonus = result.data.records
-  }, [])
+  }, [store.token])
 
   // Invitation Record
   useAsync(async () => {
+    if(state.invitationsTotal === 0) {
+      state.invitationRecord = []
+    }
     if (!TgeMarket || !accounts || !state.invitationsTotal) return
+    console.log('asdasd')
     let account = accounts[0]
     let array: Array<string> = []
     for (let i = 1; i <= state.invitationsTotal; i++) {
@@ -134,7 +138,7 @@ export default function Invite() {
     console.log(array)
     state.invitationRecord = array
 
-  }, [accounts, state.invitationsTotal, reload])
+  }, [accounts, state.invitationsTotal, reload, store.token])
 
 
   return (

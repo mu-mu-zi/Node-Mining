@@ -29,7 +29,7 @@ export default function Metaverse() {
       Notice('Please enter the correct email address', MsgStatus.fail)
       return
     }
-    let result = await submitEmail(email)
+    let result = await submitEmail(email, 2)
     if(result.data) {
       setEmail('')
       Notice('success', MsgStatus.success)

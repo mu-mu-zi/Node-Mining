@@ -42,7 +42,7 @@ export default function Home() {
     }
     try{
 
-      let result = await submitEmail(email)
+      let result = await submitEmail(email, 1)
       console.log(result)
       if(result.data) {
         setEmail('')

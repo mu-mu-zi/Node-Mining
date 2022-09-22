@@ -259,9 +259,10 @@ export function totalNodes() {
   return fetchPost<TotalNodes>('/api/v1/node/nodes')
 }
 
-export function submitEmail(email:string) {
+export function submitEmail(email:string,location: number) {
   return fetchPost<boolean>('/api/v1/email/submitEmail',{
-    email
+    email,
+    location
   })
 }
 
