@@ -16,6 +16,7 @@ import useTheme from '../../hooks/useTheme';
 import Normal from '../../components/Button/Normal';
 import useWalletTools from 'hooks/useWalletTools';
 import { CHAINS } from 'connectwallet/config';
+import useDecimals from '../../hooks/useDecimals';
 
 interface Iprops {
   setStep: React.Dispatch<React.SetStateAction<number>>
@@ -35,6 +36,7 @@ export default function Order(props: Iprops) {
   const Usdt = useUsdt()
   const EthUsdt = useEthUsdt()
   const EthBuy = useEthBuy()
+  const { decimals } = useDecimals()
   // const { account } = useWeb3React()
   const { accounts, chainId } = useWalletTools()
   const purchase = async () => {
@@ -176,7 +178,7 @@ export default function Order(props: Iprops) {
                 fontSize={theme.isH5 ? '16px' : '.2rem'}
                 fontWeight={'700'}
                 color={'#fff'}
-              >{state.price.div(10 ** Decimals).div(state.count).toFixed()}</Typography>
+              >{state.price.div(10 ** decimals).div(state.count).toFixed()}</Typography>
             </Row>
           </Column>
 
@@ -237,7 +239,7 @@ export default function Order(props: Iprops) {
                 fontSize={theme.isH5 ? '16px' : '.2rem'}
                 fontWeight={'700'}
                 color={'#fff'}
-              >{state.price.div(10 ** Decimals).toFixed()}</Typography>
+              >{state.price.div(10 ** decimals).toFixed()}</Typography>
             </Row>
           </Column>
 

@@ -25,6 +25,7 @@ import useWalletTools from 'hooks/useWalletTools'
 import { CHAINS } from 'connectwallet/config'
 import { getInveted } from 'http/api'
 import useRedux from '../../hooks/useRedux';
+import useDecimals from '../../hooks/useDecimals';
 
 
 export default function BuyNodes() {
@@ -39,6 +40,8 @@ export default function BuyNodes() {
   const { isH5 } = useWidthChange()
   const { accounts, chainId } = useWalletTools()
   const { account } = useWeb3React()
+  const { decimals } = useDecimals()
+  console.log('decimals',decimals)
   const state = useEffectState({
     count: 1 as number,
     Invite: EmptyStr as string,
@@ -53,13 +56,11 @@ export default function BuyNodes() {
       if(chainId === CHAINS.ETH.chainId) {
         let result = await EthBuy.getNodePrice()
         state.price = new BigNumber(result.toString())
-        console.log('testtest',result.toString())
         return
       }
 
       let result = await TgeMarket.getTotalCost(state.count)
       state.price = new BigNumber(result.toString())
-
 
     } catch (e: any) {
       state.price = new BigNumber(0)
@@ -189,7 +190,7 @@ export default function BuyNodes() {
                         fontSize={theme.isH5 ? "16px" : '.2rem'}
                         fontWeight={'700'}
                         color={'#fff'}
-                      >{state.price.div(10 ** Decimals).toFixed()}</Typography>
+                      >{state.price.div(10 ** decimals).toFixed()}</Typography>
                     </Row>
                   </Row>
                   <Row
@@ -334,7 +335,7 @@ export default function BuyNodes() {
                           fontSize={theme.isH5 ? "16px" : '.2rem'}
                           fontWeight={'700'}
                           color={'#fff'}
-                        >{state.price.div(10 ** Decimals).toFixed()}</Typography>
+                        >{state.price.div(10 ** decimals).toFixed()}</Typography>
                       </Row>
                     </Row>
                     <Row

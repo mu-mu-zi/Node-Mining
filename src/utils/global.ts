@@ -22,9 +22,11 @@ export const _group = "getaverse"
 
 export const Decimals = 18
 
+export const ETHDecimals = 6
+
 export const zeroAddress = "0x0000000000000000000000000000000000000000";
 
-export const adminAddress = "0xFff33d9777BB27Cc5D74922394BFB51f5C8Fe846"
+export const adminAddress = "0x7557f9C2520B08F305100Cd24529fEf8429A1B97"
 
 /*Verify if digital*/
 export const NUMBER_REG = "^[\\+-]?\\d+(\\.{1}\\d+)?$";
