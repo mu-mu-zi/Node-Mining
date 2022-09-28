@@ -34,31 +34,45 @@ export default function ConnectModal(props: IOpenModal) {
   },[store.walletInfo,isClick])
 
   useEffect(() => {
-    console.log('accounts', accounts)
     if (chainId && accounts) {
-      console.log('333')
       const walletAddress = accounts[0];
       if (store.token) {
         // props.onConnect?.(walletAddress);
         // userDispatch.setAddress(account)
         // props.destoryComponent();
       } else {
-        console.log('walletAddress',walletAddress)
-        console.log('chainId',chainId)
         if (chainId !== CHAINS.BSC.chainId && chainId !== CHAINS.ETH.chainId) {
-          Notice('You are connected to an unsupported network, please switch to the BSC master network or the ETH master network.',MsgStatus.fail)
-          deactivate()
-          userDispatch.setWalletInfo(null)
+          // Notice('You are connected to an unsupported network, please switch to the BSC master network or the ETH master network.',MsgStatus.fail)
+          // deactivate()
+          // userDispatch.setWalletInfo(null)
+
+          changeNetAndSign(walletAddress)
+
+
         } else {
           sign(walletAddress)
         }
       }
     }
   },[accounts, chainId, store.token, ])
+  
+  const changeNetAndSign = async (address:string) => {
+    try{
+      await store.walletInfo?.connector.activate(CHAINS.BSC)
+      // await activate(CHAINS.BSC)
+      activate()
+      // sign(address)
+      
+    }catch(e) {
+      Notice('You are connected to an unsupported network, please switch to the BSC master network or the ETH master network.',MsgStatus.fail)
+      deactivate()
+      userDispatch.setWalletInfo(null)
+    }
+  }
 
   const connect = async (item:IWallet) => {
-    console.log('item',item)
     userDispatch.setWalletInfo(item)
+    console.log('abc',item)
     // fix Token expires or the account is squeezed off the line for the first time after the connection does not take effect
     setIsClick(!isClick)
   }
