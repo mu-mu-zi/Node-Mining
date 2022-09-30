@@ -90,6 +90,12 @@ export default function Invite() {
     if (!TgeMarket || !accounts) return
     try{
       if (isAddress(state.friendWalletAddr)) {
+        // bug fix can't invite admin
+        if(adminAddress.toLowerCase() === state.friendWalletAddr.toLowerCase()) {
+          Notice('Cannot invite admin', MsgStatus.warn)
+          return
+        }
+
         let tx = await TgeMarket.inviteUser(state.friendWalletAddr)
         Notice('Waiting for invitation...', MsgStatus.loading)
         await tx.wait()

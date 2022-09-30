@@ -102,6 +102,7 @@ function App() {
       console.log('store.walletInfo',store.walletInfo)
       let [signData, error] = await awaitWrap(getGenerateNonce(address, provider));
       if (signData) {
+        activate()
         userDispatch.setWalletInfo(store.walletInfo)
         let signature = signData.signatrue
         loginApi({ address, signature }).then((res) => {
