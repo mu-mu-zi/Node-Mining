@@ -7,7 +7,8 @@ import Metaverse from 'pages/Metaverse/Metaverse';
 import Nodes from 'pages/Nodes';
 import BuyNode from 'pages/Nodes/BuyNodes';
 import MyNodes from 'pages/MyNodes';
-import Aboutus from '../pages/Aboutus/Aboutus';
+import Aboutus from 'pages/Aboutus/Aboutus';
+import Staking from 'pages/Staking/Staking'
 import NodeRevenue from 'pages/MyNodes/NodeRevenue'
 import FundRecords from 'pages/MyNodes/FundRecords'
 import Withdraw from 'pages/MyNodes/Withdraw';
@@ -69,6 +70,10 @@ export default function Routers() {
     {
       element: <FundRecords />,
       path: "/mynodes/fundrecords",
+    },
+    {
+      element: <Staking />,
+      path: "/staking",
     },
     {
       element: <Aboutus />,

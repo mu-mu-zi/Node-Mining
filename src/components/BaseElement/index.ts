@@ -61,6 +61,7 @@ const Box = styled.div<BoxProps>`
     whiteSpace: true,
     transform: true
   })};
+  box-sizing: border-box;
 `
 
 export const Typography = styled.div<BoxProps>`
@@ -76,6 +77,25 @@ export const Typography = styled.div<BoxProps>`
   ${system({
     cursor: true,
     boxSizing: true,
+    whiteSpace: true
+  })};
+`
+
+export const Text = styled.div<BoxProps>`
+  ${background};
+  ${layout};
+  ${border};
+  ${position};
+  ${space};
+  ${flexbox};
+  ${grid};
+  ${typography};
+  ${color};
+  ${system({
+    cursor: true,
+    boxSizing: true,
+    backdropFilter: true,
+    boxShadow: true,
     whiteSpace: true
   })};
 `

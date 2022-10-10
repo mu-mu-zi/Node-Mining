@@ -24,6 +24,7 @@ import useTheme from '../../hooks/useTheme';
 import { ContractAddresses } from 'utils/ContractAddresses';
 import useWalletTools from 'hooks/useWalletTools';
 import { CHAINS } from 'connectwallet/config';
+import Staking from './Staking';
 
 const Warpper = styled.div`
   position: relative;
@@ -38,7 +39,7 @@ const Warpper = styled.div`
   ${({theme}) => theme.mediaWidth.sm`
     height: 100%;
     min-height: 500px;
-    padding: 0 32px;
+    padding: 0 16px;
   `}
 `
 
@@ -64,6 +65,10 @@ const SeMiTabs = styled(Tabs)`
     }
     .semi-tabs-tab-active {
       color: #F6B91B;
+      background: #6B6B6B;
+      border-radius: 16px;
+      width: 80%;
+      align-self: center;
     }
     .semi-tabs-pane {
       overflow: unset;
@@ -329,6 +334,22 @@ export default function Admin() {
             </Box>
           </Column>
         </TabPane>
+
+        <TabPane
+          tab={
+            <Typography>
+              Staking
+            </Typography>
+          }
+          itemKey="3"
+          style={{
+            outline: 'none',
+            height: '100%'
+          }}
+        >
+          <Staking />
+        </TabPane>
+
       </SeMiTabs>
     </Warpper>
   </>)

@@ -25,7 +25,7 @@ export default function Header() {
   const [showAdmin, setShowAdmin] = useState<boolean>(false)
   const customRef = useRef<HTMLDivElement | null>(null);
   // const { account } = useWeb3React()
-  const { activate, deactivate, accounts, chainId, provider} = useWalletTools()
+  const { activate, deactivate, accounts, chainId, provider } = useWalletTools()
   // const scrollY = useScrollPosition()
   const [width, setWidth] = useState(0);
 
@@ -35,14 +35,14 @@ export default function Header() {
   }, [displayBtnStr]);
 
   useEffect(() => {
-    if(!accounts) return
+    if (!accounts) return
     let account = accounts[0]
-    if(adminAddress.toLowerCase() === account?.toLowerCase()) {
+    if (adminAddress.toLowerCase() === account?.toLowerCase()) {
       setShowAdmin(true)
     } else {
       setShowAdmin(false)
     }
-  },[accounts])
+  }, [accounts])
 
   useEffect(() => {
     if (store.address) {
@@ -57,7 +57,6 @@ export default function Header() {
     } else {
       openModal(ConnectModal)
     }
-
   }
 
   const FnLogout = () => {
@@ -94,6 +93,9 @@ export default function Header() {
             <RouterLink
               // style={{pointerEvents:'none'}}
               to={"/mynodes"} className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`} >{t(`MY NODE`)}</RouterLink>
+            <RouterLink
+              // style={{pointerEvents:'none'}}
+              to={"/staking"} className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`} >{t(`STAKING`)}</RouterLink>
             <RouterLink
               // style={{pointerEvents:'none'}}
               to={"/aboutus"} className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`} >{t(`WHITEPAPER`)}</RouterLink>

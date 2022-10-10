@@ -2,15 +2,18 @@ import Box from 'components/BaseElement'
 import React from 'react'
 import styled from 'styled-components'
 
-const Node = styled(Box)`
+const Node = styled(Box)<{padding: string, fontSize: string, width: string}>`
   /* border: 1px solid ${({theme}) => theme.colors.normal}; */
   background: ${({theme}) => theme.colors.normal};
-  padding: .16rem .52rem;
-  font-size: .2rem;
+  padding: ${({ padding }) => padding ? padding : '.16rem .52rem'};
+  font-size: ${({ fontSize }) => fontSize ? fontSize : '.2rem'};
+  width: ${({ width }) => width ? width : 'initial'};
+  /* font-size: .2rem; */
   font-weight: 700;
   color: #000;
   cursor: pointer;
   border-radius: 48px;
+  text-align: center;
   &:hover {
     /* border: 1px solid ${({theme}) => theme.colors.hover}; */
     color: #fff;
@@ -21,16 +24,18 @@ const Node = styled(Box)`
     cursor: not-allowed;
     pointer-events: none;
   }
-  ${({theme}) => theme.mediaWidth.sm`
+  ${({ theme, padding, fontSize }) => theme.mediaWidth.sm`
     padding: 10.5px 52px;
+    padding: ${padding ? padding : '10.5px 52px'};
     font-size: 11px;
+    font-size: ${fontSize ? fontSize : '11px'};
     font-weight: 800;
   `}
 `
 
 export default function Normal(props: any) {
   
-  return <Node className={props.name} style={props.style} onClick={props.onClick}>
+  return <Node width={props.width} padding={props.padding} fontSize={props.fontSize}  className={props.name} style={props.style} onClick={props.onClick}>
     {props.children}
   </Node>
 }

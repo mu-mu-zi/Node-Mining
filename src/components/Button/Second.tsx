@@ -11,6 +11,7 @@ const Node = styled(Box)`
   color: ${({theme}) => theme.colors.normal};
   cursor: pointer;
   border-radius: 48px;
+  text-align: center;
   &:hover {
     border: 1px solid ${({theme}) => theme.colors.hover};
     color: ${({theme}) => theme.colors.hover};
@@ -24,7 +25,7 @@ const Node = styled(Box)`
 
 export default function SecondBtn(props: any) {
   
-  return <Node onClick={props.onClick}>
+  return <Node onClick={props.onClick} style={props.style}>
     {props.children}
   </Node>
 }

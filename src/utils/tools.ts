@@ -1,6 +1,7 @@
 import OpenMessageBox, { MsgStatus } from "components/messageBox/MessageBox";
 import { NUMBER_REG, INT_REG, INPUT_NUMBER_REG, FLOAT_NUMBER } from "./global";
 import moment from "moment";
+import { ReactNode } from 'react'
 
 export function getEventParentElement(element: HTMLElement, targetId: string): HTMLElement | null {
     if (!element || element.tagName === "BODY") {
@@ -12,11 +13,12 @@ export function getEventParentElement(element: HTMLElement, targetId: string): H
     }
 }
 
-export function Notice(msg: string, type?: MsgStatus, params: any = {}) {
+export function Notice(msg: string,  type?: MsgStatus, params: any = {}, node?: ReactNode) {
     //alert(msg);
     //Toast(msg);
     OpenMessageBox({
         title: msg,
+        content: node,
         subtitle: params.subtitle || "",
         type: type ?? MsgStatus.warn
     })

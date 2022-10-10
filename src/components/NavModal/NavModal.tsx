@@ -29,12 +29,12 @@ const HeaderLinks = styled(Column)`
   }
   .active {
     font-weight: 700;
-    color: ${({theme}) => theme.colors.normal};;
+    color: ${({ theme }) => theme.colors.normal};;
   }
 `
 
 const ConnectWallet = styled.div`
-  background: ${({theme}) => theme.colors.normal};
+  background: ${({ theme }) => theme.colors.normal};
   padding: 10px 27px;
   font-size: 12px;
   font-weight: 700;
@@ -43,7 +43,7 @@ const ConnectWallet = styled.div`
   margin-top: 37px;
   &:hover {
     color: #fff;
-    background: ${({theme}) => theme.colors.hover};;
+    background: ${({ theme }) => theme.colors.hover};;
 
   }
 `
@@ -59,12 +59,12 @@ export default function NavModal(props: IOpenModal & AA) {
   const { accounts, deactivate } = useWalletTools()
   useEffect(() => {
     let account = accounts && accounts[0]
-    if(adminAddress.toLowerCase() === account?.toLowerCase()) {
+    if (adminAddress.toLowerCase() === account?.toLowerCase()) {
       setShowAdmin(true)
     } else {
       setShowAdmin(false)
     }
-  },[accounts])
+  }, [accounts])
 
   useEffect(() => {
     if (store.address) {
@@ -92,10 +92,10 @@ export default function NavModal(props: IOpenModal & AA) {
         marginTop={'16px'}
       >
 
-      <JumpBtn
-        text="BACK"
-        // path={-1}
-        onClick={() => props.destoryComponent()}
+        <JumpBtn
+          text="BACK"
+          // path={-1}
+          onClick={() => props.destoryComponent()}
         />
       </Box>
 
@@ -111,6 +111,10 @@ export default function NavModal(props: IOpenModal & AA) {
           // style={{pointerEvents:'none'}}
           onClick={() => props.destoryComponent()}
           to={"/mynodes"} className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`} >{t(`MY NODE`)}</RouterLink>
+        <RouterLink
+          // style={{pointerEvents:'none'}}
+          onClick={() => props.destoryComponent()}
+          to={"/staking"} className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`} >{t(`STAKING`)}</RouterLink>
         <RouterLink
           // style={{pointerEvents:'none'}}
           onClick={() => props.destoryComponent()}
@@ -131,23 +135,23 @@ export default function NavModal(props: IOpenModal & AA) {
 
         >EN/CN</Typography>
 
-      <ConnectWallet
-        onClick={() => {
-          if(!showLogout) {
-            openModal(ConnectModal);
-            props.destoryComponent()
-          } else {
-            FnLogout()
-          }
-        }}
-      >
+        <ConnectWallet
+          onClick={() => {
+            if (!showLogout) {
+              openModal(ConnectModal);
+              props.destoryComponent()
+            } else {
+              FnLogout()
+            }
+          }}
+        >
           {t(`${showLogout ? 'LOG OUT' : 'Connect Wallet'}`)}
-      </ConnectWallet>
+        </ConnectWallet>
 
       </HeaderLinks>
 
 
-      
+
     </Modal>
   )
 }

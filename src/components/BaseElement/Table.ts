@@ -19,6 +19,8 @@ export const Table = styled.table<BoxProps>`
     boxSizing: true,
     whiteSpace: true
   })};
+  border-collapse: separate;
+  border-spacing: 0;
 `
 
 export const Td = styled.td<BoxProps>`
