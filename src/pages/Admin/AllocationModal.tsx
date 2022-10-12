@@ -5,7 +5,7 @@ import { MsgStatus } from "components/messageBox/MessageBox";
 import Modal from "components/Modal/Modal";
 import { IOpenModal } from "components/provider/ModalProvider";
 import useTheme from "hooks/useTheme";
-import { Notice } from "utils/tools";
+import { isInputNumber, Notice } from "utils/tools";
 import { useTranslation } from 'react-i18next';
 import styled from "styled-components";
 import Input from "components/form/Input";
@@ -13,10 +13,12 @@ import { ColumnStart } from "components/BaseElement/Column";
 import Normal from "components/Button/Normal";
 import Second from "components/Button/Second";
 import { Title } from "./Staking";
-import { adminAddress } from "utils/global";
+import { adminAddress, Decimals } from "utils/global";
 import { useEffectState } from '../../hooks/useEffectState';
 import DatePickerZ from "components/DatePicker/DatePicker";
-
+import { PledgeContract } from "utils/ContractAddresses";
+import { usePledgeLpPool } from "hooks/useContract";
+import BigNumber from "bignumber.js";
 
 interface AA {
 
@@ -41,14 +43,39 @@ export default function SinglePledgeModal(props: IOpenModal & AA) {
   const { theme } = useTheme()
   const state = useEffectState({
     MiningTime: '' as ValueType,
+    bonus: '',
   })
+  const PledgeLp = usePledgeLpPool()
+
+  const onRewardAmount = async () => {
+    if (!PledgeLp) return
+    if(!state.bonus) {
+      Notice(`amount can't be empty`, MsgStatus.fail)
+    }
+    try {
+      let param = null
+      param = new BigNumber(parseFloat(state.bonus)).multipliedBy(10 ** Decimals).dp(0).toNumber()
+      console.log(param)
+      const tx = await PledgeLp.setRewardAmount(param)
+      console.log(tx)
+      await tx.wait()
+      console.log(tx)
+
+
+    } catch (e) {
+      let msg = JSON.parse(JSON.stringify(e))
+      Notice(msg.reason || msg.message, MsgStatus.fail)
+      return
+    }
+  }
+
 
   return (
     <Modal
       onClose={() => props.destoryComponent()}
       type={theme.isH5 ? 'modal' : 'modal'}
       // isH5={theme.isH5}
-      style={{ background: "#1A1919", width: theme.isH5 ? '90%' : 'initial', padding: '24px' }}
+      style={{ background: "#1A1919", width: theme.isH5 ? '90%' : '7.77rem', padding: '24px' }}
     >
       <ColumnStart gridGap={theme.isH5 ? '24px' : ".24rem"}>
 
@@ -60,8 +87,11 @@ export default function SinglePledgeModal(props: IOpenModal & AA) {
           <Text width={'185px'} fontWeight={'400'} fontSize={theme.isH5 ? '14px' : '.2rem'} color={'#ffffff'} >{t(`Today's distribution`)}</Text>
           <Inp
             // regex={[{regStr: NUMBER_REG, tips: ""}]}
+            value={state.bonus}
             onChange={(value) => {
-
+              if ((value === "" || isInputNumber(value))) {
+                state.bonus = value
+              }
             }}
             placeholder={`Please enter today's assigned quantity`}
             right={<Flex alignItems={'center'} padding={theme.isH5 ? '0 18px' : '0 .18rem'} >
@@ -73,13 +103,13 @@ export default function SinglePledgeModal(props: IOpenModal & AA) {
         <FlexTypography>
           <Text width={'185px'} fontWeight={'400'} fontSize={theme.isH5 ? '14px' : '.2rem'} color={'#ffffff'} >{t(`Contract Address`)}</Text>
           <Inp
-            value={adminAddress}
+            value={PledgeContract.LpPool}
             disabled
             className="disabled"
           />
         </FlexTypography>
 
-        <FlexTypography>
+        {/* <FlexTypography>
           <Text width={'185px'} fontWeight={'400'} fontSize={theme.isH5 ? '14px' : '.2rem'} color={'#ffffff'} >{t(`Mining time`)}</Text>
           <DatePickerZ
             onChange={(date,dateString) => {
@@ -102,14 +132,17 @@ export default function SinglePledgeModal(props: IOpenModal & AA) {
             )}
         />
         
-        </FlexTypography>
+        </FlexTypography> */}
 
         <Flex width={'100%'} justifyContent={'center'} alignItems={'center'} gridGap={theme.isH5 ? '16px' : '.24rem'} alignSelf={'center'}>
-          <Second style={{
-            padding: theme.isH5 ? '8px 0' : '.1rem 0',
-            width: theme.isH5 ? '100%' : '1.75rem'
-          }}>Cancel</Second>
-          <Normal padding={theme.isH5 ? '8px 0' : '.1rem 0 '} width={theme.isH5 ? '100%' : '1.75rem'}>Pledges</Normal>
+          <Second 
+            style={{
+              padding: theme.isH5 ? '8px 0' : '.1rem 0',
+              width: theme.isH5 ? '100%' : '1.75rem'
+            }}
+            onClick={() => props.destoryComponent()}
+            >Cancel</Second>
+          <Normal onClick={onRewardAmount} padding={theme.isH5 ? '8px 0' : '.1rem 0 '} width={theme.isH5 ? '100%' : '1.75rem'}>Pledges</Normal>
         </Flex>
 
       </ColumnStart>

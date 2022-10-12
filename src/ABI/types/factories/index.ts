@@ -3,6 +3,11 @@
 /* eslint-disable */
 export { EthBuy__factory } from "./EthBuy__factory";
 export { NodeNFT__factory } from "./NodeNFT__factory";
+export { PledgeGeta__factory } from "./PledgeGeta__factory";
+export { PledgeGetaPool__factory } from "./PledgeGetaPool__factory";
+export { PledgeLpPool__factory } from "./PledgeLpPool__factory";
+export { PledgePair__factory } from "./PledgePair__factory";
+export { PledgeUsdt__factory } from "./PledgeUsdt__factory";
 export { TgeMarket__factory } from "./TgeMarket__factory";
 export { USDT__factory } from "./USDT__factory";
 export { Rewards__factory } from "./Rewards__factory";

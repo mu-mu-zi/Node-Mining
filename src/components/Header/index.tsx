@@ -37,7 +37,9 @@ export default function Header() {
   useEffect(() => {
     if (!accounts) return
     let account = accounts[0]
-    if (adminAddress.toLowerCase() === account?.toLowerCase()) {
+    // 调试
+    // if (adminAddress.toLowerCase() === account?.toLowerCase()) {
+    if (adminAddress.toLowerCase() !== account?.toLowerCase()) {
       setShowAdmin(true)
     } else {
       setShowAdmin(false)

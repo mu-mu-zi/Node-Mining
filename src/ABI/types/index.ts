@@ -3,12 +3,22 @@
 /* eslint-disable */
 export type { EthBuy } from "./EthBuy";
 export type { NodeNFT } from "./NodeNFT";
+export type { PledgeGeta } from "./PledgeGeta";
+export type { PledgeGetaPool } from "./PledgeGetaPool";
+export type { PledgeLpPool } from "./PledgeLpPool";
+export type { PledgePair } from "./PledgePair";
+export type { PledgeUsdt } from "./PledgeUsdt";
 export type { TgeMarket } from "./TgeMarket";
 export type { USDT } from "./USDT";
 export type { Rewards } from "./Rewards";
 export * as factories from "./factories";
 export { EthBuy__factory } from "./factories/EthBuy__factory";
 export { NodeNFT__factory } from "./factories/NodeNFT__factory";
+export { PledgeGeta__factory } from "./factories/PledgeGeta__factory";
+export { PledgeGetaPool__factory } from "./factories/PledgeGetaPool__factory";
+export { PledgeLpPool__factory } from "./factories/PledgeLpPool__factory";
+export { PledgePair__factory } from "./factories/PledgePair__factory";
+export { PledgeUsdt__factory } from "./factories/PledgeUsdt__factory";
 export { Rewards__factory } from "./factories/Rewards__factory";
 export { TgeMarket__factory } from "./factories/TgeMarket__factory";
 export { USDT__factory } from "./factories/USDT__factory";

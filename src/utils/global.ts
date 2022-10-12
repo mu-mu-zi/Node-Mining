@@ -16,17 +16,21 @@ export const nodeUrl = () => {
 
 export const service_api = process.env.NODE_ENV === "production" ? "https://getaverses.com" : "https://getaverses.com";
 
-export const EmptyStr = "--" 
+export const EmptyStr = "--";
 
-export const _group = "getaverse"
+export const _group = "getaverse";
 
-export const Decimals = 18
+export const Decimals = 18;
 
-export const ETHDecimals = 6
+export const ETHDecimals = 6;
 
 export const zeroAddress = "0x0000000000000000000000000000000000000000";
 
-export const adminAddress = "0x7557f9C2520B08F305100Cd24529fEf8429A1B97"
+// export const adminAddress = "0x7557f9C2520B08F305100Cd24529fEf8429A1B97"
+// export const adminAddress = "0xFff33d9777BB27Cc5D74922394BFB51f5C8Fe846";
+export const adminAddress = "0xDffa8f599Fd19D88C76D509eD346Ef8Fb7DC90d1";
+
+export const decimalPlaces = 6;
 
 /*Verify if digital*/
 export const NUMBER_REG = "^[\\+-]?\\d+(\\.{1}\\d+)?$";

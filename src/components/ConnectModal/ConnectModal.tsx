@@ -60,6 +60,7 @@ export default function ConnectModal(props: IOpenModal) {
     try{
       await store.walletInfo?.connector.activate(CHAINS.BSC)
       // await activate(CHAINS.BSC)
+      console.log('aabbx')
       activate()
       // sign(address)
       

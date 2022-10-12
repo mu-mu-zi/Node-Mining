@@ -13,20 +13,25 @@ import { ColumnStart } from "components/BaseElement/Column";
 import Normal from "components/Button/Normal";
 import Second from "components/Button/Second";
 import BigNumber from "bignumber.js";
-import { usePledgeLpPool, usePair } from "hooks/useContract";
+import { usePledgeGetaPool, usePledgeGeta } from "hooks/useContract";
 import { useEffectState } from "hooks/useEffectState";
 import useRedux from "hooks/useRedux";
 import useWalletTools from "hooks/useWalletTools";
-import { Dispatch, SetStateAction } from "react";
+import { useAsync } from "react-use";
 import { Decimals, EmptyStr } from "utils/global";
 import { PledgeContract } from "utils/ContractAddresses";
-import { useAsync } from "react-use";
+import { Dispatch, SetStateAction } from "react";
+import { Title } from "./Staking";
 
 interface AA {
   reload: boolean,
-  setReload: Dispatch<SetStateAction<boolean>>
+  setReload: Dispatch<SetStateAction<boolean>>,
+  title: string,
+  coin: number,
+  type: number,
 }
-
+// coin 1/Single Currency Pledge 2/Liquidity Pledge
+// type 1/RECHARGE 2/WITHDRAW
 const Inp = styled(Input)`
   background: transparent;
   border: 2px solid #6B6B6B;
@@ -132,63 +137,114 @@ const Max = styled(Box)`
   `}
 `
 
-export default function LiquidityPledgeModal(props: IOpenModal & AA) {
+
+
+export default function RechargeWithdrawModal(props: IOpenModal & AA) {
   const { t } = useTranslation()
+  const { setReload, reload, title, coin, type } = props
   const { theme } = useTheme()
-  const { setReload, reload } = props
   const { accounts, chainId } = useWalletTools()
   const { store } = useRedux()
-  const pledgeLpPool = usePledgeLpPool()
-  const Pair = usePair()
+  const PledgeGetaPool = usePledgeGetaPool(true)
+  const PledgeGeta = usePledgeGeta()
 
   const state = useEffectState({
     getaBalance: new BigNumber(0),
     amount: '',
   })
 
-  useAsync(async () => {
-    if (!Pair || !accounts) return
-    let account = accounts[0]
-    const balance = await Pair.balanceOf(account)
-    state.getaBalance = new BigNumber(balance.toString())
 
-  }, [accounts, Pair, chainId, store.token])
+  useAsync(async () => {
+    if (!PledgeGeta || !accounts) return
+    let account = accounts[0]
+    const balance = await PledgeGeta.balanceOf(account)
+    state.getaBalance = new BigNumber(balance.toString())
+  }, [accounts, PledgeGeta, chainId, store.token])
+
+
 
   const onPledges = async () => {
-    if (!pledgeLpPool || !Pair || !accounts ) {
+    if (!PledgeGetaPool || !PledgeGeta || !accounts) {
+      Notice('error', MsgStatus.fail,)
+      return
+    }
+    if (!state.amount) {
+      Notice(`amount can't be empty`, MsgStatus.fail)
+    }
+    if (coin === 1) {
+      if (type === 1) {
+        singleRecharge()
+      }
+      if (type === 2) {
+        singleWithdraw()
+      }
+    } else {
+      lpRecharge()
+    }
+  }
+
+  const singleRecharge = async () => {
+    if (!PledgeGeta) {
       Notice('error', MsgStatus.fail)
       return
     }
-    if(!state.amount) {
-      Notice(`amount can't be empty`, MsgStatus.fail)
-    }
     try {
-      let account = accounts[0]
-      let tx1: any
-      let isApprove = await Pair.allowance(account, PledgeContract.LpPool)
-      console.log('isApprove', isApprove.toString())
-      console.log(new BigNumber(state.amount).multipliedBy(10 ** Decimals).toFixed())
-      if (Number(isApprove.toString()) < Number(new BigNumber(state.amount).multipliedBy(10 ** Decimals).toFixed())) {
-        try {
-          tx1 = await Pair.approve(PledgeContract.LpPool, new BigNumber(state.amount).multipliedBy(10 ** Decimals).toFixed())
-          Notice('Please wait, your approve will arrive soon.', MsgStatus.loading)
-          await tx1.wait()
-          CloseMessageBox()
-        } catch (e: any) {
-          let msg = JSON.parse(JSON.stringify(e))
-          Notice(msg.reason || msg.message, MsgStatus.fail)
-          return
-        }
-      }
-
-      let tx = await pledgeLpPool.stake(new BigNumber(state.amount).multipliedBy(10 ** Decimals).toFixed())
+      let param = new BigNumber(state.amount).multipliedBy(10 ** Decimals).dp(0).toString()
+      console.log('amount',param)
+      console.log('recipient',PledgeContract.GetaPool)
+      const tx = await PledgeGeta.transfer(PledgeContract.GetaPool, param)
       Notice('Please wait, your pledge will arrive soon.', MsgStatus.loading)
       await tx.wait()
       CloseMessageBox()
-      Notice('You have successfully pledged', MsgStatus.success, {}, <Text fontSize={'12px'} fontWeight={'400'} color={'#F6B91B'}>{`${state.amount} GETA`} </Text>)
+      Notice('You have successfully recharge', MsgStatus.success, {}, <Text fontSize={'12px'} fontWeight={'400'} color={'#F6B91B'}>{`${state.amount} GETA`} </Text>)
       props.destoryComponent()
       setReload(!reload)
     } catch (e) {
+      console.error(e)
+      let msg = JSON.parse(JSON.stringify(e))
+      Notice(msg.reason || msg.message, MsgStatus.fail)
+      return
+    }
+  }
+  const singleWithdraw = async () => {
+    if (!PledgeGetaPool) {
+      Notice('error', MsgStatus.fail,)
+      return
+    }
+    try {
+      let param = new BigNumber(state.amount).multipliedBy(10 ** Decimals).dp(0).toString()
+      const tx = await PledgeGetaPool.withdrawFunds(PledgeContract.GetaPool, param)
+      Notice('Please wait, your pledge will arrive soon.', MsgStatus.loading)
+      await tx.wait()
+      CloseMessageBox()
+      Notice('You have successfully withdraw', MsgStatus.success, {}, <Text fontSize={'12px'} fontWeight={'400'} color={'#F6B91B'}>{`${state.amount} GETA`} </Text>)
+      props.destoryComponent()
+      setReload(!reload)
+    } catch (e) {
+      console.error(e)
+      let msg = JSON.parse(JSON.stringify(e))
+      Notice(msg.reason || msg.message, MsgStatus.fail)
+      return
+    }
+
+  }
+  const lpRecharge = async () => {
+    if (!PledgeGeta) {
+      Notice('error', MsgStatus.fail,)
+      return
+    }
+    try {
+      let param = new BigNumber(state.amount).multipliedBy(10 ** Decimals).dp(0).toString()
+      console.log('param',param)
+      const tx = await PledgeGeta.transfer(PledgeContract.LpPool, param)
+      Notice('Please wait, your pledge will arrive soon.', MsgStatus.loading)
+      await tx.wait()
+      CloseMessageBox()
+      Notice('You have successfully recharge', MsgStatus.success, {}, <Text fontSize={'12px'} fontWeight={'400'} color={'#F6B91B'}>{`${state.amount} GETA`} </Text>)
+      props.destoryComponent()
+      setReload(!reload)
+    } catch (e) {
+      console.error(e)
       let msg = JSON.parse(JSON.stringify(e))
       Notice(msg.reason || msg.message, MsgStatus.fail)
       return
@@ -200,15 +256,14 @@ export default function LiquidityPledgeModal(props: IOpenModal & AA) {
       onClose={() => props.destoryComponent()}
       type={theme.isH5 ? 'modal' : 'modal'}
       // isH5={theme.isH5}
-      style={{ background: "#1A1919", width: theme.isH5 ? '90%' : '5.06rem', padding: '24px' }}
+      style={{ background: "#1A1919", width: theme.isH5 ? '90%' : '5.06rem', padding: theme.isH5 ? '24px 16px' : '24px' }}
     >
       <ColumnStart gridGap={theme.isH5 ? '24px' : ".24rem"}>
 
         <Flex alignItems={'center'} gridGap={'8px'}>
-          <Icon width={theme.isH5 ? '32px' : '.4rem'} height={theme.isH5 ? '32px' : '.4rem'} src={require('./img_usdt 1.svg').default} />
-          <Text fontSize={theme.isH5 ? '16px' : '.2rem'} fontWeight={'700'} color={'#ffffff'} >
-            {t(`Pledge GETA/USDT LP`)}
-          </Text>
+          <Title>
+            {t(`${title}`)}
+          </Title>
         </Flex>
 
         <Inp
@@ -221,7 +276,7 @@ export default function LiquidityPledgeModal(props: IOpenModal & AA) {
           value={state.amount}
           placeholder={'Please enter the number of pledges'}
           right={<Flex alignItems={'center'} gridGap={theme.isH5 ? '6px' : '.1rem'}>
-            <Text fontSize={theme.isH5 ? '12px' : '.2rem'} fontWeight={'400'} color={'#6B6B6B'}>{t(`LP`)}</Text>
+            <Text fontSize={theme.isH5 ? '12px' : '.2rem'} fontWeight={'400'} color={'#6B6B6B'}>{t(`GETA`)}</Text>
             <Max className='submit' onClick={() => {
               state.amount = `${state.getaBalance.div(10 ** Decimals).toFixed() || 0}`
             }}>MAX</Max>
@@ -230,32 +285,17 @@ export default function LiquidityPledgeModal(props: IOpenModal & AA) {
 
         <Flex width={'100%'} alignItems={'center'} justifyContent={'space-between'}>
           <Text fontSize={theme.isH5 ? '14px' : '.2rem'} fontWeight={'400'} color={'#ffffff'} >{t(`Available`)}</Text>
-          <Text fontSize={theme.isH5 ? '14px' : '.2rem'} fontWeight={'700'} color={'#ffffff'}>{t(`${state.getaBalance.div(10 ** Decimals).toFixed() || EmptyStr} LP`)}</Text>
+          <Text fontSize={theme.isH5 ? '14px' : '.2rem'} fontWeight={'700'} color={'#ffffff'}>{t(`${state.getaBalance.div(10 ** Decimals).toFixed() || EmptyStr} GETA`)}</Text>
         </Flex>
 
         <Flex width={'100%'} justifyContent={'center'} alignItems={'center'} gridGap={theme.isH5 ? '16px' : '.24rem'} alignSelf={'center'}>
-          <Second
-            style={{
-              padding: theme.isH5 ? '8px 0' : '.1rem 0',
-              width: theme.isH5 ? '100%' : '1.75rem'
-            }}
+          <Second style={{
+            padding: theme.isH5 ? '8px 0' : '.1rem 0',
+            width: theme.isH5 ? '100%' : '1.75rem'
+          }}
             onClick={() => props.destoryComponent()}
           >Cancel</Second>
           <Normal onClick={onPledges} padding={theme.isH5 ? '8px 0' : '.1rem 0 '} width={theme.isH5 ? '100%' : '1.75rem'}>Pledges</Normal>
-        </Flex>
-
-        <Flex width={'100%'} alignSelf={'center'} justifyContent={'center'} fontSize={theme.isH5 ? '12px' : '.14rem'} fontWeight={'400'} color={'#ffffff'}>
-          <Text>{t(`Liquidity for GETA/USDT(LP) on`)}</Text>
-          <Text cursor={'pointer'} marginLeft={'4px'} color={'#F6B91B'}>
-            <a
-              href={'https://pancakeswap.finance/swap?chainld=97'}
-              target="_blank"
-              style={{
-                color: "#F6B91B"
-              }}
-            >{t(`Pancake`)}</a>
-          </Text>
-          <Icon marginLeft={'4px'} src={require('assets/svg/link_gray.svg').default} />
         </Flex>
 
       </ColumnStart>

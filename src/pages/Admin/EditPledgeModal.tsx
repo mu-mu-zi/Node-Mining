@@ -14,13 +14,18 @@ import Normal from "components/Button/Normal";
 import Second from "components/Button/Second";
 import { Title } from "./Staking";
 import { RowBetween, RowCenter } from "components/BaseElement/Row";
-import { adminAddress } from "utils/global";
+import { adminAddress, Decimals, EmptyStr } from "utils/global";
 import DropDown from "components/dropDown/DropDown";
 import { useEffectState } from "hooks/useEffectState";
 import { useState } from "react";
 import DatePickerZ from "components/DatePicker/DatePicker";
+import { usePledgeGetaPool } from "hooks/useContract";
+import BigNumber from "bignumber.js";
+import { usePledgeLpPool } from '../../hooks/useContract';
+import { useAsync } from "react-use";
 
 interface AA {
+  kind: number
   type: number
 }
 
@@ -43,21 +48,178 @@ export default function EditPledgeModal(props: IOpenModal & AA) {
   const { t } = useTranslation()
   const { theme } = useTheme()
   const [selectCoin, setSelectCoin] = useState<{ text: string; value: number }>()
+  const [selectType, setSelectType] = useState<{ text: string; value: number }>()
+  const PledgeGetaPool = usePledgeGetaPool()
+  const PledgeLp = usePledgeLpPool()
 
   const state = useEffectState({
     selectOption: [
       { text: 'Single Currency Pledge', value: 1 },
       { text: 'Liquidity Pledge', value: 2 }
     ],
+    selectTypeOption: [
+      [
+        { text: 'APR', value: 1 },
+        { text: 'Handling fee', value: 2 },
+        { text: 'StartTime', value: 3 },
+      ],
+      [
+        { text: 'Handling fee', value: 1 },
+        { text: 'StartTime', value: 2 },
+      ]
+
+    ],
     MiningTime: '' as ValueType,
+    parameters: '',
+    timestamp: 0,
   })
+  // test 
+  useAsync(async () => {
+    if(!PledgeGetaPool || !PledgeLp) return
+    const startTime = await PledgeGetaPool.startTime()
+    if(startTime.toString() !== '0') {
+      state.selectTypeOption[0] = [
+        { text: 'APR', value: 1 },
+        { text: 'Handling fee', value: 2 },
+      ]
+    }
+    const isLpStart = await PledgeLp.isStarted()
+    console.log('isLpStart',isLpStart)
+    if(isLpStart) {
+      state.selectTypeOption[1]=  [
+        { text: 'Handling fee', value: 1 },
+      ]
+    }
+
+  } ,[PledgeGetaPool,PledgeLp])
+
+  const onSubmit = () => {
+    try {
+      console.log(state.parameters)
+      console.log(state.timestamp)
+      if(state.parameters && state.timestamp) {
+        Notice(`input can't be empty`, MsgStatus.fail)
+        return
+      }
+      if (selectCoin?.value === 1) {
+        if (selectType?.value === 1) {
+          
+          setSingleAPR()
+        }
+        if (selectType?.value === 2) {
+          setSingleFeeRate()
+        }
+        if (selectType?.value === 3) {
+          setSingleStartPool()
+        }
+      } else {
+        if (selectType?.value === 1) {
+          setLpFeeRate()
+        }
+        if (selectType?.value === 2) {
+          setLpStartPool()
+        }
+      }
+    } catch (e) {
+
+    }
+  }
+
+
+  const setSingleAPR = async () => {
+    if (!PledgeGetaPool) return
+    try {
+      let param = null
+      param = new BigNumber(parseFloat(state.parameters)).div(86400 * 365).multipliedBy(10 ** Decimals).div(100).dp(0).toString()
+      console.log(param)
+      console.log(state.parameters)
+      const tx = await PledgeGetaPool.setAPY(param)
+      console.log(tx)
+      await tx.wait()
+    } catch (e) {
+      console.error(e)
+      let msg = JSON.parse(JSON.stringify(e))
+      Notice(msg.reason || msg.message, MsgStatus.fail)
+      return
+    }
+  }
+
+  const setSingleFeeRate = async () => {
+    if (!PledgeGetaPool) return
+    try {
+      let param = null
+      param = new BigNumber(parseFloat(state.parameters)).multipliedBy(10 ** Decimals).div(100).dp(0).toString()
+      console.log(param)
+      const tx = await PledgeGetaPool.setFeeRate(param)
+      console.log(tx)
+      await tx.wait()
+    } catch (e) {
+      console.log(e)
+      let msg = JSON.parse(JSON.stringify(e))
+      Notice(msg.reason || msg.message, MsgStatus.fail)
+      return
+    }
+  }
+
+  const setSingleStartPool = async () => {
+    if (!PledgeGetaPool) return
+    try {
+      console.log('timestamp',state.timestamp)
+      let unixTamp = new BigNumber(state.timestamp).div(10 ** 3).toString()
+      console.log('unixTamp',unixTamp)
+      const tx = await PledgeGetaPool.startPool(unixTamp)
+      console.log(tx)
+      await tx.wait()
+    } catch (e) {
+      console.log(e)
+      let msg = JSON.parse(JSON.stringify(e))
+      Notice(msg.reason || msg.message, MsgStatus.fail)
+      return
+    }
+  }
+  const setLpFeeRate = async () => {
+    if (!PledgeLp) return
+    try {
+      let param = null
+      param = new BigNumber(parseFloat(state.parameters)).multipliedBy(10 ** Decimals).div(100).dp(0).toString()
+      console.log(param)
+      const tx = await PledgeLp.setFeeRate(param)
+      console.log(tx)
+      await tx.wait()
+    } catch (e) {
+      console.log(e)
+      let msg = JSON.parse(JSON.stringify(e))
+      Notice(msg.reason || msg.message, MsgStatus.fail)
+      return
+    }
+  }
+
+  const setLpStartPool = async () => {
+    if (!PledgeLp) return
+    try {
+      console.log('timestamp',state.timestamp)
+      let unixTamp = new BigNumber(state.timestamp).div(10 ** 3).toString()
+      console.log('unixTamp',unixTamp)
+      const tx = await PledgeLp.startPool(unixTamp)
+      console.log(tx)
+      await tx.wait()
+    } catch (e) {
+      console.log(e)
+      let msg = JSON.parse(JSON.stringify(e))
+      Notice(msg.reason || msg.message, MsgStatus.fail)
+      return
+    }
+  }
+
+
+
 
   return (
     <Modal
-      onClose={() => props.destoryComponent()}
+      // onClose={() => props.destoryComponent()}
       type={theme.isH5 ? 'modal' : 'modal'}
       // isH5={theme.isH5}
-      style={{ background: "#1A1919", width: theme.isH5 ? '90%' : 'initial', padding: '24px' }}
+      style={{ background: "#1A1919", width: theme.isH5 ? '90%' : '7.77rem', padding: '24px' }}
     >
       <ColumnStart gridGap={theme.isH5 ? '16px' : ".24rem"}>
 
@@ -77,7 +239,7 @@ export default function EditPledgeModal(props: IOpenModal & AA) {
               >
                 <DropDown
                   options={state.selectOption}
-                  defaultValue={state.selectOption[props.type]?.value}
+                  defaultValue={state.selectOption[props.kind]?.value}
                   onChange={(selectd) => {
                     setSelectCoin(selectd)
                   }}
@@ -94,55 +256,87 @@ export default function EditPledgeModal(props: IOpenModal & AA) {
           />
         </FlexTypography>
 
-        <FlexTypography>
-          <Text width={'185px'} fontWeight={'400'} fontSize={theme.isH5 ? '14px' : '.2rem'} color={'#ffffff'} >{t(`APR`)}</Text>
+        <FlexTypography >
+          <Text width={'185px'} fontWeight={'400'} fontSize={theme.isH5 ? '14px' : '.2rem'} color={'#ffffff'} >{t(`Type`)}</Text>
           <Inp
-            value={adminAddress}
             disabled
-            className="disabled"
+            value={selectType?.text}
+            right={
+              <RowCenter
+                height={theme.isH5 ? '32px' : '.38rem'}
+                cursor={'pointer'}
+              >
+                <DropDown
+                  options={state.selectTypeOption[selectCoin && (selectCoin?.value - 1) || props.kind]}
+                  defaultValue={state.selectTypeOption[props.kind][props.type].value}
+                  onChange={(selectd) => {
+                    setSelectType(selectd)
+                  }}
+                >
+                  <Icon
+                    display={'block'}
+                    onClick={() => console.log('123')}
+                    marginRight={'16px'}
+                    src={require('assets/svg/Rectangle39.svg').default}
+                  ></Icon>
+                </DropDown>
+              </RowCenter>
+            }
           />
         </FlexTypography>
+        {
+          selectType && selectType.text === 'StartTime' ?
+            <FlexTypography>
+              <Text width={'185px'} fontWeight={'400'} fontSize={theme.isH5 ? '14px' : '.2rem'} color={'#ffffff'} >{t(`Parameter`)}</Text>
+              <DatePickerZ
+                onChange={(date, dateString) => {
+                  console.log('date', date?.valueOf())
+                  state.MiningTime = dateString
+                  state.timestamp = Number(date?.valueOf()) || 0
+                }}
+                value={state.MiningTime}
+                // format={formatToken}
+                format="yyyy-MM-dd HH:mm:ss"
+                zIndex={10001}
+                type="dateTime"
+                triggerRender={({ placeholder }) => (
+                  <Inp
+                    disabled
+                    value={state.MiningTime as string}
+                    placeholder={`Please select the mining start time`}
+                    right={<Flex alignItems={'center'} padding={'0 18px'} >
+                      <Icon src={require('assets/svg/icon_calendar.svg').default} />
+                    </Flex>}
+                  />
 
-        <FlexTypography>
-          <Text width={'185px'} fontWeight={'400'} fontSize={theme.isH5 ? '14px' : '.2rem'} color={'#ffffff'} >{t(`Handling fee`)}</Text>
-          <Inp
-            value={'2.45%'}
-            disabled
-            className="disabled"
-          />
-        </FlexTypography>
-
-        <FlexTypography>
-          <Text width={'185px'} fontWeight={'400'} fontSize={theme.isH5 ? '14px' : '.2rem'} color={'#ffffff'} >{t(`Mining time`)}</Text>
-          <DatePickerZ
-            onChange={(date, dateString) => {
-              state.MiningTime = dateString
-            }}
-            value={state.MiningTime}
-            // format={formatToken}
-            format="yyyy-MM-dd HH:mm:ss"
-            zIndex={10001}
-            type="dateTime"
-            triggerRender={({ placeholder }) => (
-              <Inp
-                disabled
-                value={state.MiningTime as string}
-                placeholder={`Please select the mining start time`}
-                right={<Flex alignItems={'center'} padding={'0 18px'} >
-                  <Icon src={require('assets/svg/icon_calendar.svg').default} />
-                </Flex>}
+                )}
               />
+            </FlexTypography>
+            :
+            <FlexTypography>
+              <Text width={'185px'} fontWeight={'400'} fontSize={theme.isH5 ? '14px' : '.2rem'} color={'#ffffff'} >{t(`Parameter`)}</Text>
+              <Inp
+                value={state.parameters}
+                placeholder={`Please enter parameter`}
+                onChange={(value) => {
+                  state.parameters = value
+                }}
+              // className="disabled"
+              />
+            </FlexTypography>
 
-            )}
-          />
-        </FlexTypography>
+
+        }
 
         <Flex width={'100%'} justifyContent={'center'} alignItems={'center'} gridGap={theme.isH5 ? '16px' : '.24rem'} alignSelf={'center'}>
-          <Second style={{
-            padding: theme.isH5 ? '8px 0' : '.1rem 0',
-            width: theme.isH5 ? '100%' : '1.75rem'
-          }}>Cancel</Second>
-          <Normal padding={theme.isH5 ? '8px 0' : '.1rem 0 '} width={theme.isH5 ? '100%' : '1.75rem'}>Pledges</Normal>
+          <Second
+            style={{
+              padding: theme.isH5 ? '8px 0' : '.1rem 0',
+              width: theme.isH5 ? '100%' : '1.75rem'
+            }}
+            onClick={() => props.destoryComponent()}
+          >Cancel</Second>
+          <Normal onClick={onSubmit} padding={theme.isH5 ? '8px 0' : '.1rem 0 '} width={theme.isH5 ? '100%' : '1.75rem'}>Confirm</Normal>
         </Flex>
 
       </ColumnStart>

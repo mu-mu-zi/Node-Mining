@@ -62,18 +62,20 @@ const SeMiTabs = styled(Tabs)`
     position: relative;
     white-space: nowrap;
     outline: none;
-    /* width: 3.2rem; */
+    min-width: 3.3rem;
     gap: .16rem;
     background: #1A1919;
     border-radius: 48px;
     outline: none;
-    margin-bottom: .27rem;
+    margin:0 auto .27rem;
+    width:max-content;
     ${({ theme }) => theme.mediaWidth.sm`
       gap: 0;
-      margin-bottom: 16px;
+      margin:0 auto .27rem;
+      min-width: initial;
     `}
     .semi-tabs-tab {
-      width: 1.9rem;
+      /* width: 1.9rem; */
       border-radius: 48px;
       padding: .145rem .125rem;
       color: #fff;
@@ -107,6 +109,7 @@ const SeMiTabs = styled(Tabs)`
 export default function Staking() {
   const { t } = useTranslation()
   const { theme } = useTheme()
+  
   return <>
     <Banner>
       <FlexColumn

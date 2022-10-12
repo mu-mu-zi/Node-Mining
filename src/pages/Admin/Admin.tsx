@@ -33,7 +33,7 @@ const Warpper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center; */
-  height: 9.06rem;
+  height: max-content;
   /* padding-top: 108px; */
   box-sizing: border-box;
   ${({theme}) => theme.mediaWidth.sm`
@@ -107,7 +107,7 @@ export default function Admin() {
       let result = await TgeMarket.getTokensOf(`${ContractAddresses.TgeMarket}`)
       let arr: any = []
       let obj: any = {}
-      result.forEach((item) => {
+      result.forEach((item: any) => {
         arr.push({
           text: `Node${item.toString()}`,
           value: item.toString()
@@ -131,7 +131,9 @@ export default function Admin() {
 
   useEffect(() => {
     let account = accounts && accounts[0]
-    if (adminAddress.toLowerCase() !== account?.toLowerCase()) {
+    // 调试
+    // if (adminAddress.toLowerCase() !== account?.toLowerCase()) {
+    if (adminAddress.toLowerCase() === account?.toLowerCase()) {
       navigate('/')
     }
     if(chainId !== CHAINS.BSC.chainId) {
@@ -198,6 +200,7 @@ export default function Admin() {
           <Column
             width={theme.isH5 ? '100%' : '3.7rem'}
             margin={theme.isH5 ? '32px 0px' : '.64rem auto 0'}
+            padding={'20px'}
           >
             <Title
               marginBottom={theme.isH5 ? '48px' : '.64rem'}
@@ -251,6 +254,7 @@ export default function Admin() {
           <Column
             width={theme.isH5 ? '100%' : '3.7rem'}
             margin={theme.isH5 ? '32px 0px' : '.64rem auto 0'}
+            padding={'20px'}
           >
             <Title
               marginBottom={theme.isH5 ? '48px' : '.64rem'}
