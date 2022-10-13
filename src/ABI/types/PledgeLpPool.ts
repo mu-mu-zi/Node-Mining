@@ -30,6 +30,7 @@ import type {
 export interface PledgeLpPoolInterface extends utils.Interface {
   functions: {
     "DURATION()": FunctionFragment;
+    "accReward()": FunctionFragment;
     "denominator()": FunctionFragment;
     "feeRate()": FunctionFragment;
     "funder()": FunctionFragment;
@@ -77,6 +78,7 @@ export interface PledgeLpPoolInterface extends utils.Interface {
   getFunction(
     nameOrSignatureOrTopic:
       | "DURATION"
+      | "accReward"
       | "denominator"
       | "feeRate"
       | "funder"
@@ -122,6 +124,7 @@ export interface PledgeLpPoolInterface extends utils.Interface {
   ): FunctionFragment;
 
   encodeFunctionData(functionFragment: "DURATION", values?: undefined): string;
+  encodeFunctionData(functionFragment: "accReward", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "denominator",
     values?: undefined
@@ -265,6 +268,7 @@ export interface PledgeLpPoolInterface extends utils.Interface {
   ): string;
 
   decodeFunctionResult(functionFragment: "DURATION", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "accReward", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "denominator",
     data: BytesLike
@@ -484,6 +488,8 @@ export interface PledgeLpPool extends BaseContract {
   functions: {
     DURATION(overrides?: CallOverrides): Promise<[BigNumber]>;
 
+    accReward(overrides?: CallOverrides): Promise<[BigNumber]>;
+
     denominator(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     feeRate(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -618,6 +624,8 @@ export interface PledgeLpPool extends BaseContract {
 
   DURATION(overrides?: CallOverrides): Promise<BigNumber>;
 
+  accReward(overrides?: CallOverrides): Promise<BigNumber>;
+
   denominator(overrides?: CallOverrides): Promise<BigNumber>;
 
   feeRate(overrides?: CallOverrides): Promise<BigNumber>;
@@ -751,6 +759,8 @@ export interface PledgeLpPool extends BaseContract {
 
   callStatic: {
     DURATION(overrides?: CallOverrides): Promise<BigNumber>;
+
+    accReward(overrides?: CallOverrides): Promise<BigNumber>;
 
     denominator(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -934,6 +944,8 @@ export interface PledgeLpPool extends BaseContract {
   estimateGas: {
     DURATION(overrides?: CallOverrides): Promise<BigNumber>;
 
+    accReward(overrides?: CallOverrides): Promise<BigNumber>;
+
     denominator(overrides?: CallOverrides): Promise<BigNumber>;
 
     feeRate(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1068,6 +1080,8 @@ export interface PledgeLpPool extends BaseContract {
 
   populateTransaction: {
     DURATION(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    accReward(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     denominator(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 

@@ -38,8 +38,8 @@ export default function Header() {
     if (!accounts) return
     let account = accounts[0]
     // 调试
-    // if (adminAddress.toLowerCase() === account?.toLowerCase()) {
-    if (adminAddress.toLowerCase() !== account?.toLowerCase()) {
+    if (adminAddress.toLowerCase() === account?.toLowerCase()) {
+    // if (adminAddress.toLowerCase() !== account?.toLowerCase()) {
       setShowAdmin(true)
     } else {
       setShowAdmin(false)

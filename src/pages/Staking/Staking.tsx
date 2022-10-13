@@ -62,7 +62,7 @@ const SeMiTabs = styled(Tabs)`
     position: relative;
     white-space: nowrap;
     outline: none;
-    min-width: 3.3rem;
+    /* min-width: 3.3rem; */
     gap: .16rem;
     background: #1A1919;
     border-radius: 48px;
@@ -77,7 +77,7 @@ const SeMiTabs = styled(Tabs)`
     .semi-tabs-tab {
       /* width: 1.9rem; */
       border-radius: 48px;
-      padding: .145rem .125rem;
+      padding: .145rem .15rem;
       color: #fff;
       font-size: 14px;
       font-weight: 900;
@@ -143,7 +143,7 @@ export default function Staking() {
 
         <SeMiTabs type="button" >
           <TabPane
-            tab={<Text>{t(`Single Currency Pledge`)}</Text>}
+            tab={<Text>{t(`Single Currency Stake`)}</Text>}
             itemKey="1"
             style={{ outline: 'none', height: '100%' }}
           >
@@ -151,7 +151,7 @@ export default function Staking() {
           </TabPane>
 
           <TabPane
-            tab={<Text>{t(`Liquidity Pledge`)}</Text>}
+            tab={<Text>{t(`Liquidity Stake`)}</Text>}
             itemKey="2"
             style={{ outline: 'none', height: '100%' }}
           >

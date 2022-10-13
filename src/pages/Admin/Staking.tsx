@@ -17,10 +17,11 @@ import useRedux from "hooks/useRedux";
 import useWalletTools from "hooks/useWalletTools";
 import { useAsync } from "react-use";
 import BigNumber from "bignumber.js";
-import { Decimals, EmptyStr } from '../../utils/global';
-import { TimestampTransform } from "utils/tools";
-import {PledgeContract} from 'utils/ContractAddresses'
+import { decimalPlaces, Decimals, EmptyStr } from '../../utils/global';
+import { Notice, TimestampTransform } from "utils/tools";
+import { PledgeContract } from 'utils/ContractAddresses'
 import RechargeWithdrawModal from "./RechargeWithdrawModal";
+import { MsgStatus } from "components/messageBox/MessageBox";
 
 export const Title = styled.div`
   border-left: 4px solid #F6B91B;
@@ -48,7 +49,7 @@ const _Td = styled(Td)`
   `}
 `
 
-export default function Staking () {
+export default function Staking() {
   const { t } = useTranslation()
   const { theme } = useTheme()
   const { openModal } = useContext(ModalContext)
@@ -60,6 +61,7 @@ export default function Staking () {
   const [singlePoolReload, setSinglePoolReload] = useState(false)
   const [lpPoolReload, setLpPoolReload] = useState(false)
   const [TBreload, setTBReload] = useState(false)
+  const [parameterReload, setParameterReload] = useState(false)
   const state = useEffectState({
     SingleFee: new BigNumber(0),
     LpFee: new BigNumber(0),
@@ -71,73 +73,109 @@ export default function Staking () {
     totalSinglePools: new BigNumber(0),
     totalLpPools: new BigNumber(0),
     todayCents: new BigNumber(0),
+    totalCents: new BigNumber(0),
+    cycleId: '',
+    lpStartTime: '',
+    lpEndTime: '',
   })
 
+  
+  // get SinglePools geta
   useAsync(async () => {
-    if(!PledgeGeta) return
-
+    if (!PledgeGeta) return
     const totalSinglePools = await PledgeGeta.balanceOf(PledgeContract.GetaPool)
-    console.log(totalSinglePools.toString())
     state.totalSinglePools = new BigNumber(totalSinglePools.toString()).div(10 ** Decimals)
-    console.log(state.totalSinglePools)
-    
-    
-  },[singlePoolReload,PledgeGeta])
-  useAsync(async () => {
-    if(!PledgeGeta) return
+  }, [singlePoolReload, PledgeGeta])
 
+  // get LpPools geta
+  useAsync(async () => {
+    if (!PledgeGeta) return
     const totalLpPools = await PledgeGeta.balanceOf(PledgeContract.LpPool)
-    state.totalLpPools = new BigNumber(totalLpPools.toString()).div(10 ** Decimals) 
-    
-    
-  },[lpPoolReload,PledgeGeta])
+    state.totalLpPools = new BigNumber(totalLpPools.toString()).div(10 ** Decimals)
+  }, [lpPoolReload, PledgeGeta])
+
   
+  // get Today's Distribution Times
   useAsync(async () => {
-    if(!PledgeLpPool) return
+    if (!PledgeLpPool) return
+    try{
+      const CycleId = await PledgeLpPool.rewardEpoch()
+      state.cycleId = CycleId.toString()
+
+      const time = await PledgeLpPool.getRewardHistory(CycleId)
+      state.lpStartTime = TimestampTransform(new BigNumber(time[2].toString()).multipliedBy(1000).toNumber())
+      state.lpEndTime = TimestampTransform(new BigNumber(time[3].toString()).multipliedBy(1000).toNumber())
+      
+    }catch(e){
+      console.error(e)
+      let msg = JSON.parse(JSON.stringify(e))
+      Notice(msg.reason || msg.message, MsgStatus.fail)
+      return
+    }
     
-    const todayCents = await PledgeLpPool.rewardAmount()
-    state.todayCents = new BigNumber(todayCents.toString()).div(10 ** Decimals) 
-    
-  },[lpPoolReload,PledgeGeta])
-  
-  
+
+  }, [lpPoolReload, PledgeLpPool])
+
+  // get Cumulative/Today's Distribution Bonus
   useAsync(async () => {
-    if(!PledgeGetaPool || !PledgeLpPool) return
+    if (!PledgeLpPool) return
+    try{
+
+      const todayCents = await PledgeLpPool.rewardAmount()
+      state.todayCents = new BigNumber(todayCents.toString()).div(10 ** Decimals)
+      console.log('todayCents',todayCents)
+
+
+
+      const totalCents = await PledgeLpPool.accReward()
+      console.log('totalCents',totalCents)
+      state.totalCents = new BigNumber(totalCents.toString()).div(10 ** Decimals)
+
+
+    }catch(e) {
+      console.error(e)
+      let msg = JSON.parse(JSON.stringify(e))
+      Notice(msg.reason || msg.message, MsgStatus.fail)
+      return
+    }
+
+  }, [lpPoolReload, PledgeLpPool])
+
+  // is Start Lp/Single Pool
+  useAsync(async () => {
+    if (!PledgeGetaPool || !PledgeLpPool) return
     const startTime = await PledgeGetaPool.startTime()
-    if(startTime.toString() === '0') {
+    if (startTime.toString() === '0') {
       state.isStartPool = false
     }
     const isLpStart = await PledgeLpPool.isStarted()
-    if(!isLpStart) {
+    if (!isLpStart) {
       state.isStartLpPool = false
     }
 
-  } ,[PledgeGetaPool,PledgeLpPool])
+  }, [PledgeGetaPool, PledgeLpPool])
 
-  useAsync(async () => { 
+  // get Single Pool Configure
+  useAsync(async () => {
     if (!PledgeGetaPool || !accounts) return
-    let account = accounts[0]
     const fee = await PledgeGetaPool.bonusFeeRate()
     state.SingleFee = new BigNumber(fee.toString())
-    
+
     const apr = await PledgeGetaPool.globalAPY()
     state.SingleApr = new BigNumber(apr.toString()).multipliedBy((86400 * 365))
-    
+
     const startTime = await PledgeGetaPool.startTime()
     console.log('startTime', startTime)
     state.SingleStartTime = new BigNumber(startTime.toString())
 
   }, [accounts, PledgeGetaPool, chainId, store.token])
 
-  useAsync(async () => { 
+  // get LP Pool Configure
+  useAsync(async () => {
     if (!PledgeLpPool || !accounts) return
-    let account = accounts[0]
     const fee = await PledgeLpPool.feeRate()
     state.LpFee = new BigNumber(fee.toString())
-    
-    // const apr = await PledgeLpPool.globalAPY()
-    // state.SingleApr = new BigNumber(apr.toString()).multipliedBy((86400 * 365))
-    
+
     const startTime = await PledgeLpPool.startTime()
     console.log('startTime', startTime)
     state.LpStartTime = new BigNumber(startTime.toString())
@@ -148,7 +186,7 @@ export default function Staking () {
     <ColumnStart padding={theme.isH5 ? '32px 0' : '.31rem .5rem 1rem'} gridGap={theme.isH5 ? '55px' : '.78rem'}>
 
       <ColumnStart width={'100%'} gridGap={theme.isH5 ? '16px' : '.19rem'}>
-        <Title>{t(`Today's Distribution Bonus`)}</Title>
+        <Title>{t(`Pools`)}</Title>
 
         <Box width={'100%'} overflow={'auto'}>
           <Table width={'100%'}>
@@ -159,8 +197,8 @@ export default function Staking () {
                 color={'#ffffff'}
                 background={'#312F2A'}
               >
-                <_Th>{t(`PledgeType`)}</_Th>
-                <_Th>{t(`Number of pools`)}</_Th>
+                <_Th>{t(`Pool`)}</_Th>
+                <_Th>{t(`GETA Balance`)}</_Th>
                 <_Th>{t(`Contract Address`)}</_Th>
                 <_Th>{t(`Operation`)}</_Th>
               </Tr>
@@ -173,29 +211,33 @@ export default function Staking () {
                 color={'#ffffff'}
                 background={'#1A1919'}
               >
-                <_Td>Single Currency Pledge</_Td>
-                <_Td>{state.totalSinglePools.toNumber() || EmptyStr}</_Td>
+                <_Td>Single Currency Stake</_Td>
+                <_Td>{state.totalSinglePools.dp(decimalPlaces, 1).toNumber() || 0}</_Td>
                 <_Td>{PledgeContract.GetaPool}</_Td>
                 <_Td>
                   <Flex justifyContent={'center'} color={'#F6B91B'} gridGap={'10px'}>
-                    <Text onClick={() => {
-                      openModal(RechargeWithdrawModal, {
-                        setReload:setSinglePoolReload,
-                        reload:singlePoolReload,
-                        title:'Recharge',
-                        coin:1,
-                        type:1,
-                      })
-                    }} >{t(`RECHARGE`)}</Text>
-                    <Text onClick={() => {
-                      openModal(RechargeWithdrawModal, {
-                        setReload:setSinglePoolReload,
-                        reload:singlePoolReload,
-                        title:'Withdraw',
-                        coin:1,
-                        type:2,
-                      })
-                    }} >{t(`WITHDRAW`)}</Text>
+                    <Text
+                      cursor={'pointer'}
+                      onClick={() => {
+                        openModal(RechargeWithdrawModal, {
+                          setReload: setSinglePoolReload,
+                          reload: singlePoolReload,
+                          title: 'Recharge',
+                          coin: 1,
+                          type: 1,
+                        })
+                      }} >{t(`RECHARGE`)}</Text>
+                    <Text
+                      cursor={'pointer'}
+                      onClick={() => {
+                        openModal(RechargeWithdrawModal, {
+                          setReload: setSinglePoolReload,
+                          reload: singlePoolReload,
+                          title: 'Withdraw',
+                          coin: 1,
+                          type: 2,
+                        })
+                      }} >{t(`WITHDRAW`)}</Text>
                   </Flex>
                 </_Td>
               </Tr>
@@ -205,19 +247,21 @@ export default function Staking () {
                 color={'#ffffff'}
                 background={'#1A1919'}
               >
-                <_Td>Liquidity Pledge</_Td>
-                <_Td>{state.totalLpPools.toNumber() || EmptyStr}</_Td>
+                <_Td>Liquidity Stake</_Td>
+                <_Td>{state.totalLpPools.dp(decimalPlaces, 1).toNumber() || 0}</_Td>
                 <_Td>{PledgeContract.LpPool}</_Td>
                 <_Td>
-                  <Text onClick={() => {
-                    openModal(RechargeWithdrawModal, {
-                      setReload:setLpPoolReload,
-                        reload:lpPoolReload,
-                        title:'Recharge',
-                        coin:2,
-                        type:1,
-                    })
-                  }} color={'#F6B91B'} >{t(`RECHARGE`)}</Text>
+                  <Text
+                    cursor={'pointer'}
+                    onClick={() => {
+                      openModal(RechargeWithdrawModal, {
+                        setReload: setLpPoolReload,
+                        reload: lpPoolReload,
+                        title: 'Recharge',
+                        coin: 2,
+                        type: 1,
+                      })
+                    }} color={'#F6B91B'} >{t(`RECHARGE`)}</Text>
                 </_Td>
               </Tr>
             </tbody>
@@ -239,8 +283,11 @@ export default function Staking () {
             <Text fontSize={'14px'} fontWeight={'400'} color={'#ffffff'} >{t(`If GETA is not set before 11:59:59 each day, the next day 00:00:00 will default to the last assigned amount.`)}</Text>
           </ColumnStart>
           <Normal onClick={() => {
-            openModal(AllocationModal, {})
-          }} padding={'10px 18px'} fontSize={'14px'} style={{alignSelf: theme.isH5 ? 'start' : 'center'}}>{t(`ALLOCATION OF GETA TOKENS`)}</Normal>
+            openModal(AllocationModal, {
+              reload: TBreload,
+              setReload: setTBReload,
+            })
+          }} padding={'10px 18px'} fontSize={'14px'} style={{ alignSelf: theme.isH5 ? 'start' : 'center' }}>{t(`Distribution OF GETA TOKENS`)}</Normal>
         </Flex>
 
         <Box width={'100%'} overflow={'auto'}>
@@ -252,9 +299,11 @@ export default function Staking () {
                 color={'#ffffff'}
                 background={'#312F2A'}
               >
-                <_Th>{t(`Number of assignments`)}</_Th>
+                <_Th>{t(`Amount`)}</_Th>
                 <_Th>{t(`Contract Address`)}</_Th>
-                <_Th>{t(`Allocation time`)}</_Th>
+                <_Th>{t(`Cumulative Distribution`)}</_Th>
+                <_Th>{t(`Distribution Start Time`)}</_Th>
+                <_Th>{t(`Distribution End Time`)}</_Th>
               </Tr>
             </thead>
 
@@ -265,9 +314,11 @@ export default function Staking () {
                 color={'#ffffff'}
                 background={'#1A1919'}
               >
-                <_Td>{state.todayCents.toNumber() || EmptyStr}</_Td>
+                <_Td>{state.todayCents.toNumber() || 0}</_Td>
                 <_Td>{PledgeContract.LpPool}</_Td>
-                <_Td>2022-09-29 12:00:00</_Td>
+                <_Td>{state.totalCents.toNumber() || 0}</_Td>
+                <_Td>{state.cycleId === '0' ? EmptyStr : state.lpStartTime }</_Td>
+                <_Td>{state.cycleId === '0' ? EmptyStr : state.lpEndTime }</_Td>
               </Tr>
             </tbody>
 
@@ -276,7 +327,7 @@ export default function Staking () {
       </ColumnStart>
 
       <ColumnStart width={'100%'} gridGap={theme.isH5 ? '16px' : '.19rem'}>
-        <Title>{t(`Pledge Parameters`)}</Title>
+        <Title>{t(`Pool Configure`)}</Title>
 
         <Box width={'100%'} overflow={'auto'}>
           <Table width={'100%'}>
@@ -287,10 +338,9 @@ export default function Staking () {
                 color={'#ffffff'}
                 background={'#312F2A'}
               >
-                <_Th>{t(`PledgeType`)}</_Th>
+                <_Th>{t(`Pool`)}</_Th>
                 <_Th>{t(`Type`)}</_Th>
-                <_Th>{t(`Parameter`)}</_Th>
-                {/* <_Th>{t(`Start mining time`)}</_Th> */}
+                <_Th>{t(`Value`)}</_Th>
                 <_Th>{t(`Operation`)}</_Th>
               </Tr>
             </thead>
@@ -302,17 +352,23 @@ export default function Staking () {
                 color={'#ffffff'}
                 background={'#1A1919'}
               >
-                <_Td rowSpan={3}>Single Currency Pledge</_Td>
+                <_Td rowSpan={3}>Single Currency Stake</_Td>
                 <_Td>APR</_Td>
                 <_Td>{state.SingleApr.div(10 ** Decimals).multipliedBy(100).toFixed(2) + '%' || EmptyStr}</_Td>
-                <_Td 
-                cursor={'pointer'}  
-                onClick={() => {
-                  openModal(EditPledgeModal, {
-                    kind: 0,
-                    type: 0
-                  })
-                }} color={'#F6B91B'}>EDIT</_Td>
+                <_Td>
+                  <Text
+                    display={'inline'}
+                    cursor={'pointer'}
+                    onClick={() => {
+                      openModal(EditPledgeModal, {
+                        kind: 0,
+                        type: 0,
+                        reload: parameterReload,
+                        setReload: setParameterReload,
+                      })
+                    }} color={'#F6B91B'}
+                  >EDIT</Text>
+                </_Td>
               </Tr>
               <Tr
                 fontSize={'16px'}
@@ -323,14 +379,20 @@ export default function Staking () {
                 {/* <_Td colSpan={3}>Single Currency Pledge</_Td> */}
                 <_Td>Handling fee</_Td>
                 <_Td>{state.SingleFee.div(10 ** Decimals).multipliedBy(100).toFixed() + '%' || EmptyStr}</_Td>
-                <_Td 
-                cursor={'pointer'}
-                onClick={() => {
-                  openModal(EditPledgeModal, {
-                    kind: 0,
-                    type: 1
-                  })
-                }} color={'#F6B91B'}>EDIT</_Td>
+                <_Td>
+                  <Text
+                    display={'inline'}
+                    cursor={'pointer'}
+                    onClick={() => {
+                      openModal(EditPledgeModal, {
+                        kind: 0,
+                        type: 1,
+                        reload: parameterReload,
+                        setReload: setParameterReload,
+                      })
+                    }} color={'#F6B91B'}
+                  >EDIT</Text>
+                </_Td>
               </Tr>
               <Tr
                 fontSize={'16px'}
@@ -341,16 +403,21 @@ export default function Staking () {
                 {/* <_Td colSpan={3}>Single Currency Pledge</_Td> */}
                 <_Td>Start mining time</_Td>
                 <_Td>{state.SingleStartTime.toFixed() === '0' ? EmptyStr : TimestampTransform(state.SingleStartTime.multipliedBy(1000).toNumber())}</_Td>
-                <_Td 
-                cursor={'pointer'}
-                
-                style={{pointerEvents: state.isStartPool ? 'none' : 'inherit'}}
-                onClick={() => {
-                  openModal(EditPledgeModal, {
-                    kind: 0,
-                    type: 2
-                  })
-                }} color={'#F6B91B'}>EDIT</_Td>
+                <_Td>
+                  <Text
+                    display={'inline'}
+                    style={{ pointerEvents: state.isStartPool ? 'none' : 'inherit' }}
+                    cursor={'pointer'}
+                    onClick={() => {
+                      openModal(EditPledgeModal, {
+                        kind: 0,
+                        type: 2,
+                        reload: parameterReload,
+                        setReload: setParameterReload,
+                      })
+                    }} color={'#F6B91B'}
+                  >EDIT</Text>
+                </_Td>
               </Tr>
               <Tr
                 fontSize={'16px'}
@@ -358,17 +425,23 @@ export default function Staking () {
                 color={'#ffffff'}
                 background={'#1A1919'}
               >
-                <_Td rowSpan={2}>Liquidity Pledge</_Td>
+                <_Td rowSpan={2}>Liquidity Stake</_Td>
                 <_Td>Handling fee</_Td>
                 <_Td>{state.LpFee.div(10 ** Decimals).multipliedBy(100).toFixed() + '%' || EmptyStr}</_Td>
-                <_Td 
-                cursor={'pointer'}
-                onClick={() => {
-                  openModal(EditPledgeModal, {
-                    kind: 1,
-                    type: 0
-                  })
-                }} color={'#F6B91B'}>EDIT</_Td>
+                <_Td>
+                  <Text
+                    display={'inline'}
+                    cursor={'pointer'}
+                    onClick={() => {
+                      openModal(EditPledgeModal, {
+                        kind: 1,
+                        type: 0,
+                        reload: parameterReload,
+                        setReload: setParameterReload,
+                      })
+                    }} color={'#F6B91B'}
+                  >EDIT</Text>
+                </_Td>
               </Tr>
               <Tr
                 fontSize={'16px'}
@@ -378,15 +451,21 @@ export default function Staking () {
               >
                 <_Td>Start mining time</_Td>
                 <_Td>{state.isStartLpPool ? TimestampTransform(state.LpStartTime.multipliedBy(1000).toNumber()) : EmptyStr}</_Td>
-                <_Td 
-                cursor={'pointer'}
-                style={{pointerEvents: state.isStartLpPool ? 'none' : 'inherit'}}
-                onClick={() => {
-                  openModal(EditPledgeModal, {
-                    kind: 1,
-                    type: 1
-                  })
-                }} color={'#F6B91B'}>EDIT</_Td>
+                <_Td>
+                  <Text
+                    display={'inline'}
+                    style={{ pointerEvents: state.isStartLpPool ? 'none' : 'inherit' }}
+                    cursor={'pointer'}
+                    onClick={() => {
+                      openModal(EditPledgeModal, {
+                        kind: 1,
+                        type: 1,
+                        reload: parameterReload,
+                        setReload: setParameterReload,
+                      })
+                    }} color={'#F6B91B'}
+                  >EDIT</Text>
+                </_Td>
               </Tr>
             </tbody>
 

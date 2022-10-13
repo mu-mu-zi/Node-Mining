@@ -17,7 +17,7 @@ import { usePledgeLpPool, usePair } from "hooks/useContract";
 import { useEffectState } from "hooks/useEffectState";
 import useRedux from "hooks/useRedux";
 import useWalletTools from "hooks/useWalletTools";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useState, useEffect } from "react";
 import { Decimals, EmptyStr } from "utils/global";
 import { PledgeContract } from "utils/ContractAddresses";
 import { useAsync } from "react-use";
@@ -140,19 +140,35 @@ export default function LiquidityPledgeModal(props: IOpenModal & AA) {
   const { store } = useRedux()
   const pledgeLpPool = usePledgeLpPool()
   const Pair = usePair()
+  const [approveReload, setApproveReload] = useState<boolean>(false)
 
   const state = useEffectState({
     getaBalance: new BigNumber(0),
     amount: '',
+    approve: '',
+    isApproveEnough: true,
   })
+
+
 
   useAsync(async () => {
     if (!Pair || !accounts) return
     let account = accounts[0]
     const balance = await Pair.balanceOf(account)
     state.getaBalance = new BigNumber(balance.toString())
+    let isApprove = await Pair.allowance(account, PledgeContract.LpPool)
+    state.approve = new BigNumber(isApprove.toString()).div(10 ** Decimals).toFixed()
 
-  }, [accounts, Pair, chainId, store.token])
+  }, [accounts, Pair, chainId, store.token, approveReload])
+
+  useEffect(() => {
+    if(Number(state.approve) < Number(state.amount)) {
+      state.isApproveEnough = false
+    } else {
+      state.isApproveEnough = true
+    }
+
+  },[state.amount, state.approve])
 
   const onPledges = async () => {
     if (!pledgeLpPool || !Pair || !accounts ) {
@@ -165,19 +181,23 @@ export default function LiquidityPledgeModal(props: IOpenModal & AA) {
     try {
       let account = accounts[0]
       let tx1: any
-      let isApprove = await Pair.allowance(account, PledgeContract.LpPool)
-      console.log('isApprove', isApprove.toString())
-      console.log(new BigNumber(state.amount).multipliedBy(10 ** Decimals).toFixed())
-      if (Number(isApprove.toString()) < Number(new BigNumber(state.amount).multipliedBy(10 ** Decimals).toFixed())) {
-        try {
-          tx1 = await Pair.approve(PledgeContract.LpPool, new BigNumber(state.amount).multipliedBy(10 ** Decimals).toFixed())
-          Notice('Please wait, your approve will arrive soon.', MsgStatus.loading)
-          await tx1.wait()
-          CloseMessageBox()
-        } catch (e: any) {
-          let msg = JSON.parse(JSON.stringify(e))
-          Notice(msg.reason || msg.message, MsgStatus.fail)
-          return
+      if(!state.isApproveEnough) {
+        let isApprove = await Pair.allowance(account, PledgeContract.LpPool)
+        if (Number(isApprove.toString()) < Number(new BigNumber(state.amount).multipliedBy( 10 ** Decimals).toFixed())) {
+          try{
+            // The overflow of the principal authorized two
+            tx1 = await Pair.approve(PledgeContract.LpPool, new BigNumber(state.amount).multipliedBy( 10 ** (Decimals + 2)).toFixed())
+            Notice('Please wait, your approve will arrive soon.', MsgStatus.loading)
+            await tx1.wait()
+            CloseMessageBox()
+            Notice('successfully approve.', MsgStatus.success)
+            setApproveReload(!approveReload)
+            return
+          }catch(e:any) {
+            let msg = JSON.parse(JSON.stringify(e))
+            Notice(msg.reason || msg.message, MsgStatus.fail)
+            return
+          }
         }
       }
 
@@ -197,7 +217,7 @@ export default function LiquidityPledgeModal(props: IOpenModal & AA) {
 
   return (
     <Modal
-      onClose={() => props.destoryComponent()}
+      // onClose={() => props.destoryComponent()}
       type={theme.isH5 ? 'modal' : 'modal'}
       // isH5={theme.isH5}
       style={{ background: "#1A1919", width: theme.isH5 ? '90%' : '5.06rem', padding: '24px' }}
@@ -207,7 +227,7 @@ export default function LiquidityPledgeModal(props: IOpenModal & AA) {
         <Flex alignItems={'center'} gridGap={'8px'}>
           <Icon width={theme.isH5 ? '32px' : '.4rem'} height={theme.isH5 ? '32px' : '.4rem'} src={require('./img_usdt 1.svg').default} />
           <Text fontSize={theme.isH5 ? '16px' : '.2rem'} fontWeight={'700'} color={'#ffffff'} >
-            {t(`Pledge GETA/USDT LP`)}
+            {t(`Stake GETA/USDT LP`)}
           </Text>
         </Flex>
 
@@ -241,7 +261,7 @@ export default function LiquidityPledgeModal(props: IOpenModal & AA) {
             }}
             onClick={() => props.destoryComponent()}
           >Cancel</Second>
-          <Normal onClick={onPledges} padding={theme.isH5 ? '8px 0' : '.1rem 0 '} width={theme.isH5 ? '100%' : '1.75rem'}>Pledges</Normal>
+          <Normal onClick={onPledges} padding={theme.isH5 ? '8px 0' : '.1rem 0 '} width={theme.isH5 ? '100%' : '1.75rem'}>{state.isApproveEnough ? 'Stake' : 'Approve'}</Normal>
         </Flex>
 
         <Flex width={'100%'} alignSelf={'center'} justifyContent={'center'} fontSize={theme.isH5 ? '12px' : '.14rem'} fontWeight={'400'} color={'#ffffff'}>

@@ -132,8 +132,8 @@ export default function Admin() {
   useEffect(() => {
     let account = accounts && accounts[0]
     // 调试
-    // if (adminAddress.toLowerCase() !== account?.toLowerCase()) {
-    if (adminAddress.toLowerCase() === account?.toLowerCase()) {
+    if (adminAddress.toLowerCase() !== account?.toLowerCase()) {
+    // if (adminAddress.toLowerCase() === account?.toLowerCase()) {
       navigate('/')
     }
     if(chainId !== CHAINS.BSC.chainId) {

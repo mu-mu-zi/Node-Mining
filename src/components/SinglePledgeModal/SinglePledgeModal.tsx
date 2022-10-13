@@ -20,7 +20,7 @@ import useWalletTools from "hooks/useWalletTools";
 import { useAsync } from "react-use";
 import { Decimals, EmptyStr } from "utils/global";
 import { PledgeContract } from "utils/ContractAddresses";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 interface AA {
   reload: boolean,
@@ -142,10 +142,13 @@ export default function SinglePledgeModal(props: IOpenModal & AA) {
   const { store } = useRedux()
   const PledgeGetaPool = usePledgeGetaPool(true)
   const PledgeGeta = usePledgeGeta()
+  const [approveReload, setApproveReload] = useState<boolean>(false)
 
   const state = useEffectState({
     getaBalance: new BigNumber(0),
     amount: '',
+    approve: '',
+    isApproveEnough: true,
   })
 
 
@@ -154,8 +157,18 @@ export default function SinglePledgeModal(props: IOpenModal & AA) {
     let account = accounts[0]
     const balance = await PledgeGeta.balanceOf(account)
     state.getaBalance = new BigNumber(balance.toString())
+    let isApprove = await PledgeGeta.allowance(account, PledgeContract.GetaPool)
+    state.approve = new BigNumber(isApprove.toString()).div(10 ** Decimals).toFixed()
+  },[accounts, PledgeGeta, chainId, store.token, approveReload])
 
-  },[accounts, PledgeGeta, chainId, store.token])
+  useEffect(() => {
+    if(Number(state.approve) < Number(state.amount)) {
+      state.isApproveEnough = false
+    } else {
+      state.isApproveEnough = true
+    }
+
+  },[state.amount, state.approve])
 
   const onPledges = async () => {
     if (!PledgeGetaPool || !PledgeGeta || !accounts) {
@@ -168,21 +181,27 @@ export default function SinglePledgeModal(props: IOpenModal & AA) {
     try{
       let account = accounts[0]
       let tx1: any
-      let isApprove = await PledgeGeta.allowance(account, PledgeContract.GetaPool)
-      console.log('isApprove',isApprove.toString())
-      console.log(new BigNumber(state.amount).multipliedBy( 10 ** Decimals).toFixed())
-      if (Number(isApprove.toString()) < Number(new BigNumber(state.amount).multipliedBy( 10 ** Decimals).toFixed())) {
-        try{
-          tx1 = await PledgeGeta.approve(PledgeContract.GetaPool, new BigNumber(state.amount).multipliedBy( 10 ** Decimals).toFixed())
-          Notice('Please wait, your approve will arrive soon.', MsgStatus.loading)
-          await tx1.wait()
-          CloseMessageBox()
-        }catch(e:any) {
-          let msg = JSON.parse(JSON.stringify(e))
-          Notice(msg.reason || msg.message, MsgStatus.fail)
-          return
+      
+      if(!state.isApproveEnough) {
+        let isApprove = await PledgeGeta.allowance(account, PledgeContract.GetaPool)
+        if (Number(isApprove.toString()) < Number(new BigNumber(state.amount).multipliedBy( 10 ** Decimals).toFixed())) {
+          try{
+            // The overflow of the principal authorized two
+            tx1 = await PledgeGeta.approve(PledgeContract.GetaPool, new BigNumber(state.amount).multipliedBy( 10 ** (Decimals + 2)).toFixed())
+            Notice('Please wait, your approve will arrive soon.', MsgStatus.loading)
+            await tx1.wait()
+            CloseMessageBox()
+            Notice('successfully approve.', MsgStatus.success)
+            setApproveReload(!approveReload)
+            return
+          }catch(e:any) {
+            let msg = JSON.parse(JSON.stringify(e))
+            Notice(msg.reason || msg.message, MsgStatus.fail)
+            return
+          }
         }
       }
+
 
       let tx = await PledgeGetaPool.deposit(new BigNumber(state.amount).multipliedBy( 10 ** Decimals).toFixed())
       Notice('Please wait, your pledge will arrive soon.', MsgStatus.loading)
@@ -200,7 +219,7 @@ export default function SinglePledgeModal(props: IOpenModal & AA) {
 
   return (
     <Modal
-      onClose={() => props.destoryComponent()}
+      // onClose={() => props.destoryComponent()}
       type={theme.isH5 ? 'modal' : 'modal'}
       // isH5={theme.isH5}
       style={{ background: "#1A1919", width: theme.isH5 ? '90%' : '5.06rem', padding: theme.isH5 ? '24px 16px' : '24px' }}
@@ -210,7 +229,7 @@ export default function SinglePledgeModal(props: IOpenModal & AA) {
         <Flex alignItems={'center'} gridGap={'8px'}>
           <Icon width={theme.isH5 ? '32px' : '.4rem'} height={theme.isH5 ? '32px' : '.4rem'} src={require('./img_usdt 1.svg').default} />
           <Text fontSize={theme.isH5 ? '16px' : '.2rem'} fontWeight={'700'} color={'#ffffff'} >
-            {t(`GETA Single Currency Pledge`)}
+            {t(`GETA Single Currency Stake`)}
           </Text>
         </Flex>
 
@@ -243,7 +262,7 @@ export default function SinglePledgeModal(props: IOpenModal & AA) {
               }}
               onClick={() => props.destoryComponent()}
             >Cancel</Second>
-            <Normal onClick={onPledges} padding={theme.isH5 ? '8px 0' : '.1rem 0 '} width={theme.isH5 ? '100%' : '1.75rem'}>Pledges</Normal>
+            <Normal onClick={onPledges} padding={theme.isH5 ? '8px 0' : '.1rem 0 '} width={theme.isH5 ? '100%' : '1.75rem'}>{state.isApproveEnough ? 'Stake' : 'Approve'}</Normal>
         </Flex>
 
       </ColumnStart>

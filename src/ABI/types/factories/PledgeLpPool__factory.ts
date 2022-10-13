@@ -184,6 +184,21 @@ const _abi = [
   },
   {
     inputs: [],
+    name: "accReward",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+    constant: true,
+    signature: "0x562975cb",
+  },
+  {
+    inputs: [],
     name: "denominator",
     outputs: [
       {

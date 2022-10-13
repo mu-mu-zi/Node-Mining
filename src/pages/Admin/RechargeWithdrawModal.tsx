@@ -30,7 +30,7 @@ interface AA {
   coin: number,
   type: number,
 }
-// coin 1/Single Currency Pledge 2/Liquidity Pledge
+// coin 1/Single Currency Stake 2/Liquidity Stake
 // type 1/RECHARGE 2/WITHDRAW
 const Inp = styled(Input)`
   background: transparent;
@@ -137,8 +137,6 @@ const Max = styled(Box)`
   `}
 `
 
-
-
 export default function RechargeWithdrawModal(props: IOpenModal & AA) {
   const { t } = useTranslation()
   const { setReload, reload, title, coin, type } = props
@@ -189,7 +187,7 @@ export default function RechargeWithdrawModal(props: IOpenModal & AA) {
       return
     }
     try {
-      let param = new BigNumber(state.amount).multipliedBy(10 ** Decimals).dp(0).toString()
+      let param = new BigNumber(state.amount).multipliedBy(10 ** Decimals).dp(0).toFixed()
       console.log('amount',param)
       console.log('recipient',PledgeContract.GetaPool)
       const tx = await PledgeGeta.transfer(PledgeContract.GetaPool, param)
@@ -212,7 +210,7 @@ export default function RechargeWithdrawModal(props: IOpenModal & AA) {
       return
     }
     try {
-      let param = new BigNumber(state.amount).multipliedBy(10 ** Decimals).dp(0).toString()
+      let param = new BigNumber(state.amount).multipliedBy(10 ** Decimals).dp(0).toFixed()
       const tx = await PledgeGetaPool.withdrawFunds(PledgeContract.GetaPool, param)
       Notice('Please wait, your pledge will arrive soon.', MsgStatus.loading)
       await tx.wait()
@@ -234,7 +232,7 @@ export default function RechargeWithdrawModal(props: IOpenModal & AA) {
       return
     }
     try {
-      let param = new BigNumber(state.amount).multipliedBy(10 ** Decimals).dp(0).toString()
+      let param = new BigNumber(state.amount).multipliedBy(10 ** Decimals).dp(0).toFixed()
       console.log('param',param)
       const tx = await PledgeGeta.transfer(PledgeContract.LpPool, param)
       Notice('Please wait, your pledge will arrive soon.', MsgStatus.loading)
@@ -253,7 +251,7 @@ export default function RechargeWithdrawModal(props: IOpenModal & AA) {
 
   return (
     <Modal
-      onClose={() => props.destoryComponent()}
+      // onClose={() => props.destoryComponent()}
       type={theme.isH5 ? 'modal' : 'modal'}
       // isH5={theme.isH5}
       style={{ background: "#1A1919", width: theme.isH5 ? '90%' : '5.06rem', padding: theme.isH5 ? '24px 16px' : '24px' }}
@@ -274,7 +272,7 @@ export default function RechargeWithdrawModal(props: IOpenModal & AA) {
             }
           }}
           value={state.amount}
-          placeholder={'Please enter the number of pledges'}
+          placeholder={'Please enter the number'}
           right={<Flex alignItems={'center'} gridGap={theme.isH5 ? '6px' : '.1rem'}>
             <Text fontSize={theme.isH5 ? '12px' : '.2rem'} fontWeight={'400'} color={'#6B6B6B'}>{t(`GETA`)}</Text>
             <Max className='submit' onClick={() => {
@@ -295,7 +293,7 @@ export default function RechargeWithdrawModal(props: IOpenModal & AA) {
           }}
             onClick={() => props.destoryComponent()}
           >Cancel</Second>
-          <Normal onClick={onPledges} padding={theme.isH5 ? '8px 0' : '.1rem 0 '} width={theme.isH5 ? '100%' : '1.75rem'}>Pledges</Normal>
+          <Normal onClick={onPledges} padding={theme.isH5 ? '8px 0' : '.1rem 0 '} width={theme.isH5 ? '100%' : '1.75rem'}>Confirm</Normal>
         </Flex>
 
       </ColumnStart>

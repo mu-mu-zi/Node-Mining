@@ -1,7 +1,7 @@
 import Box, { Typography, Text } from "components/BaseElement";
 import Flex from "components/BaseElement/Flex";
 import { Icon } from "components/BaseElement/Icon";
-import { MsgStatus } from "components/messageBox/MessageBox";
+import { CloseMessageBox, MsgStatus } from "components/messageBox/MessageBox";
 import Modal from "components/Modal/Modal";
 import { IOpenModal } from "components/provider/ModalProvider";
 import useTheme from "hooks/useTheme";
@@ -17,7 +17,7 @@ import { RowBetween, RowCenter } from "components/BaseElement/Row";
 import { adminAddress, Decimals, EmptyStr } from "utils/global";
 import DropDown from "components/dropDown/DropDown";
 import { useEffectState } from "hooks/useEffectState";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import DatePickerZ from "components/DatePicker/DatePicker";
 import { usePledgeGetaPool } from "hooks/useContract";
 import BigNumber from "bignumber.js";
@@ -27,6 +27,8 @@ import { useAsync } from "react-use";
 interface AA {
   kind: number
   type: number
+  reload: boolean
+  setReload: Dispatch<SetStateAction<boolean>>
 }
 
 const FlexTypography = styled(Flex)`
@@ -45,6 +47,7 @@ type BaseValueType = string | number | Date;
 type ValueType = BaseValueType | BaseValueType[] | undefined;
 
 export default function EditPledgeModal(props: IOpenModal & AA) {
+  const {reload, setReload} = props
   const { t } = useTranslation()
   const { theme } = useTheme()
   const [selectCoin, setSelectCoin] = useState<{ text: string; value: number }>()
@@ -54,8 +57,8 @@ export default function EditPledgeModal(props: IOpenModal & AA) {
 
   const state = useEffectState({
     selectOption: [
-      { text: 'Single Currency Pledge', value: 1 },
-      { text: 'Liquidity Pledge', value: 2 }
+      { text: 'Single Currency Stake', value: 1 },
+      { text: 'Liquidity Stake', value: 2 }
     ],
     selectTypeOption: [
       [
@@ -130,12 +133,11 @@ export default function EditPledgeModal(props: IOpenModal & AA) {
     if (!PledgeGetaPool) return
     try {
       let param = null
-      param = new BigNumber(parseFloat(state.parameters)).div(86400 * 365).multipliedBy(10 ** Decimals).div(100).dp(0).toString()
+      param = new BigNumber(parseFloat(state.parameters)).div(86400 * 365).multipliedBy(10 ** Decimals).div(100).dp(0).toFixed()
       console.log(param)
       console.log(state.parameters)
       const tx = await PledgeGetaPool.setAPY(param)
-      console.log(tx)
-      await tx.wait()
+      FnReload(tx)
     } catch (e) {
       console.error(e)
       let msg = JSON.parse(JSON.stringify(e))
@@ -148,11 +150,10 @@ export default function EditPledgeModal(props: IOpenModal & AA) {
     if (!PledgeGetaPool) return
     try {
       let param = null
-      param = new BigNumber(parseFloat(state.parameters)).multipliedBy(10 ** Decimals).div(100).dp(0).toString()
+      param = new BigNumber(parseFloat(state.parameters)).multipliedBy(10 ** Decimals).div(100).dp(0).toFixed()
       console.log(param)
       const tx = await PledgeGetaPool.setFeeRate(param)
-      console.log(tx)
-      await tx.wait()
+      FnReload(tx)
     } catch (e) {
       console.log(e)
       let msg = JSON.parse(JSON.stringify(e))
@@ -165,11 +166,10 @@ export default function EditPledgeModal(props: IOpenModal & AA) {
     if (!PledgeGetaPool) return
     try {
       console.log('timestamp',state.timestamp)
-      let unixTamp = new BigNumber(state.timestamp).div(10 ** 3).toString()
+      let unixTamp = new BigNumber(state.timestamp).div(10 ** 3).toFixed()
       console.log('unixTamp',unixTamp)
       const tx = await PledgeGetaPool.startPool(unixTamp)
-      console.log(tx)
-      await tx.wait()
+      FnReload(tx)
     } catch (e) {
       console.log(e)
       let msg = JSON.parse(JSON.stringify(e))
@@ -181,11 +181,10 @@ export default function EditPledgeModal(props: IOpenModal & AA) {
     if (!PledgeLp) return
     try {
       let param = null
-      param = new BigNumber(parseFloat(state.parameters)).multipliedBy(10 ** Decimals).div(100).dp(0).toString()
+      param = new BigNumber(parseFloat(state.parameters)).multipliedBy(10 ** Decimals).div(100).dp(0).toFixed()
       console.log(param)
       const tx = await PledgeLp.setFeeRate(param)
-      console.log(tx)
-      await tx.wait()
+      FnReload(tx)
     } catch (e) {
       console.log(e)
       let msg = JSON.parse(JSON.stringify(e))
@@ -201,8 +200,7 @@ export default function EditPledgeModal(props: IOpenModal & AA) {
       let unixTamp = new BigNumber(state.timestamp).div(10 ** 3).toString()
       console.log('unixTamp',unixTamp)
       const tx = await PledgeLp.startPool(unixTamp)
-      console.log(tx)
-      await tx.wait()
+      FnReload(tx)
     } catch (e) {
       console.log(e)
       let msg = JSON.parse(JSON.stringify(e))
@@ -211,7 +209,14 @@ export default function EditPledgeModal(props: IOpenModal & AA) {
     }
   }
 
-
+  const FnReload = async (tx:any) => {
+    Notice('Please wait', MsgStatus.loading)
+    await tx.wait()
+    CloseMessageBox()
+    Notice('modify successfully', MsgStatus.success)
+    props.destoryComponent()
+    setReload(!reload)
+  }
 
 
   return (
@@ -224,11 +229,11 @@ export default function EditPledgeModal(props: IOpenModal & AA) {
       <ColumnStart gridGap={theme.isH5 ? '16px' : ".24rem"}>
 
         <Title>
-          {t(`Edit Pledge Parameters`)}
+          {t(`Edit Stake Parameters`)}
         </Title>
 
         <FlexTypography >
-          <Text width={'185px'} fontWeight={'400'} fontSize={theme.isH5 ? '14px' : '.2rem'} color={'#ffffff'} >{t(`Pledge Type`)}</Text>
+          <Text width={'185px'} fontWeight={'400'} fontSize={theme.isH5 ? '14px' : '.2rem'} color={'#ffffff'} >{t(`Stake Type`)}</Text>
           <Inp
             disabled
             value={selectCoin?.text}

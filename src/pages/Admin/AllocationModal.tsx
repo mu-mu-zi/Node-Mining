@@ -1,7 +1,7 @@
 import Box, { Typography, Text } from "components/BaseElement";
 import Flex from "components/BaseElement/Flex";
 import { Icon } from "components/BaseElement/Icon";
-import { MsgStatus } from "components/messageBox/MessageBox";
+import { CloseMessageBox, MsgStatus } from "components/messageBox/MessageBox";
 import Modal from "components/Modal/Modal";
 import { IOpenModal } from "components/provider/ModalProvider";
 import useTheme from "hooks/useTheme";
@@ -19,9 +19,11 @@ import DatePickerZ from "components/DatePicker/DatePicker";
 import { PledgeContract } from "utils/ContractAddresses";
 import { usePledgeLpPool } from "hooks/useContract";
 import BigNumber from "bignumber.js";
+import { Dispatch, SetStateAction } from "react";
 
 interface AA {
-
+  reload: boolean
+  setReload: Dispatch<SetStateAction<boolean>>
 }
 
 const FlexTypography = styled(Flex)`
@@ -39,6 +41,7 @@ type BaseValueType = string | number | Date;
 type ValueType = BaseValueType | BaseValueType[] | undefined;
 
 export default function SinglePledgeModal(props: IOpenModal & AA) {
+  const {reload, setReload} = props
   const { t } = useTranslation()
   const { theme } = useTheme()
   const state = useEffectState({
@@ -54,12 +57,10 @@ export default function SinglePledgeModal(props: IOpenModal & AA) {
     }
     try {
       let param = null
-      param = new BigNumber(parseFloat(state.bonus)).multipliedBy(10 ** Decimals).dp(0).toNumber()
+      param = new BigNumber(parseFloat(state.bonus)).multipliedBy(10 ** Decimals).dp(0).toFixed()
       console.log(param)
       const tx = await PledgeLp.setRewardAmount(param)
-      console.log(tx)
-      await tx.wait()
-      console.log(tx)
+      FnReload(tx)
 
 
     } catch (e) {
@@ -69,10 +70,19 @@ export default function SinglePledgeModal(props: IOpenModal & AA) {
     }
   }
 
+  const FnReload = async (tx:any) => {
+    Notice('Please wait', MsgStatus.loading)
+    await tx.wait()
+    CloseMessageBox()
+    Notice('modify successfully', MsgStatus.success)
+    props.destoryComponent()
+    setReload(!reload)
+  }
+
 
   return (
     <Modal
-      onClose={() => props.destoryComponent()}
+      // onClose={() => props.destoryComponent()}
       type={theme.isH5 ? 'modal' : 'modal'}
       // isH5={theme.isH5}
       style={{ background: "#1A1919", width: theme.isH5 ? '90%' : '7.77rem', padding: '24px' }}
@@ -80,11 +90,11 @@ export default function SinglePledgeModal(props: IOpenModal & AA) {
       <ColumnStart gridGap={theme.isH5 ? '24px' : ".24rem"}>
 
         <Title>
-          {t(`Allocation of GETA tokens`)}
+          {t(`Distribution of GETA tokens`)}
         </Title>
 
         <FlexTypography>
-          <Text width={'185px'} fontWeight={'400'} fontSize={theme.isH5 ? '14px' : '.2rem'} color={'#ffffff'} >{t(`Today's distribution`)}</Text>
+          <Text width={'185px'} fontWeight={'400'} fontSize={theme.isH5 ? '14px' : '.2rem'} color={'#ffffff'} >{t(`Today's Distribution`)}</Text>
           <Inp
             // regex={[{regStr: NUMBER_REG, tips: ""}]}
             value={state.bonus}
@@ -93,7 +103,7 @@ export default function SinglePledgeModal(props: IOpenModal & AA) {
                 state.bonus = value
               }
             }}
-            placeholder={`Please enter today's assigned quantity`}
+            placeholder={`Please enter today's distribution quantity`}
             right={<Flex alignItems={'center'} padding={theme.isH5 ? '0 18px' : '0 .18rem'} >
               <Text fontSize={theme.isH5 ? '12px' : '.2rem'} fontWeight={'400'} color={'#6B6B6B'}>{t(`GETA`)}</Text>
             </Flex>}
@@ -142,7 +152,7 @@ export default function SinglePledgeModal(props: IOpenModal & AA) {
             }}
             onClick={() => props.destoryComponent()}
             >Cancel</Second>
-          <Normal onClick={onRewardAmount} padding={theme.isH5 ? '8px 0' : '.1rem 0 '} width={theme.isH5 ? '100%' : '1.75rem'}>Pledges</Normal>
+          <Normal onClick={onRewardAmount} padding={theme.isH5 ? '8px 0' : '.1rem 0 '} width={theme.isH5 ? '100%' : '1.75rem'}>Confirm</Normal>
         </Flex>
 
       </ColumnStart>
