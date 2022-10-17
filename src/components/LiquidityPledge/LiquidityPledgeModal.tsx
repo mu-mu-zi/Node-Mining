@@ -184,6 +184,10 @@ export default function LiquidityPledgeModal(props: IOpenModal & AA) {
       Notice('Insufficient balance', MsgStatus.fail,)
       return
     }
+    if(Number(state.amount) < 1) {
+      Notice('Less than minimum：1', MsgStatus.fail,)
+      return
+    }
     try {
       let account = accounts[0]
       let tx1: any
@@ -245,7 +249,7 @@ export default function LiquidityPledgeModal(props: IOpenModal & AA) {
             }
           }}
           value={state.amount}
-          placeholder={'Please enter the number of pledges'}
+          placeholder={'Please enter the number of stake'}
           right={<Flex alignItems={'center'} gridGap={theme.isH5 ? '6px' : '.1rem'}>
             <Text fontSize={theme.isH5 ? '12px' : '.2rem'} fontWeight={'400'} color={'#6B6B6B'}>{t(`LP`)}</Text>
             <Max className='submit' onClick={() => {

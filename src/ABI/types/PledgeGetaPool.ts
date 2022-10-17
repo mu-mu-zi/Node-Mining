@@ -34,6 +34,8 @@ export interface PledgeGetaPoolInterface extends utils.Interface {
     "denominator()": FunctionFragment;
     "funder()": FunctionFragment;
     "globalAPY()": FunctionFragment;
+    "isEnableStake()": FunctionFragment;
+    "maxStakeAmount()": FunctionFragment;
     "minStakeAmount()": FunctionFragment;
     "owner()": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
@@ -45,6 +47,9 @@ export interface PledgeGetaPoolInterface extends utils.Interface {
     "setAPY(uint256)": FunctionFragment;
     "setFeeRate(uint256)": FunctionFragment;
     "startPool(uint256)": FunctionFragment;
+    "enableStake(bool)": FunctionFragment;
+    "setMinStakeAmount(uint256)": FunctionFragment;
+    "setMaxStakeAmount(uint256)": FunctionFragment;
     "withdrawFunds(address,uint256)": FunctionFragment;
     "provideFunds(address,uint256)": FunctionFragment;
     "getUserInfo(address)": FunctionFragment;
@@ -61,6 +66,8 @@ export interface PledgeGetaPoolInterface extends utils.Interface {
       | "denominator"
       | "funder"
       | "globalAPY"
+      | "isEnableStake"
+      | "maxStakeAmount"
       | "minStakeAmount"
       | "owner"
       | "renounceOwnership"
@@ -72,6 +79,9 @@ export interface PledgeGetaPoolInterface extends utils.Interface {
       | "setAPY"
       | "setFeeRate"
       | "startPool"
+      | "enableStake"
+      | "setMinStakeAmount"
+      | "setMaxStakeAmount"
       | "withdrawFunds"
       | "provideFunds"
       | "getUserInfo"
@@ -92,6 +102,14 @@ export interface PledgeGetaPoolInterface extends utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: "funder", values?: undefined): string;
   encodeFunctionData(functionFragment: "globalAPY", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "isEnableStake",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "maxStakeAmount",
+    values?: undefined
+  ): string;
   encodeFunctionData(
     functionFragment: "minStakeAmount",
     values?: undefined
@@ -125,6 +143,18 @@ export interface PledgeGetaPoolInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "startPool",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "enableStake",
+    values: [PromiseOrValue<boolean>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setMinStakeAmount",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setMaxStakeAmount",
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
@@ -168,6 +198,14 @@ export interface PledgeGetaPoolInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "funder", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "globalAPY", data: BytesLike): Result;
   decodeFunctionResult(
+    functionFragment: "isEnableStake",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "maxStakeAmount",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "minStakeAmount",
     data: BytesLike
   ): Result;
@@ -190,6 +228,18 @@ export interface PledgeGetaPoolInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "setAPY", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "setFeeRate", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "startPool", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "enableStake",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setMinStakeAmount",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setMaxStakeAmount",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "withdrawFunds",
     data: BytesLike
@@ -310,6 +360,10 @@ export interface PledgeGetaPool extends BaseContract {
 
     globalAPY(overrides?: CallOverrides): Promise<[BigNumber]>;
 
+    isEnableStake(overrides?: CallOverrides): Promise<[boolean]>;
+
+    maxStakeAmount(overrides?: CallOverrides): Promise<[BigNumber]>;
+
     minStakeAmount(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
@@ -356,6 +410,21 @@ export interface PledgeGetaPool extends BaseContract {
 
     startPool(
       _startTime: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    enableStake(
+      enable: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    setMinStakeAmount(
+      minAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    setMaxStakeAmount(
+      maxAmount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -408,6 +477,10 @@ export interface PledgeGetaPool extends BaseContract {
 
   globalAPY(overrides?: CallOverrides): Promise<BigNumber>;
 
+  isEnableStake(overrides?: CallOverrides): Promise<boolean>;
+
+  maxStakeAmount(overrides?: CallOverrides): Promise<BigNumber>;
+
   minStakeAmount(overrides?: CallOverrides): Promise<BigNumber>;
 
   owner(overrides?: CallOverrides): Promise<string>;
@@ -454,6 +527,21 @@ export interface PledgeGetaPool extends BaseContract {
 
   startPool(
     _startTime: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  enableStake(
+    enable: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  setMinStakeAmount(
+    minAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  setMaxStakeAmount(
+    maxAmount: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -506,6 +594,10 @@ export interface PledgeGetaPool extends BaseContract {
 
     globalAPY(overrides?: CallOverrides): Promise<BigNumber>;
 
+    isEnableStake(overrides?: CallOverrides): Promise<boolean>;
+
+    maxStakeAmount(overrides?: CallOverrides): Promise<BigNumber>;
+
     minStakeAmount(overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<string>;
@@ -550,6 +642,21 @@ export interface PledgeGetaPool extends BaseContract {
 
     startPool(
       _startTime: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    enableStake(
+      enable: PromiseOrValue<boolean>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    setMinStakeAmount(
+      minAmount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    setMaxStakeAmount(
+      maxAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -649,6 +756,10 @@ export interface PledgeGetaPool extends BaseContract {
 
     globalAPY(overrides?: CallOverrides): Promise<BigNumber>;
 
+    isEnableStake(overrides?: CallOverrides): Promise<BigNumber>;
+
+    maxStakeAmount(overrides?: CallOverrides): Promise<BigNumber>;
+
     minStakeAmount(overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
@@ -688,6 +799,21 @@ export interface PledgeGetaPool extends BaseContract {
 
     startPool(
       _startTime: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    enableStake(
+      enable: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    setMinStakeAmount(
+      minAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    setMaxStakeAmount(
+      maxAmount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -741,6 +867,10 @@ export interface PledgeGetaPool extends BaseContract {
 
     globalAPY(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    isEnableStake(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    maxStakeAmount(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     minStakeAmount(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -780,6 +910,21 @@ export interface PledgeGetaPool extends BaseContract {
 
     startPool(
       _startTime: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    enableStake(
+      enable: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    setMinStakeAmount(
+      minAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    setMaxStakeAmount(
+      maxAmount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

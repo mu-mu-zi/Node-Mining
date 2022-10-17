@@ -190,7 +190,7 @@ export default function Staking() {
     <ColumnStart padding={theme.isH5 ? '32px 0' : '.31rem .5rem 1rem'} gridGap={theme.isH5 ? '55px' : '.78rem'}>
 
       <ColumnStart width={'100%'} gridGap={theme.isH5 ? '16px' : '.19rem'}>
-        <Title>{t(`Pools`)}</Title>
+        <Title>{t(`Stake Pools`)}</Title>
 
         <Box width={'100%'} overflow={'auto'}>
           <Table width={'100%'}>
@@ -201,7 +201,7 @@ export default function Staking() {
                 color={'#ffffff'}
                 background={'#312F2A'}
               >
-                <_Th>{t(`Pool`)}</_Th>
+                <_Th>{t(`Stake Type`)}</_Th>
                 <_Th>{t(`GETA Balance`)}</_Th>
                 <_Th>{t(`Contract Address`)}</_Th>
                 <_Th>{t(`Operation`)}</_Th>
@@ -291,7 +291,7 @@ export default function Staking() {
               reload: TBreload,
               setReload: setTBReload,
             })
-          }} padding={'10px 18px'} fontSize={'14px'} style={{ alignSelf: theme.isH5 ? 'start' : 'center' }}>{t(`Distribution OF GETA TOKENS`)}</Normal>
+          }} padding={'10px 18px'} fontSize={'14px'} style={{ alignSelf: theme.isH5 ? 'start' : 'center' }}>{t(`DISTRIBUTION OF GETA TOKENS`)}</Normal>
         </Flex>
 
         <Box width={'100%'} overflow={'auto'}>
@@ -305,9 +305,9 @@ export default function Staking() {
               >
                 <_Th>{t(`Amount`)}</_Th>
                 <_Th>{t(`Contract Address`)}</_Th>
-                <_Th>{t(`Cumulative Distribution`)}</_Th>
-                <_Th>{t(`Distribution Start Time`)}</_Th>
-                <_Th>{t(`Distribution End Time`)}</_Th>
+                <_Th>{t(`Cumulative distribution`)}</_Th>
+                <_Th>{t(`Distribution start time`)}</_Th>
+                <_Th>{t(`Distribution end time`)}</_Th>
               </Tr>
             </thead>
 
@@ -344,7 +344,7 @@ export default function Staking() {
               >
                 <_Th>{t(`Pool`)}</_Th>
                 <_Th>{t(`Type`)}</_Th>
-                <_Th>{t(`Value`)}</_Th>
+                <_Th>{t(`Parameter`)}</_Th>
                 <_Th>{t(`Operation`)}</_Th>
               </Tr>
             </thead>

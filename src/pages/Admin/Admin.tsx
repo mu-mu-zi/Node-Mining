@@ -344,7 +344,7 @@ export default function Admin() {
         <TabPane
           tab={
             <Typography>
-              Staking
+              Stake
             </Typography>
           }
           itemKey="3"

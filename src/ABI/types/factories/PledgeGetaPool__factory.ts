@@ -218,6 +218,36 @@ const _abi = [
   },
   {
     inputs: [],
+    name: "isEnableStake",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+    constant: true,
+    signature: "0xab0c1233",
+  },
+  {
+    inputs: [],
+    name: "maxStakeAmount",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+    constant: true,
+    signature: "0x5d80ca32",
+  },
+  {
+    inputs: [],
     name: "minStakeAmount",
     outputs: [
       {
@@ -394,6 +424,48 @@ const _abi = [
     stateMutability: "nonpayable",
     type: "function",
     signature: "0xa901d15c",
+  },
+  {
+    inputs: [
+      {
+        internalType: "bool",
+        name: "enable",
+        type: "bool",
+      },
+    ],
+    name: "enableStake",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+    signature: "0x2dba8258",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "minAmount",
+        type: "uint256",
+      },
+    ],
+    name: "setMinStakeAmount",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+    signature: "0xeb4af045",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "maxAmount",
+        type: "uint256",
+      },
+    ],
+    name: "setMaxStakeAmount",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+    signature: "0xdcc2a55e",
   },
   {
     inputs: [

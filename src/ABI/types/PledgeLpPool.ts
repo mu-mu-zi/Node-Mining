@@ -34,9 +34,12 @@ export interface PledgeLpPoolInterface extends utils.Interface {
     "denominator()": FunctionFragment;
     "feeRate()": FunctionFragment;
     "funder()": FunctionFragment;
+    "isEnableStake()": FunctionFragment;
     "isStarted()": FunctionFragment;
     "lastDurationCursor()": FunctionFragment;
     "lastUpdateTime()": FunctionFragment;
+    "maxStakeAmount()": FunctionFragment;
+    "minStakeAmount()": FunctionFragment;
     "owner()": FunctionFragment;
     "periodFinish()": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
@@ -54,6 +57,9 @@ export interface PledgeLpPoolInterface extends utils.Interface {
     "startPool(uint256)": FunctionFragment;
     "setRewardAmount(uint256)": FunctionFragment;
     "setFeeRate(uint256)": FunctionFragment;
+    "enableStake(bool)": FunctionFragment;
+    "setMinStakeAmount(uint256)": FunctionFragment;
+    "setMaxStakeAmount(uint256)": FunctionFragment;
     "startTime()": FunctionFragment;
     "isPeriodFinished()": FunctionFragment;
     "lastTimeRewardApplicable()": FunctionFragment;
@@ -82,9 +88,12 @@ export interface PledgeLpPoolInterface extends utils.Interface {
       | "denominator"
       | "feeRate"
       | "funder"
+      | "isEnableStake"
       | "isStarted"
       | "lastDurationCursor"
       | "lastUpdateTime"
+      | "maxStakeAmount"
+      | "minStakeAmount"
       | "owner"
       | "periodFinish"
       | "renounceOwnership"
@@ -102,6 +111,9 @@ export interface PledgeLpPoolInterface extends utils.Interface {
       | "startPool"
       | "setRewardAmount"
       | "setFeeRate"
+      | "enableStake"
+      | "setMinStakeAmount"
+      | "setMaxStakeAmount"
       | "startTime"
       | "isPeriodFinished"
       | "lastTimeRewardApplicable"
@@ -131,6 +143,10 @@ export interface PledgeLpPoolInterface extends utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: "feeRate", values?: undefined): string;
   encodeFunctionData(functionFragment: "funder", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "isEnableStake",
+    values?: undefined
+  ): string;
   encodeFunctionData(functionFragment: "isStarted", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "lastDurationCursor",
@@ -138,6 +154,14 @@ export interface PledgeLpPoolInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "lastUpdateTime",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "maxStakeAmount",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "minStakeAmount",
     values?: undefined
   ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
@@ -197,6 +221,18 @@ export interface PledgeLpPoolInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "setFeeRate",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "enableStake",
+    values: [PromiseOrValue<boolean>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setMinStakeAmount",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setMaxStakeAmount",
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(functionFragment: "startTime", values?: undefined): string;
@@ -275,6 +311,10 @@ export interface PledgeLpPoolInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "feeRate", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "funder", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "isEnableStake",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "isStarted", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "lastDurationCursor",
@@ -282,6 +322,14 @@ export interface PledgeLpPoolInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "lastUpdateTime",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "maxStakeAmount",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "minStakeAmount",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
@@ -331,6 +379,18 @@ export interface PledgeLpPoolInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "setFeeRate", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "enableStake",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setMinStakeAmount",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setMaxStakeAmount",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "startTime", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "isPeriodFinished",
@@ -496,11 +556,17 @@ export interface PledgeLpPool extends BaseContract {
 
     funder(overrides?: CallOverrides): Promise<[string]>;
 
+    isEnableStake(overrides?: CallOverrides): Promise<[boolean]>;
+
     isStarted(overrides?: CallOverrides): Promise<[boolean]>;
 
     lastDurationCursor(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     lastUpdateTime(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    maxStakeAmount(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    minStakeAmount(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
@@ -556,6 +622,21 @@ export interface PledgeLpPool extends BaseContract {
 
     setFeeRate(
       _feeRate: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    enableStake(
+      enable: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    setMinStakeAmount(
+      minAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    setMaxStakeAmount(
+      maxAmount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -632,11 +713,17 @@ export interface PledgeLpPool extends BaseContract {
 
   funder(overrides?: CallOverrides): Promise<string>;
 
+  isEnableStake(overrides?: CallOverrides): Promise<boolean>;
+
   isStarted(overrides?: CallOverrides): Promise<boolean>;
 
   lastDurationCursor(overrides?: CallOverrides): Promise<BigNumber>;
 
   lastUpdateTime(overrides?: CallOverrides): Promise<BigNumber>;
+
+  maxStakeAmount(overrides?: CallOverrides): Promise<BigNumber>;
+
+  minStakeAmount(overrides?: CallOverrides): Promise<BigNumber>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
@@ -692,6 +779,21 @@ export interface PledgeLpPool extends BaseContract {
 
   setFeeRate(
     _feeRate: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  enableStake(
+    enable: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  setMinStakeAmount(
+    minAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  setMaxStakeAmount(
+    maxAmount: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -768,11 +870,17 @@ export interface PledgeLpPool extends BaseContract {
 
     funder(overrides?: CallOverrides): Promise<string>;
 
+    isEnableStake(overrides?: CallOverrides): Promise<boolean>;
+
     isStarted(overrides?: CallOverrides): Promise<boolean>;
 
     lastDurationCursor(overrides?: CallOverrides): Promise<BigNumber>;
 
     lastUpdateTime(overrides?: CallOverrides): Promise<BigNumber>;
+
+    maxStakeAmount(overrides?: CallOverrides): Promise<BigNumber>;
+
+    minStakeAmount(overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
@@ -826,6 +934,21 @@ export interface PledgeLpPool extends BaseContract {
 
     setFeeRate(
       _feeRate: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    enableStake(
+      enable: PromiseOrValue<boolean>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    setMinStakeAmount(
+      minAmount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    setMaxStakeAmount(
+      maxAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -952,11 +1075,17 @@ export interface PledgeLpPool extends BaseContract {
 
     funder(overrides?: CallOverrides): Promise<BigNumber>;
 
+    isEnableStake(overrides?: CallOverrides): Promise<BigNumber>;
+
     isStarted(overrides?: CallOverrides): Promise<BigNumber>;
 
     lastDurationCursor(overrides?: CallOverrides): Promise<BigNumber>;
 
     lastUpdateTime(overrides?: CallOverrides): Promise<BigNumber>;
+
+    maxStakeAmount(overrides?: CallOverrides): Promise<BigNumber>;
+
+    minStakeAmount(overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1012,6 +1141,21 @@ export interface PledgeLpPool extends BaseContract {
 
     setFeeRate(
       _feeRate: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    enableStake(
+      enable: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    setMinStakeAmount(
+      minAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    setMaxStakeAmount(
+      maxAmount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -1089,6 +1233,8 @@ export interface PledgeLpPool extends BaseContract {
 
     funder(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    isEnableStake(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     isStarted(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     lastDurationCursor(
@@ -1096,6 +1242,10 @@ export interface PledgeLpPool extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     lastUpdateTime(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    maxStakeAmount(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    minStakeAmount(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1153,6 +1303,21 @@ export interface PledgeLpPool extends BaseContract {
 
     setFeeRate(
       _feeRate: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    enableStake(
+      enable: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    setMinStakeAmount(
+      minAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    setMaxStakeAmount(
+      maxAmount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

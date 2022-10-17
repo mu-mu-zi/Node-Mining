@@ -94,7 +94,7 @@ export default function AllocationModal(props: IOpenModal & AA) {
         </Title>
 
         <FlexTypography>
-          <Text width={'185px'} fontWeight={'400'} fontSize={theme.isH5 ? '14px' : '.2rem'} color={'#ffffff'} >{t(`Today's Distribution`)}</Text>
+          <Text width={'185px'} fontWeight={'400'} fontSize={theme.isH5 ? '14px' : '.2rem'} color={'#ffffff'} >{t(`Amount`)}</Text>
           <Inp
             // regex={[{regStr: NUMBER_REG, tips: ""}]}
             value={state.bonus}
@@ -151,8 +151,8 @@ export default function AllocationModal(props: IOpenModal & AA) {
               width: theme.isH5 ? '100%' : '1.75rem'
             }}
             onClick={() => props.destoryComponent()}
-            >Cancel</Third>
-          <Normal onClick={onRewardAmount} padding={theme.isH5 ? '8px 0' : '.1rem 0 '} width={theme.isH5 ? '100%' : '1.75rem'}>Confirm</Normal>
+            >CANCEL</Third>
+          <Normal onClick={onRewardAmount} padding={theme.isH5 ? '8px 0' : '.1rem 0 '} width={theme.isH5 ? '100%' : '1.75rem'}>CONFIRM</Normal>
         </Flex>
 
       </ColumnStart>

@@ -5,7 +5,7 @@ import { CloseMessageBox, MsgStatus } from "components/messageBox/MessageBox";
 import Modal from "components/Modal/Modal";
 import { IOpenModal } from "components/provider/ModalProvider";
 import useTheme from "hooks/useTheme";
-import { isInputNumber, Notice } from "utils/tools";
+import { isInputNumber, isInputNumberSix, Notice } from "utils/tools";
 import { useTranslation } from 'react-i18next';
 import styled from "styled-components";
 import Input from "components/form/Input";
@@ -18,7 +18,7 @@ import { useEffectState } from "hooks/useEffectState";
 import useRedux from "hooks/useRedux";
 import useWalletTools from "hooks/useWalletTools";
 import { useAsync } from "react-use";
-import { Decimals, EmptyStr } from "utils/global";
+import { decimalPlaces, Decimals, EmptyStr } from "utils/global";
 import { PledgeContract } from "utils/ContractAddresses";
 import { Dispatch, SetStateAction } from "react";
 import { Title } from "./Staking";
@@ -160,7 +160,7 @@ export default function RechargeWithdrawModal(props: IOpenModal & AA) {
       account = PledgeContract.GetaPool 
     } 
     const balance = await PledgeGeta.balanceOf(account)
-    state.getaBalance = new BigNumber(balance.toString())
+    state.getaBalance = new BigNumber(balance.toString()).div(10 ** Decimals).dp(decimalPlaces,1)
 
 
   }, [accounts, PledgeGeta, chainId, store.token])
@@ -172,8 +172,13 @@ export default function RechargeWithdrawModal(props: IOpenModal & AA) {
       Notice('error', MsgStatus.fail,)
       return
     }
-    if (!state.amount) {
-      Notice(`amount can't be empty`, MsgStatus.fail)
+    if (state.amount === '0' || !state.amount) {
+      Notice(`Your amount is 0`, MsgStatus.fail)
+      return
+    }
+    if(state.getaBalance.lt(state.amount)) {
+      Notice('Insufficient balance', MsgStatus.fail,)
+      return
     }
     if (coin === 1) {
       if (type === 1) {
@@ -270,27 +275,29 @@ export default function RechargeWithdrawModal(props: IOpenModal & AA) {
           </Title>
         </Flex>
 
+        <Flex width={'100%'} alignItems={'center'} justifyContent={'space-between'}>
+          <Text fontSize={theme.isH5 ? '14px' : '.2rem'} fontWeight={'400'} color={'#ffffff'} >{t(`Amount`)}</Text>
+          <Text fontSize={theme.isH5 ? '12px' : '.2rem'} fontWeight={'400'} color={'#6B6B6B'}>{t(`balance ${state.getaBalance.toFixed() || EmptyStr} GETA`)}</Text>
+        </Flex>
+
         <Inp
           // regex={[{regStr: NUMBER_REG, tips: ""}]}
           onChange={(value) => {
-            if ((value === "" || isInputNumber(value))) {
+            if ((value === "" || isInputNumberSix(value))) {
               state.amount = value
             }
           }}
           value={state.amount}
-          placeholder={'Please enter the number'}
+          placeholder={type === 2 ? 'Please enter the number of withdrawals' : 'Please enter the number of recharge'}
           right={<Flex alignItems={'center'} gridGap={theme.isH5 ? '6px' : '.1rem'}>
             <Text fontSize={theme.isH5 ? '12px' : '.2rem'} fontWeight={'400'} color={'#6B6B6B'}>{t(`GETA`)}</Text>
             <Max className='submit' onClick={() => {
-              state.amount = `${state.getaBalance.div(10 ** Decimals).toFixed() || 0}`
+              state.amount = `${state.getaBalance.toFixed() || 0}`
             }}>MAX</Max>
           </Flex>}
         />
 
-        <Flex width={'100%'} alignItems={'center'} justifyContent={'space-between'}>
-          <Text fontSize={theme.isH5 ? '14px' : '.2rem'} fontWeight={'400'} color={'#ffffff'} >{t(`Available`)}</Text>
-          <Text fontSize={theme.isH5 ? '14px' : '.2rem'} fontWeight={'700'} color={'#ffffff'}>{t(`${state.getaBalance.div(10 ** Decimals).toFixed() || EmptyStr} GETA`)}</Text>
-        </Flex>
+  
 
         <Flex width={'100%'} justifyContent={'center'} alignItems={'center'} gridGap={theme.isH5 ? '16px' : '.24rem'} alignSelf={'center'}>
           <Third style={{
@@ -298,8 +305,8 @@ export default function RechargeWithdrawModal(props: IOpenModal & AA) {
             width: theme.isH5 ? '100%' : '1.75rem'
           }}
             onClick={() => props.destoryComponent()}
-          >Cancel</Third>
-          <Normal onClick={onPledges} padding={theme.isH5 ? '8px 0' : '.1rem 0 '} width={theme.isH5 ? '100%' : '1.75rem'}>Confirm</Normal>
+          >CANCEL</Third>
+          <Normal onClick={onPledges} padding={theme.isH5 ? '8px 0' : '.1rem 0 '} width={theme.isH5 ? '100%' : '1.75rem'}>CONFIRM</Normal>
         </Flex>
 
       </ColumnStart>

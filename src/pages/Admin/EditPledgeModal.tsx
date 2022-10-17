@@ -340,8 +340,8 @@ export default function EditPledgeModal(props: IOpenModal & AA) {
               width: theme.isH5 ? '100%' : '1.75rem'
             }}
             onClick={() => props.destoryComponent()}
-          >Cancel</Third>
-          <Normal onClick={onSubmit} padding={theme.isH5 ? '8px 0' : '.1rem 0 '} width={theme.isH5 ? '100%' : '1.75rem'}>Confirm</Normal>
+          >CANCEL</Third>
+          <Normal onClick={onSubmit} padding={theme.isH5 ? '8px 0' : '.1rem 0 '} width={theme.isH5 ? '100%' : '1.75rem'}>CONFIRM</Normal>
         </Flex>
 
       </ColumnStart>
@@ -399,12 +399,12 @@ const Inp = styled(Input)`
   }
   &:disabled {
     border: 1px solid #3D3D3D;
-    color: #3D3D3D;
+    color: #ffffff;
     background-color: rgba(217, 217, 217, 0.1);
   }
 
 .input {
-    color: #00E88A;
+    color: #ffffff;
     border: none;
     outline: unset;
     font-size: .14rem;
@@ -432,7 +432,7 @@ const Inp = styled(Input)`
       }
     }
     &:disabled {
-      color: #6B6B6B;
+      color: #ffffff;
     }
     ${({ theme }) => theme.mediaWidth.sm`
       font-size: 12px;

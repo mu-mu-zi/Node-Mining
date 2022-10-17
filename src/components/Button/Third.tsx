@@ -7,7 +7,7 @@ const Node = styled(Box)`
   padding: .16rem .52rem;
   font-size: .2rem;
   font-weight: 700;
-  color: rgba(0, 0, 0, 1);
+  color: ${({theme}) => theme.colors.normal};
   cursor: pointer;
   border-radius: 48px;
   text-align: center;
