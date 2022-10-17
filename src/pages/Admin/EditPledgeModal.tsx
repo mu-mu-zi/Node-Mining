@@ -11,7 +11,7 @@ import styled from "styled-components";
 import Input from "components/form/Input";
 import { ColumnStart } from "components/BaseElement/Column";
 import Normal from "components/Button/Normal";
-import Second from "components/Button/Second";
+import Third from "components/Button/Third";
 import { Title } from "./Staking";
 import { RowBetween, RowCenter } from "components/BaseElement/Row";
 import { adminAddress, Decimals, EmptyStr } from "utils/global";
@@ -334,13 +334,13 @@ export default function EditPledgeModal(props: IOpenModal & AA) {
         }
 
         <Flex width={'100%'} justifyContent={'center'} alignItems={'center'} gridGap={theme.isH5 ? '16px' : '.24rem'} alignSelf={'center'}>
-          <Second
+          <Third
             style={{
               padding: theme.isH5 ? '8px 0' : '.1rem 0',
               width: theme.isH5 ? '100%' : '1.75rem'
             }}
             onClick={() => props.destoryComponent()}
-          >Cancel</Second>
+          >Cancel</Third>
           <Normal onClick={onSubmit} padding={theme.isH5 ? '8px 0' : '.1rem 0 '} width={theme.isH5 ? '100%' : '1.75rem'}>Confirm</Normal>
         </Flex>
 

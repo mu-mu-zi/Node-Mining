@@ -11,7 +11,7 @@ import styled from "styled-components";
 import Input from "components/form/Input";
 import { ColumnStart } from "components/BaseElement/Column";
 import Normal from "components/Button/Normal";
-import Second from "components/Button/Second";
+import Third from "components/Button/Third";
 import BigNumber from "bignumber.js";
 import { usePledgeGetaPool, usePledgeGeta } from "hooks/useContract";
 import { useEffectState } from "hooks/useEffectState";
@@ -154,9 +154,15 @@ export default function RechargeWithdrawModal(props: IOpenModal & AA) {
 
   useAsync(async () => {
     if (!PledgeGeta || !accounts) return
+
     let account = accounts[0]
+    if(coin === 1 && type=== 2 ) {
+      account = PledgeContract.GetaPool 
+    } 
     const balance = await PledgeGeta.balanceOf(account)
     state.getaBalance = new BigNumber(balance.toString())
+
+
   }, [accounts, PledgeGeta, chainId, store.token])
 
 
@@ -191,7 +197,7 @@ export default function RechargeWithdrawModal(props: IOpenModal & AA) {
       console.log('amount',param)
       console.log('recipient',PledgeContract.GetaPool)
       const tx = await PledgeGeta.transfer(PledgeContract.GetaPool, param)
-      Notice('Please wait, your pledge will arrive soon.', MsgStatus.loading)
+      Notice('Please wait, your recharge will arrive soon.', MsgStatus.loading)
       await tx.wait()
       CloseMessageBox()
       Notice('You have successfully recharge', MsgStatus.success, {}, <Text fontSize={'12px'} fontWeight={'400'} color={'#F6B91B'}>{`${state.amount} GETA`} </Text>)
@@ -211,8 +217,8 @@ export default function RechargeWithdrawModal(props: IOpenModal & AA) {
     }
     try {
       let param = new BigNumber(state.amount).multipliedBy(10 ** Decimals).dp(0).toFixed()
-      const tx = await PledgeGetaPool.withdrawFunds(PledgeContract.GetaPool, param)
-      Notice('Please wait, your pledge will arrive soon.', MsgStatus.loading)
+      const tx = await PledgeGetaPool.withdrawFunds(PledgeContract.Geta, param)
+      Notice('Please wait, your withdraw will arrive soon.', MsgStatus.loading)
       await tx.wait()
       CloseMessageBox()
       Notice('You have successfully withdraw', MsgStatus.success, {}, <Text fontSize={'12px'} fontWeight={'400'} color={'#F6B91B'}>{`${state.amount} GETA`} </Text>)
@@ -235,7 +241,7 @@ export default function RechargeWithdrawModal(props: IOpenModal & AA) {
       let param = new BigNumber(state.amount).multipliedBy(10 ** Decimals).dp(0).toFixed()
       console.log('param',param)
       const tx = await PledgeGeta.transfer(PledgeContract.LpPool, param)
-      Notice('Please wait, your pledge will arrive soon.', MsgStatus.loading)
+      Notice('Please wait, your recharge will arrive soon.', MsgStatus.loading)
       await tx.wait()
       CloseMessageBox()
       Notice('You have successfully recharge', MsgStatus.success, {}, <Text fontSize={'12px'} fontWeight={'400'} color={'#F6B91B'}>{`${state.amount} GETA`} </Text>)
@@ -287,12 +293,12 @@ export default function RechargeWithdrawModal(props: IOpenModal & AA) {
         </Flex>
 
         <Flex width={'100%'} justifyContent={'center'} alignItems={'center'} gridGap={theme.isH5 ? '16px' : '.24rem'} alignSelf={'center'}>
-          <Second style={{
+          <Third style={{
             padding: theme.isH5 ? '8px 0' : '.1rem 0',
             width: theme.isH5 ? '100%' : '1.75rem'
           }}
             onClick={() => props.destoryComponent()}
-          >Cancel</Second>
+          >Cancel</Third>
           <Normal onClick={onPledges} padding={theme.isH5 ? '8px 0' : '.1rem 0 '} width={theme.isH5 ? '100%' : '1.75rem'}>Confirm</Normal>
         </Flex>
 

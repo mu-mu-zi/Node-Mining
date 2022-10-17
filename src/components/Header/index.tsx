@@ -44,7 +44,7 @@ export default function Header() {
     } else {
       setShowAdmin(false)
     }
-  }, [accounts])
+  }, [accounts,store.token,store.address])
 
   useEffect(() => {
     if (store.address) {
@@ -97,7 +97,7 @@ export default function Header() {
               to={"/mynodes"} className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`} >{t(`MY NODE`)}</RouterLink>
             <RouterLink
               // style={{pointerEvents:'none'}}
-              to={"/staking"} className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`} >{t(`STAKING`)}</RouterLink>
+              to={"/staking"} className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`} >{t(`STAKE`)}</RouterLink>
             <RouterLink
               // style={{pointerEvents:'none'}}
               to={"/aboutus"} className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`} >{t(`WHITEPAPER`)}</RouterLink>

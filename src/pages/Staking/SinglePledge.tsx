@@ -34,9 +34,13 @@ const Row = styled(Flex)`
     min-width: 100%;
   `}
 `
+interface IProps {
+  reloadGeta: boolean
+}
 
-export default function SinglePledge() {
+export default function SinglePledge(props:IProps) {
   const { t } = useTranslation()
+  const { reloadGeta } = props
   const { theme } = useTheme()
   const { accounts, chainId } = useWalletTools()
   const { store } = useRedux()
@@ -57,15 +61,22 @@ export default function SinglePledge() {
   })
 
 
-  const onExtraction = async () => {
+  const onExit = async () => {
     if (!PledgeGetaPool) {
-      Notice('error', MsgStatus.fail,)
+      Notice('Please login to your wallet account first', MsgStatus.fail,)
       return
     }
+
+    if (state.pledged.eq(0)) {
+      Notice(`Your staking amount is 0`, MsgStatus.fail,)
+      return
+    }
+
     try{
       
       let tx = await PledgeGetaPool.exit()
       Notice('Please wait, your redeemed will arrive soon.', MsgStatus.loading)
+      toggleIsRunning(false)
       await tx.wait()
       CloseMessageBox()
       Notice('You have successfully redeemed',
@@ -75,12 +86,45 @@ export default function SinglePledge() {
           {`${state.pledged.div(10 ** Decimals).dp(decimalPlaces,1).toFixed()} GETA + ${state.acquired.div(10 ** Decimals).dp(decimalPlaces,1).toFixed()} GETA`}
         </Text>)
         setReload(!reload)
+        toggleIsRunning(true)
     } catch (e) {
+      toggleIsRunning(true)
       let msg = JSON.parse(JSON.stringify(e))
       Notice(msg.reason || msg.message, MsgStatus.fail)
       return
     }
 
+  }
+
+  const onExtraction = async () => {
+    if (!PledgeGetaPool) {
+      Notice('Please login to your wallet account first', MsgStatus.fail,)
+      return
+    }
+
+    if (state.acquired.eq(0)) {
+      Notice(`Your earnings are 0, please try again later`, MsgStatus.fail,)
+      return
+    }
+
+    try{
+      let tx = await PledgeGetaPool.claimReward()
+      Notice('Please wait, your acquired will arrive soon.', MsgStatus.loading)
+      // stop poll
+      toggleIsRunning(false)
+      await tx.wait()
+
+      CloseMessageBox()
+      
+      Notice('You have successfully acquired', MsgStatus.success, {}, <Text fontSize={'12px'} fontWeight={'400'} color={'#F6B91B'}>{`${state.acquired.div(10 ** Decimals).dp(decimalPlaces,1).toFixed()} GETA`} </Text>)
+      toggleIsRunning(true)
+      setReload(!reload)
+    }catch(e) {
+      toggleIsRunning(true)
+      let msg = JSON.parse(JSON.stringify(e))
+      Notice(msg.reason || msg.message, MsgStatus.fail)
+      return
+    }
   }
 
   useAsync(async () => { 
@@ -89,7 +133,7 @@ export default function SinglePledge() {
     const balance = await PledgeGeta.balanceOf(account)
     state.getaBalance = new BigNumber(balance.toString())
 
-  },[accounts, PledgeGeta, chainId, store.token,reload])
+  },[accounts, PledgeGeta, chainId, store.token,reload,reloadGeta])
 
   useInterval(async () => { 
     if (!PledgeGetaPool || !accounts) return
@@ -105,7 +149,7 @@ export default function SinglePledge() {
     if (!PledgeGetaPool || !accounts) return
     let account = accounts[0]
     const reawrds = await PledgeGetaPool.getUserInfo(account)
-    console.log('pledged,acquired,apr',reawrds,reawrds.toString())
+
     state.pledged = new BigNumber(reawrds[0].toString())
     // state.acquired = new BigNumber(reawrds[1].toString())
     state.apr = new BigNumber(reawrds[2].toString()).multipliedBy((86400 * 365))
@@ -173,18 +217,19 @@ export default function SinglePledge() {
           <Text>{t(`Earned:`)}</Text>
           <Text fontWeight={'700'}>{state.acquired.div(10 ** Decimals).dp(decimalPlaces,1).toFixed() || EmptyStr}</Text>
         </Flex>
-        <Normal onClick={onExtraction} padding={theme.isH5 ? '3.5px 9.5px' : '.065rem .145rem'} fontSize={'.16rem'} >{t(`Redeem`)}</Normal>
+        <Normal onClick={onExtraction} width={theme.isH5 ? '88px' : '1.06rem'} padding={theme.isH5 ? '3.5px 9.5px' : '.065rem .145rem'} fontSize={'.16rem'} >{t(`CLAIM`)}</Normal>
       </Row>
 
       <Row>
         <Flex gridGap={'8px'}>
-          <Text>{t(`Staked:`)}</Text>
+          <Text>{t(`Total Staked:`)}</Text>
           <Text fontWeight={'700'}>{state.pledged.div(10 ** Decimals).dp(decimalPlaces,1).toFixed() || EmptyStr}</Text>
         </Flex>
+        <Normal onClick={onExit} width={theme.isH5 ? '88px' : '1.06rem'} padding={theme.isH5 ? '3.5px 9.5px' : '.065rem 0'} fontSize={theme.isH5 ? '11px' : '.16rem'} >{t(`REDEEM`)}</Normal>
       </Row>
 
       <Box alignSelf={'center'} width={'100%'}>
-        <Normal onClick={onPledge} padding={theme.isH5 ? '8px 10px' : '.105rem 1.1rem'}>{t(`Stake`)}</Normal>
+        <Normal onClick={onPledge} padding={theme.isH5 ? '8px 10px' : '.105rem 1.1rem'}>{t(`STAKE`)}</Normal>
       </Box>
 
     </ColumnStart>

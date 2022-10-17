@@ -8,7 +8,7 @@ import { Column, FlexColumn } from 'components/BaseElement/Column';
 import { Tabs, TabPane } from '@douyinfe/semi-ui';
 import LiquidityPledge from './LiquidityPledge';
 import SinglePledge from './SinglePledge';
-
+import {useState} from 'react'
 const Banner = styled.div`
   position: relative;
   background-image: url('${require('assets/images/staking_bg.png')}');
@@ -109,6 +109,8 @@ const SeMiTabs = styled(Tabs)`
 export default function Staking() {
   const { t } = useTranslation()
   const { theme } = useTheme()
+
+  const [reloadGeta,setReloadGeta] = useState<boolean>(false)
   
   return <>
     <Banner>
@@ -120,7 +122,7 @@ export default function Staking() {
       >
         <FlexColumn gridGap={theme.isH5 ? '8px' : '.16rem'}  alignItems={theme.isH5 ? 'start' : 'center'}>
           <Text fontSize={theme.isH5 ? '20px' : '.32rem'} fontWeight={'700'} color={'#ffffff'} >
-            {t(`Staking`)}
+            {t(`Stake`)}
           </Text>
           <Text fontSize={theme.isH5 ? '14px' : '.2rem'} fontWeight={'400'} color={'#ffffff'} >
             {t(`Add value to your cryptocurrency assets`)}
@@ -147,7 +149,7 @@ export default function Staking() {
             itemKey="1"
             style={{ outline: 'none', height: '100%' }}
           >
-            <SinglePledge />
+            <SinglePledge reloadGeta={reloadGeta} />
           </TabPane>
 
           <TabPane
@@ -155,7 +157,7 @@ export default function Staking() {
             itemKey="2"
             style={{ outline: 'none', height: '100%' }}
           >
-            <LiquidityPledge />
+            <LiquidityPledge setReloadGeta={setReloadGeta} reloadGeta={reloadGeta} />
           </TabPane>
         </SeMiTabs>
 

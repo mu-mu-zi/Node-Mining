@@ -25,6 +25,7 @@ import { ContractAddresses } from 'utils/ContractAddresses';
 import useWalletTools from 'hooks/useWalletTools';
 import { CHAINS } from 'connectwallet/config';
 import Staking from './Staking';
+import useRedux from 'hooks/useRedux';
 
 const Warpper = styled.div`
   position: relative;
@@ -92,7 +93,7 @@ export default function Admin() {
   const TgeMarket = useTgeMarket()
   const [reload, setReload] = useState<boolean>()
   const { theme } = useTheme()
-  
+  const {store} = useRedux()
   const state = useEffectState({
     address: '' as string,
     amount: '' as string,
@@ -135,12 +136,13 @@ export default function Admin() {
     if (adminAddress.toLowerCase() !== account?.toLowerCase()) {
     // if (adminAddress.toLowerCase() === account?.toLowerCase()) {
       navigate('/')
+      return
     }
     if(chainId !== CHAINS.BSC.chainId) {
       navigate('/')
       Notice('You are connected to an unsupported network, please switch to the BSC master network.', MsgStatus.fail)
     }
-  }, [accounts, chainId])
+  }, [accounts, chainId, store.token])
 
   const FnCast = async () => {
     if (!TgeMarket || !accounts) return

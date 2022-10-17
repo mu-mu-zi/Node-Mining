@@ -37,6 +37,7 @@ export const MessageBoxStyle = styled.div`
     border-radius: 8px;
     max-width: 328px;
     height: max-content;
+    flex-direction: column;
     &.bottomRight{
         left: initial;
         top: initial;
@@ -61,11 +62,12 @@ export const MessageBoxStyle = styled.div`
         font-weight: 400;
         color: #fff;
         line-height: 20px;
-        padding-left: 24px;
-        margin-top: 8px;
+        /* padding-left: 24px; */
+        /* margin-top: 8px; */
         word-break: break-word;
         max-height: 70vh;
         overflow-y: hidden;
+
     }
     .label{
         color: #fff;

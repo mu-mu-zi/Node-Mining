@@ -42,6 +42,7 @@ export const NUMBER_REG = "^[\\+-]?\\d+(\\.{1}\\d+)?$";
 export const INT_REG = "^\\d+$";
 
 export const INPUT_NUMBER_REG = "^\\d*(\\.{1}\\d*)?$";
+export const INPUT_NUMBER_REG_SIX = "^\\d*(\\.{1}\\d{0,6})?$"
 
 export const DECIMAL_NUMBER = "^[\\+-]?\\d+(\\.{1}\\d*)?$";
 

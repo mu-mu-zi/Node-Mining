@@ -11,7 +11,7 @@ import styled from "styled-components";
 import Input from "components/form/Input";
 import { ColumnStart } from "components/BaseElement/Column";
 import Normal from "components/Button/Normal";
-import Second from "components/Button/Second";
+import Third from "components/Button/Third";
 import { Title } from "./Staking";
 import { adminAddress, Decimals } from "utils/global";
 import { useEffectState } from '../../hooks/useEffectState';
@@ -40,7 +40,7 @@ const FlexTypography = styled(Flex)`
 type BaseValueType = string | number | Date;
 type ValueType = BaseValueType | BaseValueType[] | undefined;
 
-export default function SinglePledgeModal(props: IOpenModal & AA) {
+export default function AllocationModal(props: IOpenModal & AA) {
   const {reload, setReload} = props
   const { t } = useTranslation()
   const { theme } = useTheme()
@@ -75,8 +75,8 @@ export default function SinglePledgeModal(props: IOpenModal & AA) {
     await tx.wait()
     CloseMessageBox()
     Notice('modify successfully', MsgStatus.success)
-    props.destoryComponent()
     setReload(!reload)
+    props.destoryComponent()
   }
 
 
@@ -145,13 +145,13 @@ export default function SinglePledgeModal(props: IOpenModal & AA) {
         </FlexTypography> */}
 
         <Flex width={'100%'} justifyContent={'center'} alignItems={'center'} gridGap={theme.isH5 ? '16px' : '.24rem'} alignSelf={'center'}>
-          <Second 
+          <Third 
             style={{
               padding: theme.isH5 ? '8px 0' : '.1rem 0',
               width: theme.isH5 ? '100%' : '1.75rem'
             }}
             onClick={() => props.destoryComponent()}
-            >Cancel</Second>
+            >Cancel</Third>
           <Normal onClick={onRewardAmount} padding={theme.isH5 ? '8px 0' : '.1rem 0 '} width={theme.isH5 ? '100%' : '1.75rem'}>Confirm</Normal>
         </Flex>
 

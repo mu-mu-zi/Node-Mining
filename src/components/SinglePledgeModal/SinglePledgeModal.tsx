@@ -5,20 +5,20 @@ import { CloseMessageBox, MsgStatus } from "components/messageBox/MessageBox";
 import Modal from "components/Modal/Modal";
 import { IOpenModal } from "components/provider/ModalProvider";
 import useTheme from "hooks/useTheme";
-import { isInputNumber, Notice } from "utils/tools";
+import { isInputNumber, isInputNumberSix, Notice } from "utils/tools";
 import { useTranslation } from 'react-i18next';
 import styled from "styled-components";
 import Input from "components/form/Input";
 import { ColumnStart } from "components/BaseElement/Column";
 import Normal from "components/Button/Normal";
-import Second from "components/Button/Second";
+import Third from "components/Button/Third";
 import BigNumber from "bignumber.js";
 import { usePledgeGetaPool, usePledgeGeta } from "hooks/useContract";
 import { useEffectState } from "hooks/useEffectState";
 import useRedux from "hooks/useRedux";
 import useWalletTools from "hooks/useWalletTools";
 import { useAsync } from "react-use";
-import { Decimals, EmptyStr } from "utils/global";
+import { decimalPlaces, Decimals, EmptyStr } from "utils/global";
 import { PledgeContract } from "utils/ContractAddresses";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
@@ -156,7 +156,7 @@ export default function SinglePledgeModal(props: IOpenModal & AA) {
     if (!PledgeGeta || !accounts) return
     let account = accounts[0]
     const balance = await PledgeGeta.balanceOf(account)
-    state.getaBalance = new BigNumber(balance.toString())
+    state.getaBalance = new BigNumber(balance.toString()).div(10 ** Decimals).dp(decimalPlaces,1)
     let isApprove = await PledgeGeta.allowance(account, PledgeContract.GetaPool)
     state.approve = new BigNumber(isApprove.toString()).div(10 ** Decimals).toFixed()
   },[accounts, PledgeGeta, chainId, store.token, approveReload])
@@ -172,12 +172,19 @@ export default function SinglePledgeModal(props: IOpenModal & AA) {
 
   const onPledges = async () => {
     if (!PledgeGetaPool || !PledgeGeta || !accounts) {
-      Notice('error', MsgStatus.fail,)
+      Notice('Please login to your wallet account first', MsgStatus.fail,)
       return
     }
-    if(!state.amount) {
-      Notice(`amount can't be empty`, MsgStatus.fail)
+    if(state.amount === '0' || !state.amount) {
+      Notice(`Your staking amount is 0`, MsgStatus.fail)
+      return
     }
+    
+    if(state.getaBalance.lt(state.amount)) {
+      Notice('Insufficient balance', MsgStatus.fail,)
+      return
+    }
+
     try{
       let account = accounts[0]
       let tx1: any
@@ -204,10 +211,10 @@ export default function SinglePledgeModal(props: IOpenModal & AA) {
 
 
       let tx = await PledgeGetaPool.deposit(new BigNumber(state.amount).multipliedBy( 10 ** Decimals).toFixed())
-      Notice('Please wait, your pledge will arrive soon.', MsgStatus.loading)
+      Notice('Please wait, your stake will arrive soon.', MsgStatus.loading)
       await tx.wait()
       CloseMessageBox()
-      Notice('You have successfully pledged', MsgStatus.success, {}, <Text fontSize={'12px'} fontWeight={'400'} color={'#F6B91B'}>{`${state.amount} GETA`} </Text>)
+      Notice('You have successfully staked', MsgStatus.success, {}, <Text fontSize={'12px'} fontWeight={'400'} color={'#F6B91B'}>{`${state.amount} GETA`} </Text>)
       props.destoryComponent()
       setReload(!reload)
     }catch(e) {
@@ -236,7 +243,7 @@ export default function SinglePledgeModal(props: IOpenModal & AA) {
         <Inp
           // regex={[{regStr: NUMBER_REG, tips: ""}]}
           onChange={(value) => {
-            if ((value === "" || isInputNumber(value))) {
+            if ((value === "" || isInputNumberSix(value))) {
               state.amount = value
             }
           }}
@@ -245,24 +252,24 @@ export default function SinglePledgeModal(props: IOpenModal & AA) {
           right={<Flex alignItems={'center'} gridGap={theme.isH5 ? '6px' : '.1rem'}>
             <Text fontSize={theme.isH5 ? '12px' : '.2rem'} fontWeight={'400'} color={'#6B6B6B'}>{t(`GETA`)}</Text>
             <Max className='submit' onClick={() => {
-              state.amount = `${state.getaBalance.div(10 ** Decimals).toFixed() || 0}`
+              state.amount = `${state.getaBalance.toFixed() || 0}`
             }}>MAX</Max>
           </Flex>}
         />
 
         <Flex width={'100%'} alignItems={'center'} justifyContent={'space-between'}>
           <Text fontSize={theme.isH5 ? '14px' : '.2rem'} fontWeight={'400'} color={'#ffffff'} >{t(`Available`)}</Text>
-          <Text fontSize={theme.isH5 ? '14px' : '.2rem'} fontWeight={'700'} color={'#ffffff'}>{t(`${state.getaBalance.div(10 ** Decimals).toFixed() || EmptyStr} GETA`)}</Text>
+          <Text fontSize={theme.isH5 ? '14px' : '.2rem'} fontWeight={'700'} color={'#ffffff'}>{t(`${state.getaBalance.toFixed() || EmptyStr} GETA`)}</Text>
         </Flex>
 
         <Flex width={'100%'} justifyContent={'center'} alignItems={'center'} gridGap={theme.isH5 ? '16px' : '.24rem'} alignSelf={'center'}>
-            <Second style={{
+            <Third style={{
                 padding: theme.isH5 ? '8px 0' : '.1rem 0',
                 width: theme.isH5 ? '100%' : '1.75rem'
               }}
               onClick={() => props.destoryComponent()}
-            >Cancel</Second>
-            <Normal onClick={onPledges} padding={theme.isH5 ? '8px 0' : '.1rem 0 '} width={theme.isH5 ? '100%' : '1.75rem'}>{state.isApproveEnough ? 'Stake' : 'Approve'}</Normal>
+            >CANCEl</Third>
+            <Normal onClick={onPledges} padding={theme.isH5 ? '8px 0' : '.1rem 0 '} width={theme.isH5 ? '100%' : '1.75rem'}>{state.isApproveEnough ? 'CONFIRM' : 'APPROVE'}</Normal>
         </Flex>
 
       </ColumnStart>

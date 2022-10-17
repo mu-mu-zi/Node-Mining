@@ -10,7 +10,7 @@ import { useEffectState } from "hooks/useEffectState";
 import useRedux from "hooks/useRedux";
 import useTheme from "hooks/useTheme";
 import useWalletTools from "hooks/useWalletTools";
-import { useContext, useState } from "react";
+import { Dispatch, SetStateAction, useContext, useState } from "react";
 import { useTranslation } from 'react-i18next';
 import styled from "styled-components";
 import BigNumber from "bignumber.js";
@@ -34,8 +34,14 @@ const Row = styled(Flex)`
   `}
 `
 
-export default function LiquidityPledge() {
+interface IProps {
+  reloadGeta: boolean
+  setReloadGeta: Dispatch<SetStateAction<boolean>>
+}
+
+export default function LiquidityPledge(props: IProps) {
   const { t } = useTranslation()
+  const { reloadGeta, setReloadGeta } = props
   const { theme } = useTheme()
   const { openModal } = useContext(ModalContext);
   const { accounts, chainId } = useWalletTools()
@@ -78,7 +84,7 @@ export default function LiquidityPledge() {
     state.pledged = new BigNumber(reawrds[0].toString())
     state.acquired = new BigNumber(reawrds[1].toString())
     // state.apr = new BigNumber(reawrds[2].toString()).multipliedBy((86400 * 365))
-    console.log(reawrds.toString())
+    console.log(state.acquired.toString())
 
   },[accounts, pledgeLpPool, chainId, store.token,reload])
 
@@ -95,7 +101,7 @@ export default function LiquidityPledge() {
       Notice(msg.reason || msg.message, MsgStatus.fail)
       return
     }
-  }, [uniswap, pledgeLpPool, accounts, chainId, store.token ])
+  }, [uniswap, pledgeLpPool, accounts, chainId, store.token, reload ])
 
 
   const onPledges = () => {
@@ -107,12 +113,20 @@ export default function LiquidityPledge() {
 
   const onExit = async () => {
     if (!pledgeLpPool) {
-      Notice('error', MsgStatus.fail,)
+      Notice('Please login to your wallet account first', MsgStatus.fail,)
       return
     }
+
+    if (state.pledged.eq(0)) {
+      Notice(`Your staking amount is 0`, MsgStatus.fail,)
+      return
+    }
+
     try{
       let tx = await pledgeLpPool.exit()
       Notice('Please wait, your redeemed will arrive soon.', MsgStatus.loading)
+      // stop poll
+      toggleIsRunning(false)
       await tx.wait()
       CloseMessageBox()
       Notice('You have successfully redeemed',
@@ -121,8 +135,12 @@ export default function LiquidityPledge() {
       <Text fontSize={'12px'} fontWeight={'400'} color={'#F6B91B'}>
         {`${state.pledged.div(10 ** Decimals).dp(decimalPlaces,1).toFixed()} GETA + ${state.acquired.div(10 ** Decimals).dp(decimalPlaces,1).toFixed()} GETA`}
       </Text>)
+      console.log('tx',tx)
       setReload(!reload)
+      toggleIsRunning(true)
+      setReloadGeta(!reloadGeta)
     }catch(e) {
+      toggleIsRunning(true)
       let msg = JSON.parse(JSON.stringify(e))
       Notice(msg.reason || msg.message, MsgStatus.fail)
       return
@@ -130,16 +148,27 @@ export default function LiquidityPledge() {
   }
   const onExtraction = async () => {
     if (!pledgeLpPool) {
-      Notice('error', MsgStatus.fail,)
+      Notice('Please login to your wallet account first', MsgStatus.fail,)
+      return
+    }
+    if (state.acquired.eq(0)) {
+      Notice(`Your earnings are 0, please try again later`, MsgStatus.fail,)
       return
     }
     try{
       let tx = await pledgeLpPool.getReward()
       Notice('Please wait, your acquired will arrive soon.', MsgStatus.loading)
+      // stop poll
+      toggleIsRunning(false)
       await tx.wait()
+
       CloseMessageBox()
+      
       Notice('You have successfully acquired', MsgStatus.success, {}, <Text fontSize={'12px'} fontWeight={'400'} color={'#F6B91B'}>{`${state.acquired.div(10 ** Decimals).dp(decimalPlaces,1).toFixed()} GETA`} </Text>)
+      toggleIsRunning(true)
+      setReloadGeta(!reloadGeta)
     }catch(e) {
+      toggleIsRunning(true)
       let msg = JSON.parse(JSON.stringify(e))
       Notice(msg.reason || msg.message, MsgStatus.fail)
       return
@@ -156,13 +185,13 @@ export default function LiquidityPledge() {
       <Flex alignItems={'center'} gridGap={'8px'}>
         <Icon width={theme.isH5 ? '32px' : '.4rem'} height={theme.isH5 ? '32px' : '.4rem'} src={require('./img_usdt 1.svg').default} />
         <Text fontSize={theme.isH5 ? '16px' : '.2rem'} fontWeight={'700'} color={'#ffffff'} >
-          {t(`Liquidity Pledge`)}
+          {t(`GETA/USDT`)}
         </Text>
       </Flex>
 
       <Row>
         <Text>{t(`TVL`)}</Text>
-        <Text fontWeight={'700'}>{state.tvl.toFixed() || EmptyStr}</Text>
+        <Text fontWeight={'700'}>{state.tvl.dp(decimalPlaces,1).toFixed() || EmptyStr}</Text>
       </Row>
 
       <Row>
@@ -183,7 +212,7 @@ export default function LiquidityPledge() {
           <Text>{t(`LP Balance: `)}</Text>
           <Text fontWeight={'700'}>{(state.getaBalance.div(10 ** Decimals).dp(decimalPlaces,1).toFixed() + ' LP') || EmptyStr}</Text>
         </Flex>
-        <Normal onClick={onPledges} width={theme.isH5 ? '88px' : '1.06rem'} padding={theme.isH5 ? '3.5px 9.5px' : '.065rem 0'} fontSize={theme.isH5 ? '11px' : '.16rem'} >{t(`Stake`)}</Normal>
+        <Normal onClick={onPledges} width={theme.isH5 ? '88px' : '1.06rem'} padding={theme.isH5 ? '3.5px 9.5px' : '.065rem 0'} fontSize={theme.isH5 ? '11px' : '.16rem'} >{t(`STAKE`)}</Normal>
       </Row>
 
       <Row>
@@ -191,19 +220,19 @@ export default function LiquidityPledge() {
           <Text>{t(`Earned: `)}</Text>
           <Text fontWeight={'700'}>{state.acquired.div(10 ** Decimals).dp(decimalPlaces,1).toFixed() + ' GETA' || EmptyStr}</Text>
         </Flex>
-        <Normal onClick={onExtraction} width={theme.isH5 ? '88px' : '1.06rem'} padding={theme.isH5 ? '3.5px 9.5px' : '.065rem 0'} fontSize={theme.isH5 ? '11px' : '.16rem'} >{t(`Claim`)}</Normal>
+        <Normal onClick={onExtraction} width={theme.isH5 ? '88px' : '1.06rem'} padding={theme.isH5 ? '3.5px 9.5px' : '.065rem 0'} fontSize={theme.isH5 ? '11px' : '.16rem'} >{t(`CLAIM`)}</Normal>
       </Row>
 
       <Row>
         <Flex gridGap={'8px'}>
-          <Text>{t(`LP Staked: `)}</Text>
+          <Text>{t(`Total Staked: `)}</Text>
           <Text fontWeight={'700'}>{state.pledged.div(10 ** Decimals).dp(decimalPlaces,1).toFixed() + ' LP' || EmptyStr}</Text>
         </Flex>
-        <Normal onClick={onExit} width={theme.isH5 ? '88px' : '1.06rem'} padding={theme.isH5 ? '3.5px 9.5px' : '.065rem 0'} fontSize={theme.isH5 ? '11px' : '.16rem'} >{t(`Redeem`)}</Normal>
+        <Normal onClick={onExit} width={theme.isH5 ? '88px' : '1.06rem'} padding={theme.isH5 ? '3.5px 9.5px' : '.065rem 0'} fontSize={theme.isH5 ? '11px' : '.16rem'} >{t(`REDEEM`)}</Normal>
       </Row>
 
       <Box alignSelf={'center'} width={'100%'}>
-        <Normal onClick={onPledges} padding={theme.isH5 ? '8px 10px' : '.105rem 1.1rem'}>{t(`Stake`)}</Normal>
+        <Normal onClick={onPledges} padding={theme.isH5 ? '8px 10px' : '.105rem 1.1rem'}>{t(`STAKE`)}</Normal>
       </Box>
 
       <Flex alignSelf={'center'} fontSize={theme.isH5 ? '14px' : '.14rem'} fontWeight={'400'} color={'#ffffff'}>

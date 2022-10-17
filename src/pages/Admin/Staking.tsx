@@ -18,7 +18,7 @@ import useWalletTools from "hooks/useWalletTools";
 import { useAsync } from "react-use";
 import BigNumber from "bignumber.js";
 import { decimalPlaces, Decimals, EmptyStr } from '../../utils/global';
-import { Notice, TimestampTransform } from "utils/tools";
+import { Notice, TimestampTransform, Timestamp} from "utils/tools";
 import { PledgeContract } from 'utils/ContractAddresses'
 import RechargeWithdrawModal from "./RechargeWithdrawModal";
 import { MsgStatus } from "components/messageBox/MessageBox";
@@ -77,6 +77,7 @@ export default function Staking() {
     cycleId: '',
     lpStartTime: '',
     lpEndTime: '',
+    lpStartHh: '',
   })
 
   
@@ -105,6 +106,8 @@ export default function Staking() {
       const time = await PledgeLpPool.getRewardHistory(CycleId)
       state.lpStartTime = TimestampTransform(new BigNumber(time[2].toString()).multipliedBy(1000).toNumber())
       state.lpEndTime = TimestampTransform(new BigNumber(time[3].toString()).multipliedBy(1000).toNumber())
+
+      state.lpStartHh = Timestamp(new BigNumber(time[2].toString()).multipliedBy(1000).toNumber())
       
     }catch(e){
       console.error(e)
@@ -139,7 +142,7 @@ export default function Staking() {
       return
     }
 
-  }, [lpPoolReload, PledgeLpPool])
+  }, [lpPoolReload, PledgeLpPool, TBreload])
 
   // is Start Lp/Single Pool
   useAsync(async () => {
@@ -168,7 +171,7 @@ export default function Staking() {
     console.log('startTime', startTime)
     state.SingleStartTime = new BigNumber(startTime.toString())
 
-  }, [accounts, PledgeGetaPool, chainId, store.token])
+  }, [accounts, PledgeGetaPool, chainId, store.token, parameterReload])
 
   // get LP Pool Configure
   useAsync(async () => {
@@ -177,10 +180,11 @@ export default function Staking() {
     state.LpFee = new BigNumber(fee.toString())
 
     const startTime = await PledgeLpPool.startTime()
-    console.log('startTime', startTime)
+    console.log('startTime', startTime.toString())
     state.LpStartTime = new BigNumber(startTime.toString())
+    
 
-  }, [accounts, PledgeLpPool, chainId, store.token])
+  }, [accounts, PledgeLpPool, chainId, store.token, parameterReload])
 
   return (
     <ColumnStart padding={theme.isH5 ? '32px 0' : '.31rem .5rem 1rem'} gridGap={theme.isH5 ? '55px' : '.78rem'}>
@@ -280,7 +284,7 @@ export default function Staking() {
         >
           <ColumnStart gridGap={theme.isH5 ? '16px' : '.16rem'}>
             <Title>{t(`Today's Distribution Bonus`)}</Title>
-            <Text fontSize={'14px'} fontWeight={'400'} color={'#ffffff'} >{t(`If GETA is not set before 11:59:59 each day, the next day 00:00:00 will default to the last assigned amount.`)}</Text>
+            <Text fontSize={'14px'} fontWeight={'400'} color={'#ffffff'} >{t(`If GETA is not set before ${state.lpStartHh} cycle, the next cycle will default to the last assigned amount.`)}</Text>
           </ColumnStart>
           <Normal onClick={() => {
             openModal(AllocationModal, {
@@ -354,7 +358,7 @@ export default function Staking() {
               >
                 <_Td rowSpan={3}>Single Currency Stake</_Td>
                 <_Td>APR</_Td>
-                <_Td>{state.SingleApr.div(10 ** Decimals).multipliedBy(100).toFixed(2) + '%' || EmptyStr}</_Td>
+                <_Td>{state.SingleApr.div(10 ** Decimals).multipliedBy(100).dp(2,1).toFixed() + '%' || EmptyStr}</_Td>
                 <_Td>
                   <Text
                     display={'inline'}
@@ -378,7 +382,7 @@ export default function Staking() {
               >
                 {/* <_Td colSpan={3}>Single Currency Pledge</_Td> */}
                 <_Td>Handling fee</_Td>
-                <_Td>{state.SingleFee.div(10 ** Decimals).multipliedBy(100).toFixed() + '%' || EmptyStr}</_Td>
+                <_Td>{state.SingleFee.div(10 ** Decimals).multipliedBy(100).dp(2,1).toFixed() + '%' || EmptyStr}</_Td>
                 <_Td>
                   <Text
                     display={'inline'}
@@ -427,7 +431,7 @@ export default function Staking() {
               >
                 <_Td rowSpan={2}>Liquidity Stake</_Td>
                 <_Td>Handling fee</_Td>
-                <_Td>{state.LpFee.div(10 ** Decimals).multipliedBy(100).toFixed() + '%' || EmptyStr}</_Td>
+                <_Td>{state.LpFee.div(10 ** Decimals).multipliedBy(100).dp(2,1).toFixed() + '%' || EmptyStr}</_Td>
                 <_Td>
                   <Text
                     display={'inline'}

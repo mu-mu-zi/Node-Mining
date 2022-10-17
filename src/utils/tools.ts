@@ -1,5 +1,5 @@
 import OpenMessageBox, { MsgStatus } from "components/messageBox/MessageBox";
-import { NUMBER_REG, INT_REG, INPUT_NUMBER_REG, FLOAT_NUMBER } from "./global";
+import { NUMBER_REG, INT_REG, INPUT_NUMBER_REG, FLOAT_NUMBER, INPUT_NUMBER_REG_SIX } from "./global";
 import moment from "moment";
 import { ReactNode } from 'react'
 
@@ -82,6 +82,9 @@ export function isIntNumber(str: string) {
 export function isInputNumber(str: string) {
     return new RegExp(INPUT_NUMBER_REG, "gi").test(str);
 }
+export function isInputNumberSix(str: string) {
+    return new RegExp(INPUT_NUMBER_REG_SIX, "gi").test(str);
+}
 export function isFloatNumber(str: string) {
     return new RegExp(FLOAT_NUMBER, "gi").test(str);
 }
@@ -91,5 +94,9 @@ export function isEmptyObject(data: Object) {
 
 export function TimestampTransform(date: number) {
     return moment(date).parseZone().format('YYYY-MM-DD HH:mm:ss')
+}
+
+export function Timestamp(date: number) {
+    return moment(date).parseZone().format('HH:mm:ss')
 }
 
