@@ -32,7 +32,7 @@ const FlexTypography = styled(Flex)`
   justify-content: space-between;
   grid-gap: 17px;
   width: 100%;
-  ${({theme}) => theme.mediaWidth.sm`
+  ${({ theme }) => theme.mediaWidth.sm`
     flex-direction: column;
     align-items: self-start;
   `}
@@ -41,7 +41,7 @@ type BaseValueType = string | number | Date;
 type ValueType = BaseValueType | BaseValueType[] | undefined;
 
 export default function AllocationModal(props: IOpenModal & AA) {
-  const {reload, setReload} = props
+  const { reload, setReload } = props
   const { t } = useTranslation()
   const { theme } = useTheme()
   const state = useEffectState({
@@ -52,17 +52,14 @@ export default function AllocationModal(props: IOpenModal & AA) {
 
   const onRewardAmount = async () => {
     if (!PledgeLp) return
-    if(!state.bonus) {
+    if (!state.bonus) {
       Notice(`amount can't be empty`, MsgStatus.fail)
     }
     try {
       let param = null
       param = new BigNumber(parseFloat(state.bonus)).multipliedBy(10 ** Decimals).dp(0).toFixed()
-      console.log(param)
       const tx = await PledgeLp.setRewardAmount(param)
       FnReload(tx)
-
-
     } catch (e) {
       let msg = JSON.parse(JSON.stringify(e))
       Notice(msg.reason || msg.message, MsgStatus.fail)
@@ -70,7 +67,7 @@ export default function AllocationModal(props: IOpenModal & AA) {
     }
   }
 
-  const FnReload = async (tx:any) => {
+  const FnReload = async (tx: any) => {
     Notice('Please wait', MsgStatus.loading)
     await tx.wait()
     CloseMessageBox()
@@ -145,13 +142,13 @@ export default function AllocationModal(props: IOpenModal & AA) {
         </FlexTypography> */}
 
         <Flex width={'100%'} justifyContent={'center'} alignItems={'center'} gridGap={theme.isH5 ? '16px' : '.24rem'} alignSelf={'center'}>
-          <Third 
+          <Third
             style={{
               padding: theme.isH5 ? '8px 0' : '.1rem 0',
               width: theme.isH5 ? '100%' : '1.75rem'
             }}
             onClick={() => props.destoryComponent()}
-            >CANCEL</Third>
+          >CANCEL</Third>
           <Normal onClick={onRewardAmount} padding={theme.isH5 ? '8px 0' : '.1rem 0 '} width={theme.isH5 ? '100%' : '1.75rem'}>CONFIRM</Normal>
         </Flex>
 

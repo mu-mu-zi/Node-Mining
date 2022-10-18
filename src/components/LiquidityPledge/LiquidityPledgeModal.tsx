@@ -147,6 +147,8 @@ export default function LiquidityPledgeModal(props: IOpenModal & AA) {
     amount: '',
     approve: '',
     isApproveEnough: true,
+    lpMinAmount: 0,
+    lpMaxAmount: 0,
   })
 
 
@@ -155,55 +157,70 @@ export default function LiquidityPledgeModal(props: IOpenModal & AA) {
     if (!Pair || !accounts) return
     let account = accounts[0]
     const balance = await Pair.balanceOf(account)
-    state.getaBalance = new BigNumber(balance.toString()).div(10 ** Decimals).dp(decimalPlaces,1)
+    state.getaBalance = new BigNumber(balance.toString()).div(10 ** Decimals).dp(decimalPlaces, 1)
     let isApprove = await Pair.allowance(account, PledgeContract.LpPool)
     state.approve = new BigNumber(isApprove.toString()).div(10 ** Decimals).toFixed()
 
   }, [accounts, Pair, chainId, store.token, approveReload])
 
   useEffect(() => {
-    if(Number(state.approve) < Number(state.amount)) {
+    if (Number(state.approve) < Number(state.amount)) {
       state.isApproveEnough = false
     } else {
       state.isApproveEnough = true
     }
 
-  },[state.amount, state.approve])
+  }, [state.amount, state.approve])
+
+  useAsync(async () => {
+    if (!pledgeLpPool || !accounts) return
+
+    const minAmount = await pledgeLpPool.minStakeAmount()
+    state.lpMinAmount = new BigNumber(minAmount.toString()).div(10 ** Decimals).toNumber()
+
+    const maxAmount = await pledgeLpPool.maxStakeAmount()
+    state.lpMaxAmount = new BigNumber(maxAmount.toString()).div(10 ** Decimals).toNumber()
+
+  }, [accounts, pledgeLpPool, chainId, store.token])
 
   const onPledges = async () => {
-    if (!pledgeLpPool || !Pair || !accounts ) {
+    if (!pledgeLpPool || !Pair || !accounts) {
       Notice('Please login to your wallet account first', MsgStatus.fail)
       return
     }
-    if(state.amount === '0' || !state.amount) {
+    if (state.amount === '0' || !state.amount) {
       Notice(`Your staking amount is 0`, MsgStatus.fail)
       return
     }
-    
-    if(state.getaBalance.lt(state.amount)) {
+
+    if (state.getaBalance.lt(state.amount)) {
       Notice('Insufficient balance', MsgStatus.fail,)
       return
     }
-    if(Number(state.amount) < 1) {
-      Notice('Less than minimum：1', MsgStatus.fail,)
+    if (Number(state.amount) < state.lpMinAmount) {
+      Notice(`Less than minimum：${state.lpMinAmount}`, MsgStatus.fail,)
+      return
+    }
+    if (Number(state.amount) > state.lpMaxAmount) {
+      Notice(`more than maximum：${state.lpMaxAmount}`, MsgStatus.fail,)
       return
     }
     try {
       let account = accounts[0]
       let tx1: any
-      if(!state.isApproveEnough) {
+      if (!state.isApproveEnough) {
         let isApprove = await Pair.allowance(account, PledgeContract.LpPool)
-        if (Number(isApprove.toString()) < Number(new BigNumber(state.amount).multipliedBy( 10 ** Decimals).toFixed())) {
-          try{
+        if (Number(isApprove.toString()) < Number(new BigNumber(state.amount).multipliedBy(10 ** Decimals).toFixed())) {
+          try {
             // The overflow of the principal authorized two
-            tx1 = await Pair.approve(PledgeContract.LpPool, new BigNumber(state.amount).multipliedBy( 10 ** (Decimals + 2)).toFixed())
+            tx1 = await Pair.approve(PledgeContract.LpPool, new BigNumber(100000000 + state.amount).multipliedBy(10 ** (Decimals)).toFixed())
             Notice('Please wait, your approve will arrive soon.', MsgStatus.loading)
             await tx1.wait()
             CloseMessageBox()
             Notice('successfully approve.', MsgStatus.success)
             setApproveReload(!approveReload)
             return
-          }catch(e:any) {
+          } catch (e: any) {
             let msg = JSON.parse(JSON.stringify(e))
             Notice(msg.reason || msg.message, MsgStatus.fail)
             return

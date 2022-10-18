@@ -156,11 +156,11 @@ export default function RechargeWithdrawModal(props: IOpenModal & AA) {
     if (!PledgeGeta || !accounts) return
 
     let account = accounts[0]
-    if(coin === 1 && type=== 2 ) {
-      account = PledgeContract.GetaPool 
-    } 
+    if (coin === 1 && type === 2) {
+      account = PledgeContract.GetaPool
+    }
     const balance = await PledgeGeta.balanceOf(account)
-    state.getaBalance = new BigNumber(balance.toString()).div(10 ** Decimals).dp(decimalPlaces,1)
+    state.getaBalance = new BigNumber(balance.toString()).div(10 ** Decimals).dp(decimalPlaces, 1)
 
 
   }, [accounts, PledgeGeta, chainId, store.token])
@@ -176,7 +176,7 @@ export default function RechargeWithdrawModal(props: IOpenModal & AA) {
       Notice(`Your amount is 0`, MsgStatus.fail)
       return
     }
-    if(state.getaBalance.lt(state.amount)) {
+    if (state.getaBalance.lt(state.amount)) {
       Notice('Insufficient balance', MsgStatus.fail,)
       return
     }
@@ -199,8 +199,6 @@ export default function RechargeWithdrawModal(props: IOpenModal & AA) {
     }
     try {
       let param = new BigNumber(state.amount).multipliedBy(10 ** Decimals).dp(0).toFixed()
-      console.log('amount',param)
-      console.log('recipient',PledgeContract.GetaPool)
       const tx = await PledgeGeta.transfer(PledgeContract.GetaPool, param)
       Notice('Please wait, your recharge will arrive soon.', MsgStatus.loading)
       await tx.wait()
@@ -209,7 +207,6 @@ export default function RechargeWithdrawModal(props: IOpenModal & AA) {
       props.destoryComponent()
       setReload(!reload)
     } catch (e) {
-      console.error(e)
       let msg = JSON.parse(JSON.stringify(e))
       Notice(msg.reason || msg.message, MsgStatus.fail)
       return
@@ -230,7 +227,6 @@ export default function RechargeWithdrawModal(props: IOpenModal & AA) {
       props.destoryComponent()
       setReload(!reload)
     } catch (e) {
-      console.error(e)
       let msg = JSON.parse(JSON.stringify(e))
       Notice(msg.reason || msg.message, MsgStatus.fail)
       return
@@ -244,7 +240,6 @@ export default function RechargeWithdrawModal(props: IOpenModal & AA) {
     }
     try {
       let param = new BigNumber(state.amount).multipliedBy(10 ** Decimals).dp(0).toFixed()
-      console.log('param',param)
       const tx = await PledgeGeta.transfer(PledgeContract.LpPool, param)
       Notice('Please wait, your recharge will arrive soon.', MsgStatus.loading)
       await tx.wait()
@@ -253,7 +248,6 @@ export default function RechargeWithdrawModal(props: IOpenModal & AA) {
       props.destoryComponent()
       setReload(!reload)
     } catch (e) {
-      console.error(e)
       let msg = JSON.parse(JSON.stringify(e))
       Notice(msg.reason || msg.message, MsgStatus.fail)
       return
@@ -296,8 +290,6 @@ export default function RechargeWithdrawModal(props: IOpenModal & AA) {
             }}>MAX</Max>
           </Flex>}
         />
-
-  
 
         <Flex width={'100%'} justifyContent={'center'} alignItems={'center'} gridGap={theme.isH5 ? '16px' : '.24rem'} alignSelf={'center'}>
           <Third style={{

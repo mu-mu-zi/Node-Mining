@@ -59,9 +59,7 @@ export default function NavModal(props: IOpenModal & AA) {
   const { accounts, deactivate } = useWalletTools()
   useEffect(() => {
     let account = accounts && accounts[0]
-    // 调试
     if (adminAddress.toLowerCase() === account?.toLowerCase()) {
-    // if (adminAddress.toLowerCase() !== account?.toLowerCase()) {
       setShowAdmin(true)
     } else {
       setShowAdmin(false)

@@ -47,7 +47,7 @@ type BaseValueType = string | number | Date;
 type ValueType = BaseValueType | BaseValueType[] | undefined;
 
 export default function EditPledgeModal(props: IOpenModal & AA) {
-  const {reload, setReload} = props
+  const { reload, setReload } = props
   const { t } = useTranslation()
   const { theme } = useTheme()
   const [selectCoin, setSelectCoin] = useState<{ text: string; value: number }>()
@@ -64,10 +64,14 @@ export default function EditPledgeModal(props: IOpenModal & AA) {
       [
         { text: 'APR', value: 1 },
         { text: 'Handling fee', value: 2 },
+        { text: 'Stake Minimum', value: 4 },
+        { text: 'Stake Maximum', value: 5 },
         { text: 'StartTime', value: 3 },
       ],
       [
         { text: 'Handling fee', value: 1 },
+        { text: 'Stake Minimum', value: 3 },
+        { text: 'Stake Maximum', value: 4 },
         { text: 'StartTime', value: 2 },
       ]
 
@@ -78,35 +82,36 @@ export default function EditPledgeModal(props: IOpenModal & AA) {
   })
   // test 
   useAsync(async () => {
-    if(!PledgeGetaPool || !PledgeLp) return
+    if (!PledgeGetaPool || !PledgeLp) return
     const startTime = await PledgeGetaPool.startTime()
-    if(startTime.toString() !== '0') {
+    if (startTime.toString() !== '0') {
       state.selectTypeOption[0] = [
         { text: 'APR', value: 1 },
         { text: 'Handling fee', value: 2 },
+        { text: 'Stake Minimum', value: 4 },
+        { text: 'Stake Maximum', value: 5 },
       ]
     }
     const isLpStart = await PledgeLp.isStarted()
-    console.log('isLpStart',isLpStart)
-    if(isLpStart) {
-      state.selectTypeOption[1]=  [
+    if (isLpStart) {
+      state.selectTypeOption[1] = [
         { text: 'Handling fee', value: 1 },
+        { text: 'Stake Minimum', value: 3 },
+        { text: 'Stake Maximum', value: 4 },
       ]
     }
 
-  } ,[PledgeGetaPool,PledgeLp])
+  }, [PledgeGetaPool, PledgeLp])
 
   const onSubmit = () => {
     try {
-      console.log(state.parameters)
-      console.log(state.timestamp)
-      if(state.parameters && state.timestamp) {
+      if (state.parameters && state.timestamp) {
         Notice(`input can't be empty`, MsgStatus.fail)
         return
       }
       if (selectCoin?.value === 1) {
         if (selectType?.value === 1) {
-          
+
           setSingleAPR()
         }
         if (selectType?.value === 2) {
@@ -115,12 +120,24 @@ export default function EditPledgeModal(props: IOpenModal & AA) {
         if (selectType?.value === 3) {
           setSingleStartPool()
         }
+        if (selectType?.value === 4) {
+          setSingleMinimum()
+        }
+        if (selectType?.value === 5) {
+          setSingleMaximum()
+        }
       } else {
         if (selectType?.value === 1) {
           setLpFeeRate()
         }
         if (selectType?.value === 2) {
           setLpStartPool()
+        }
+        if (selectType?.value === 3) {
+          setLpMinimum()
+        }
+        if (selectType?.value === 4) {
+          setLpMaximum()
         }
       }
     } catch (e) {
@@ -134,12 +151,9 @@ export default function EditPledgeModal(props: IOpenModal & AA) {
     try {
       let param = null
       param = new BigNumber(parseFloat(state.parameters)).div(86400 * 365).multipliedBy(10 ** Decimals).div(100).dp(0).toFixed()
-      console.log(param)
-      console.log(state.parameters)
       const tx = await PledgeGetaPool.setAPY(param)
       FnReload(tx)
     } catch (e) {
-      console.error(e)
       let msg = JSON.parse(JSON.stringify(e))
       Notice(msg.reason || msg.message, MsgStatus.fail)
       return
@@ -151,11 +165,9 @@ export default function EditPledgeModal(props: IOpenModal & AA) {
     try {
       let param = null
       param = new BigNumber(parseFloat(state.parameters)).multipliedBy(10 ** Decimals).div(100).dp(0).toFixed()
-      console.log(param)
       const tx = await PledgeGetaPool.setFeeRate(param)
       FnReload(tx)
     } catch (e) {
-      console.log(e)
       let msg = JSON.parse(JSON.stringify(e))
       Notice(msg.reason || msg.message, MsgStatus.fail)
       return
@@ -165,28 +177,51 @@ export default function EditPledgeModal(props: IOpenModal & AA) {
   const setSingleStartPool = async () => {
     if (!PledgeGetaPool) return
     try {
-      console.log('timestamp',state.timestamp)
       let unixTamp = new BigNumber(state.timestamp).div(10 ** 3).toFixed()
-      console.log('unixTamp',unixTamp)
       const tx = await PledgeGetaPool.startPool(unixTamp)
       FnReload(tx)
     } catch (e) {
-      console.log(e)
       let msg = JSON.parse(JSON.stringify(e))
       Notice(msg.reason || msg.message, MsgStatus.fail)
       return
     }
   }
+
+  const setSingleMinimum = async () => {
+    if (!PledgeGetaPool) return
+    try {
+      let param = null
+      param = new BigNumber(parseFloat(state.parameters)).multipliedBy(10 ** Decimals).dp(0).toFixed()
+      const tx = await PledgeGetaPool.setMinStakeAmount(param)
+      FnReload(tx)
+    } catch (e) {
+      let msg = JSON.parse(JSON.stringify(e))
+      Notice(msg.reason || msg.message, MsgStatus.fail)
+      return
+    }
+  }
+  const setSingleMaximum = async () => {
+    if (!PledgeGetaPool) return
+    try {
+      let param = null
+      param = new BigNumber(parseFloat(state.parameters)).multipliedBy(10 ** Decimals).dp(0).toFixed()
+      const tx = await PledgeGetaPool.setMaxStakeAmount(param)
+      FnReload(tx)
+    } catch (e) {
+      let msg = JSON.parse(JSON.stringify(e))
+      Notice(msg.reason || msg.message, MsgStatus.fail)
+      return
+    }
+  }
+
   const setLpFeeRate = async () => {
     if (!PledgeLp) return
     try {
       let param = null
       param = new BigNumber(parseFloat(state.parameters)).multipliedBy(10 ** Decimals).div(100).dp(0).toFixed()
-      console.log(param)
       const tx = await PledgeLp.setFeeRate(param)
       FnReload(tx)
     } catch (e) {
-      console.log(e)
       let msg = JSON.parse(JSON.stringify(e))
       Notice(msg.reason || msg.message, MsgStatus.fail)
       return
@@ -196,26 +231,51 @@ export default function EditPledgeModal(props: IOpenModal & AA) {
   const setLpStartPool = async () => {
     if (!PledgeLp) return
     try {
-      console.log('timestamp',state.timestamp)
       let unixTamp = new BigNumber(state.timestamp).div(10 ** 3).toString()
-      console.log('unixTamp',unixTamp)
       const tx = await PledgeLp.startPool(unixTamp)
       FnReload(tx)
     } catch (e) {
-      console.log(e)
       let msg = JSON.parse(JSON.stringify(e))
       Notice(msg.reason || msg.message, MsgStatus.fail)
       return
     }
   }
 
-  const FnReload = async (tx:any) => {
+  const setLpMinimum = async () => {
+    if (!PledgeLp) return
+    try {
+      let param = null
+      param = new BigNumber(parseFloat(state.parameters)).multipliedBy(10 ** Decimals).dp(0).toFixed()
+      const tx = await PledgeLp.setMinStakeAmount(param)
+      FnReload(tx)
+    } catch (e) {
+      let msg = JSON.parse(JSON.stringify(e))
+      Notice(msg.reason || msg.message, MsgStatus.fail)
+      return
+    }
+  }
+
+  const setLpMaximum = async () => {
+    if (!PledgeLp) return
+    try {
+      let param = null
+      param = new BigNumber(parseFloat(state.parameters)).multipliedBy(10 ** Decimals).dp(0).toFixed()
+      const tx = await PledgeLp.setMaxStakeAmount(param)
+      FnReload(tx)
+    } catch (e) {
+      let msg = JSON.parse(JSON.stringify(e))
+      Notice(msg.reason || msg.message, MsgStatus.fail)
+      return
+    }
+  }
+
+  const FnReload = async (tx: any) => {
     Notice('Please wait', MsgStatus.loading)
     await tx.wait()
     CloseMessageBox()
     Notice('modify successfully', MsgStatus.success)
-    props.destoryComponent()
     setReload(!reload)
+    props.destoryComponent()
   }
 
 
@@ -251,7 +311,7 @@ export default function EditPledgeModal(props: IOpenModal & AA) {
                 >
                   <Icon
                     display={'block'}
-                    onClick={() => console.log('123')}
+                    // onClick={() => console.log('123')}
                     marginRight={'16px'}
                     src={require('assets/svg/Rectangle39.svg').default}
                   ></Icon>
@@ -273,14 +333,14 @@ export default function EditPledgeModal(props: IOpenModal & AA) {
               >
                 <DropDown
                   options={state.selectTypeOption[selectCoin && (selectCoin?.value - 1) || props.kind]}
-                  defaultValue={state.selectTypeOption[props.kind][props.type].value}
+                  defaultValue={state.selectTypeOption[props.kind][props.type] && state.selectTypeOption[props.kind][props.type].value || state.selectTypeOption[0][0].value}
                   onChange={(selectd) => {
                     setSelectType(selectd)
                   }}
                 >
                   <Icon
                     display={'block'}
-                    onClick={() => console.log('123')}
+                    // onClick={() => console.log('123')}
                     marginRight={'16px'}
                     src={require('assets/svg/Rectangle39.svg').default}
                   ></Icon>
@@ -295,7 +355,6 @@ export default function EditPledgeModal(props: IOpenModal & AA) {
               <Text width={'185px'} fontWeight={'400'} fontSize={theme.isH5 ? '14px' : '.2rem'} color={'#ffffff'} >{t(`Parameter`)}</Text>
               <DatePickerZ
                 onChange={(date, dateString) => {
-                  console.log('date', date?.valueOf())
                   state.MiningTime = dateString
                   state.timestamp = Number(date?.valueOf()) || 0
                 }}

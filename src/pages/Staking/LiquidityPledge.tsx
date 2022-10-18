@@ -28,7 +28,7 @@ const Row = styled(Flex)`
   font-size: .2rem;
   font-weight: 400;
   color: #ffffff;
-  ${({theme}) => theme.mediaWidth.sm`
+  ${({ theme }) => theme.mediaWidth.sm`
     font-size: 14px;
     min-width: 100%;
   `}
@@ -61,56 +61,53 @@ export default function LiquidityPledge(props: IProps) {
     tvl: new BigNumber(0)
   })
 
-  useInterval(async () => { 
+  useInterval(async () => {
     if (!pledgeLpPool || !accounts) return
     let account = accounts[0]
     const reawrds = await pledgeLpPool.earned(account)
     state.acquired = new BigNumber(reawrds.toString())
-  },isRunning ? delay : null)
+  }, isRunning ? delay : null)
 
-  useAsync(async () => { 
+  useAsync(async () => {
     if (!Pair || !accounts) return
     let account = accounts[0]
     const balance = await Pair.balanceOf(account)
     state.getaBalance = new BigNumber(balance.toString())
 
-  },[accounts, Pair, chainId, store.token,reload])
+  }, [accounts, Pair, chainId, store.token, reload])
 
-  useAsync(async () => { 
+  useAsync(async () => {
     if (!pledgeLpPool || !accounts) return
     let account = accounts[0]
     const reawrds = await pledgeLpPool.getUserInfo(account)
-    console.log(reawrds)
     state.pledged = new BigNumber(reawrds[0].toString())
     state.acquired = new BigNumber(reawrds[1].toString())
-    // state.apr = new BigNumber(reawrds[2].toString()).multipliedBy((86400 * 365))
-    console.log(state.acquired.toString())
+  }, [accounts, pledgeLpPool, chainId, store.token, reload])
 
-  },[accounts, pledgeLpPool, chainId, store.token,reload])
-
-  useAsync(async() => {
-       //LP价格
-    try{
-      if(!pledgeLpPool) return
+  useAsync(async () => {
+    //LP price
+    try {
+      if (!pledgeLpPool) return
       let pairPrice = await uniswap.getLPTokenPriceFast();
       const totalSupply = await pledgeLpPool.totalSupply()
 
       state.tvl = new BigNumber(totalSupply.toString()).div(10 ** Decimals).multipliedBy(pairPrice)
-    }catch(e){
+    } catch (e) {
       let msg = JSON.parse(JSON.stringify(e))
       Notice(msg.reason || msg.message, MsgStatus.fail)
       return
     }
-  }, [uniswap, pledgeLpPool, accounts, chainId, store.token, reload ])
-
-
+  }, [uniswap, pledgeLpPool, accounts, chainId, store.token, reload])
   const onPledges = () => {
-    openModal(LiquidityPledgeModal,{
+    if (!pledgeLpPool) {
+      Notice('Please login to your wallet account first', MsgStatus.fail,)
+      return
+    }
+    openModal(LiquidityPledgeModal, {
       setReload: setReload,
       reload: reload
     })
   }
-
   const onExit = async () => {
     if (!pledgeLpPool) {
       Notice('Please login to your wallet account first', MsgStatus.fail,)
@@ -122,7 +119,7 @@ export default function LiquidityPledge(props: IProps) {
       return
     }
 
-    try{
+    try {
       let tx = await pledgeLpPool.exit()
       Notice('Please wait, your redeemed will arrive soon.', MsgStatus.loading)
       // stop poll
@@ -130,16 +127,15 @@ export default function LiquidityPledge(props: IProps) {
       await tx.wait()
       CloseMessageBox()
       Notice('You have successfully redeemed',
-      MsgStatus.success,
-      {},
-      <Text fontSize={'12px'} fontWeight={'400'} color={'#F6B91B'}>
-        {`${state.pledged.div(10 ** Decimals).dp(decimalPlaces,1).toFixed()} GETA + ${state.acquired.div(10 ** Decimals).dp(decimalPlaces,1).toFixed()} GETA`}
-      </Text>)
-      console.log('tx',tx)
+        MsgStatus.success,
+        {},
+        <Text fontSize={'12px'} fontWeight={'400'} color={'#F6B91B'}>
+          {`${state.pledged.div(10 ** Decimals).dp(decimalPlaces, 1).toFixed()} GETA + ${state.acquired.div(10 ** Decimals).dp(decimalPlaces, 1).toFixed()} GETA`}
+        </Text>)
       setReload(!reload)
       toggleIsRunning(true)
       setReloadGeta(!reloadGeta)
-    }catch(e) {
+    } catch (e) {
       toggleIsRunning(true)
       let msg = JSON.parse(JSON.stringify(e))
       Notice(msg.reason || msg.message, MsgStatus.fail)
@@ -155,7 +151,7 @@ export default function LiquidityPledge(props: IProps) {
       Notice(`Your earnings are 0, please try again later`, MsgStatus.fail,)
       return
     }
-    try{
+    try {
       let tx = await pledgeLpPool.getReward()
       Notice('Please wait, your acquired will arrive soon.', MsgStatus.loading)
       // stop poll
@@ -163,11 +159,11 @@ export default function LiquidityPledge(props: IProps) {
       await tx.wait()
 
       CloseMessageBox()
-      
-      Notice('You have successfully acquired', MsgStatus.success, {}, <Text fontSize={'12px'} fontWeight={'400'} color={'#F6B91B'}>{`${state.acquired.div(10 ** Decimals).dp(decimalPlaces,1).toFixed()} GETA`} </Text>)
+
+      Notice('You have successfully acquired', MsgStatus.success, {}, <Text fontSize={'12px'} fontWeight={'400'} color={'#F6B91B'}>{`${state.acquired.div(10 ** Decimals).dp(decimalPlaces, 1).toFixed()} GETA`} </Text>)
       toggleIsRunning(true)
       setReloadGeta(!reloadGeta)
-    }catch(e) {
+    } catch (e) {
       toggleIsRunning(true)
       let msg = JSON.parse(JSON.stringify(e))
       Notice(msg.reason || msg.message, MsgStatus.fail)
@@ -176,8 +172,8 @@ export default function LiquidityPledge(props: IProps) {
   }
 
   return (
-    <ColumnStart 
-      padding={theme.isH5 ? '16px' : '.24rem'} 
+    <ColumnStart
+      padding={theme.isH5 ? '16px' : '.24rem'}
       gridGap={theme.isH5 ? '16px' : '.24rem'}
       background={'#1a1919'}
       borderRadius={'16px'}
@@ -191,7 +187,7 @@ export default function LiquidityPledge(props: IProps) {
 
       <Row>
         <Text>{t(`TVL`)}</Text>
-        <Text fontWeight={'700'}>{state.tvl.dp(decimalPlaces,1).toFixed() || EmptyStr}</Text>
+        <Text fontWeight={'700'}>{state.tvl.dp(decimalPlaces, 1).toFixed() || EmptyStr}</Text>
       </Row>
 
       <Row>
@@ -210,7 +206,7 @@ export default function LiquidityPledge(props: IProps) {
       <Row>
         <Flex gridGap={'8px'}>
           <Text>{t(`LP Balance: `)}</Text>
-          <Text fontWeight={'700'}>{(state.getaBalance.div(10 ** Decimals).dp(decimalPlaces,1).toFixed() + ' LP') || EmptyStr}</Text>
+          <Text fontWeight={'700'}>{(state.getaBalance.div(10 ** Decimals).dp(decimalPlaces, 1).toFixed() + ' LP') || EmptyStr}</Text>
         </Flex>
         <Normal onClick={onPledges} width={theme.isH5 ? '88px' : '1.06rem'} padding={theme.isH5 ? '3.5px 9.5px' : '.065rem 0'} fontSize={theme.isH5 ? '11px' : '.16rem'} >{t(`STAKE`)}</Normal>
       </Row>
@@ -218,7 +214,7 @@ export default function LiquidityPledge(props: IProps) {
       <Row>
         <Flex gridGap={'8px'}>
           <Text>{t(`Earned: `)}</Text>
-          <Text fontWeight={'700'}>{state.acquired.div(10 ** Decimals).dp(decimalPlaces,1).toFixed() + ' GETA' || EmptyStr}</Text>
+          <Text fontWeight={'700'}>{state.acquired.div(10 ** Decimals).dp(decimalPlaces, 1).toFixed() + ' GETA' || EmptyStr}</Text>
         </Flex>
         <Normal onClick={onExtraction} width={theme.isH5 ? '88px' : '1.06rem'} padding={theme.isH5 ? '3.5px 9.5px' : '.065rem 0'} fontSize={theme.isH5 ? '11px' : '.16rem'} >{t(`CLAIM`)}</Normal>
       </Row>
@@ -226,7 +222,7 @@ export default function LiquidityPledge(props: IProps) {
       <Row>
         <Flex gridGap={'8px'}>
           <Text>{t(`Total Staked: `)}</Text>
-          <Text fontWeight={'700'}>{state.pledged.div(10 ** Decimals).dp(decimalPlaces,1).toFixed() + ' LP' || EmptyStr}</Text>
+          <Text fontWeight={'700'}>{state.pledged.div(10 ** Decimals).dp(decimalPlaces, 1).toFixed() + ' LP' || EmptyStr}</Text>
         </Flex>
         <Normal onClick={onExit} width={theme.isH5 ? '88px' : '1.06rem'} padding={theme.isH5 ? '3.5px 9.5px' : '.065rem 0'} fontSize={theme.isH5 ? '11px' : '.16rem'} >{t(`REDEEM`)}</Normal>
       </Row>
@@ -248,7 +244,7 @@ export default function LiquidityPledge(props: IProps) {
         </Text>
         <Icon marginLeft={'4px'} src={require('assets/svg/link_gray.svg').default} />
       </Flex>
- 
+
     </ColumnStart>
   )
 }

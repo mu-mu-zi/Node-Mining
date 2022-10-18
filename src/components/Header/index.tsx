@@ -35,15 +35,17 @@ export default function Header() {
   }, [displayBtnStr]);
 
   useEffect(() => {
-    if (!accounts) return
+    if (!accounts) {
+      setShowAdmin(false)
+      return
+    }
     let account = accounts[0]
-    // 调试
     if (adminAddress.toLowerCase() === account?.toLowerCase()) {
-    // if (adminAddress.toLowerCase() !== account?.toLowerCase()) {
       setShowAdmin(true)
     } else {
       setShowAdmin(false)
     }
+    
   }, [accounts,store.token,store.address])
 
   useEffect(() => {

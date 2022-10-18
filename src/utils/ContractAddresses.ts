@@ -20,7 +20,7 @@ export const ContractAddresses = {
 export const PledgeContract = {
   Usdt: '0x19712F01203cA08dDFbae5D3eC0dd07CE811152C',
   Geta: '0x4c693351dB9B83A68Aa5a08C242DdE589ba0eD96',
-  GetaPool: '0xc0e3B9a9934bB6E532D57D86a3C3C3fD27dE36d8',
+  GetaPool: '0x7ed162c3D4A1B246188adEd4B5F4bFc5DbA234dC',
   Pair: '0x342d8484e49b6e6c61eAfF925fc93171bD660E94',
-  LpPool: '0x6192ae977360c8a29c86434e5c968af51e38e00a',
+  LpPool: '0x404a6b1ec4726d1aeaeb09a16e6f37284e75d263',
 }

@@ -18,10 +18,12 @@ import useWalletTools from "hooks/useWalletTools";
 import { useAsync } from "react-use";
 import BigNumber from "bignumber.js";
 import { decimalPlaces, Decimals, EmptyStr } from '../../utils/global';
-import { Notice, TimestampTransform, Timestamp} from "utils/tools";
+import { Notice, TimestampTransform, Timestamp } from "utils/tools";
 import { PledgeContract } from 'utils/ContractAddresses'
 import RechargeWithdrawModal from "./RechargeWithdrawModal";
-import { MsgStatus } from "components/messageBox/MessageBox";
+import { CloseMessageBox, MsgStatus } from "components/messageBox/MessageBox";
+import { Switch } from '@douyinfe/semi-ui';
+import SwitchZ from "components/Switch/Switch";
 
 export const Title = styled.div`
   border-left: 4px solid #F6B91B;
@@ -62,6 +64,8 @@ export default function Staking() {
   const [lpPoolReload, setLpPoolReload] = useState(false)
   const [TBreload, setTBReload] = useState(false)
   const [parameterReload, setParameterReload] = useState(false)
+
+
   const state = useEffectState({
     SingleFee: new BigNumber(0),
     LpFee: new BigNumber(0),
@@ -74,69 +78,59 @@ export default function Staking() {
     totalLpPools: new BigNumber(0),
     todayCents: new BigNumber(0),
     totalCents: new BigNumber(0),
+    singleMinAmount: new BigNumber(0),
+    singleMaxAmount: new BigNumber(0),
+    lpMinAmount: new BigNumber(0),
+    lpMaxAmount: new BigNumber(0),
     cycleId: '',
     lpStartTime: '',
     lpEndTime: '',
     lpStartHh: '',
+    singleChecked: false,
+    lpChecked: false,
   })
 
-  
   // get SinglePools geta
   useAsync(async () => {
     if (!PledgeGeta) return
     const totalSinglePools = await PledgeGeta.balanceOf(PledgeContract.GetaPool)
     state.totalSinglePools = new BigNumber(totalSinglePools.toString()).div(10 ** Decimals)
   }, [singlePoolReload, PledgeGeta])
-
   // get LpPools geta
   useAsync(async () => {
     if (!PledgeGeta) return
     const totalLpPools = await PledgeGeta.balanceOf(PledgeContract.LpPool)
     state.totalLpPools = new BigNumber(totalLpPools.toString()).div(10 ** Decimals)
   }, [lpPoolReload, PledgeGeta])
-
-  
   // get Today's Distribution Times
   useAsync(async () => {
     if (!PledgeLpPool) return
-    try{
+    try {
       const CycleId = await PledgeLpPool.rewardEpoch()
       state.cycleId = CycleId.toString()
-
       const time = await PledgeLpPool.getRewardHistory(CycleId)
       state.lpStartTime = TimestampTransform(new BigNumber(time[2].toString()).multipliedBy(1000).toNumber())
       state.lpEndTime = TimestampTransform(new BigNumber(time[3].toString()).multipliedBy(1000).toNumber())
-
       state.lpStartHh = Timestamp(new BigNumber(time[2].toString()).multipliedBy(1000).toNumber())
-      
-    }catch(e){
-      console.error(e)
+    } catch (e) {
       let msg = JSON.parse(JSON.stringify(e))
       Notice(msg.reason || msg.message, MsgStatus.fail)
       return
     }
-    
 
-  }, [lpPoolReload, PledgeLpPool])
+
+  }, [lpPoolReload, PledgeLpPool, parameterReload])
 
   // get Cumulative/Today's Distribution Bonus
   useAsync(async () => {
     if (!PledgeLpPool) return
-    try{
+    try {
 
       const todayCents = await PledgeLpPool.rewardAmount()
       state.todayCents = new BigNumber(todayCents.toString()).div(10 ** Decimals)
-      console.log('todayCents',todayCents)
-
-
-
       const totalCents = await PledgeLpPool.accReward()
-      console.log('totalCents',totalCents)
       state.totalCents = new BigNumber(totalCents.toString()).div(10 ** Decimals)
-
-
-    }catch(e) {
-      console.error(e)
+    } catch (e) {
       let msg = JSON.parse(JSON.stringify(e))
       Notice(msg.reason || msg.message, MsgStatus.fail)
       return
@@ -150,17 +144,22 @@ export default function Staking() {
     const startTime = await PledgeGetaPool.startTime()
     if (startTime.toString() === '0') {
       state.isStartPool = false
+    } else {
+      state.isStartPool = true
     }
     const isLpStart = await PledgeLpPool.isStarted()
     if (!isLpStart) {
       state.isStartLpPool = false
+    } else {
+      state.isStartLpPool = true
     }
 
-  }, [PledgeGetaPool, PledgeLpPool])
+  }, [PledgeGetaPool, PledgeLpPool, parameterReload])
 
   // get Single Pool Configure
   useAsync(async () => {
     if (!PledgeGetaPool || !accounts) return
+
     const fee = await PledgeGetaPool.bonusFeeRate()
     state.SingleFee = new BigNumber(fee.toString())
 
@@ -168,8 +167,13 @@ export default function Staking() {
     state.SingleApr = new BigNumber(apr.toString()).multipliedBy((86400 * 365))
 
     const startTime = await PledgeGetaPool.startTime()
-    console.log('startTime', startTime)
     state.SingleStartTime = new BigNumber(startTime.toString())
+
+    const minAmount = await PledgeGetaPool.minStakeAmount()
+    state.singleMinAmount = new BigNumber(minAmount.toString())
+
+    const maxAmount = await PledgeGetaPool.maxStakeAmount()
+    state.singleMaxAmount = new BigNumber(maxAmount.toString())
 
   }, [accounts, PledgeGetaPool, chainId, store.token, parameterReload])
 
@@ -180,11 +184,41 @@ export default function Staking() {
     state.LpFee = new BigNumber(fee.toString())
 
     const startTime = await PledgeLpPool.startTime()
-    console.log('startTime', startTime.toString())
     state.LpStartTime = new BigNumber(startTime.toString())
-    
 
+    const minAmount = await PledgeLpPool.minStakeAmount()
+    state.lpMinAmount = new BigNumber(minAmount.toString())
+
+    const maxAmount = await PledgeLpPool.maxStakeAmount()
+    state.lpMaxAmount = new BigNumber(maxAmount.toString())
   }, [accounts, PledgeLpPool, chainId, store.token, parameterReload])
+
+  // isEnableStake
+  useAsync(async () => {
+    if (!PledgeLpPool || !PledgeGetaPool || !accounts) return
+    state.lpChecked = await PledgeLpPool.isEnableStake()
+    state.singleChecked = await PledgeGetaPool.isEnableStake()
+  }, [accounts, PledgeLpPool, PledgeGetaPool, chainId, store.token])
+
+
+  const onSingleSwitch = async (e: any) => {
+    if (!PledgeGetaPool || !accounts) return
+    let tx = await PledgeGetaPool.enableStake(e)
+    await FnReload(tx)
+    state.singleChecked = e
+  }
+  const onLpSwitch = async (e: any) => {
+    if (!PledgeLpPool || !accounts) return
+    let tx = await PledgeLpPool.enableStake(e)
+    await FnReload(tx)
+    state.lpChecked = e
+  }
+  const FnReload = async (tx: any) => {
+    Notice('Please wait', MsgStatus.loading)
+    await tx.wait()
+    CloseMessageBox()
+    Notice('modify successfully', MsgStatus.success)
+  }
 
   return (
     <ColumnStart padding={theme.isH5 ? '32px 0' : '.31rem .5rem 1rem'} gridGap={theme.isH5 ? '55px' : '.78rem'}>
@@ -321,8 +355,8 @@ export default function Staking() {
                 <_Td>{state.todayCents.toNumber() || 0}</_Td>
                 <_Td>{PledgeContract.LpPool}</_Td>
                 <_Td>{state.totalCents.toNumber() || 0}</_Td>
-                <_Td>{state.cycleId === '0' ? EmptyStr : state.lpStartTime }</_Td>
-                <_Td>{state.cycleId === '0' ? EmptyStr : state.lpEndTime }</_Td>
+                <_Td>{state.cycleId === '0' ? EmptyStr : state.lpStartTime}</_Td>
+                <_Td>{state.cycleId === '0' ? EmptyStr : state.lpEndTime}</_Td>
               </Tr>
             </tbody>
 
@@ -356,9 +390,12 @@ export default function Staking() {
                 color={'#ffffff'}
                 background={'#1A1919'}
               >
-                <_Td rowSpan={3}>Single Currency Stake</_Td>
+                <_Td rowSpan={5}>
+                  <Text marginBottom={'10px'}>Single Currency Stake</Text>
+                  <SwitchZ checked={state.singleChecked} aria-label="a switch for single stake" onChange={onSingleSwitch} />
+                </_Td>
                 <_Td>APR</_Td>
-                <_Td>{state.SingleApr.div(10 ** Decimals).multipliedBy(100).dp(2,1).toFixed() + '%' || EmptyStr}</_Td>
+                <_Td>{state.SingleApr.div(10 ** Decimals).multipliedBy(100).dp(2, 1).toFixed() + '%' || EmptyStr}</_Td>
                 <_Td>
                   <Text
                     display={'inline'}
@@ -366,7 +403,7 @@ export default function Staking() {
                     onClick={() => {
                       openModal(EditPledgeModal, {
                         kind: 0,
-                        type: 0,
+                        type: 5,
                         reload: parameterReload,
                         setReload: setParameterReload,
                       })
@@ -382,7 +419,7 @@ export default function Staking() {
               >
                 {/* <_Td colSpan={3}>Single Currency Pledge</_Td> */}
                 <_Td>Handling fee</_Td>
-                <_Td>{state.SingleFee.div(10 ** Decimals).multipliedBy(100).dp(2,1).toFixed() + '%' || EmptyStr}</_Td>
+                <_Td>{state.SingleFee.div(10 ** Decimals).multipliedBy(100).dp(2, 1).toFixed() + '%' || EmptyStr}</_Td>
                 <_Td>
                   <Text
                     display={'inline'}
@@ -415,6 +452,30 @@ export default function Staking() {
                     onClick={() => {
                       openModal(EditPledgeModal, {
                         kind: 0,
+                        type: 4,
+                        reload: parameterReload,
+                        setReload: setParameterReload,
+                      })
+                    }} color={'#F6B91B'}
+                  >EDIT</Text>
+                </_Td>
+              </Tr>
+              <Tr
+                fontSize={'16px'}
+                fontWeight={'600'}
+                color={'#ffffff'}
+                background={'#1A1919'}
+              >
+                {/* <_Td colSpan={3}>Single Currency Pledge</_Td> */}
+                <_Td>Stake Minimum</_Td>
+                <_Td>{state.singleMinAmount.div(10 ** Decimals).toFixed() || EmptyStr}</_Td>
+                <_Td>
+                  <Text
+                    display={'inline'}
+                    cursor={'pointer'}
+                    onClick={() => {
+                      openModal(EditPledgeModal, {
+                        kind: 0,
                         type: 2,
                         reload: parameterReload,
                         setReload: setParameterReload,
@@ -429,9 +490,36 @@ export default function Staking() {
                 color={'#ffffff'}
                 background={'#1A1919'}
               >
-                <_Td rowSpan={2}>Liquidity Stake</_Td>
+                {/* <_Td colSpan={3}>Single Currency Pledge</_Td> */}
+                <_Td>Stake Maximum</_Td>
+                <_Td>{state.singleMaxAmount.div(10 ** Decimals).toFixed() || EmptyStr}</_Td>
+                <_Td>
+                  <Text
+                    display={'inline'}
+                    cursor={'pointer'}
+                    onClick={() => {
+                      openModal(EditPledgeModal, {
+                        kind: 0,
+                        type: 3,
+                        reload: parameterReload,
+                        setReload: setParameterReload,
+                      })
+                    }} color={'#F6B91B'}
+                  >EDIT</Text>
+                </_Td>
+              </Tr>
+              <Tr
+                fontSize={'16px'}
+                fontWeight={'600'}
+                color={'#ffffff'}
+                background={'#1A1919'}
+              >
+                <_Td rowSpan={4}>
+                  <Text marginBottom={'10px'}>Liquidity Stake</Text>
+                  <SwitchZ checked={state.lpChecked} aria-label="a switch for single stake" onChange={onLpSwitch} />
+                </_Td>
                 <_Td>Handling fee</_Td>
-                <_Td>{state.LpFee.div(10 ** Decimals).multipliedBy(100).dp(2,1).toFixed() + '%' || EmptyStr}</_Td>
+                <_Td>{state.LpFee.div(10 ** Decimals).multipliedBy(100).dp(2, 1).toFixed() + '%' || EmptyStr}</_Td>
                 <_Td>
                   <Text
                     display={'inline'}
@@ -463,7 +551,53 @@ export default function Staking() {
                     onClick={() => {
                       openModal(EditPledgeModal, {
                         kind: 1,
+                        type: 3,
+                        reload: parameterReload,
+                        setReload: setParameterReload,
+                      })
+                    }} color={'#F6B91B'}
+                  >EDIT</Text>
+                </_Td>
+              </Tr>
+              <Tr
+                fontSize={'16px'}
+                fontWeight={'600'}
+                color={'#ffffff'}
+                background={'#1A1919'}
+              >
+                <_Td>Stake Minimum</_Td>
+                <_Td>{state.lpMinAmount.div(10 ** Decimals).toFixed() || EmptyStr}</_Td>
+                <_Td>
+                  <Text
+                    display={'inline'}
+                    cursor={'pointer'}
+                    onClick={() => {
+                      openModal(EditPledgeModal, {
+                        kind: 1,
                         type: 1,
+                        reload: parameterReload,
+                        setReload: setParameterReload,
+                      })
+                    }} color={'#F6B91B'}
+                  >EDIT</Text>
+                </_Td>
+              </Tr>
+              <Tr
+                fontSize={'16px'}
+                fontWeight={'600'}
+                color={'#ffffff'}
+                background={'#1A1919'}
+              >
+                <_Td>Stake Maximum</_Td>
+                <_Td>{state.lpMaxAmount.div(10 ** Decimals).toFixed() || EmptyStr}</_Td>
+                <_Td>
+                  <Text
+                    display={'inline'}
+                    cursor={'pointer'}
+                    onClick={() => {
+                      openModal(EditPledgeModal, {
+                        kind: 1,
+                        type: 2,
                         reload: parameterReload,
                         setReload: setParameterReload,
                       })

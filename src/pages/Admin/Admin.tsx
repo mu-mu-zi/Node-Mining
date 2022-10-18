@@ -124,7 +124,6 @@ export default function Admin() {
       }
       state.selectOption = arr
       state.selectValue = obj
-      console.log(state.selectOption)
     } catch (e: any) {
       Notice(JSON.parse(JSON.stringify(e.reason)), MsgStatus.fail)
     }
@@ -132,9 +131,7 @@ export default function Admin() {
 
   useEffect(() => {
     let account = accounts && accounts[0]
-    // 调试
     if (adminAddress.toLowerCase() !== account?.toLowerCase()) {
-    // if (adminAddress.toLowerCase() === account?.toLowerCase()) {
       navigate('/')
       return
     }
@@ -152,12 +149,9 @@ export default function Admin() {
       Notice('Waiting for Cast...', MsgStatus.loading)
       await tx.wait()
       CloseMessageBox()
-      console.log(tx)
       Notice('cast success', MsgStatus.success)
       state.amount = '0'
-
     } catch (e: any) {
-      console.log(e)
       Notice(JSON.parse(JSON.stringify(e.reason)), MsgStatus.fail)
     }
   }
@@ -166,18 +160,14 @@ export default function Admin() {
     if (!TgeMarket || !accounts || !state.selectValue.value) return
     let account = accounts[0]
     try {
-      console.log(state.selectValue.value,state.address)
       let tx = await TgeMarket.adminTransfer(state.selectValue.value, state.address, _group)
       Notice('Waiting for Transfer...', MsgStatus.loading)
       await tx.wait()
       CloseMessageBox()
-
       Notice('Transfer success', MsgStatus.success)
       state.address = ''
       setReload(!reload)
-
     } catch (e: any) {
-      console.log(e)
       Notice(JSON.parse(JSON.stringify(e.reason)), MsgStatus.fail)
     }
   }
@@ -321,7 +311,7 @@ export default function Admin() {
                   >
                     <Icon
                       display={'block'}
-                      onClick={() => console.log('123')}
+                      // onClick={() => console.log('123')}
                       marginRight={'16px'}
                       src={require('assets/svg/Rectangle39.svg').default}
                     ></Icon>

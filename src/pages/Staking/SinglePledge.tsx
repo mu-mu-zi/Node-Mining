@@ -29,7 +29,7 @@ const Row = styled(Flex)`
   font-weight: 400;
   color: #ffffff;
   white-space: nowrap;
-  ${({theme}) => theme.mediaWidth.sm`
+  ${({ theme }) => theme.mediaWidth.sm`
     font-size: 14px;
     min-width: 100%;
   `}
@@ -38,7 +38,7 @@ interface IProps {
   reloadGeta: boolean
 }
 
-export default function SinglePledge(props:IProps) {
+export default function SinglePledge(props: IProps) {
   const { t } = useTranslation()
   const { reloadGeta } = props
   const { theme } = useTheme()
@@ -72,8 +72,8 @@ export default function SinglePledge(props:IProps) {
       return
     }
 
-    try{
-      
+    try {
+
       let tx = await PledgeGetaPool.exit()
       Notice('Please wait, your redeemed will arrive soon.', MsgStatus.loading)
       toggleIsRunning(false)
@@ -83,10 +83,10 @@ export default function SinglePledge(props:IProps) {
         MsgStatus.success,
         {},
         <Text fontSize={'12px'} fontWeight={'400'} color={'#F6B91B'}>
-          {`${state.pledged.div(10 ** Decimals).dp(decimalPlaces,1).toFixed()} GETA + ${state.acquired.div(10 ** Decimals).dp(decimalPlaces,1).toFixed()} GETA`}
+          {`${state.pledged.div(10 ** Decimals).dp(decimalPlaces, 1).toFixed()} GETA + ${state.acquired.div(10 ** Decimals).dp(decimalPlaces, 1).toFixed()} GETA`}
         </Text>)
-        setReload(!reload)
-        toggleIsRunning(true)
+      setReload(!reload)
+      toggleIsRunning(true)
     } catch (e) {
       toggleIsRunning(true)
       let msg = JSON.parse(JSON.stringify(e))
@@ -107,7 +107,7 @@ export default function SinglePledge(props:IProps) {
       return
     }
 
-    try{
+    try {
       let tx = await PledgeGetaPool.claimReward()
       Notice('Please wait, your acquired will arrive soon.', MsgStatus.loading)
       // stop poll
@@ -115,61 +115,53 @@ export default function SinglePledge(props:IProps) {
       await tx.wait()
 
       CloseMessageBox()
-      
-      Notice('You have successfully acquired', MsgStatus.success, {}, <Text fontSize={'12px'} fontWeight={'400'} color={'#F6B91B'}>{`${state.acquired.div(10 ** Decimals).dp(decimalPlaces,1).toFixed()} GETA`} </Text>)
+
+      Notice('You have successfully acquired', MsgStatus.success, {}, <Text fontSize={'12px'} fontWeight={'400'} color={'#F6B91B'}>{`${state.acquired.div(10 ** Decimals).dp(decimalPlaces, 1).toFixed()} GETA`} </Text>)
       toggleIsRunning(true)
       setReload(!reload)
-    }catch(e) {
+    } catch (e) {
       toggleIsRunning(true)
       let msg = JSON.parse(JSON.stringify(e))
       Notice(msg.reason || msg.message, MsgStatus.fail)
       return
     }
   }
-
-  useAsync(async () => { 
+  useAsync(async () => {
     if (!PledgeGeta || !accounts) return
     let account = accounts[0]
     const balance = await PledgeGeta.balanceOf(account)
     state.getaBalance = new BigNumber(balance.toString())
-
-  },[accounts, PledgeGeta, chainId, store.token,reload,reloadGeta])
-
-  useInterval(async () => { 
+  }, [accounts, PledgeGeta, chainId, store.token, reload, reloadGeta])
+  useInterval(async () => {
     if (!PledgeGetaPool || !accounts) return
     let account = accounts[0]
-
     const reawrds = await PledgeGetaPool.earned(account)
- 
     state.acquired = new BigNumber(reawrds.toString())
-
-
-  },isRunning ? delay : null)
-  useAsync(async () => { 
+  }, isRunning ? delay : null)
+  useAsync(async () => {
     if (!PledgeGetaPool || !accounts) return
     let account = accounts[0]
     const reawrds = await PledgeGetaPool.getUserInfo(account)
-
     state.pledged = new BigNumber(reawrds[0].toString())
     // state.acquired = new BigNumber(reawrds[1].toString())
     state.apr = new BigNumber(reawrds[2].toString()).multipliedBy((86400 * 365))
-
     const SingleGlobalApr = await PledgeGetaPool.globalAPY()
     state.SingleGlobalApr = new BigNumber(SingleGlobalApr.toString()).multipliedBy((86400 * 365))
-    console.log(SingleGlobalApr.toString())
-
-  },[accounts, PledgeGetaPool, chainId, store.token,reload])
-  
+  }, [accounts, PledgeGetaPool, chainId, store.token, reload])
   const onPledge = async () => {
-    openModal(SinglePledgeModal,{
+    if (!PledgeGetaPool) {
+      Notice('Please login to your wallet account first', MsgStatus.fail,)
+      return
+    }
+    openModal(SinglePledgeModal, {
       setReload: setReload,
       reload: reload
     })
   }
 
   return (
-    <ColumnStart 
-      padding={theme.isH5 ? '16px' : '.24rem'} 
+    <ColumnStart
+      padding={theme.isH5 ? '16px' : '.24rem'}
       gridGap={theme.isH5 ? '16px' : '.24rem'}
       background={'#1a1919'}
       borderRadius={'16px'}
@@ -209,13 +201,13 @@ export default function SinglePledge(props:IProps) {
         }}
       >
         <Text>{t(`GETA Balance:`)}</Text>
-        <Text fontWeight={'700'}>{state.getaBalance.div(10 ** Decimals).dp(decimalPlaces,1).toFixed() || EmptyStr}</Text>
+        <Text fontWeight={'700'}>{state.getaBalance.div(10 ** Decimals).dp(decimalPlaces, 1).toFixed() || EmptyStr}</Text>
       </Row>
 
       <Row>
         <Flex gridGap={'8px'}>
           <Text>{t(`Earned:`)}</Text>
-          <Text fontWeight={'700'}>{state.acquired.div(10 ** Decimals).dp(decimalPlaces,1).toFixed() || EmptyStr}</Text>
+          <Text fontWeight={'700'}>{state.acquired.div(10 ** Decimals).dp(decimalPlaces, 1).toFixed() || EmptyStr}</Text>
         </Flex>
         <Normal onClick={onExtraction} width={theme.isH5 ? '88px' : '1.06rem'} padding={theme.isH5 ? '3.5px 9.5px' : '.065rem .145rem'} fontSize={'.16rem'} >{t(`CLAIM`)}</Normal>
       </Row>
@@ -223,7 +215,7 @@ export default function SinglePledge(props:IProps) {
       <Row>
         <Flex gridGap={'8px'}>
           <Text>{t(`Total Staked:`)}</Text>
-          <Text fontWeight={'700'}>{state.pledged.div(10 ** Decimals).dp(decimalPlaces,1).toFixed() || EmptyStr}</Text>
+          <Text fontWeight={'700'}>{state.pledged.div(10 ** Decimals).dp(decimalPlaces, 1).toFixed() || EmptyStr}</Text>
         </Flex>
         <Normal onClick={onExit} width={theme.isH5 ? '88px' : '1.06rem'} padding={theme.isH5 ? '3.5px 9.5px' : '.065rem 0'} fontSize={theme.isH5 ? '11px' : '.16rem'} >{t(`REDEEM`)}</Normal>
       </Row>
