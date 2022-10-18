@@ -1,4 +1,7 @@
-export const ContractAddresses = {
+import { isMain } from "./global"
+
+// test
+export const test = {
   Usdt: '0xd39dBF2Fb85eC7fBfF2B321cf14cdAFf297073E2',
   // NodeNft: '0xF2835A04fd85A9aD5c95B8141dE3cAbb492068be',
   TgeMarket: '0x4C0080C1a7026cAfb79943C0b100d57A13E5cb55',
@@ -7,15 +10,18 @@ export const ContractAddresses = {
   EthUsdt: '0xfEfCd7269C102006EEA1446f07D736C3B1190308',
   EthTgeMarket: '0xc2BfC697BaEc038e348CF72b365d99B1212d7F91',
 }
-// export const ContractAddresses = {
-//   Usdt: '0x55d398326f99059fF775485246999027B3197955',
-//   // NodeNft: '0xF2835A04fd85A9aD5c95B8141dE3cAbb492068be',
-//   TgeMarket: '0x2bcd5f2955A590A38AEB41ea2154CEC8F85DD01e',
-//   // GetaAward: '0x97598dF48D8693064cD6BF67b8027B7Cdd0C353E',
-//   // MiningReward: '0xDEAe1A735a3FdEC861DD4be54753d178a0009833',
-//   EthUsdt: '0xdAC17F958D2ee523a2206206994597C13D831ec7',
-//   EthTgeMarket: '0xF2835A04fd85A9aD5c95B8141dE3cAbb492068be',
-// }
+// main
+export const main = {
+  Usdt: '0x55d398326f99059fF775485246999027B3197955',
+  // NodeNft: '0xF2835A04fd85A9aD5c95B8141dE3cAbb492068be',
+  TgeMarket: '0x2bcd5f2955A590A38AEB41ea2154CEC8F85DD01e',
+  // GetaAward: '0x97598dF48D8693064cD6BF67b8027B7Cdd0C353E',
+  // MiningReward: '0xDEAe1A735a3FdEC861DD4be54753d178a0009833',
+  EthUsdt: '0xdAC17F958D2ee523a2206206994597C13D831ec7',
+  EthTgeMarket: '0xF2835A04fd85A9aD5c95B8141dE3cAbb492068be',
+}
+
+export const ContractAddresses = isMain ? main : test
 
 export const PledgeContract = {
   Usdt: '0x19712F01203cA08dDFbae5D3eC0dd07CE811152C',

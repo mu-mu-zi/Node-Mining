@@ -1,5 +1,6 @@
 
 import {CSSProperties} from "react";
+import { isMain } from "utils/global";
 import { injected ,injectedHooks, bitKeep, bitKeepHooks } from "./hooks";
 
 export type IWallet = {
@@ -32,8 +33,8 @@ export const CHAINS = {
         symbol: "BNB"
       },
       // icon: require("src/assets/images/BNB 1.png"),
-      // chainId: 56,
-      chainId: 97,
+      chainId: isMain ? 56 : 97,
+      // chainId: 97,
       rpcUrls: "https://bsc-dataseed4.ninicoin.io/"
   },
   ETH: {
@@ -45,8 +46,8 @@ export const CHAINS = {
         symbol: "ETH"
       },
       // icon: require("src/assets/images/BNB 1.png"),
-      // chainId: 1,
-      chainId: 5,
+      chainId: isMain ? 1 : 5,
+      // chainId: 5,
       rpcUrls: "https://api.mycryptoapi.com/eth"
   }
 };
