@@ -127,19 +127,30 @@ export default function SinglePledge(props: IProps) {
     }
   }
   useAsync(async () => {
-    if (!PledgeGeta || !accounts) return
+    if (!PledgeGeta || !accounts) {
+      state.getaBalance = new BigNumber(0)
+      return
+    }
     let account = accounts[0]
     const balance = await PledgeGeta.balanceOf(account)
     state.getaBalance = new BigNumber(balance.toString())
   }, [accounts, PledgeGeta, chainId, store.token, reload, reloadGeta])
   useInterval(async () => {
-    if (!PledgeGetaPool || !accounts) return
+    if (!PledgeGetaPool || !accounts) {
+      state.acquired = new BigNumber(0)
+      return
+    }
     let account = accounts[0]
     const reawrds = await PledgeGetaPool.earned(account)
     state.acquired = new BigNumber(reawrds.toString())
   }, isRunning ? delay : null)
   useAsync(async () => {
-    if (!PledgeGetaPool || !accounts) return
+    if (!PledgeGetaPool || !accounts) {
+      state.apr = new BigNumber(0)
+      state.SingleGlobalApr = new BigNumber(0)
+      state.pledged = new BigNumber(0)
+      return
+    }
     let account = accounts[0]
     const reawrds = await PledgeGetaPool.getUserInfo(account)
     state.pledged = new BigNumber(reawrds[0].toString())

@@ -62,14 +62,20 @@ export default function LiquidityPledge(props: IProps) {
   })
 
   useInterval(async () => {
-    if (!pledgeLpPool || !accounts) return
+    if (!pledgeLpPool || !accounts) {
+      state.acquired = new BigNumber(0)
+      return
+    }
     let account = accounts[0]
     const reawrds = await pledgeLpPool.earned(account)
     state.acquired = new BigNumber(reawrds.toString())
   }, isRunning ? delay : null)
 
   useAsync(async () => {
-    if (!Pair || !accounts) return
+    if (!Pair || !accounts) {
+      state.getaBalance = new BigNumber(0)
+      return
+    }
     let account = accounts[0]
     const balance = await Pair.balanceOf(account)
     state.getaBalance = new BigNumber(balance.toString())
@@ -77,7 +83,11 @@ export default function LiquidityPledge(props: IProps) {
   }, [accounts, Pair, chainId, store.token, reload])
 
   useAsync(async () => {
-    if (!pledgeLpPool || !accounts) return
+    if (!pledgeLpPool || !accounts) {
+      state.pledged = new BigNumber(0)
+      state.acquired = new BigNumber(0)
+      return
+    }
     let account = accounts[0]
     const reawrds = await pledgeLpPool.getUserInfo(account)
     state.pledged = new BigNumber(reawrds[0].toString())
