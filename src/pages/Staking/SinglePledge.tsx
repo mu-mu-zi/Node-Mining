@@ -93,7 +93,6 @@ export default function SinglePledge(props: IProps) {
       Notice(msg.reason || msg.message, MsgStatus.fail)
       return
     }
-
   }
 
   const onExtraction = async () => {
@@ -135,6 +134,17 @@ export default function SinglePledge(props: IProps) {
     const balance = await PledgeGeta.balanceOf(account)
     state.getaBalance = new BigNumber(balance.toString())
   }, [accounts, PledgeGeta, chainId, store.token, reload, reloadGeta])
+
+  useAsync(async () => {
+    if (state.pledged.eq(0)) {
+      toggleIsRunning(false)
+      state.acquired = new BigNumber(0)
+    } else {
+      toggleIsRunning(true)
+    }
+
+  }, [state.pledged])
+
   useInterval(async () => {
     if (!PledgeGetaPool || !accounts) {
       state.acquired = new BigNumber(0)

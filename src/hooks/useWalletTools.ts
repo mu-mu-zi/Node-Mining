@@ -39,20 +39,20 @@ export default function useWalletTools() {
   // 获取当前连接组
   const connector = useMemo(() => {
     // to do
-    console.log('walletInfo',store.walletInfo)
+
     return store.walletInfo?.connector || WALLETS.MetaMask.connector
   },[store.walletInfo])
 
   const activate = useCallback(async () => {
     let result 
-    console.log('connector',connector)
+
     // if(connector.activate) {
       result = await connector.activate()
 
 
-    console.log('result', result)
+ 
     if (result) {
-      console.log('result', result)
+  
       state.provider = {provider: result.provider};
       state.chainId = parseInt(result.provider.chainId);
       state.accounts = [result.account];

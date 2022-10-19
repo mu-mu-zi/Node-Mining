@@ -61,6 +61,16 @@ export default function LiquidityPledge(props: IProps) {
     tvl: new BigNumber(0)
   })
 
+  useAsync(async () => {
+    if (state.pledged.eq(0)) {
+      toggleIsRunning(false)
+      state.acquired = new BigNumber(0)
+    } else {
+      toggleIsRunning(true)
+    }
+
+  }, [state.pledged])
+
   useInterval(async () => {
     if (!pledgeLpPool || !accounts) {
       state.acquired = new BigNumber(0)
