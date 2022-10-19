@@ -97,10 +97,10 @@ export default function Withdraw() {
       Notice('Please enter correctly', MsgStatus.warn)
       return
     }
-    if(selectCoin.value === 2) {
-      Notice('GETA tokens are coming soon', MsgStatus.warn)
-      return
-    }
+    // if(selectCoin.value === 2) {
+    //   Notice('GETA tokens are coming soon', MsgStatus.warn)
+    //   return
+    // }
     if(chainId !== CHAINS.BSC.chainId) {
       openModal(Network)
       return
