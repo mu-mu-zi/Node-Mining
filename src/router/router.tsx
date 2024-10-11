@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react'
 import { useLocation, useRoutes } from 'react-router-dom';
 import { RouteObject } from "react-router/lib/router";
 import Home from 'pages/Home/Home';
@@ -22,8 +22,8 @@ export default function Routers() {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
     window.scrollTo(0, 0)
-  },[history.pathname])
-  
+  }, [history.pathname])
+
 
 
   const routes: RouteObject[] = [

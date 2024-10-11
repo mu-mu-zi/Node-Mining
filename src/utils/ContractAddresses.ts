@@ -1,14 +1,14 @@
 import { isMain } from "./global"
 
 // test
-export const test = {
+const test = {
   Usdt: '0xd39dBF2Fb85eC7fBfF2B321cf14cdAFf297073E2',
   TgeMarket: '0x4C0080C1a7026cAfb79943C0b100d57A13E5cb55',
   EthUsdt: '0xfEfCd7269C102006EEA1446f07D736C3B1190308',
   EthTgeMarket: '0xc2BfC697BaEc038e348CF72b365d99B1212d7F91',
 }
 // main
-export const main = {
+const main = {
   Usdt: '0x55d398326f99059fF775485246999027B3197955',
   TgeMarket: '0x2bcd5f2955A590A38AEB41ea2154CEC8F85DD01e',
   EthUsdt: '0xdAC17F958D2ee523a2206206994597C13D831ec7',

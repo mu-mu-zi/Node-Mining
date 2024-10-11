@@ -26,7 +26,7 @@ export function fetchGet<R extends Object>(url:string, data?:object, config?:obj
     return axios.get(reqURL, config,);
 }
 
-export function useFetchPost<T>(url: string, params = {}, require: any[] = []) {
+export function useFetchPost<T extends Object>(url: string, params = {}, require: any[] = []) {
     const [data, setData] = useState<T>({} as T);
     const [loading, setLoading] = useState(false);
 
@@ -54,7 +54,7 @@ export function useFetchPost<T>(url: string, params = {}, require: any[] = []) {
     return {data, loading, reload};
 }
 
-export function useFetchGet<T>(url: string, params = {}, require: any[] = []) {
+export function useFetchGet<T extends Object>(url: string, params = {}, require: any[] = []) {
     const [data, setData] = useState<T>({} as T);
     const [loading, setLoading] = useState(false);
 
